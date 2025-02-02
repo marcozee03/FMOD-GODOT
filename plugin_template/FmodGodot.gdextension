@@ -1,0 +1,34 @@
+[configuration]
+entry_symbol = "fmod_library_init"
+compatibility_minimum = 4.3
+
+[icons]
+
+FmodEngine = "res://addons/FmodGodot/icons/fmod_icon.svg"
+BankLoader = "res://addons/FmodGodot/icons/bank_icon.svg"
+BanksExplorer = "res://addons/FmodGodot/icons/bank_icon.svg"
+EventTree = "res://addons/FmodGodot/icons/event_icon.svg"
+EventSelector = "res://addons/FmodGodot/icons/event_icon.svg"
+[libraries]
+
+windows.editor.x86_64 = "res://addons/FmodGodot/bin/libs/windows/libFmodGodot.windows.editor.x86_64.dll"
+windows.debug.x86_64 = "res://addons/FmodGodot/bin/libs/windows/libFmodGodot.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "res://addons/FmodGodot/bin/libs/windows/libFmodGodot.windows.template_release.x86_64.dll"
+
+[dependencies]
+
+windows.editor = {
+    "res://addons/FmodGodot/bin/libs/windows/fmod.dll" : "",
+    "res://addons/FmodGodot/bin/libs/windows/fmodstudio.dll" : ""
+}
+windows.debug = {
+    "res://addons/FmodGodot/bin/libs/windows/fmod.dll" : "",
+    "res://addons/FmodGodot/bin/libs/windows/fmodstudio.dll" : ""
+}
+windows.release = {
+    "res://addons/FmodGodot/bin/libs/windows/fmod.dll" : "",
+    "res://addons/FmodGodot/bin/libs/windows/fmodstudio.dll" : ""
+}
+
+
+

@@ -1,0 +1,12 @@
+.sconsign.dblite
+*.o
+*.os
+demo/bin/*
+.sconsign.dblite
+*Zone.Identifier
+.sconsign.dblite
+*.dblite
+*.obj
+git-filter-repo
+/Headers
+/libs
