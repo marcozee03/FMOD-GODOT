@@ -28,13 +28,13 @@ env.Append(LIBPATH=["libs/%s" % env["platform"]])
 if env["platform"] == "windows":
     env.Append(LIBS=["fmod_vc","fmodstudio_vc"])
     library = env.SharedLibrary(
-        "demo/bin/libs/windows/libFmodGodot{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+        "plugin_template/bin/libs/windows/libFmodGodot{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
         source=sources, 
     )
 elif env["platform"] == "linux":
     env.Append(LIBS=["libfmod","libfmodstudio"])
     library = env.SharedLibrary(
-        "demo/bin/libs/linux/libFmodGodot{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+        "plugin_template/bin/libs/linux/libFmodGodot{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
         source=sources, 
     )
 
