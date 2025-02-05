@@ -7,14 +7,14 @@ using namespace std;
 using namespace godot;
 namespace FMODGodot
 {
-    FMODEngine *FMODEngine::instance = NULL;
+    FMODEngine *FMODEngine::instance = nullptr;
 
     FMODEngine::FMODEngine()
     {
-        studio = NULL;
-        core = NULL;
-        Master = NULL;
-        Masterstrings = NULL;
+        studio = nullptr;
+        core = nullptr;
+        Master = nullptr;
+        Masterstrings = nullptr;
     }
     FMODEngine::~FMODEngine()
     {
@@ -55,9 +55,10 @@ namespace FMODGodot
             {
                 std::cout << "\ndsp" << FMOD_ErrorString(result);
             }
+            LoadMasterBanks();
             break;
         case NOTIFICATION_READY:
-            LoadMasterBanks();
+
             break;
         case NOTIFICATION_EXIT_TREE:
             if (instance == this)
