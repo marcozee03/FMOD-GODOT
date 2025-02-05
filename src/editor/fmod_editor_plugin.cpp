@@ -15,6 +15,17 @@ namespace FMODGodot
         bankLoaderInspector = memnew(BankLoaderInspector);
         add_inspector_plugin(bankLoaderInspector);
     }
-
+    void FmodEditorPlugin::_enter_tree()
+    {
+        fmodEngine = memnew(FMODEngine);
+        add_child(fmodEngine);
+        std::cout << "addengine";
+    }
+    void FmodEditorPlugin::_exit_tree()
+    {
+        remove_child(fmodEngine);
+        fmodEngine->queue_free();
+        std::cout << "remove engine";
+    }
 }
 #endif

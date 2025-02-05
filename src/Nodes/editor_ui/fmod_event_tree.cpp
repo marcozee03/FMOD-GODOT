@@ -6,6 +6,7 @@
 #include <classes/window.hpp>
 #include "fmod_event_tree.h"
 #include "fmod_globals.h"
+#include "fmodengine.h"
 using namespace godot;
 using namespace FMOD;
 namespace FMODGodot
@@ -23,12 +24,14 @@ namespace FMODGodot
     }
     bool EventTree::LoadEvents()
     {
-        Studio::System *studio;
-        FMOD::Studio::System::create(&studio);
-        studio->initialize(1, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0);
+        Studio::System *studio = FMODEngine::get_global_studio();
         ProjectSettings *pj = ProjectSettings::get_singleton();
         Studio::Bank *MasterStrings;
-        FMOD_RESULT result = studio->loadBankFile(pj->globalize_path(pj->get_setting("Fmod/Banks/Master_Strings_Bank_Path", "").stringify()).utf8().ptr(), FMOD_STUDIO_LOAD_BANK_NORMAL, &MasterStrings);
+        FMOD_RESULT result = studio->getBank("bank:/Master.strings", &MasterStrings);
+        // char path[128];
+        // int r;
+        // MasterStrings->getPath(path, 128, &r);
+        // print_line(path);
         if (result == FMOD_OK)
         {
             int count = 0;
@@ -57,7 +60,6 @@ namespace FMODGodot
                 item->set_text(0, eventPath);
                 item->set_metadata(0, cast_to_Vector4i(guid));
             }
-            studio->release();
             delete[] eventPath;
             return true;
         }
@@ -65,8 +67,6 @@ namespace FMODGodot
         {
             Window *window = (Window *)get_parent();
             window->hide();
-            MasterStrings->unload();
-            studio->release();
             return false;
         }
     }
