@@ -11,6 +11,7 @@
 #include "fmodengine.h"
 #include <classes/project_settings.hpp>
 #include <fmod_errors.h>
+#include "fmodengine.h"
 // #include <godot_cpp/classes/event_s
 using namespace godot;
 using namespace FMOD;
@@ -58,19 +59,16 @@ namespace FMODGodot
         currentValue = newValue;
         int retrieved = 0;
         char *str = new char[128];
-        Studio::System *studio;
-        auto result = FMOD::Studio::System::create(&studio);
-        if (result != FMOD_OK)
+        Studio::System *studio = FMODEngine::get_global_studio();
+        if (!studio->isValid())
         {
-            std::cout << FMOD_ErrorString(result);
+            print_error("fmod studio system is not valid");
             return;
         }
-        studio->initialize(1, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0);
         Studio::Bank *MasterStrings;
         ProjectSettings* pj = ProjectSettings::get_singleton();
-        result = studio->loadBankFile(pj->globalize_path(pj->get_setting("Fmod/Banks/Master_Strings_Bank_Path", "").stringify()).utf8().ptr(), FMOD_STUDIO_LOAD_BANK_NORMAL, &MasterStrings);
         FMOD_GUID guid = cast_to_FMOD_GUID(currentValue);
-        result = studio->lookupPath(&guid, str, 128, &retrieved);
+        auto result = studio->lookupPath(&guid, str, 128, &retrieved);
         if (result == FMOD_ERR_TRUNCATED)
         {
             delete[] str;
@@ -82,7 +80,6 @@ namespace FMODGodot
         eventSelector->get_line_edit()->set_tooltip_text(fmod_guid_to_string(guid));
         updating = false;
         delete[] str;
-        studio->release();
     }
 }
 #endif
