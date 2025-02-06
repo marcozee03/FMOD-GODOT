@@ -2,7 +2,8 @@
 #ifdef TOOLS_ENABLED
 #include <classes/editor_plugin.hpp>
 #include "fmod_event_inspector_plugin.h"
-#include "bank_loader_inspector_plugin.h";
+#include "bank_loader_inspector_plugin.h"
+#include "fmodengine.h"
 using namespace godot;
 namespace FMODGodot
 {
@@ -13,6 +14,7 @@ namespace FMODGodot
     private:
         EventInspector *eventInspector;
         BankLoaderInspector *bankLoaderInspector;
+        FMODEngine *fmodEngine;
 
     protected:
         static void _bind_methods();
@@ -20,6 +22,8 @@ namespace FMODGodot
     public:
         FmodEditorPlugin();
         ~FmodEditorPlugin() = default;
+        void _enter_tree() override;
+        void _exit_tree() override;
     };
 }
 #endif
