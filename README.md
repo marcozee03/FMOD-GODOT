@@ -5,7 +5,7 @@ does not necessarily aim to be a fully-fledged engine integration. It provides s
 the FMOD_System_Core and Fmod_Studio_Core objects to C# code to then be used with the official FMOD C# wrapper.
 # Features
 Add a FmodEvent tag to strings or Vector4Is to choose an FMOD_Event from the
-inspector to be passed to FMOD API Functions <sub>*Convert Vector4i to an FMOD::GUID with the ToGUID extension Method</sub>
+inspector to be passed to FMOD API Functions <sub>*Convert will Vector4i to an FMOD::GUID with an implicit castand vice versa</sub>
 ```
 [Export(PropertyHint.None,"FMODEvent")]
 public string soundFX1;
