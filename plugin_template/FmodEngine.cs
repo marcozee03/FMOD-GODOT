@@ -86,6 +86,15 @@ namespace FmodGodot
             instance.start().ToString();
             instance.release().ToString();
         }
+        public static void PlayOneShotWithParam(GUID guid, float value, string paramName)
+        {
+
+            Studio.getEventByID(guid, out var _event).ToString();
+            _event.createInstance(out var instance).ToString();
+            instance.setParameterByName(paramName, value).ToString();
+            instance.start().ToString();
+            instance.release().ToString();
+        }
         public static void PlayOneShot(GUID @event)
         {
             Studio.getEventByID(@event, out var _event);
