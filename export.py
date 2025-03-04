@@ -34,7 +34,7 @@ def main():
         else :
             buildForPlatform(platform)
             exportDependencies(platform)
-    if args.output.is_dir():
+    if not args.output.is_dir():
         print("\"" + str(args.output) + "\" does not exist or is not a directory")
         return;
 
