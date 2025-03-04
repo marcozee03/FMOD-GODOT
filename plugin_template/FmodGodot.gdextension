@@ -15,9 +15,9 @@ windows.editor.x86_64 = "res://addons/FmodGodot/bin/libs/windows/libFmodGodot.wi
 windows.debug.x86_64 = "res://addons/FmodGodot/bin/libs/windows/libFmodGodot.windows.template_debug.x86_64.dll"
 windows.release.x86_64 = "res://addons/FmodGodot/bin/libs/windows/libFmodGodot.windows.template_release.x86_64.dll"
 
-linux.editor.x86_64 = "res://addons/FmodGodot/bin/libs/linux/libFmodGodot.linux.editor.x86_64.dll"
-linux.debug.x86_64 = "res://addons/FmodGodot/bin/libs/linux/libFmodGodot.linux.template_debug.x86_64.dll"
-linux.release.x86_64 = "res://addons/FmodGodot/bin/libs/linux/libFmodGodot.linux.template_release.x86_64.dll"
+linux.editor.x86_64 = "res://addons/FmodGodot/bin/libs/linux/libFmodGodot.linux.editor.x86_64.so"
+linux.debug.x86_64 = "res://addons/FmodGodot/bin/libs/linux/libFmodGodot.linux.template_debug.x86_64.so"
+linux.release.x86_64 = "res://addons/FmodGodot/bin/libs/linux/libFmodGodot.linux.template_release.x86_64.so"
 [dependencies]
 
 windows.editor = {
