@@ -16,14 +16,14 @@ namespace FmodGodot
 #if TOOLS
 #if GODOT_WINDOWS
             public const string dll = "libFmodGodot.windows.editor.x86_64";
-#elif GODOT_LINUX
+#elif GODOT_LINUXBSD
             public const string dll = "libFmodGodot.linux.editor.x86_64";
 #endif
 #endif
 #if !TOOLS
 #if GODOT_WINDOWS
             public const string dll = "libFmodGodot.windows.template_release.x86_64";
-#elif GODOT_LINUX
+#elif GODOT_LINUXBSD
             public const string dll = "libFmodGodot.linux.template_release.x86_64";
 #endif
 #endif
