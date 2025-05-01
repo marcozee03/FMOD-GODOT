@@ -1,6 +1,4 @@
-// #pragma once
-#ifndef TREE_GUARD
-#define TREE_GUARD
+#pragma once
 #include <classes/tree.hpp>
 using namespace godot;
 
@@ -23,4 +21,3 @@ namespace FMODGodot
         void _ready() override;
     };
 }
-#endif

@@ -5,10 +5,9 @@
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
 #include <godot.hpp>
-#include "nodes/editor_ui/fmod_event_selector.h"
 #include "fmod_event_tree.h"
 #include "fmod_event_selector.h"
-#include "nodes/editor_ui/fmod_banks_explorer.h"
+#include "fmod_banks_explorer.h"
 #include <classes/engine.hpp>
 #ifdef TOOLS_ENABLED
 #include <classes/editor_plugin_registration.hpp>
