@@ -17,7 +17,7 @@ env.Append(CPPPATH=[env.Dir(d) for d in source_path])
 # - LINKFLAGS are for linking flags
 
 # tweak this if you want to use different folders, or more folders, to store your source code in.
-env.Append(CPPPATH=["src/","Headers/",'src/nodes/','src/editor/','src/nodes/editor_ui'])
+env.Append(CPPPATH=["src/","headers/",'src/nodes/','src/editor/','src/nodes/editor_ui'])
 sources = [
     Glob('src/*.cpp'),
     Glob('src/nodes/*.cpp'),
@@ -32,7 +32,7 @@ if env["platform"] == "windows":
         source=sources, 
     )
 elif env["platform"] == "linux":
-    env.Append(LIBS=["libfmod.so","libfmodstudio"])
+    env.Append(LIBS=["libfmod","libfmodstudio"])
     library = env.SharedLibrary(
         "plugin_template/bin/libs/linux/libFmodGodot{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
         source=sources, 

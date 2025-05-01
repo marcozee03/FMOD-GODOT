@@ -8,5 +8,6 @@ plugin_template/bin/*
 *.dblite
 *.obj
 git-filter-repo
-/Headers
+/headers
 /libs
+
