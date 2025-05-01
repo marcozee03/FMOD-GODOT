@@ -32,7 +32,7 @@ if env["platform"] == "windows":
         source=sources, 
     )
 elif env["platform"] == "linux":
-    env.Append(LIBS=["libfmod","libfmodstudio"])
+    env.Append(LIBS=["libfmod.so","libfmodstudio"])
     library = env.SharedLibrary(
         "plugin_template/bin/libs/linux/libFmodGodot{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
         source=sources, 
