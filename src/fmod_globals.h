@@ -3,6 +3,7 @@
 #include <godot_cpp/variant/vector4i.hpp>
 #include <stdio.h>
 #include <iostream>
+#include <godot_cpp/variant/string.hpp>
 using namespace godot;
 namespace FMODGodot
 {

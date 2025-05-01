@@ -1,5 +1,5 @@
-#include <fmod_studio.hpp>
 #include <fmod.hpp>
+#include <fmod_studio.hpp>
 #include <classes/project_settings.hpp>
 #include <classes/resource_loader.hpp>
 #include <classes/window.hpp>
