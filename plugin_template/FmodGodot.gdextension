@@ -35,26 +35,14 @@ windows.release = {
 
 linux.editor.x86_64  = {
 "bin/libs/linux/libfmod.so": "",
-"bin/libs/linux/libfmod.so.13": "",
-"bin/libs/linux/libfmod.so.13.12": "",
 "bin/libs/linux/libfmodstudio.so": "",
-"bin/libs/linux/libfmodstudio.so.13": "",
-"bin/libs/linux/libfmodstudio.so.13.12": ""
 }
 linux.debug.x86_64  = {
 "bin/libs/linux/libfmod.so": "",
-"bin/libs/linux/libfmod.so.13": "",
-"bin/libs/linux/libfmod.so.13.12": "",
 "bin/libs/linux/libfmodstudio.so": "",
-"bin/libs/linux/libfmodstudio.so.13": "",
-"bin/libs/linux/libfmodstudio.so.13.12": ""
 }
 linux.release.x86_64 = {
 "bin/libs/linux/libfmod.so": "",
-"bin/libs/linux/libfmod.so.13": "",
-"bin/libs/linux/libfmod.so.13.12": "",
 "bin/libs/linux/libfmodstudio.so": "",
-"bin/libs/linux/libfmodstudio.so.13": "",
-"bin/libs/linux/libfmodstudio.so.13.12": ""
 }
 
