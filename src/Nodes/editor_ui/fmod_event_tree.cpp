@@ -1,4 +1,3 @@
-#pragma once
 #include <fmod_studio.hpp>
 #include <fmod.hpp>
 #include <classes/project_settings.hpp>
