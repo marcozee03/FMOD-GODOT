@@ -13,19 +13,18 @@ namespace FmodGodot
     {
         private struct Version
         {
+
 #if TOOLS
+public const string template = "editor";
+#elif DEBUG
+public const string template = "template_debug";
+#else
+public const string template = "template_release";
+#endif
 #if GODOT_WINDOWS
-            public const string dll = "libFmodGodot.windows.editor.x86_64";
+            public const string dll = $"libFmodGodot.windows.{template}.x86_64";
 #elif GODOT_LINUXBSD
-            public const string dll = "libFmodGodot.linux.editor.x86_64";
-#endif
-#endif
-#if !TOOLS
-#if GODOT_WINDOWS
-            public const string dll = "libFmodGodot.windows.template_release.x86_64";
-#elif GODOT_LINUXBSD
-            public const string dll = "libFmodGodot.linux.template_release.x86_64";
-#endif
+            public const string dll = $"libFmodGodot.linux.{template}.x86_64";
 #endif
         }
         private static FMOD.Studio.System studio;
