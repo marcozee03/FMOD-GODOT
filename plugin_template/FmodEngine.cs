@@ -48,7 +48,6 @@ namespace FmodGodot
 
         public override void _EnterTree()
         {
-            Camera2D camera2D = new Camera2D();
             base._EnterTree();
             get_fmod_studio(out studio.handle);
             get_fmod_core(out core.handle);

@@ -1,9 +1,8 @@
-#include <fmod.h>
-#include <fmod_studio.h>
 #include <godot_cpp/variant/vector4i.hpp>
 #include <stdio.h>
 #include <iostream>
 #include <godot_cpp/variant/string.hpp>
+#include <fmod.hpp>
 using namespace godot;
 namespace FMODGodot
 {

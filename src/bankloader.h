@@ -1,5 +1,4 @@
-#ifndef BANK_LOADER
-#define BANK_LOADER
+#pragma once
 #include <godot_cpp/classes/node.hpp>
 using namespace godot;
 namespace FMODGodot
@@ -19,4 +18,3 @@ namespace FMODGodot
         PackedStringArray get_banks();
     };
 }
-#endif
