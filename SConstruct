@@ -18,6 +18,10 @@ env.Append(CPPPATH=[env.Dir(d) for d in source_path])
 
 # tweak this if you want to use different folders, or more folders, to store your source code in.
 env.Append(CPPPATH=["src/","headers/",'src/nodes/','src/editor/','src/nodes/editor_ui'])
+logging = ''
+if env["target"] == "editor" or env["target"] == "template_debug" :
+    logging = "L"
+
 sources = [
     Glob('src/*.cpp'),
     Glob('src/nodes/*.cpp'),
@@ -32,7 +36,8 @@ if env["platform"] == "windows":
         source=sources, 
     )
 elif env["platform"] == "linux":
-    env.Append(LIBS=["libfmod","libfmodstudio"])
+    env.Append(LIBS=["libfmod%s" % logging,"libfmodstudio%s" % logging])
+    print(env["LIBS"])
     library = env.SharedLibrary(
         "plugin_template/bin/libs/linux/libFmodGodot{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
         source=sources, 
