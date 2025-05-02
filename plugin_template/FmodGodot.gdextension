@@ -34,21 +34,27 @@ windows.release = {
 }
 
 linux.editor.x86_64  = {
-"bin/libs/linux/libfmod.so": "",
-"bin/libs/linux/libfmod.so.14.7": "",
-"bin/libs/linux/libfmodstudio.so": "",
-"bin/libs/linux/libfmodstudio.so.14.7": ""
+"bin/libs/linux/libfmodL.so.14.7": "",
+"bin/libs/linux/libfmodstudioL.so.14.7": "",
+"bin/libs/linux/libfmodL.so.14": "",
+"bin/libs/linux/libfmodstudioL.so.14": "",
+"bin/libs/linux/libfmodL.so": "",
+"bin/libs/linux/libfmodstudioL.so": ""
 }
 linux.debug.x86_64  = {
-"bin/libs/linux/libfmod.so": "",
-"bin/libs/linux/libfmod.so.14.7": "",
-"bin/libs/linux/libfmodstudio.so": "",
-"bin/libs/linux/libfmodstudio.so.14.7": ""
+"bin/libs/linux/libfmodL.so.14.7": "",
+"bin/libs/linux/libfmodstudioL.so.14.7": "",
+"bin/libs/linux/libfmodL.so.14": "",
+"bin/libs/linux/libfmodstudioL.so.14": "",
+"bin/libs/linux/libfmodL.so": "",
+"bin/libs/linux/libfmodstudioL.so": ""
 }
 linux.release.x86_64 = {
-"bin/libs/linux/libfmod.so": "",
 "bin/libs/linux/libfmod.so.14.7": "",
-"bin/libs/linux/libfmodstudio.so": "",
-"bin/libs/linux/libfmodstudio.so.14.7": ""
+"bin/libs/linux/libfmodstudio.so.14.7": "",
+"bin/libs/linux/libfmod.so.14": "",
+"bin/libs/linux/libfmodstudio.so.14": "",
+"bin/libs/linux/libfmod.so": "",
+"bin/libs/linux/libfmodstudio.so": ""
 }
 

@@ -10,8 +10,8 @@ from pathlib import Path
 supported_platforms = ["linux","windows"];
 def buildForPlatform(platform):
     p1 = subprocess.run(['scons', 'target=template_release', 'platform=%s' % platform])
-    p2 = subprocess.run(['scons', 'target=template_debug', 'platform=%s' % platform])
-    p3 = subprocess.run(['scons', 'target=editor', 'platform=%s' % platform])
+    p2 = subprocess.run(['scons', 'debug_symbols=yes', 'target=template_debug', 'platform=%s' % platform])
+    p3 = subprocess.run(['scons', 'debug_symbols=yes','target=editor', 'platform=%s' % platform])
 def exportDependencies(platform):
     for file in os.listdir('libs/%s' % platform) :
         shutil.copy('libs/%s/%s'% (platform,file), 'plugin_template/bin/libs/%s/%s' % (platform,file))
