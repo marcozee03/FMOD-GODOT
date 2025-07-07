@@ -4,7 +4,7 @@
 #include <classes/button.hpp>
 #include <classes/item_list.hpp>
 using namespace godot;
-namespace FMODGodot
+namespace FmodGodot
 {
     class BanksExplorer : public Control
     {

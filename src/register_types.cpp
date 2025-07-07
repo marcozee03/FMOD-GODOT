@@ -1,7 +1,8 @@
 #include "register_types.h"
 #include "bankloader.h"
+#include "fmod_audio_server_proxy.h"
 // #include "fmodeventemitter2d.h"
-#include "fmodengine.h"
+#include "fmod_audio_server.h"
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
 #include <godot.hpp>
@@ -19,14 +20,24 @@
 #include "bank_loader_inspector_plugin.h"
 #endif
 
+#include "fmod_listener.h"
 using namespace godot;
-using namespace FMODGodot;
-void initialize_example_module(ModuleInitializationLevel p_level)
+using namespace FmodGodot;
+
+static FmodAudioServer *audio_server;
+void initialize_fmod_module(ModuleInitializationLevel p_level)
 {
   if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
   {
     GDREGISTER_CLASS(BankLoader);
-    GDREGISTER_CLASS(FMODEngine);
+    GDREGISTER_CLASS(FmodAudioServer);
+    GDREGISTER_CLASS(FmodAudioServerProxy);
+    
+    GDREGISTER_CLASS(FmodListener);
+    audio_server = memnew(FmodAudioServer);
+    audio_server->init();
+    FmodAudioServer::singleton = audio_server;
+    Engine::get_singleton()->register_singleton("FmodAudioServer", audio_server);
     GDREGISTER_CLASS(FmodEventPathSelector);
     GDREGISTER_CLASS(EventTree);
     GDREGISTER_CLASS(BanksExplorer);
@@ -68,7 +79,7 @@ extern "C"
     godot::GDExtensionBinding::InitObject init_obj(p_get_proc_address, p_library,
                                                    r_initialization);
 
-    init_obj.register_initializer(initialize_example_module);
+    init_obj.register_initializer(initialize_fmod_module);
     init_obj.register_terminator(uninitialize_fmod_module);
     init_obj.set_minimum_library_initialization_level(
         MODULE_INITIALIZATION_LEVEL_CORE);

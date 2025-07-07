@@ -5,11 +5,11 @@
 #include "fmod_event_guid_selector_property.h"
 #include <godot_cpp/core/memory.hpp>
 using namespace godot;
-namespace FMODGodot
+namespace FmodGodot
 {
     bool EventInspector::_parse_property(Object *p_object, Variant::Type p_type, const String &p_name, PropertyHint p_hint_type, const String &p_hint_string, BitField<PropertyUsageFlags> p_usage_flags, bool p_wide)
     {
-        if (p_hint_string == "FMODEvent")
+        if (p_hint_string.nocasecmp_to("FMODEvent") == 0)
         {
 
             switch (p_type)

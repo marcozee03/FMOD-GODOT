@@ -3,7 +3,7 @@
 #include <classes/editor_property.hpp>
 #include "fmod_banks_explorer.h"
 using namespace godot;
-namespace FMODGodot
+namespace FmodGodot
 {
     class BanksExplorerProperty : public EditorProperty
     {

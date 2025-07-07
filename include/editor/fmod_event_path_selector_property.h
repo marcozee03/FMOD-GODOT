@@ -8,7 +8,7 @@
 #include <godot_cpp/classes/button.hpp>
 // #include <godot_cpp/classes/event_s
 using namespace godot;
-namespace FMODGodot
+namespace FmodGodot
 {
     class EventPathSelectorProperty : public EditorProperty
     {

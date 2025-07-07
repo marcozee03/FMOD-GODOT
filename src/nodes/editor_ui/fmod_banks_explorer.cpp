@@ -2,7 +2,7 @@
 #include "fmod_banks_explorer.h"
 #include <classes/resource_loader.hpp>
 using namespace godot;
-namespace FMODGodot
+namespace FmodGodot
 {
     bool BanksExplorer::add_bank(String path)
     {

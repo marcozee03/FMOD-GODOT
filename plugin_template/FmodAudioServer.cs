@@ -9,13 +9,18 @@ namespace FmodGodot
     using Godot;
     using Godot.NativeInterop;
 
-    public partial class FmodEngine : Node
+    public static partial class FmodAudioServer : Object
     {
+        static FmodAudioServer()
+        {
+            get_fmod_studio(out studio.handle);
+            get_fmod_core(out core.handle);
+        }
         private struct Version
         {
 
 #if TOOLS
-public const string template = "editor";
+            public const string template = "editor";
 #elif DEBUG
 public const string template = "template_debug";
 #else
@@ -32,8 +37,8 @@ public const string template = "template_release";
         public static FMOD.Studio.System Studio
         {
             get => studio;
-        private
-            set => studio = value;
+            private
+                set => studio = value;
         }
 
         private static FMOD.System core;
@@ -41,26 +46,8 @@ public const string template = "template_release";
         public static FMOD.System Core
         {
             get => core;
-        private
-            set => core = value;
-        }
-
-        public override void _EnterTree()
-        {
-            base._EnterTree();
-            get_fmod_studio(out studio.handle);
-            get_fmod_core(out core.handle);
-            // FMOD.Studio.System.create(out studio);
-            // studio.initialize(ProjectSettings.GetSetting("Fmod/General/channel_count").AsInt32(), FMOD.Studio.INITFLAGS.NORMAL, FMOD.INITFLAGS.NORMAL, 0);
-            // studio.getCoreSystem(out core);
-            // core.setDSPBufferSize(ProjectSettings.GetSetting("Fmod/DSP/dsp_buffer_size", 512).As<uint>(), ProjectSettings.GetSetting("Fmod/DSP/dsp_buffer_count", 4).AsInt32());
-            // LoadMasterBanks();
-            // ADVANCEDSETTINGS settings = new ADVANCEDSETTINGS();
-            // core.getAdvancedSettings(ref settings);
-        }
-        public override void _PhysicsProcess(double delta)
-        {
-            base._PhysicsProcess(delta);
+            private
+                set => core = value;
         }
 
         [DllImport(Version.dll)]
@@ -99,10 +86,6 @@ public const string template = "template_release";
             _event.createInstance(out var instance);
             instance.start();
             instance.release();
-        }
-        public override void _ExitTree()
-        {
-            Studio.release();
         }
     }
 }

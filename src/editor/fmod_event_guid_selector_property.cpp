@@ -8,14 +8,13 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <fmod_globals.h>
 #include <fmod_studio.hpp>
-#include "fmodengine.h"
+#include "fmod_audio_server.h"
 #include <classes/project_settings.hpp>
 #include <fmod_errors.h>
-#include "fmodengine.h"
 // #include <godot_cpp/classes/event_s
 using namespace godot;
 using namespace FMOD;
-namespace FMODGodot
+namespace FmodGodot
 {
     EventGUIDSelectorProperty::EventGUIDSelectorProperty()
     {
@@ -59,7 +58,7 @@ namespace FMODGodot
         currentValue = newValue;
         int retrieved = 0;
         char *str = new char[128];
-        Studio::System *studio = FMODEngine::get_global_studio();
+        Studio::System *studio = FmodAudioServer::get_global_studio();
         if (!studio->isValid())
         {
             print_error("fmod studio system is not valid");

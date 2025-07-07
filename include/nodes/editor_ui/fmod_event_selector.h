@@ -6,7 +6,7 @@
 #include <classes/h_box_container.hpp>
 #include "fmod_event_tree.h"
 using namespace godot;
-namespace FMODGodot
+namespace FmodGodot
 {
     class FmodEventPathSelector : public Control
     {

@@ -71,7 +71,6 @@ namespace FmodGodot
 			{
 				ProjectSettings.Singleton.SetSetting("Fmod/Banks/Master_Strings_Bank_Path", "res://Banks");
 			}
-			AddAutoloadSingleton("FmodEngine", "res://addons/FmodGodot/Scenes/fmod_engine.tscn");
 		}
 
 		public override void _ExitTree()

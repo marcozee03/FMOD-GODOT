@@ -5,10 +5,10 @@
 #include <classes/window.hpp>
 #include "fmod_event_tree.h"
 #include "fmod_globals.h"
-#include "fmodengine.h"
+#include "fmod_audio_server.h"
 using namespace godot;
 using namespace FMOD;
-namespace FMODGodot
+namespace FmodGodot
 {
     void EventTree::_bind_methods()
     {
@@ -23,7 +23,7 @@ namespace FMODGodot
     }
     bool EventTree::LoadEvents()
     {
-        Studio::System *studio = FMODEngine::get_global_studio();
+        Studio::System *studio = FmodAudioServer::get_global_studio();
         ProjectSettings *pj = ProjectSettings::get_singleton();
         Studio::Bank *MasterStrings;
         FMOD_RESULT result = studio->getBank("bank:/Master.strings", &MasterStrings);

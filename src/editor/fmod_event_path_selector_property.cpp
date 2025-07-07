@@ -8,7 +8,7 @@
 #include <godot_cpp/core/class_db.hpp>
 // #include <godot_cpp/classes/event_s
 using namespace godot;
-namespace FMODGodot
+namespace FmodGodot
 {
     EventPathSelectorProperty::EventPathSelectorProperty()
     {
