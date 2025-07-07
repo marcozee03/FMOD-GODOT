@@ -2,7 +2,7 @@
 #include "banks_explorer_property.h"
 
 using namespace godot;
-namespace FMODGodot
+namespace FmodGodot
 {
     void BanksExplorerProperty::on_paths_changed()
     {

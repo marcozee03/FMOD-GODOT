@@ -4,7 +4,7 @@ compatibility_minimum = 4.3
 
 [icons]
 
-FmodEngine = "res://addons/FmodGodot/icons/fmod_icon.svg"
+FmodAudioServer = "res://addons/FmodGodot/icons/fmod_icon.svg"
 BankLoader = "res://addons/FmodGodot/icons/bank_icon.svg"
 BanksExplorer = "res://addons/FmodGodot/icons/bank_icon.svg"
 EventTree = "res://addons/FmodGodot/icons/event_icon.svg"

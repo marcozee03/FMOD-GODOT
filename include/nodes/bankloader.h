@@ -1,7 +1,7 @@
 #pragma once
 #include <godot_cpp/classes/node.hpp>
 using namespace godot;
-namespace FMODGodot
+namespace FmodGodot
 {
     class BankLoader : public Node
     {

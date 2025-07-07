@@ -2,7 +2,7 @@
 #include <classes/tree.hpp>
 using namespace godot;
 
-namespace FMODGodot
+namespace FmodGodot
 {
     class EventTree : public Tree
     {
