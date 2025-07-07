@@ -9,7 +9,7 @@
 #include <variant/vector4i.hpp>
 // #include <godot_cpp/classes/event_s
 using namespace godot;
-namespace FMODGodot
+namespace FmodGodot
 {
     class EventGUIDSelectorProperty : public EditorProperty
     {

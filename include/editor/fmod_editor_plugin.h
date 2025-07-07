@@ -3,9 +3,9 @@
 #include <classes/editor_plugin.hpp>
 #include "fmod_event_inspector_plugin.h"
 #include "bank_loader_inspector_plugin.h"
-#include "fmodengine.h"
+#include "fmod_audio_server.h"
 using namespace godot;
-namespace FMODGodot
+namespace FmodGodot
 {
 
     class FmodEditorPlugin : public EditorPlugin
@@ -14,8 +14,6 @@ namespace FMODGodot
     private:
         EventInspector *eventInspector;
         BankLoaderInspector *bankLoaderInspector;
-        FMODEngine *fmodEngine;
-
     protected:
         static void _bind_methods();
 

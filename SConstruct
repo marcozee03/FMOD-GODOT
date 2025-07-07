@@ -17,9 +17,9 @@ env.Append(CPPPATH=[env.Dir(d) for d in source_path])
 # - LINKFLAGS are for linking flags
 
 # tweak this if you want to use different folders, or more folders, to store your source code in.
-env.Append(CPPPATH=["src/","headers/",'src/nodes/','src/editor/','src/nodes/editor_ui'])
+env.Append(CPPPATH=["src/","headers/",'src/nodes/','src/editor/','src/nodes/editor_ui',"include/","include/editor/", "include/nodes/editor_ui", "include/nodes/"])
 logging = ''
-if env["target"] == "editor" or env["target"] == "template_debug" :
+if env["target"] == "template_debug" :
     logging = "L"
 
 sources = [

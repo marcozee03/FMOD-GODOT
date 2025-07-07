@@ -1,9 +1,9 @@
 #include "bankloader.h"
-#include "fmodengine.h"
+#include "fmod_audio_server.h"
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/engine.hpp>
 using namespace godot;
-using namespace FMODGodot;
+using namespace FmodGodot;
 void BankLoader::_bind_methods()
 {
     ClassDB::bind_method(D_METHOD("get_banks"), &BankLoader::get_banks);
@@ -26,7 +26,7 @@ void BankLoader::_enter_tree()
     }
     for (int i = 0; i < banks.size(); i++)
     {
-        FMODEngine::load_global_bank(banks[i].utf8().ptr());
+        FmodAudioServer::load_global_bank(banks[i]);
     }
 }
 void BankLoader::_exit_tree()
@@ -37,7 +37,7 @@ void BankLoader::_exit_tree()
     }
     for (int i = 0; i < banks.size(); i++)
     {
-        FMODEngine::unload_global_bank(banks[i].utf8().ptr());
+        FmodAudioServer::unload_global_bank(banks[i]);
     }
 }
 PackedStringArray BankLoader::get_banks()
