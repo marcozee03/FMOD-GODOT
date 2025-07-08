@@ -35,16 +35,18 @@ namespace FmodGodot
         {
             int count = 0;
             FMOD_GUID guid;
-            int retrieved = 128;
-            char *eventPath = new char[retrieved];
+            int size = 128;
+            int retrieved = 0;
+            char *eventPath = new char[size];
 
             MasterStrings->getStringCount(&count);
             for (int i = 0; i < count; i++)
             {
-                FMOD_RESULT result = MasterStrings->getStringInfo(i, &guid, eventPath, retrieved, &retrieved);
+                FMOD_RESULT result = MasterStrings->getStringInfo(i, &guid, eventPath, size, &retrieved);
                 if (result == FMOD_ERR_TRUNCATED)
                 {
                     delete[] eventPath;
+                    size = retrieved;
                     eventPath = new char[retrieved];
                     MasterStrings->getStringInfo(i, &guid, eventPath, retrieved, &retrieved);
                 }

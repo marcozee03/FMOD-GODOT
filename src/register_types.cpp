@@ -10,6 +10,7 @@
 #include "fmod_event_selector.h"
 #include "fmod_banks_explorer.h"
 #include <classes/engine.hpp>
+// #define TOOLS_ENABLED
 #ifdef TOOLS_ENABLED
 #include <classes/editor_plugin_registration.hpp>
 #include "fmod_editor_plugin.h"
@@ -18,30 +19,48 @@
 #include "fmod_event_inspector_plugin.h"
 #include "banks_explorer_property.h"
 #include "bank_loader_inspector_plugin.h"
+#include "fmod_bank_importer.h"
+#include "bank_inspector_plugin.h"
+#include "bank_inspector.h"
 #endif
-
+#include "fmod_bank_format_saver.h"
+#include "fmod_bank_format_loader.h"
 #include "fmod_listener.h"
 using namespace godot;
 using namespace FmodGodot;
-
+#include <godot_cpp/classes/resource_saver.hpp>
+// #include "resource_saver.hpp"
+#include <godot_cpp/classes/resource_loader.hpp>
 static FmodAudioServer *audio_server;
+FmodBankFormatSaver *bankSaver;
+FmodBankFormatLoader *bankLoader;
 void initialize_fmod_module(ModuleInitializationLevel p_level)
 {
-  if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
+  if (p_level == MODULE_INITIALIZATION_LEVEL_CORE)
   {
-    GDREGISTER_CLASS(BankLoader);
     GDREGISTER_CLASS(FmodAudioServer);
     GDREGISTER_CLASS(FmodAudioServerProxy);
-    
-    GDREGISTER_CLASS(FmodListener);
     audio_server = memnew(FmodAudioServer);
     audio_server->init();
     FmodAudioServer::singleton = audio_server;
     Engine::get_singleton()->register_singleton("FmodAudioServer", audio_server);
+  }
+  if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
+  {
+    GDREGISTER_CLASS(BankLoader);
+
+    GDREGISTER_CLASS(FmodListener);
+
     GDREGISTER_CLASS(FmodEventPathSelector);
     GDREGISTER_CLASS(EventTree);
     GDREGISTER_CLASS(BanksExplorer);
-    // GDREGISTER_INTERNAL_CLASS(EventSelector)
+    GDREGISTER_INTERNAL_CLASS(FmodBankFormatLoader);
+    GDREGISTER_INTERNAL_CLASS(FmodBankFormatSaver);
+    GDREGISTER_CLASS(FmodBank);
+    bankSaver = memnew(FmodBankFormatSaver);
+    bankLoader = memnew(FmodBankFormatLoader);
+    ResourceSaver::get_singleton()->add_resource_format_saver(bankSaver);
+    ResourceLoader::get_singleton()->add_resource_format_loader(bankLoader);
   }
 
   // ClassDB::register_class<FMODEventEmitter2D>();
@@ -56,14 +75,20 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
     GDREGISTER_INTERNAL_CLASS(EventPathSelectorProperty)
     GDREGISTER_INTERNAL_CLASS(EventGUIDSelectorProperty)
     GDREGISTER_INTERNAL_CLASS(BanksExplorerProperty)
+    GDREGISTER_INTERNAL_CLASS(FmodBankImporter);
+    GDREGISTER_CLASS(BankInspector);
+    GDREGISTER_INTERNAL_CLASS(BankInspectorPlugin);
     EditorPlugins::add_by_type<FmodEditorPlugin>();
 #endif // TOOLS_ENABLED
   }
 }
 void uninitialize_fmod_module(ModuleInitializationLevel p_level)
 {
-  if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE)
+  if (p_level == MODULE_INITIALIZATION_LEVEL_CORE)
   {
+    audio_server->finish();
+    Engine::get_singleton()->unregister_singleton("FmodAudioServer");
+    memdelete(audio_server);
     return;
   }
 }
