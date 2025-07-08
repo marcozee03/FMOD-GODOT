@@ -9,6 +9,7 @@ BankLoader = "res://addons/FmodGodot/icons/bank_icon.svg"
 BanksExplorer = "res://addons/FmodGodot/icons/bank_icon.svg"
 EventTree = "res://addons/FmodGodot/icons/event_icon.svg"
 EventSelector = "res://addons/FmodGodot/icons/event_icon.svg"
+FmodBank = "res://addons/FmodGodot/icons/bank_icon.svg"
 [libraries]
 
 windows.editor.x86_64 = "res://addons/FmodGodot/bin/libs/windows/libFmodGodot.windows.editor.x86_64.dll"

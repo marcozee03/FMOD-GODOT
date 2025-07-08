@@ -71,10 +71,6 @@ namespace FmodGodot
     }
     FmodAudioServer::~FmodAudioServer()
     {
-        // if (banks)
-        // {
-        //     delete (banks);
-        // }
     }
     FMOD_RESULT FmodAudioServer::init()
     {
@@ -197,6 +193,7 @@ namespace FmodGodot
             studio_system->update();
             OS::get_singleton()->delay_usec(20);
         }
+        studio_system->release();
     }
 
     void FmodAudioServer::unlock()
@@ -375,10 +372,10 @@ namespace FmodGodot
         load_bank(ProjectSettings::get_singleton()->get_setting("Fmod/Banks/Master_Bank_Path", "").stringify().utf8().ptr());
         load_bank(ProjectSettings::get_singleton()->get_setting("Fmod/Banks/Master_Strings_Bank_Path", "").stringify().utf8().ptr());
     }
+#define STRINGIZE(x) #x
 #pragma region server api
     FMOD_RESULT FmodAudioServer::load_bank(String path, bool loadSamples)
     {
-        cout << "AHHHH" << path.utf8() << std::endl;
         Studio::Bank *bank;
         FMOD_RESULT result = studio_system->loadBankFile(path.utf8().ptr(), FMOD_STUDIO_LOAD_BANK_NORMAL, &bank);
         if (result == FMOD_OK)
@@ -399,7 +396,7 @@ namespace FmodGodot
         }
         else
         {
-            godot::_err_print_error("load_bank", "FmodAudioServer.cpp", 103, "Couldn't load bank:" + path + " error:" + result, true, true);
+            godot::_err_print_error("load_bank", __FILE__, __LINE__, "Couldn't load bank:" + path + " error:" + result, true, true);
         }
 
         return result;
