@@ -24,7 +24,7 @@ namespace FmodGodot
     }
     EventGUIDSelectorProperty::~EventGUIDSelectorProperty()
     {
-        // eventSelector->queue_free();
+        eventSelector->queue_free();
     }
     void EventGUIDSelectorProperty::on_text_changed(String newText)
     {
