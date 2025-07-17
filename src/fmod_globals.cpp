@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <godot_cpp/variant/string.hpp>
-#include <fmod.hpp>
+#include <fmod.h>
 #include <godot_cpp/variant/vector3.hpp>
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/node3d.hpp>
@@ -13,6 +13,11 @@
 using namespace godot;
 namespace FmodGodot
 {
+
+    char* to_char_ptr(const String& str){
+        return str.utf8().ptrw();
+    }
+
     Vector4i cast_to_Vector4i(const FMOD_GUID &guid)
     {
         Vector4i v;
@@ -102,16 +107,16 @@ namespace FmodGodot
         FMOD_3D_ATTRIBUTES attributes;
         // std::cout << "GP:" << godot::String(node->get_global_position()).utf8() << std::endl;
         attributes.position = to_fmod_vector(node->get_global_position());
-        attributes.forward = to_fmod_vector(-node->get_transform().get_basis().get_column(2));
-        attributes.up = to_fmod_vector(node->get_transform().get_basis().get_column(1));
+        attributes.forward = to_fmod_vector(-node->get_global_transform().get_basis().get_column(2));
+        attributes.up = to_fmod_vector(node->get_global_transform().get_basis().get_column(1));
         return attributes;
     }
     FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody3D *rigidbody)
     {
         FMOD_3D_ATTRIBUTES attributes;
         attributes.position = to_fmod_vector(rigidbody->get_global_position());
-        attributes.forward = to_fmod_vector(-rigidbody->get_transform().get_basis().get_column(2));
-        attributes.up = to_fmod_vector(rigidbody->get_transform().get_basis().get_column(1));
+        attributes.forward = to_fmod_vector(-rigidbody->get_global_transform().get_basis().get_column(2));
+        attributes.up = to_fmod_vector(rigidbody->get_global_transform().get_basis().get_column(1));
         attributes.velocity = to_fmod_vector(rigidbody->get_linear_velocity());
         return attributes;
     }
@@ -128,16 +133,16 @@ namespace FmodGodot
     {
         FMOD_3D_ATTRIBUTES attributes;
         attributes.position = to_fmod_vector(node->get_global_position());
-        attributes.forward = to_fmod_vector(node->get_transform().columns[0]);
-        attributes.up = to_fmod_vector(node->get_transform().columns[1]);
+        attributes.forward = to_fmod_vector(node->get_global_transform().columns[0]);
+        attributes.up = to_fmod_vector(node->get_global_transform().columns[1]);
         return attributes;
     }
     FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody2D *rigidbody)
     {
         FMOD_3D_ATTRIBUTES attributes;
         attributes.position = to_fmod_vector(rigidbody->get_global_position());
-        attributes.forward = to_fmod_vector(rigidbody->get_transform().columns[0]);
-        attributes.up = to_fmod_vector(rigidbody->get_transform().columns[1]);
+        attributes.forward = to_fmod_vector(rigidbody->get_global_transform().columns[0]);
+        attributes.up = to_fmod_vector(rigidbody->get_global_transform().columns[1]);
         attributes.velocity = to_fmod_vector(rigidbody->get_linear_velocity());
         return attributes;
     }
