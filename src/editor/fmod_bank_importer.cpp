@@ -58,15 +58,11 @@ int32_t FmodGodot::FmodBankImporter::_get_import_order() const
 
 TypedArray<Dictionary> FmodGodot::FmodBankImporter::_get_import_options(const String &p_path, int32_t p_preset_index) const
 {
-    // Dictionary option;
-    // option["name"] = "platform";
-    // option["default_value"] = "desktop";
     return {};
 }
 
 Error FmodGodot::FmodBankImporter::_import(const String &p_source_file, const String &p_save_path, const Dictionary &p_options, const TypedArray<String> &p_platform_variants, const TypedArray<String> &p_gen_files) const
 {
-    Ref<FileAccess> file = FileAccess::open(p_source_file, FileAccess::ModeFlags::READ);
     Ref<FmodBank> bank = memnew(FmodBank);
     bank->set_path(p_source_file);
     return ResourceSaver::get_singleton()->save(bank, String(".").join({p_save_path, _get_save_extension()}));

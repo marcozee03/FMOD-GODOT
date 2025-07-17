@@ -1,6 +1,5 @@
 #include "register_types.h"
-#include "bankloader.h"
-#include "fmod_audio_server_proxy.h"
+#include "fmod_bank_loader.h"
 // #include "fmodeventemitter2d.h"
 #include "fmod_audio_server.h"
 #include <gdextension_interface.h>
@@ -10,6 +9,17 @@
 #include "fmod_event_selector.h"
 #include "fmod_banks_explorer.h"
 #include <classes/engine.hpp>
+#include "fmod_event_emitter_2d.h"
+#include "fmod_event_emitter_3d.h"
+#include <godot_cpp/classes/resource_saver.hpp>
+// #include "resource_saver.hpp"
+#include <godot_cpp/classes/resource_loader.hpp>
+#include "fmod_string_names.h"
+#include <classes/project_settings.hpp>
+#include "fmod_bank_format_saver.h"
+#include "fmod_bank_format_loader.h"
+#include "fmod_listener_2d.h"
+#include "fmod_listener_3d.h"
 // #define TOOLS_ENABLED
 #ifdef TOOLS_ENABLED
 #include <classes/editor_plugin_registration.hpp>
@@ -17,50 +27,116 @@
 #include "fmod_event_path_selector_property.h"
 #include "fmod_event_guid_selector_property.h"
 #include "fmod_event_inspector_plugin.h"
-#include "banks_explorer_property.h"
-#include "bank_loader_inspector_plugin.h"
 #include "fmod_bank_importer.h"
 #include "bank_inspector_plugin.h"
 #include "bank_inspector.h"
+#include <classes/editor_settings.hpp>
+#include <classes/editor_interface.hpp>
 #endif
-#include "fmod_bank_format_saver.h"
-#include "fmod_bank_format_loader.h"
-#include "fmod_listener.h"
+
 using namespace godot;
 using namespace FmodGodot;
-#include <godot_cpp/classes/resource_saver.hpp>
-// #include "resource_saver.hpp"
-#include <godot_cpp/classes/resource_loader.hpp>
+
 static FmodAudioServer *audio_server;
 FmodBankFormatSaver *bankSaver;
 FmodBankFormatLoader *bankLoader;
+
+#define ADD_PROJECT_SETTING(setting_str, bool_basic, bool_internal, bool_restart_if_changed, default_value, variant_type, property_hint, hint_string, dictionary) \
+  if (!godot::ProjectSettings::get_singleton()->has_setting(setting_str))                                                                                         \
+  {                                                                                                                                                               \
+    godot::ProjectSettings::get_singleton()->set_setting(setting_str, default_value);                                                                             \
+  }                                                                                                                                                               \
+  godot::ProjectSettings::get_singleton()->set_initial_value(setting_str, default_value);                                                                         \
+  godot::ProjectSettings::get_singleton()->set_as_basic(setting_str, bool_basic);                                                                                 \
+  godot::ProjectSettings::get_singleton()->set_as_internal(setting_str, bool_internal);                                                                           \
+  godot::ProjectSettings::get_singleton()->set_restart_if_changed(setting_str, bool_restart_if_changed);                                                          \
+  dictionary = godot::Dictionary();                                                                                                                               \
+  dictionary.get_or_add("name", setting_str);                                                                                                                     \
+  dictionary.get_or_add("type", variant_type);                                                                                                                    \
+  dictionary.get_or_add("hint", property_hint);                                                                                                                   \
+  dictionary.get_or_add("hint_string", hint_string);                                                                                                              \
+  godot::ProjectSettings::get_singleton()->add_property_info(dictionary)
+
+#define ADD_EDITOR_SETTING(setting_str, default_value, variant_type, property_hint, hint_string, dictionary)            \
+  if (!godot::EditorInterface::get_singleton()->get_editor_settings()->has_setting(setting_str))                        \
+  {                                                                                                                     \
+    godot::EditorInterface::get_singleton()->get_editor_settings()->set_setting(setting_str, default_value);            \
+  }                                                                                                                     \
+  godot::EditorInterface::get_singleton()->get_editor_settings()->set_initial_value(setting_str, default_value, false); \
+  dictionary = godot::Dictionary();                                                                                     \
+  dictionary.get_or_add("name", setting_str);                                                                           \
+  dictionary.get_or_add("type", variant_type);                                                                          \
+  dictionary.get_or_add("hint", property_hint);                                                                         \
+  dictionary.get_or_add("hint_string", hint_string);                                                                    \
+  godot::EditorInterface::get_singleton()->get_editor_settings()->add_property_info(dictionary)
+namespace FmodGodot
+{
+  void loadSettings()
+  {
+    godot::Dictionary propinfo = Dictionary();
+    // ADD_EDITOR_SETTING("Fmod/Debug/logging_level", true, false, true, 1, Variant::Type::INT, PROPERTY_HINT_ENUM, "NONE:0,ERROR:1,WARNING:2,LOG:4", propinfo);
+    ADD_PROJECT_SETTING(LIVE_UPDATE, true, false, true, 0, Variant::Type::INT, PROPERTY_HINT_ENUM, "Disabled:0, Enabled:1, Development Build Only:2", propinfo);
+    ADD_PROJECT_SETTING(LIVE_UPDATE_PORT, true, false, false, 9264, Variant::Type::INT, PROPERTY_HINT_RANGE, "0,65536", propinfo);
+    ADD_PROJECT_SETTING(SAMPLE_RATE, true, false, false, 48000, Variant::Type::INT, PROPERTY_HINT_RANGE, "8000,192000", propinfo);
+    ADD_PROJECT_SETTING(REAL_COUNT, true, false, false, 64, Variant::Type::INT, PROPERTY_HINT_NONE, "", propinfo);
+    ADD_PROJECT_SETTING(VIRTUAL_COUNT, true, false, false, 1024, Variant::Type::INT, PROPERTY_HINT_RANGE, "0,4095", propinfo);
+    ADD_PROJECT_SETTING(BUFFER_LENGTH, true, false, false, 1024, Variant::Type::INT, PROPERTY_HINT_NONE, "", propinfo);
+    ADD_PROJECT_SETTING(BUFFER_COUNT, true, false, false, 4, Variant::Type::INT, PROPERTY_HINT_NONE, "", propinfo);
+    ADD_PROJECT_SETTING(DOPPLER_SCALE, true, false, false, 1, Variant::Type::FLOAT, PROPERTY_HINT_NONE, "", propinfo);
+    ADD_PROJECT_SETTING(DISTANCE_FACTOR, true, false, false, 1, Variant::Type::FLOAT, PROPERTY_HINT_NONE, "", propinfo);
+    ADD_PROJECT_SETTING(ROLLOFF_SCALE, true, false, false, 1, Variant::Type::FLOAT, PROPERTY_HINT_NONE, "", propinfo);
+
+    ADD_PROJECT_SETTING(SOURCE_TYPE, true, false, false, 1, Variant::Type::INT, PROPERTY_HINT_ENUM, "FMOD Studio Project:0,Single Platform Build:1, Multiple Platform Build:2", propinfo);
+    ADD_PROJECT_SETTING(FMOD_STUDIO_PATH, true, false, false, "", Variant::Type::STRING, PROPERTY_HINT_FILE, "", propinfo);
+    ADD_PROJECT_SETTING(FMOD_PROJECT_PATH, true, false, false, "", Variant::Type::STRING, PROPERTY_HINT_NONE, "", propinfo);
+    ADD_PROJECT_SETTING(BANK_DIRECTORY, true, false, false, "res://banks/", Variant::Type::STRING, PROPERTY_HINT_DIR, "", propinfo);
+    ADD_PROJECT_SETTING(LOAD_BANKS, true, false, false, 0, Variant::Type::INT, PROPERTY_HINT_ENUM, "None:0,Specified:1,All:2", propinfo);
+    ADD_PROJECT_SETTING(SPECIFIED_BANKS, true, false, false, {}, Variant::Type::ARRAY, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":FmodBank", propinfo);
+    ADD_PROJECT_SETTING(LOAD_SAMPLE_DATA, true, false, false, false, Variant::Type::BOOL, PROPERTY_HINT_NONE, "", propinfo);
+    ADD_PROJECT_SETTING(ENCRYPTION_KEY, true, false, false, "", Variant::Type::STRING, PROPERTY_HINT_NONE, "", propinfo);
+
+    ADD_PROJECT_SETTING(LOGGING_LEVEL, true, false, false, 1, Variant::Type::INT, PROPERTY_HINT_ENUM, "NONE:0,ERROR:1,WARNING:2,LOG:4", propinfo);
+    ADD_PROJECT_SETTING(DEBUG_TYPE, true, false, false, 0, Variant::Type::INT, PROPERTY_HINT_FLAGS, "MEMORY:256,FILE:512,CODEC:1024,TRACE:2048", propinfo);
+    ADD_PROJECT_SETTING(DEBUG_DISPLAY, true, false, false, 0, Variant::Type::INT, PROPERTY_HINT_FLAGS, "TIMESTAMPS:65536,LINENUMBERS:131072,THREAD:262144", propinfo);
+    // #ifdef TOOLS_ENABLED
+    //     ADD_EDITOR_SETTING(LOGGING_LEVEL, 1, Variant::Type::INT, PROPERTY_HINT_ENUM, "NONE:0,ERROR:1,WARNING:2,LOG:4", propinfo);
+    //     ADD_EDITOR_SETTING(DEBUG_TYPE, 0, Variant::Type::INT, PROPERTY_HINT_FLAGS, "MEMORY:256,FILE:512,CODEC:1024,TRACE:2048", propinfo);
+    //     ADD_EDITOR_SETTING(DEBUG_DISPLAY, 0, Variant::Type::INT, PROPERTY_HINT_FLAGS, "TIMESTAMPS:65536,LINENUMBERS:131072,THREAD:262144", propinfo);
+    //     ADD_EDITOR_SETTING(LIVE_UPDATE, 0, Variant::Type::INT, PROPERTY_HINT_ENUM, "Disabled:0, Enabled:1", propinfo);
+    //     ADD_EDITOR_SETTING(LIVE_UPDATE_PORT, 9265, Variant::Type::INT, PROPERTY_HINT_RANGE, "0,65536", propinfo);
+    //     ADD_EDITOR_SETTING(LOAD_BANKS, 2, Variant::Type::INT, PROPERTY_HINT_ENUM, "None:0,Specified:1,All:2", propinfo);
+    // #endif
+  }
+}
 void initialize_fmod_module(ModuleInitializationLevel p_level)
 {
-  if (p_level == MODULE_INITIALIZATION_LEVEL_CORE)
+  if (p_level == MODULE_INITIALIZATION_LEVEL_SERVERS)
   {
+    loadSettings();
     GDREGISTER_CLASS(FmodAudioServer);
-    GDREGISTER_CLASS(FmodAudioServerProxy);
     audio_server = memnew(FmodAudioServer);
-    audio_server->init();
     FmodAudioServer::singleton = audio_server;
+    audio_server->init();
     Engine::get_singleton()->register_singleton("FmodAudioServer", audio_server);
   }
   if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
   {
-    GDREGISTER_CLASS(BankLoader);
 
-    GDREGISTER_CLASS(FmodListener);
-
+    GDREGISTER_CLASS(FmodListener2D);
+    GDREGISTER_CLASS(FmodListener3D);
+    GDREGISTER_ABSTRACT_CLASS(FmodBank);
     GDREGISTER_CLASS(FmodEventPathSelector);
     GDREGISTER_CLASS(EventTree);
     GDREGISTER_CLASS(BanksExplorer);
     GDREGISTER_INTERNAL_CLASS(FmodBankFormatLoader);
     GDREGISTER_INTERNAL_CLASS(FmodBankFormatSaver);
-    GDREGISTER_CLASS(FmodBank);
+    GDREGISTER_CLASS(FmodEventEmitter2D);
+    GDREGISTER_CLASS(FmodEventEmitter3D);
     bankSaver = memnew(FmodBankFormatSaver);
     bankLoader = memnew(FmodBankFormatLoader);
     ResourceSaver::get_singleton()->add_resource_format_saver(bankSaver);
     ResourceLoader::get_singleton()->add_resource_format_loader(bankLoader);
+    GDREGISTER_CLASS(FmodBankLoader);
   }
 
   // ClassDB::register_class<FMODEventEmitter2D>();
@@ -68,13 +144,10 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
   if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
   {
 #ifdef TOOLS_ENABLED
-    // GDREGISTER_CLASS(FMODEDITOR)
     GDREGISTER_INTERNAL_CLASS(FmodEditorPlugin)
     GDREGISTER_INTERNAL_CLASS(EventInspector)
-    GDREGISTER_INTERNAL_CLASS(BankLoaderInspector)
     GDREGISTER_INTERNAL_CLASS(EventPathSelectorProperty)
     GDREGISTER_INTERNAL_CLASS(EventGUIDSelectorProperty)
-    GDREGISTER_INTERNAL_CLASS(BanksExplorerProperty)
     GDREGISTER_INTERNAL_CLASS(FmodBankImporter);
     GDREGISTER_CLASS(BankInspector);
     GDREGISTER_INTERNAL_CLASS(BankInspectorPlugin);
@@ -84,7 +157,7 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
 }
 void uninitialize_fmod_module(ModuleInitializationLevel p_level)
 {
-  if (p_level == MODULE_INITIALIZATION_LEVEL_CORE)
+  if (p_level == MODULE_INITIALIZATION_LEVEL_SERVERS)
   {
     audio_server->finish();
     Engine::get_singleton()->unregister_singleton("FmodAudioServer");

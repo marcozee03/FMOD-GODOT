@@ -1,7 +1,10 @@
-// #define TOOLS_ENABLED
 #ifdef TOOLS_ENABLED
 #include "fmod_editor_plugin.h"
 #include "fmod_bank_importer.h"
+#include <classes/project_settings.hpp>
+#include <classes/editor_interface.hpp>
+#include <classes/editor_settings.hpp>
+#include "fmod_string_names.h"
 using namespace godot;
 namespace FmodGodot
 {
@@ -13,8 +16,6 @@ namespace FmodGodot
     {
         eventInspector = memnew(EventInspector);
         add_inspector_plugin(eventInspector);
-        bankLoaderInspector = memnew(BankLoaderInspector);
-        add_inspector_plugin(bankLoaderInspector);
         bankInspector = memnew(BankInspectorPlugin);
         add_inspector_plugin(bankInspector);
         bankImporter = memnew(FmodBankImporter);
@@ -23,17 +24,11 @@ namespace FmodGodot
     FmodEditorPlugin::~FmodEditorPlugin()
     {
         remove_inspector_plugin(eventInspector);
-        remove_inspector_plugin(bankLoaderInspector);
         remove_inspector_plugin(bankInspector);
         remove_import_plugin(bankImporter);
         // memdelete(eventInspector);
         // memdelete(bankLoaderInspector);
     }
-    void FmodEditorPlugin::_enter_tree()
-    {
-    }
-    void FmodEditorPlugin::_exit_tree()
-    {
-    }
+
 }
 #endif

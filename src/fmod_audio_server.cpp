@@ -8,6 +8,15 @@
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/os.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
+#include <classes/dir_access.hpp>
+#include <classes/os.hpp>
+#include "fmod_string_names.h"
+#include "classes/os.hpp"
+#include "fmod_editor_interface.h"
+#ifdef TOOLS_ENABLED
+#include <classes/editor_interface.hpp>
+#include <classes/editor_settings.hpp>
+#endif
 using namespace std;
 using namespace godot;
 namespace FmodGodot
@@ -66,43 +75,127 @@ namespace FmodGodot
     {
         studio_system = nullptr;
         core_system = nullptr;
-        Master = nullptr;
-        Masterstrings = nullptr;
+        ProjectSettings* ps = ProjectSettings::get_singleton();
     }
     FmodAudioServer::~FmodAudioServer()
     {
     }
+    namespace
+    {
+        void get_live_update_settings(FmodAudioServer::InitSettings &settings)
+        {
+            // #ifdef TOOLS_ENABLED
+            //             Ref<EditorSettings> es = EditorInterface::get_singleton()->get_editor_settings();
+            //             settings.live_update = static_cast<FmodAudioServer::LiveUpdate>(
+            //                 static_cast<int>(es->get_setting(LIVE_UPDATE)));
+            //             settings.live_update_port = es->get_setting(LIVE_UPDATE_PORT);
+            // #else
+            auto pj = ProjectSettings::get_singleton();
+            settings.live_update = static_cast<FmodAudioServer::LiveUpdate>(
+                static_cast<int>(pj->get_setting_with_override(LIVE_UPDATE)));
+            settings.live_update_port = pj->get_setting_with_override(LIVE_UPDATE_PORT);
+            // #endif // TOOLS_ENABLED
+        }
+        void get_debug_settings(FmodAudioServer::InitSettings &settings)
+        {
+            // #ifdef TOOLS_ENABLED
+            //             Ref<EditorSettings> es = EditorInterface::get_singleton()->get_editor_settings();
+            //             settings.logging_level = es->get_setting(LOGGING_LEVEL);
+            //             settings.debug_type = es->get_setting(DEBUG_TYPE);
+            //             settings.debug_display = es->get_setting(DEBUG_DISPLAY);
+            // #else
+            auto pj = ProjectSettings::get_singleton();
+            settings.logging_level = pj->get_setting_with_override(LOGGING_LEVEL);
+            settings.debug_type = pj->get_setting_with_override(DEBUG_TYPE);
+            settings.debug_display = pj->get_setting_with_override(DEBUG_DISPLAY);
+            // #endif // TOOLS_ENABLED
+        }
+
+        FmodAudioServer::InitSettings get_settings()
+        {
+            FmodAudioServer::InitSettings settings;
+            auto pj = ProjectSettings::get_singleton();
+            settings.sample_rate = pj->get_setting_with_override(SAMPLE_RATE);
+            settings.dspbuffer_length = pj->get_setting_with_override(BUFFER_LENGTH);
+            settings.dspbuffer_count = pj->get_setting_with_override(BUFFER_COUNT);
+            settings.software_channels = pj->get_setting_with_override(REAL_COUNT);
+            settings.virtual_channels = pj->get_setting_with_override(VIRTUAL_COUNT);
+            settings.encryption_key = pj->get_setting_with_override(ENCRYPTION_KEY);
+            settings.rolloff_scale = pj->get_setting_with_override(ROLLOFF_SCALE);
+            settings.doppler_scale = pj->get_setting_with_override(DOPPLER_SCALE);
+            settings.distance_factor = pj->get_setting_with_override(DISTANCE_FACTOR);
+            get_live_update_settings(settings);
+            get_debug_settings(settings);
+            return settings;
+        }
+    }
+
     FMOD_RESULT FmodAudioServer::init()
     {
         mutex.instantiate();
         thread.instantiate();
-        FMOD_RESULT result;
-        result = FMOD::Studio::System::create(&studio_system);
-        if (result != FMOD_OK)
+        InitSettings settings = get_settings();
+        
+        FMOD_STUDIO_INITFLAGS studio_init = FMOD_STUDIO_INIT_NORMAL;
+        switch (settings.live_update)
         {
-            std::cout << "\ncreate" << FMOD_ErrorString(result);
+        case DISABLED: // disabled
+            studio_init = FMOD_STUDIO_INIT_NORMAL;
+            break;
+        case ENABLED:
+            studio_init = FMOD_STUDIO_INIT_LIVEUPDATE;
+        case DEV_ONLY: // dev
+#if defined(TOOLS_ENABLED) || defined(DEBUG)
+            studio_init = FMOD_STUDIO_INIT_LIVEUPDATE;
+#else
+            studio_init = FMOD_STUDIO_INIT_NORMAL;
+#endif
+            /* code */
+            break;
+
+        default:
+            break;
         }
-        result = studio_system->initialize(ProjectSettings::get_singleton()->get_setting("Fmod/General/channel_count"), FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0);
+        FMOD_RESULT result;
+        result = FMOD_Debug_Initialize(settings.logging_level | settings.debug_type | settings.debug_display, FMOD_DEBUG_MODE_TTY, 0, nullptr);
+
+        result = FMOD_Studio_System_Create(&studio_system, FMOD_VERSION);
+        result = FMOD_Studio_System_GetCoreSystem(studio_system, &core_system);
+
+        // Core Settings
+        FMOD_ADVANCEDSETTINGS fmod_settings;
+        fmod_settings.cbSize = sizeof(FMOD_ADVANCEDSETTINGS);
+        FMOD_System_GetAdvancedSettings(core_system, &fmod_settings);
+        fmod_settings.profilePort = settings.live_update_port;
+        FMOD_System_SetAdvancedSettings(core_system, &fmod_settings);
+        FMOD_System_SetSoftwareFormat(core_system, settings.sample_rate, FMOD_SPEAKERMODE_DEFAULT, 0);
+        FMOD_System_SetDSPBufferSize(core_system, settings.dspbuffer_length, settings.dspbuffer_count);
+        FMOD_System_SetSoftwareChannels(core_system, settings.software_channels);
+        FMOD_System_Set3DSettings(core_system, settings.doppler_scale, settings.distance_factor, settings.rolloff_scale);
+        FMOD_System_SetFileSystem(core_system, open_callback, close_callback, read_callback, seek_callback, NULL, NULL, 2048);
+        // studio settings
+        FMOD_STUDIO_ADVANCEDSETTINGS studio_settings;
+        studio_settings.cbsize = sizeof(FMOD_STUDIO_ADVANCEDSETTINGS);
+        FMOD_Studio_System_GetAdvancedSettings(studio_system, &studio_settings);
+        studio_settings.cbsize = sizeof(FMOD_STUDIO_ADVANCEDSETTINGS);
+        studio_settings.encryptionkey = settings.encryption_key.utf8();
+        FMOD_Studio_System_SetAdvancedSettings(studio_system, &studio_settings);
+
+        result = FMOD_Studio_System_Initialize(studio_system, settings.virtual_channels, studio_init, FMOD_INIT_NORMAL, 0);
         if (result != FMOD_OK)
         {
             std::cout << "\ninit" << FMOD_ErrorString(result);
         }
-        result = studio_system->getCoreSystem(&core_system);
-        if (result != FMOD_OK)
-        {
-            std::cout << "\nget core" << FMOD_ErrorString(result);
-        }
-        // result = core->setDSPBufferSize(ProjectSettings::get_singleton()->get_setting("Fmod/DSP/dsp_buffer_size", 512), ProjectSettings::get_singleton()->get_setting("Fmod/DSP/dsp_buffer_count", 4));
+
         if (result != FMOD_OK)
         {
             std::cout << "\ndsp" << FMOD_ErrorString(result);
         }
         initialized = true;
         thread->start(callable_mp(this, &FmodAudioServer::thread_func), Thread::Priority::PRIORITY_NORMAL);
-        core_system->set3DSettings(1, 1, 1);
-        core_system->setFileSystem(open_callback, close_callback, read_callback, seek_callback, NULL, NULL, 2048);
-        LoadMasterBanks();
-
+        load_start_up_banks();
+        FmodEditorInterface interface;
+        interface.refresh();
         return result;
     }
     void FmodAudioServer::_physics_process()
@@ -110,7 +203,7 @@ namespace FmodGodot
         lock();
         for (int i = 0; i < instances.size(); i++)
         {
-            if (!instances[i].instance->isValid())
+            if (!FMOD_Studio_EventInstance_IsValid(instances[i].instance))
             {
                 instances.write[i] = instances[instances.size() - 1];
                 instances.remove_at(instances.size() - 1);
@@ -122,20 +215,21 @@ namespace FmodGodot
             {
             case Attachment::NODE2D:
             {
-                instances[i].instance->get3DAttributes(&attributes);
+                FMOD_Studio_EventInstance_Get3DAttributes(instances[i].instance, &attributes);
                 Vector2 pos = instances[i].node2D->get_global_position();
                 velocity = (Vector3(pos.x, pos.y, 0) - instances[i].lastFramePosition) / instances[i].node2D->get_physics_process_delta_time();
                 attributes.velocity = to_fmod_vector(velocity);
                 instances.write[i].lastFramePosition = Vector3(pos.x, pos.y, 0);
+                FMOD_Studio_EventInstance_Set3DAttributes(instances[i].instance, &attributes);
                 break;
             }
             case Attachment::NODE3D:
             {
-                instances[i].instance->get3DAttributes(&attributes);
+                FMOD_Studio_EventInstance_Get3DAttributes(instances[i].instance, &attributes);
                 velocity = (instances[i].node3D->get_global_position() - instances[i].lastFramePosition) / instances[i].node3D->get_physics_process_delta_time();
                 attributes.velocity = to_fmod_vector(velocity);
                 instances.write[i].lastFramePosition = instances[i].node3D->get_global_position();
-                instances[i].instance->set3DAttributes(&attributes);
+                FMOD_Studio_EventInstance_Set3DAttributes(instances[i].instance, &attributes);
                 break;
             }
             default:
@@ -160,7 +254,7 @@ namespace FmodGodot
             lock();
             for (int i = 0; i < instances.size(); i++)
             {
-                if (!instances[i].instance->isValid())
+                if (!FMOD_Studio_EventInstance_IsValid(instances[i].instance))
                 {
                     instances.write[i] = instances[instances.size() - 1];
                     instances.remove_at(instances.size() - 1);
@@ -170,19 +264,19 @@ namespace FmodGodot
                 {
                 case NODE2D:
                     attributes = to_3d_attributes(instances[i].node2D);
-                    instances[i].instance->set3DAttributes(&attributes);
+                    FMOD_Studio_EventInstance_Set3DAttributes(instances[i].instance, &attributes);
                     break;
                 case NODE3D:
                     attributes = to_3d_attributes(instances[i].node3D);
-                    instances[i].instance->set3DAttributes(&attributes);
+                    FMOD_Studio_EventInstance_Set3DAttributes(instances[i].instance, &attributes);
                     break;
                 case RIGIDBODY2D:
                     attributes = to_3d_attributes(instances[i].rigidBody2D);
-                    instances[i].instance->set3DAttributes(&attributes);
+                    FMOD_Studio_EventInstance_Set3DAttributes(instances[i].instance, &attributes);
                     break;
                 case RIGIDBODY3D:
                     attributes = to_3d_attributes(instances[i].rigidBody3D);
-                    instances[i].instance->set3DAttributes(&attributes);
+                    FMOD_Studio_EventInstance_Set3DAttributes(instances[i].instance, &attributes);
                     break;
 
                 default:
@@ -190,10 +284,23 @@ namespace FmodGodot
                 }
             }
             unlock();
-            studio_system->update();
+            FMOD_Studio_System_Update(studio_system);
             OS::get_singleton()->delay_usec(20);
         }
-        studio_system->release();
+        FMOD_Studio_System_Release(studio_system);
+    }
+
+    int FmodAudioServer::find_instance(FMOD_STUDIO_EVENTINSTANCE *p_event)
+    {
+        int instance_index = -1;
+        for (int i = 0; i < instances.size(); i++)
+        {
+            if (instances[i].instance == p_event)
+            {
+                instance_index = i;
+            }
+        }
+        return instance_index;
     }
 
     void FmodAudioServer::unlock()
@@ -316,9 +423,22 @@ namespace FmodGodot
         // BIND_ENUM_CONSTANT(FMOD_ERR_RECORD_DISCONNECTED);
         // BIND_ENUM_CONSTANT(FMOD_ERR_TOOMANYSAMPLES);
         // BIND_ENUM_CONSTANT(FMOD_RESULT_FORCEINT);
+
+        // BIND_ENUM_CONSTANT(LEVEL_NONE)
+        // BIND_ENUM_CONSTANT(LEVEL_ERROR)
+        // BIND_ENUM_CONSTANT(LEVEL_WARNING)
+        // BIND_ENUM_CONSTANT(LEVEL_LOG)
+        // BIND_ENUM_CONSTANT(TYPE_MEMORY)
+        // BIND_ENUM_CONSTANT(TYPE_FILE)
+        // BIND_ENUM_CONSTANT(TYPE_CODEC)
+        // BIND_ENUM_CONSTANT(TYPE_TRACE)
+        // BIND_ENUM_CONSTANT(DISPLAY_TIMESTAMPS)
+        // BIND_ENUM_CONSTANT(DISPLAY_LINENUMBERS)
+        // BIND_ENUM_CONSTANT(DISPLAY_THREAD)
+
         ClassDB::bind_method(D_METHOD("unload_banks"), &FmodAudioServer::unload_banks);
 
-        BIND_BOOL_PROPERTY(muted, FmodAudioServer);
+        BIND_BOOL_PROPERTY(muted);
         ClassDB::bind_method(D_METHOD("play_one_shot_by_id", "guid", "position"), &FmodAudioServer::play_one_shot_by_id, DEFVAL(Vector3(0, 0, 0)));
         ClassDB::bind_static_method("FmodAudioServer", D_METHOD("get_singleton"), &FmodAudioServer::get_singleton);
         ClassDB::bind_method(D_METHOD("play_one_shot_by_path", "path", "position"), &FmodAudioServer::play_one_shot_by_path, DEFVAL(Vector3(0, 0, 0)));
@@ -333,16 +453,16 @@ namespace FmodGodot
         ClassDB::bind_method(D_METHOD("play_one_shot_rigid_2d_attached_by_path", "path", "rigid_body2d"), &FmodAudioServer::play_one_shot_rigid_body2d_attached_by_path);
         // bool any_sample_data_loading();
         // ClassDB::bind_method(D_METHOD("attach_instance_to_node3d", "node", "instance", "non_rigid_body_velocity"), &FmodAudioServer::attach_instance_to_node3d);
-        // void attach_instance_to_node3D(Node3D * p_node, Studio::EventInstance * p_instance, bool p_non_rigid_body_velocity = false);
-        // void attach_instance_to_rigid_body_3D(RigidBody3D * p_node, Studio::EventInstance * p_instance);
-        // void attach_instance_to_node2D(Node2D * p_node, Studio::EventInstance * p_instance, bool p_non_rigid_body_velocity = false);
-        // void attach_instance_to_rigid_body_2D(RigidBody2D * p_node, Studio::EventInstance * p_instance);
+        // void attach_instance_to_node3D(Node3D * p_node, FMOD_STUDIO_EVENTINSTANCE * p_instance, bool p_non_rigid_body_velocity = false);
+        // void attach_instance_to_rigid_body_3D(RigidBody3D * p_node, FMOD_STUDIO_EVENTINSTANCE * p_instance);
+        // void attach_instance_to_node2D(Node2D * p_node, FMOD_STUDIO_EVENTINSTANCE * p_instance, bool p_non_rigid_body_velocity = false);
+        // void attach_instance_to_rigid_body_2D(RigidBody2D * p_node, FMOD_STUDIO_EVENTINSTANCE * p_instance);
 
-        // void detach_instance_from_node(Studio::EventInstance * p_instance);
+        // void detach_instance_from_node(FMOD_STUDIO_EVENTINSTANCE * p_instance);
 
         // Vector4i path_to_guid(String p_path);
-        // Studio::EventDescription *get_event_description(String p_path);
-        // Studio::EventDescription *get_event_description(Vector4i p_guid);
+        // FMOD_STUDIO_EVENTDESCRIPTION *get_event_description(String p_path);
+        // FMOD_STUDIO_EVENTDESCRIPTION *get_event_description(Vector4i p_guid);
         // void pause_all_events(bool p_pause);
 
         // bool is_muted();
@@ -367,39 +487,76 @@ namespace FmodGodot
     {
         return singleton;
     }
-    void FmodAudioServer::LoadMasterBanks()
+    void FmodAudioServer::load_start_up_banks()
     {
-        load_bank(ProjectSettings::get_singleton()->get_setting("Fmod/Banks/Master_Bank_Path", "").stringify().utf8().ptr());
-        load_bank(ProjectSettings::get_singleton()->get_setting("Fmod/Banks/Master_Strings_Bank_Path", "").stringify().utf8().ptr());
+
+        Array arr;
+        // #ifdef TOOLS_ENABLED
+        //         int what = EditorInterface::get_singleton()->get_editor_settings()->get_setting(LOAD_BANKS);
+        //         arr = EditorInterface::get_singleton()->get_editor_settings()->get_setting(SPECIFIED_BANKS);
+        // #else
+        int what = ProjectSettings::get_singleton()->get_setting_with_override(LOAD_BANKS);
+        arr = ProjectSettings::get_singleton()->get_setting_with_override(SPECIFIED_BANKS);
+        // #endif
+        switch (what)
+        {
+        case 0: // none
+        {
+            return;
+        }
+        case 1: // specified should be loaded by project settings?
+            break;
+        case 2: // all
+        {
+            auto dir = DirAccess::open(ProjectSettings::get_singleton()->get_setting_with_override(BANK_DIRECTORY));
+            for (auto file : dir->get_files())
+            {
+                load_bank_by_file(ProjectSettings::get_singleton()->get_setting_with_override(BANK_DIRECTORY).stringify() + "/" + file);
+            }
+            break;
+        }
+        default:
+            break;
+        }
     }
-#define STRINGIZE(x) #x
+
 #pragma region server api
-    FMOD_RESULT FmodAudioServer::load_bank(String path, bool loadSamples)
+    FMOD_RESULT FmodAudioServer::load_bank_by_file(const String &path, bool loadSamples)
     {
-        Studio::Bank *bank;
-        FMOD_RESULT result = studio_system->loadBankFile(path.utf8().ptr(), FMOD_STUDIO_LOAD_BANK_NORMAL, &bank);
+        FMOD_STUDIO_BANK *bank;
+        FMOD_RESULT result = FMOD_Studio_System_LoadBankFile(studio_system, path.utf8().ptr(), FMOD_STUDIO_LOAD_BANK_NORMAL, &bank);
         if (result == FMOD_OK)
         {
-            banks.insert(path, 1);
             if (loadSamples)
             {
-                bank->loadSampleData();
+                FMOD_Studio_Bank_LoadSampleData(bank);
             }
         }
-        else if (result == FMOD_ERR_EVENT_ALREADY_LOADED)
+        else if (result == FMOD_ERR_EVENT_ALREADY_LOADED && loadSamples)
         {
-            banks[path] = banks[path] + 1;
-            if (loadSamples)
-            {
-                bank->loadSampleData();
-            }
+            FMOD_Studio_Bank_LoadSampleData(bank);
         }
         else
         {
-            godot::_err_print_error("load_bank", __FILE__, __LINE__, "Couldn't load bank:" + path + " error:" + result, true, true);
+            godot::_err_print_error("load_bank", __FILE__, __LINE__, "Couldn't load bank:" + path + " error:" + FMOD_ErrorString(result), true, true);
         }
 
         return result;
+    }
+
+    FMOD_RESULT FmodAudioServer::load_bank(const String &p_name, bool loadSamples)
+    {
+
+        if (p_name.begins_with("bank:/"))
+        {
+
+            return load_bank_by_file(ProjectSettings::get_singleton()->get_setting_with_override(BANK_DIRECTORY).stringify() + p_name.substr(6));
+        }
+        else if (p_name.ends_with(".bank"))
+        {
+            return load_bank_by_file(p_name, loadSamples);
+        }
+        return FMOD_ERR_FILE_NOTFOUND;
     }
 
     // FMOD_RESULT FmodAudioServer::load_bank(FmodBank p_bank, bool loadSamples)
@@ -432,299 +589,163 @@ namespace FmodGodot
     //     return result;
     // }
 
-    void FmodAudioServer::unload_bank(String path)
-    {
-        lock();
-        if (!studio_system->isValid())
-        {
-            return;
-        }
-        banks[path] = banks[path] - 1;
-        if (banks[path] <= 0)
-        {
-            banks.erase(path);
-            Studio::Bank *bank;
-            studio_system->getBank(path.utf8().ptr(), &bank);
-            bank->unload();
-        }
-        unlock();
-    }
     void FmodAudioServer::unload_banks()
     {
         lock();
-        if (!studio_system->isValid())
+        if (!FMOD_Studio_System_IsValid(studio_system))
         {
             unlock();
             return;
         }
-        studio_system->unloadAll();
+        FMOD_Studio_System_UnloadAll(studio_system);
         unlock();
     }
-    void FmodAudioServer::get_core_ref(System **core)
+    void FmodAudioServer::get_core_ref(FMOD_SYSTEM **core)
     {
         *core = this->core_system;
     }
-    void FmodAudioServer::get_studio_ref(Studio::System **studio)
+    void FmodAudioServer::get_studio_ref(FMOD_STUDIO_SYSTEM **studio)
     {
         *studio = this->studio_system;
     }
-    System *FmodAudioServer::get_core()
+    FMOD_SYSTEM *FmodAudioServer::get_core()
     {
         return core_system;
     }
-    Studio::System *FmodAudioServer::get_studio()
+    FMOD_STUDIO_SYSTEM *FmodAudioServer::get_studio()
     {
         return studio_system;
     }
 
-    System *FmodAudioServer::get_global_core()
+    FMOD_SYSTEM *FmodAudioServer::get_global_core()
     {
         return singleton->get_core();
     }
-    Studio::System *FmodAudioServer::get_global_studio()
+    FMOD_STUDIO_SYSTEM *FmodAudioServer::get_global_studio()
     {
         return singleton->get_studio();
     }
-    void FmodAudioServer::get_global_core_ref(System **core)
+    void FmodAudioServer::get_global_core_ref(FMOD_SYSTEM **core)
     {
         singleton->get_core_ref(core);
     }
-    void FmodAudioServer::get_global_studio_ref(Studio::System **studio)
+    void FmodAudioServer::get_global_studio_ref(FMOD_STUDIO_SYSTEM **studio)
     {
         singleton->get_studio_ref(studio);
     }
-    FMOD_RESULT FmodAudioServer::load_global_bank(String path)
-    {
 
-        return singleton->load_bank(path);
-    }
-    void FmodAudioServer::unload_global_bank(String path)
-    {
-        singleton->unload_bank(path);
-    }
-    void FmodAudioServer::unload_global_banks()
-    {
-        singleton->unload_banks();
-    }
-    Studio::EventInstance *FmodAudioServer::create_instance(const Vector4i p_guid) const
+    FMOD_STUDIO_EVENTINSTANCE *FmodAudioServer::create_instance(const Vector4i p_guid) const
     {
         FMOD_GUID guid = cast_to_FMOD_GUID(p_guid);
-        Studio::EventDescription *description;
-        studio_system->getEventByID(&guid, &description);
-        Studio::EventInstance *event;
-        description->createInstance(&event);
+        FMOD_STUDIO_EVENTDESCRIPTION *description;
+        FMOD_Studio_System_GetEventByID(studio_system, &guid, &description);
+        FMOD_STUDIO_EVENTINSTANCE *event;
+        FMOD_Studio_EventDescription_CreateInstance(description, &event);
         return event;
     }
     void FmodAudioServer::play_one_shot_by_id(const Vector4i p_guid, const Vector3 p_position) const
     {
-        Studio::EventInstance *event = create_instance(p_guid);
+        FMOD_STUDIO_EVENTINSTANCE *event = create_instance(p_guid);
         FMOD_3D_ATTRIBUTES attr;
         attr.forward = {0, 0, -1};
         attr.up = {0, 1, 0};
         attr.position = {p_position.x, -p_position.y, p_position.z};
         attr.velocity = {0, 0, 0};
-        event->start();
-        event->release();
+        FMOD_Studio_EventInstance_Start(event);
+        FMOD_Studio_EventInstance_Release(event);
     }
-    void FmodAudioServer::play_one_shot_by_path(String p_path, const Vector3 p_position) const
+    void FmodAudioServer::play_one_shot_by_path(const String &p_path, const Vector3 p_position) const
     {
         play_one_shot_by_id(path_to_guid(p_path), p_position);
     }
     void FmodAudioServer::play_one_shot_3d_attached_by_id(const Vector4i p_guid, Node3D *p_node, bool p_non_rigid_body_velocity)
     {
-        Studio::EventInstance *event = create_instance(p_guid);
+        FMOD_STUDIO_EVENTINSTANCE *event = create_instance(p_guid);
 
         attach_instance_to_node3d(p_node, event);
-        event->start();
-        event->release();
+        FMOD_Studio_EventInstance_Start(event);
+        FMOD_Studio_EventInstance_Release(event);
     }
-    void FmodAudioServer::play_one_shot_3d_attached_by_path(String p_path, Node3D *p_node, bool p_non_rigid_body_velocity)
+    void FmodAudioServer::play_one_shot_3d_attached_by_path(const String &p_path, Node3D *p_node, bool p_non_rigid_body_velocity)
     {
         play_one_shot_3d_attached_by_id(path_to_guid(p_path), p_node);
     }
     void FmodAudioServer::play_one_shot_2d_attached_by_id(const Vector4i p_guid, Node2D *p_node, bool p_non_rigid_body_velocity)
     {
-        Studio::EventInstance *event = create_instance(p_guid);
+        FMOD_STUDIO_EVENTINSTANCE *event = create_instance(p_guid);
 
         attach_instance_to_node2D(p_node, event);
-        event->start();
-        event->release();
+        FMOD_Studio_EventInstance_Start(event);
+        FMOD_Studio_EventInstance_Release(event);
     }
-    void FmodAudioServer::play_one_shot_2d_attached_by_path(String p_path, Node2D *p_node, bool p_non_rigid_body_velocity)
+    void FmodAudioServer::play_one_shot_2d_attached_by_path(const String &p_path, Node2D *p_node, bool p_non_rigid_body_velocity)
     {
         play_one_shot_2d_attached_by_id(path_to_guid(p_path), p_node);
     }
 
     void FmodAudioServer::play_one_shot_rigid_body3d_attached_by_id(const Vector4i p_guid, RigidBody3D *p_rigid_body3d)
     {
-        Studio::EventInstance *event = create_instance(p_guid);
+        FMOD_STUDIO_EVENTINSTANCE *event = create_instance(p_guid);
 
         attach_instance_to_rigid_body3d(p_rigid_body3d, event);
-        event->start();
-        event->release();
+        FMOD_Studio_EventInstance_Start(event);
+        FMOD_Studio_EventInstance_Release(event);
     }
-    void FmodAudioServer::play_one_shot_rigid_body3d_attached_by_path(const String p_path, RigidBody3D *p_rigid_body3d)
+    void FmodAudioServer::play_one_shot_rigid_body3d_attached_by_path(const String &p_path, RigidBody3D *p_rigid_body3d)
     {
         play_one_shot_rigid_body3d_attached_by_id(path_to_guid(p_path), p_rigid_body3d);
     }
     void FmodAudioServer::play_one_shot_rigid_body2d_attached_by_id(const Vector4i p_guid, RigidBody2D *p_rigid_body2d)
     {
-        Studio::EventInstance *event = create_instance(p_guid);
+        FMOD_STUDIO_EVENTINSTANCE *event = create_instance(p_guid);
 
         attach_instance_to_rigid_body2d(p_rigid_body2d, event);
-        event->start();
-        event->release();
+        FMOD_Studio_EventInstance_Start(event);
+        FMOD_Studio_EventInstance_Release(event);
     }
-    void FmodAudioServer::play_one_shot_rigid_body2d_attached_by_path(const String p_path, RigidBody2D *p_rigid_body2d)
+    void FmodAudioServer::play_one_shot_rigid_body2d_attached_by_path(const String &p_path, RigidBody2D *p_rigid_body2d)
     {
         play_one_shot_rigid_body2d_attached_by_id(path_to_guid(p_path), p_rigid_body2d);
     }
     bool FmodAudioServer::any_sample_data_loading()
     {
         int count;
-        studio_system->getBankCount(&count);
+        FMOD_Studio_System_GetBankCount(studio_system, &count);
         int retrieved;
-        Studio::Bank **banks;
+        FMOD_STUDIO_BANK **banks;
 
-        studio_system->getBankList(banks, count, &retrieved);
+        FMOD_Studio_System_GetBankList(studio_system, banks, count, &retrieved);
         bool loading = false;
         for (int i = 0; i < retrieved; i++)
         {
             FMOD_STUDIO_LOADING_STATE state;
-            banks[i]->getSampleLoadingState(&state);
+            FMOD_Studio_Bank_GetSampleLoadingState(banks[i], &state);
             loading |= (state == FMOD_STUDIO_LOADING_STATE_LOADING);
         }
         return loading;
     }
 
-    void FmodAudioServer::attach_instance_to_node3d(Node3D *p_node, Studio::EventInstance *p_instance, bool p_non_rigid_body_velocity)
+    void FmodAudioServer::attach_instance_to_node3d(Node3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_instance, bool p_non_rigid_body_velocity)
     {
-        lock();
-        int instance_index = -1;
-        for (int i = 0; i < instances.size(); i++)
-        {
-            if (instances[i].instance == p_instance)
-            {
-                instance_index = i;
-            }
-        }
-        if (instance_index == -1)
-        {
-            AttachedInstance instance;
-            instance.node3D = p_node;
-            instance.nonRigidbodyVelocity = p_non_rigid_body_velocity;
-            instance.attachment = Attachment::NODE3D;
-            instance.lastFramePosition = p_node->get_position();
-            instance.instance = p_instance;
-            instances.push_back(instance);
-        }
-        else
-        {
-            instances.write[instance_index].node3D = p_node;
-            instances.write[instance_index].nonRigidbodyVelocity = p_non_rigid_body_velocity;
-            instances.write[instance_index].attachment = Attachment::NODE3D;
-            instances.write[instance_index].lastFramePosition = p_node->get_position();
-            instances.write[instance_index].instance = p_instance;
-        }
-        unlock();
+        _attach_instance_3d(p_node, p_instance, NODE3D, false);
     }
-    void FmodAudioServer::attach_instance_to_rigid_body3d(RigidBody3D *p_node, Studio::EventInstance *p_instance)
+    void FmodAudioServer::attach_instance_to_rigid_body3d(RigidBody3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_instance)
     {
-        lock();
-        int instance_index = -1;
-        for (int i = 0; i < instances.size(); i++)
-        {
-            if (instances[i].instance == p_instance)
-            {
-                instance_index = i;
-            }
-        }
-        if (instance_index == -1)
-        {
-            AttachedInstance instance;
-            instance.rigidBody3D = p_node;
-            instance.nonRigidbodyVelocity = false;
-            instance.attachment = Attachment::RIGIDBODY3D;
-            instance.lastFramePosition = p_node->get_position();
-            instance.instance = p_instance;
-            instances.push_back(instance);
-        }
-        else
-        {
-            instances.write[instance_index].rigidBody3D = p_node;
-            instances.write[instance_index].nonRigidbodyVelocity = false;
-            instances.write[instance_index].attachment = Attachment::RIGIDBODY3D;
-            instances.write[instance_index].lastFramePosition = p_node->get_position();
-            instances.write[instance_index].instance = p_instance;
-        }
-        unlock();
+        _attach_instance_3d<RigidBody3D>(p_node, p_instance, RIGIDBODY3D, false);
     }
-    void FmodAudioServer::attach_instance_to_node2D(Node2D *p_node, Studio::EventInstance *p_instance, bool p_non_rigid_body_velocity)
+    void FmodAudioServer::attach_instance_to_node2D(Node2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_instance, bool p_non_rigid_body_velocity)
     {
-        lock();
-        int instance_index = -1;
-        for (int i = 0; i < instances.size(); i++)
-        {
-            if (instances[i].instance == p_instance)
-            {
-                instance_index = i;
-            }
-        }
-        if (instance_index == -1)
-        {
-            AttachedInstance instance;
-            instance.node2D = p_node;
-            instance.nonRigidbodyVelocity = p_non_rigid_body_velocity;
-            instance.attachment = Attachment::NODE2D;
-            instance.lastFramePosition = {p_node->get_position().x, p_node->get_position().y, 0};
-            instance.instance = p_instance;
-            instances.push_back(instance);
-        }
-        else
-        {
-            instances.write[instance_index].node2D = p_node;
-            instances.write[instance_index].nonRigidbodyVelocity = p_non_rigid_body_velocity;
-            instances.write[instance_index].attachment = Attachment::NODE2D;
-            instances.write[instance_index].lastFramePosition = {p_node->get_position().x, p_node->get_position().y, 0};
-            instances.write[instance_index].instance = p_instance;
-        }
-        unlock();
+        _attach_instance_2d<Node2D>(p_node, p_instance, NODE2D, p_non_rigid_body_velocity);
     }
-    void FmodAudioServer::attach_instance_to_rigid_body2d(RigidBody2D *p_node, Studio::EventInstance *p_instance)
+    void FmodAudioServer::attach_instance_to_rigid_body2d(RigidBody2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_instance)
     {
-        lock();
-        int instance_index = -1;
-        for (int i = 0; i < instances.size(); i++)
-        {
-            if (instances[i].instance == p_instance)
-            {
-                instance_index = i;
-            }
-        }
-        if (instance_index == -1)
-        {
-            AttachedInstance instance;
-            instance.node2D = p_node;
-            instance.nonRigidbodyVelocity = false;
-            instance.attachment = Attachment::NODE2D;
-            instance.lastFramePosition = {p_node->get_position().x, p_node->get_position().y, 0};
-            instance.instance = p_instance;
-            instances.push_back(instance);
-        }
-        else
-        {
-            instances.write[instance_index].node2D = p_node;
-            instances.write[instance_index].nonRigidbodyVelocity = false;
-            instances.write[instance_index].attachment = Attachment::NODE2D;
-            instances.write[instance_index].lastFramePosition = {p_node->get_position().x, p_node->get_position().y, 0};
-            instances.write[instance_index].instance = p_instance;
-        }
-        unlock();
+        _attach_instance_2d<RigidBody2D>(p_node, p_instance, RIGIDBODY2D, false);
     }
 
-    void FmodAudioServer::detach_instance_from_node(Studio::EventInstance *p_instance)
+    void FmodAudioServer::detach_instance_from_node(FMOD_STUDIO_EVENTINSTANCE *p_instance)
     {
         lock();
+        int i = find_instance(p_instance);
         for (int i = 0; i < instances.size(); i++)
         {
             if (instances[i].instance == p_instance)
@@ -737,31 +758,31 @@ namespace FmodGodot
         unlock();
     }
 
-    Vector4i FmodAudioServer::path_to_guid(String p_path) const
+    Vector4i FmodAudioServer::path_to_guid(const String &p_path) const
     {
         FMOD_GUID guid;
-        studio_system->lookupID(p_path.utf8(), &guid);
+        FMOD_Studio_System_LookupID(studio_system, p_path.utf8(), &guid);
         return cast_to_Vector4i(guid);
     }
-    Studio::EventDescription *FmodAudioServer::get_event_description(String p_path) const
+    FMOD_STUDIO_EVENTDESCRIPTION *FmodAudioServer::get_event_description(const String &p_path) const
     {
-        Studio::EventDescription *description;
-        studio_system->getEvent(p_path.utf8(), &description);
+        FMOD_STUDIO_EVENTDESCRIPTION *description;
+        FMOD_Studio_System_GetEvent(studio_system, p_path.utf8(), &description);
         return description;
     }
-    Studio::EventDescription *FmodAudioServer::get_event_description(Vector4i p_guid) const
+    FMOD_STUDIO_EVENTDESCRIPTION *FmodAudioServer::get_event_description(Vector4i p_guid) const
     {
-        Studio::EventDescription *description;
+        FMOD_STUDIO_EVENTDESCRIPTION *description;
         FMOD_GUID guid = cast_to_FMOD_GUID(p_guid);
-        studio_system->getEventByID(&guid, &description);
+        FMOD_Studio_System_GetEventByID(studio_system, &guid, &description);
         return description;
     }
     void FmodAudioServer::pause_all_events(bool p_pause)
     {
-        Studio::Bus *bus;
-        if (studio_system->getBus("bus:/", &bus) == FMOD_RESULT::FMOD_OK)
+        FMOD_STUDIO_BUS *bus;
+        if (FMOD_Studio_System_GetBus(studio_system, "bus:/", &bus) == FMOD_RESULT::FMOD_OK)
         {
-            bus->setPaused(p_pause);
+            FMOD_Studio_Bus_SetPaused(bus, p_pause);
         }
     }
     bool FmodAudioServer::is_muted() const
@@ -770,38 +791,36 @@ namespace FmodGodot
     }
     void FmodAudioServer::set_muted(bool p_muted)
     {
-        Studio::Bus *bus;
+        FMOD_STUDIO_BUS *bus;
         muted = p_muted;
-        if (studio_system->getBus("bus:/", &bus) == FMOD_RESULT::FMOD_OK)
+        if (FMOD_Studio_System_GetBus(studio_system, "bus:/", &bus) == FMOD_RESULT::FMOD_OK)
         {
-            bus->setMute(p_muted);
+            FMOD_Studio_Bus_SetMute(bus, p_muted);
         }
     }
-    Studio::Bus *FmodAudioServer::get_bus(String p_path) const
+    FMOD_STUDIO_BUS *FmodAudioServer::get_bus(const String &p_path) const
     {
-        Studio::Bus *bus;
-        studio_system->getBus(p_path.utf8(), &bus);
+        FMOD_STUDIO_BUS *bus;
+        FMOD_Studio_System_GetBus(studio_system, p_path.utf8(), &bus);
         return bus;
     }
-    Studio::VCA *FmodAudioServer::get_vca(String p_path) const
+    FMOD_STUDIO_VCA *FmodAudioServer::get_vca(const String &p_path) const
     {
-        Studio::VCA *vca;
-        studio_system->getVCA(p_path.utf8(), &vca);
+        FMOD_STUDIO_VCA *vca;
+        FMOD_Studio_System_GetVCA(studio_system, p_path.utf8(), &vca);
         return vca;
     }
-    bool FmodAudioServer::has_bank_loaded(String p_bankName) const
+    bool FmodAudioServer::has_bank_loaded(const String &p_bankName) const
     {
-        return banks.has(p_bankName);
+        FMOD_STUDIO_BANK *bank;
+        // TODO Only works synchronously
+        return FMOD_Studio_System_GetBank(studio_system, p_bankName.utf8(), &bank) == FMOD_OK;
     }
 
     bool FmodAudioServer::have_all_banks_loaded() const
     {
-        // TODO
+        // TODO is alway true when synchronous
         return true;
-    }
-    bool FmodAudioServer::have_all_master_banks_loaded() const
-    {
-        return has_bank_loaded(ProjectSettings::get_singleton()->get_setting("Fmod/Banks/Master_Bank_Path", "").stringify()) && has_bank_loaded(ProjectSettings::get_singleton()->get_setting("Fmod/Banks/Master_Strings_Bank_Path", "").stringify());
     }
 
     void FmodAudioServer::set_listener_location(Node2D *p_node, Node2D *p_attenuation_object)
@@ -820,11 +839,12 @@ namespace FmodGodot
         if (p_attenuation_object)
         {
             attenuation_attr = to_fmod_vector(p_attenuation_object->get_global_position());
-            studio_system->setListenerAttributes(p_listener_index, &node_attr, &attenuation_attr);
+
+            FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, &attenuation_attr);
         }
         else
         {
-            studio_system->setListenerAttributes(p_listener_index, &node_attr, nullptr);
+            FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, nullptr);
         }
     }
     void FmodAudioServer::set_listener_location(int p_listener_index, Node2D *p_node, Node2D *p_attenuation_object)
@@ -835,11 +855,11 @@ namespace FmodGodot
         if (p_attenuation_object)
         {
             attenuation_attr = to_fmod_vector(p_attenuation_object->get_global_position());
-            studio_system->setListenerAttributes(p_listener_index, &node_attr, &attenuation_attr);
+            FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, &attenuation_attr);
         }
         else
         {
-            studio_system->setListenerAttributes(p_listener_index, &node_attr, nullptr);
+            FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, nullptr);
         }
     }
 
@@ -859,11 +879,11 @@ namespace FmodGodot
         if (attenuationObject)
         {
             attenuation_attr = to_fmod_vector(attenuationObject->get_global_position());
-            studio_system->setListenerAttributes(listenerIndex, &node_attr, &attenuation_attr);
+            FMOD_Studio_System_SetListenerAttributes(studio_system, listenerIndex, &node_attr, &attenuation_attr);
         }
         else
         {
-            studio_system->setListenerAttributes(listenerIndex, &node_attr, nullptr);
+            FMOD_Studio_System_SetListenerAttributes(studio_system, listenerIndex, &node_attr, nullptr);
         }
     }
     void FmodAudioServer::set_listener_location(int listenerIndex, Node3D *p_node, Node3D *attenuationObject)
@@ -874,17 +894,18 @@ namespace FmodGodot
         if (attenuationObject)
         {
             attenuation_attr = to_fmod_vector(attenuationObject->get_global_position());
-            studio_system->setListenerAttributes(listenerIndex, &node_attr, &attenuation_attr);
+            FMOD_Studio_System_SetListenerAttributes(studio_system, listenerIndex, &node_attr, &attenuation_attr);
         }
         else
         {
-            studio_system->setListenerAttributes(listenerIndex, &node_attr, nullptr);
+            FMOD_Studio_System_SetListenerAttributes(studio_system, listenerIndex, &node_attr, nullptr);
         }
     }
+
 #pragma endregion
     extern "C"
     {
-        GDE_EXPORT int get_fmod_core(System **core)
+        GDE_EXPORT int get_fmod_core(FMOD_SYSTEM **core)
         {
             FmodAudioServer::get_global_core_ref(core);
             if (core == NULL)
@@ -896,7 +917,7 @@ namespace FmodGodot
                 return 0;
             }
         }
-        GDE_EXPORT int get_fmod_studio(Studio::System **studio)
+        GDE_EXPORT int get_fmod_studio(FMOD_STUDIO_SYSTEM **studio)
         {
             FmodAudioServer::get_global_studio_ref(studio);
             if (studio == NULL)

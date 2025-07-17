@@ -5,6 +5,7 @@
 #include <godot_cpp/core/memory.hpp>
 #include "fmod_event_tree.h"
 #include "fmod_globals.h"
+#include <godot_cpp/godot.hpp>
 using namespace godot;
 namespace FmodGodot
 {
@@ -59,8 +60,9 @@ namespace FmodGodot
     void FmodEventPathSelector::on_item_selected()
     {
         lineEdit->set_text(windowTree->get_selected()->get_text(0));
+        //TODO SEGFAULT MAYBE
         lineEdit->set_tooltip_text(FmodGodot::fmod_guid_to_string(windowTree->get_selected()->get_metadata(0)));
-        lineEdit->emit_signal("text_changed", lineEdit->get_text());
+        lineEdit->emit_signal("text_submitted", lineEdit->get_text());
         window->hide();
     }
     LineEdit *FmodEventPathSelector::get_line_edit()

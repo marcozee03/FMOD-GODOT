@@ -8,27 +8,32 @@ namespace FmodGodot
 
     FmodBank::~FmodBank()
     {
+        unload();
     }
 
     FMOD_RESULT FmodBank::unload()
     {
-        return bank->unload();
+        return FMOD_Studio_Bank_Unload(bank);
     }
     FMOD_RESULT FmodBank::loadSampleData()
     {
-        return bank->loadSampleData();
+        return FMOD_Studio_Bank_LoadSampleData(bank);
     }
     FMOD_RESULT FmodBank::unloadSampleData()
     {
-        return bank->unloadSampleData();
+        return FMOD_Studio_Bank_Unload(bank);
     }
     FMOD_STUDIO_LOADING_STATE FmodBank::getLoadingState() const
     {
-        return FMOD_STUDIO_LOADING_STATE();
+        FMOD_STUDIO_LOADING_STATE state;
+        FMOD_Studio_Bank_GetLoadingState(bank, &state);
+        return state;
     }
     FMOD_STUDIO_LOADING_STATE FmodBank::getSampleLoadingState() const
     {
-        return FMOD_STUDIO_LOADING_STATE();
+        FMOD_STUDIO_LOADING_STATE state;
+        FMOD_Studio_Bank_GetSampleLoadingState(bank, &state);
+        return state;
     }
     void FmodBank::_bind_methods() {}
 }

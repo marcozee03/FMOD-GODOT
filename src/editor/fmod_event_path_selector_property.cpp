@@ -14,7 +14,7 @@ namespace FmodGodot
     {
         eventSelector = memnew(FmodEventPathSelector);
         add_child(eventSelector);
-        eventSelector->get_line_edit()->connect("text_changed", Callable(this, "on_text_changed"));
+        eventSelector->get_line_edit()->connect("text_changed", callable_mp(this, &EventPathSelectorProperty::on_text_changed));
     }
     EventPathSelectorProperty::~EventPathSelectorProperty()
     {
@@ -35,7 +35,6 @@ namespace FmodGodot
 
     void EventPathSelectorProperty::_bind_methods()
     {
-        ClassDB::bind_method(D_METHOD("on_text_changed", "new_text"), &EventPathSelectorProperty::on_text_changed);
     }
 
     void EventPathSelectorProperty::_update_property()
