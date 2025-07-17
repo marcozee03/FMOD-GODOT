@@ -13,15 +13,16 @@ namespace FmodGodot
 {
     class EventGUIDSelectorProperty : public EditorProperty
     {
-        GDCLASS(EventGUIDSelectorProperty,EditorProperty)
+        GDCLASS(EventGUIDSelectorProperty, EditorProperty)
     private:
         FmodEventPathSelector *eventSelector;
         Vector4i currentValue;
         bool updating = false;
         void on_text_changed(String newText);
+        void on_editing_toggled(bool toggle_on);
 
     protected:
-       static void _bind_methods();
+        static void _bind_methods();
 
     public:
         EventGUIDSelectorProperty();

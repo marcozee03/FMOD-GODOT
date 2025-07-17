@@ -1,13 +1,14 @@
-#include <fmod.hpp>
-#include <fmod_studio.hpp>
+#include <fmod.h>
+#include <fmod_studio.h>
 #include <classes/project_settings.hpp>
 #include <classes/resource_loader.hpp>
 #include <classes/window.hpp>
 #include "fmod_event_tree.h"
 #include "fmod_globals.h"
 #include "fmod_audio_server.h"
+#include "fmod_editor_cache.h"
+#include "classes/tree_item.hpp"
 using namespace godot;
-using namespace FMOD;
 namespace FmodGodot
 {
     void EventTree::_bind_methods()
@@ -17,16 +18,67 @@ namespace FmodGodot
     {
         set_columns(2);
         set_select_mode(SelectMode::SELECT_ROW);
+        // BIND_BITFIELD_FLAG(BANKS);
+        // BIND_BITFIELD_FLAG(EVENTS);
+        // BIND_BITFIELD_FLAG(VCAS);
+        // BIND_BITFIELD_FLAG(GLOBAL_PARAMETERS);
     }
     EventTree::~EventTree()
     {
     }
+    namespace
+    {
+        void recurOverEvents(TreeItem *root, const PackedStringArray &contents, const String &current_path)
+        {
+        }
+    }
+    void EventTree::set_display_flags(int p_flags)
+    {
+        if (display_flags != p_flags)
+        {
+            // display_flags = static_cast<DisplayFlags>(p_flags);
+            // this->clear();
+            // root = create_item();
+            // FmodEditorCache cache;
+            // if (display_flags & EVENTS)
+            // {
+            //     TreeItem *item = root->create_child(-1);
+            //     item->set_text(0, "event:/");
+            //     auto event_contents = cache.get_contents("event:/");
+            //     String current_path = "event:/";
+            //     for (auto str : event_contents)
+            //     {
+            //         auto child = item->create_child();
+            //         child->set_text(0, str);
+            //         PackedStringArray subcontents = cache.get_contents(current_path + str);
+            //         if (!cache.get_contents(str).is_empty())
+            //         {
+            //             recurOverEvents(child, subcontents, current_path + str + '/');
+            //         }
+            //     }
+            // }
+            // if (display_flags & BANKS)
+            // {
+            // }
+
+            // if (display_flags & VCAS)
+            // {
+            // }
+            // if (display_flags & GLOBAL_PARAMETERS)
+            // {
+            // }
+        }
+    }
+    int EventTree::get_display_flags() const
+    {
+        return static_cast<DisplayFlags>(display_flags);
+    }
     bool EventTree::LoadEvents()
     {
-        Studio::System *studio = FmodAudioServer::get_global_studio();
+        FMOD_STUDIO_SYSTEM *studio = FmodAudioServer::get_global_studio();
         ProjectSettings *pj = ProjectSettings::get_singleton();
-        Studio::Bank *MasterStrings;
-        FMOD_RESULT result = studio->getBank("bank:/Master.strings", &MasterStrings);
+        FMOD_STUDIO_BANK *MasterStrings;
+        FMOD_RESULT result = FMOD_Studio_System_GetBank(studio, "bank:/Master.strings", &MasterStrings);
         // char path[128];
         // int r;
         // MasterStrings->getPath(path, 128, &r);
@@ -38,18 +90,10 @@ namespace FmodGodot
             int size = 128;
             int retrieved = 0;
             char *eventPath = new char[size];
-
-            MasterStrings->getStringCount(&count);
+            FMOD_Studio_Bank_GetStringCount(MasterStrings, &count);
             for (int i = 0; i < count; i++)
             {
-                FMOD_RESULT result = MasterStrings->getStringInfo(i, &guid, eventPath, size, &retrieved);
-                if (result == FMOD_ERR_TRUNCATED)
-                {
-                    delete[] eventPath;
-                    size = retrieved;
-                    eventPath = new char[retrieved];
-                    MasterStrings->getStringInfo(i, &guid, eventPath, retrieved, &retrieved);
-                }
+                FMOD_GET_FULL_STRING_FUNC_CALL(FMOD_Studio_Bank_GetStringInfo(MasterStrings, i, &guid, eventPath, size, &retrieved), eventPath, size, retrieved);
                 String g_eventPath = String(eventPath);
                 if (!g_eventPath.begins_with("event:/"))
                 {

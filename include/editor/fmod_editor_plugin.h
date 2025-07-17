@@ -17,7 +17,6 @@ namespace FmodGodot
     private:
         EventInspector *eventInspector;
         FmodBankImporter *bankImporter;
-        BankLoaderInspector *bankLoaderInspector;
         BankInspectorPlugin *bankInspector;
     protected:
         static void _bind_methods();
@@ -25,8 +24,6 @@ namespace FmodGodot
     public:
         FmodEditorPlugin();
         ~FmodEditorPlugin();
-        void _enter_tree() override;
-        void _exit_tree() override;
     };
 }
 #endif
