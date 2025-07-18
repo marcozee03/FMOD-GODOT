@@ -1,3 +1,4 @@
+#pragma once
 #include "fmod_object.h"
 #include "path_tree.h"
 namespace FmodGodot
@@ -25,6 +26,10 @@ namespace FmodGodot
         const PathTree<Bank> get_bank_cache() const;
         const PathTree<Parameter> get_parameter_cache() const;
         const PathTree<VCA> get_vca_cache();
-        PackedStringArray get_contents(const String& p_path) const;
+        Event get_event(const String &path) const;
+        Bank get_bank(const String &path) const;
+        Parameter get_parameter(const String &path) const;
+        VCA get_vca(const String &path) const;
+        PackedStringArray get_contents(const String &p_path) const;
     };
 }

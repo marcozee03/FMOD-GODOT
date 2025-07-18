@@ -14,6 +14,11 @@ using namespace godot;
 #include <godot_cpp/classes/thread.hpp>
 #include <godot_cpp/classes/mutex.hpp>
 #include "fmod_bank.h"
+
+// #ifdef TOOLS_ENABLED
+#include "fmod_editor_interface.h"
+// #endif
+
 namespace FmodGodot
 {
 

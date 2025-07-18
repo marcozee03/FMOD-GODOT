@@ -64,21 +64,36 @@ namespace FmodGodot
         return vca_cache;
     }
 
+    Event FmodEditorCache::get_event(const String &path) const
+    {
+        return event_cache[path];
+    }
+
+    Bank FmodEditorCache::get_bank(const String &path) const
+    {
+        return bank_cache[path];
+    }
+
+    Parameter FmodEditorCache::get_parameter(const String &path) const
+    {
+        return parameter_cache[path];
+    }
+
     PackedStringArray FmodEditorCache::get_contents(const String &p_path) const
     {
-        if (p_path.begins_with("event:/"))
+        if (p_path.begins_with("event:"))
         {
             return event_cache.get_contents(p_path);
         }
-        else if (p_path.begins_with("vca:/"))
+        else if (p_path.begins_with("vca:"))
         {
             return vca_cache.get_contents(p_path);
         }
-        else if (p_path.begins_with("bank:/"))
+        else if (p_path.begins_with("bank:"))
         {
             return bank_cache.get_contents(p_path);
         }
-        else if (p_path.begins_with("param:/"))
+        else if (p_path.begins_with("param:"))
         {
             return parameter_cache.get_contents(p_path);
         }
