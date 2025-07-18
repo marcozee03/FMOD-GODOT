@@ -7,7 +7,6 @@
 #include <godot.hpp>
 #include "fmod_event_tree.h"
 #include "fmod_event_selector.h"
-#include "fmod_banks_explorer.h"
 #include <classes/engine.hpp>
 #include "fmod_event_emitter_2d.h"
 #include "fmod_event_emitter_3d.h"
@@ -31,6 +30,7 @@
 #include <classes/editor_settings.hpp>
 #include <classes/editor_interface.hpp>
 #include "fmod_object_details.h"
+#include "fmod_editor_interface.h"
 #endif
 
 using namespace godot;
@@ -39,7 +39,9 @@ using namespace FmodGodot;
 static FmodAudioServer *audio_server;
 FmodBankFormatSaver *bankSaver;
 FmodBankFormatLoader *bankLoader;
+#ifdef TOOLS_ENABLED
 FmodEditorInterface *editor_interface;
+#endif
 #define ADD_PROJECT_SETTING(setting_str, bool_basic, bool_internal, bool_restart_if_changed, default_value, variant_type, property_hint, hint_string, dictionary) \
   if (!godot::ProjectSettings::get_singleton()->has_setting(setting_str))                                                                                         \
   {                                                                                                                                                               \
@@ -126,7 +128,6 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
     GDREGISTER_ABSTRACT_CLASS(FmodBank);
     GDREGISTER_CLASS(FmodEventPathSelector);
     GDREGISTER_CLASS(EventTree);
-    GDREGISTER_CLASS(BanksExplorer);
     GDREGISTER_INTERNAL_CLASS(FmodBankFormatLoader);
     GDREGISTER_INTERNAL_CLASS(FmodBankFormatSaver);
     GDREGISTER_CLASS(FmodEventEmitter2D);

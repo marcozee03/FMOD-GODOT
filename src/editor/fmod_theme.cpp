@@ -1,3 +1,4 @@
+#ifdef TOOLS_ENABLED
 #include "fmod_theme.h"
 #include <classes/resource_loader.hpp>
 namespace FmodGodot
@@ -14,3 +15,4 @@ namespace FmodGodot
     {
     }
 }
+#endif

@@ -1,3 +1,4 @@
+#ifdef TOOLS_ENABLED
 #include "fmod_editor_cache.h"
 #include "fmod_object.h"
 #include <godot_cpp/variant/packed_string_array.hpp>
@@ -103,3 +104,4 @@ namespace FmodGodot
         }
     }
 }
+#endif
