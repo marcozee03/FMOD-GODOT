@@ -20,7 +20,6 @@
 #include "fmod_bank_format_loader.h"
 #include "fmod_listener_2d.h"
 #include "fmod_listener_3d.h"
-// #define TOOLS_ENABLED
 #ifdef TOOLS_ENABLED
 #include <classes/editor_plugin_registration.hpp>
 #include "fmod_editor_plugin.h"
@@ -29,9 +28,9 @@
 #include "fmod_event_inspector_plugin.h"
 #include "fmod_bank_importer.h"
 #include "bank_inspector_plugin.h"
-#include "bank_inspector.h"
 #include <classes/editor_settings.hpp>
 #include <classes/editor_interface.hpp>
+#include "fmod_object_details.h"
 #endif
 
 using namespace godot;
@@ -40,7 +39,7 @@ using namespace FmodGodot;
 static FmodAudioServer *audio_server;
 FmodBankFormatSaver *bankSaver;
 FmodBankFormatLoader *bankLoader;
-
+FmodEditorInterface *editor_interface;
 #define ADD_PROJECT_SETTING(setting_str, bool_basic, bool_internal, bool_restart_if_changed, default_value, variant_type, property_hint, hint_string, dictionary) \
   if (!godot::ProjectSettings::get_singleton()->has_setting(setting_str))                                                                                         \
   {                                                                                                                                                               \
@@ -144,13 +143,17 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
   if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
   {
 #ifdef TOOLS_ENABLED
+    GDREGISTER_INTERNAL_CLASS(FmodEditorInterface);
+    editor_interface = memnew(FmodEditorInterface);
+    editor_interface->refresh();
+    Engine::get_singleton()->register_singleton("FmodEditorInterface", editor_interface);
     GDREGISTER_INTERNAL_CLASS(FmodEditorPlugin)
     GDREGISTER_INTERNAL_CLASS(EventInspector)
     GDREGISTER_INTERNAL_CLASS(EventPathSelectorProperty)
     GDREGISTER_INTERNAL_CLASS(EventGUIDSelectorProperty)
     GDREGISTER_INTERNAL_CLASS(FmodBankImporter);
-    GDREGISTER_CLASS(BankInspector);
     GDREGISTER_INTERNAL_CLASS(BankInspectorPlugin);
+    GDREGISTER_INTERNAL_CLASS(FmodObjectDetails);
     EditorPlugins::add_by_type<FmodEditorPlugin>();
 #endif // TOOLS_ENABLED
   }

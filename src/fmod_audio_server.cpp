@@ -75,7 +75,7 @@ namespace FmodGodot
     {
         studio_system = nullptr;
         core_system = nullptr;
-        ProjectSettings* ps = ProjectSettings::get_singleton();
+        ProjectSettings *ps = ProjectSettings::get_singleton();
     }
     FmodAudioServer::~FmodAudioServer()
     {
@@ -135,7 +135,7 @@ namespace FmodGodot
         mutex.instantiate();
         thread.instantiate();
         InitSettings settings = get_settings();
-        
+
         FMOD_STUDIO_INITFLAGS studio_init = FMOD_STUDIO_INIT_NORMAL;
         switch (settings.live_update)
         {
@@ -194,8 +194,6 @@ namespace FmodGodot
         initialized = true;
         thread->start(callable_mp(this, &FmodAudioServer::thread_func), Thread::Priority::PRIORITY_NORMAL);
         load_start_up_banks();
-        FmodEditorInterface interface;
-        interface.refresh();
         return result;
     }
     void FmodAudioServer::_physics_process()

@@ -105,7 +105,6 @@ namespace FmodGodot
     FMOD_3D_ATTRIBUTES to_3d_attributes(Node3D *node)
     {
         FMOD_3D_ATTRIBUTES attributes;
-        // std::cout << "GP:" << godot::String(node->get_global_position()).utf8() << std::endl;
         attributes.position = to_fmod_vector(node->get_global_position());
         attributes.forward = to_fmod_vector(-node->get_global_transform().get_basis().get_column(2));
         attributes.up = to_fmod_vector(node->get_global_transform().get_basis().get_column(1));

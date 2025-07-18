@@ -1,7 +1,9 @@
+
 #include <godot_cpp/variant/string.hpp>
 #include <godot_cpp/variant/packed_string_array.hpp>
 #include <godot_cpp/templates/vector.hpp>
 #include <iostream>
+#include <godot_cpp/core/print_string.hpp>
 using namespace std;
 template <typename Data>
 class PathTree
@@ -22,8 +24,8 @@ private:
         const bool has_children;
         virtual const Node *find(const String &name) const = 0;
         virtual Node *find(const String &name) = 0;
-        virtual void print(int indent_level) = 0;
-        virtual PackedStringArray get_contents() const;
+        virtual void print(int indent_level) const = 0;
+        virtual PackedStringArray get_contents() const = 0;
     };
 
     struct BranchNode : Node
@@ -36,7 +38,7 @@ private:
         BranchNode *add(const String &name) override;
         const Node *find(const String &name) const override;
         Node *find(const String &name) override;
-        void print(int indent_level) override;
+        void print(int indent_level) const override;
 
         PackedStringArray get_contents() const override;
     };
@@ -52,7 +54,7 @@ private:
         BranchNode *add(const String &name) override;
         const Node *find(const String &name) const override;
         Node *find(const String &name) override;
-        void print(int indent_level) override;
+        void print(int indent_level) const override;
         PackedStringArray get_contents() const override;
     };
 
@@ -97,7 +99,7 @@ public:
     void add_data(const String &path, Data data);
     void add(const String &path);
     void clear();
-    void print();
+    void print() const;
     PackedStringArray get_contents(const String &path) const;
     TreeItem get_root() const;
 };
@@ -105,7 +107,7 @@ template <typename Data>
 typename PathTree<Data>::Node *PathTree<Data>::find_node(const String &path, bool last_is_data)
 {
     Node *current_branch = &root;
-    PackedStringArray split = path.split("/");
+    PackedStringArray split = path.split("/", false);
     Node *next_branch;
     for (int i = 0; i < split.size(); i++)
     {
@@ -134,7 +136,7 @@ template <typename Data>
 const typename PathTree<Data>::Node *PathTree<Data>::find_node(const String &path) const
 {
     const Node *current_branch = &root;
-    PackedStringArray split = path.split("/");
+    PackedStringArray split = path.split("/", false);
     const Node *next_branch;
     for (int i = 0; i < split.size(); i++)
     {
@@ -166,7 +168,13 @@ Data &PathTree<Data>::operator[](const String &path)
 template <typename Data>
 Data PathTree<Data>::operator[](const String &path) const
 {
-    return ((PathTree<Data>::DataNode *)find_node(path))->data;
+    const Node *node = find_node(path);
+    if (!node)
+    {
+        print_error("no node at [", path, "]");
+        return Data();
+    }
+    return ((PathTree<Data>::DataNode *)node)->data;
 }
 
 template <typename Data>
@@ -193,7 +201,7 @@ void PathTree<Data>::clear()
 }
 
 template <typename Data>
-void PathTree<Data>::print()
+void PathTree<Data>::print() const
 {
     std::cout << root.name.utf8() << std::endl;
     for (auto child : root.children)
@@ -271,7 +279,7 @@ typename PathTree<Data>::Node *PathTree<Data>::DataNode::find(const String &name
 }
 
 template <typename Data>
-void PathTree<Data>::DataNode::print(int indent_level)
+void PathTree<Data>::DataNode::print(int indent_level) const
 {
     for (int i = 0; i < indent_level; i++)
     {
@@ -350,7 +358,7 @@ PackedStringArray PathTree<Data>::BranchNode::get_contents() const
 }
 
 template <typename Data>
-void PathTree<Data>::BranchNode::print(int indent_level)
+void PathTree<Data>::BranchNode::print(int indent_level) const
 {
     for (int i = 0; i < indent_level; i++)
     {

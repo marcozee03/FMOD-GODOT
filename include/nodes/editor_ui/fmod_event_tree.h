@@ -8,8 +8,7 @@ namespace FmodGodot
     {
         GDCLASS(EventTree, Tree);
 
-    private:
-        TreeItem *root;
+    public:
         enum DisplayFlags
         {
             BANKS = 1,
@@ -17,7 +16,10 @@ namespace FmodGodot
             VCAS = 4,
             GLOBAL_PARAMETERS = 8
         };
+
+    private:
         DisplayFlags display_flags;
+        void on_item_activated();
 
     protected:
         static void
@@ -28,7 +30,8 @@ namespace FmodGodot
         ~EventTree();
         void set_display_flags(int p_flags);
         int get_display_flags() const;
-        bool LoadEvents();
-        void _ready() override;
+        void LoadEvents();
     };
+
 }
+VARIANT_BITFIELD_CAST(FmodGodot::EventTree::DisplayFlags)

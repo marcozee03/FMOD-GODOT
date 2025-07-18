@@ -5,13 +5,14 @@
 #include <godot_cpp/core/memory.hpp>
 #include "fmod_event_tree.h"
 #include "fmod_globals.h"
+#include "fmod_audio_server.h"
 #include <godot_cpp/godot.hpp>
 using namespace godot;
 namespace FmodGodot
 {
     void FmodEventPathSelector::_bind_methods()
     {
-        ClassDB::bind_method(D_METHOD("on_item_selected"), &FmodEventPathSelector::on_item_selected);
+
         ClassDB::bind_method(D_METHOD("open_window"), &FmodEventPathSelector::open_window);
     }
 
@@ -25,7 +26,9 @@ namespace FmodGodot
         window->set_initial_position(Window::WindowInitialPosition::WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN);
         add_child(window);
         windowTree = memnew(EventTree);
-        windowTree->connect("item_selected", Callable(this, "on_item_selected"));
+        windowTree->set_display_flags(EventTree::DisplayFlags::EVENTS);
+        windowTree->set_select_mode(Tree::SelectMode::SELECT_SINGLE);
+        windowTree->connect("fmod_object_selected", callable_mp(this, &FmodEventPathSelector::on_fmod_object_selected));
         windowTree->set_anchors_preset(LayoutPreset::PRESET_FULL_RECT);
         window->connect("close_requested", Callable(window, "hide"));
         window->add_child(windowTree);
@@ -57,12 +60,14 @@ namespace FmodGodot
     {
         window->show();
     }
-    void FmodEventPathSelector::on_item_selected()
+    void FmodEventPathSelector::on_fmod_object_selected(const String &p_path)
     {
-        lineEdit->set_text(windowTree->get_selected()->get_text(0));
-        //TODO SEGFAULT MAYBE
-        lineEdit->set_tooltip_text(FmodGodot::fmod_guid_to_string(windowTree->get_selected()->get_metadata(0)));
-        lineEdit->emit_signal("text_submitted", lineEdit->get_text());
+        auto cache = FmodEditorInterface::get_singleton()->get_cache();
+        // windowTree.get
+        lineEdit->set_text(p_path);
+        // TODO SEGFAULT MAYBE
+        lineEdit->set_tooltip_text(FmodGodot::fmod_guid_to_string(cache->get_event(p_path).guid));
+        lineEdit->emit_signal("text_submitted", p_path);
         window->hide();
     }
     LineEdit *FmodEventPathSelector::get_line_edit()

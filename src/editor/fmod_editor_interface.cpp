@@ -2,6 +2,21 @@
 #include "fmod_audio_server.h"
 namespace FmodGodot
 {
+    FmodEditorInterface *FmodEditorInterface::singleton = nullptr;
+    FmodEditorInterface::FmodEditorInterface()
+    {
+        if (singleton == nullptr)
+        {
+            singleton = this;
+        }
+    }
+    FmodEditorInterface::~FmodEditorInterface()
+    {
+        if (singleton == this)
+        {
+            singleton = nullptr;
+        }
+    }
     void FmodEditorInterface::restart_server()
     {
     }
@@ -10,6 +25,19 @@ namespace FmodGodot
     }
     void FmodEditorInterface::build_banks()
     {
+    }
+    void FmodEditorInterface::_bind_methods() {}
+    const FmodEditorCache *FmodEditorInterface::get_cache() const
+    {
+        return &cache;
+    }
+    const FmodTheme *FmodEditorInterface::get_theme() const
+    {
+        return &theme;
+    }
+    FmodEditorInterface *FmodEditorInterface::get_singleton()
+    {
+        return singleton;
     }
     void FmodEditorInterface::refresh()
     {
@@ -78,11 +106,9 @@ namespace FmodGodot
                 cache.add(event);
             }
             cache.add(bank);
-            cache.print();
             delete[] descriptions;
         }
         delete[] banks;
         delete[] str;
-        cache.print();
     }
 }
