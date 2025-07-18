@@ -83,6 +83,18 @@
         "streambuf": "cpp",
         "thread": "cpp",
         "cfenv": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "cassert": "cpp",
+        "cerrno": "cpp",
+        "cfloat": "cpp",
+        "ciso646": "cpp",
+        "climits": "cpp",
+        "filesystem": "cpp",
+        "ios": "cpp",
+        "locale": "cpp",
+        "cstdbool": "cpp",
+        "version": "cpp",
+        "*.def": "cpp",
+        "*.inc": "cpp"
     }
 }

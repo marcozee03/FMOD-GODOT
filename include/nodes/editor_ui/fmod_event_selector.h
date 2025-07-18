@@ -26,7 +26,7 @@ namespace FmodGodot
         ~FmodEventPathSelector();
         void _ready() override;
         void open_window();
-        void on_item_selected();
+        void on_fmod_object_selected(const String& p_path);
         LineEdit *get_line_edit();
         EventTree *get_event_tree();
     };
