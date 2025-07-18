@@ -1,4 +1,5 @@
 #pragma once
+#ifdef TOOLS_ENABLED
 #include <variant/string.hpp>
 #include <godot_cpp/templates/vector.hpp>
 #include <variant/vector4i.hpp>
@@ -48,3 +49,4 @@ namespace FmodGodot
     };
 
 }
+#endif

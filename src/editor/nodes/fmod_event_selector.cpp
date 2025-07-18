@@ -1,3 +1,4 @@
+#ifdef TOOLS_ENABLED
 #include "fmod_event_selector.h"
 #include <godot_cpp/core/memory.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
@@ -79,3 +80,4 @@ namespace FmodGodot
         return windowTree;
     }
 }
+#endif

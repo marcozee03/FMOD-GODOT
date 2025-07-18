@@ -1,3 +1,4 @@
+#ifdef TOOLS_ENABLED
 #include "fmod_object.h"
 #include <iostream>
 using namespace std;
@@ -34,3 +35,4 @@ namespace FmodGodot
         return stream;
     }
 }
+#endif

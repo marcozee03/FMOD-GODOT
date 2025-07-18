@@ -3,7 +3,8 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/include/scene/3d"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",

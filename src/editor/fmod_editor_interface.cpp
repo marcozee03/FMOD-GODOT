@@ -1,3 +1,4 @@
+#ifdef TOOLS_ENABLED
 #include "fmod_editor_interface.h"
 #include "fmod_audio_server.h"
 namespace FmodGodot
@@ -112,3 +113,4 @@ namespace FmodGodot
         delete[] str;
     }
 }
+#endif

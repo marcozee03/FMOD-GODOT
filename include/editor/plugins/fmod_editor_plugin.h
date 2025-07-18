@@ -3,7 +3,6 @@
 #ifdef TOOLS_ENABLED
 #include <classes/editor_plugin.hpp>
 #include "fmod_event_inspector_plugin.h"
-#include "bank_loader_inspector_plugin.h"
 #include "fmod_audio_server.h"
 #include "fmod_bank_importer.h"
 #include "bank_inspector_plugin.h"

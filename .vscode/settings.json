@@ -96,5 +96,6 @@
         "version": "cpp",
         "*.def": "cpp",
         "*.inc": "cpp"
-    }
+    },
+    "cmake.ignoreCMakeListsMissing": true
 }

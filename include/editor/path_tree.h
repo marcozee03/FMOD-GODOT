@@ -1,4 +1,5 @@
 
+#ifdef TOOLS_ENABLED
 #include <godot_cpp/variant/string.hpp>
 #include <godot_cpp/variant/packed_string_array.hpp>
 #include <godot_cpp/templates/vector.hpp>
@@ -370,3 +371,4 @@ void PathTree<Data>::BranchNode::print(int indent_level) const
         child->print(indent_level + 1);
     }
 }
+#endif

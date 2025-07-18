@@ -1,5 +1,4 @@
 #pragma once
-// #define TOOLS_ENABLED
 #ifdef TOOLS_ENABLED
 #include <godot_cpp/classes/editor_import_plugin.hpp>
 #include <godot_cpp/variant/string.hpp>

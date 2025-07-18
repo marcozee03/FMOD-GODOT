@@ -1,4 +1,5 @@
 #pragma once
+#ifdef TOOLS_ENABLED
 #include "fmod_editor_cache.h"
 #include "fmod_theme.h"
 #include <classes/object.hpp>
@@ -29,3 +30,4 @@ namespace FmodGodot
         static FmodEditorInterface *get_singleton();
     };
 }
+#endif

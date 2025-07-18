@@ -1,3 +1,4 @@
+#ifdef TOOLS_ENABLED
 #include <fmod.h>
 #include <fmod_studio.h>
 #include <classes/project_settings.hpp>
@@ -122,3 +123,4 @@ namespace FmodGodot
         }
     }
 }
+#endif
