@@ -24,18 +24,17 @@ namespace FmodGodot
         {
             return;
         }
-        Vector<TreeItem *> items;
-        while (current != get_root())
+        emit_signal("fmod_object_activated", get_selected_path());
+    }
+
+    void EventTree::on_item_selected()
+    {
+        TreeItem *current = get_selected();
+        if (current->get_child_count() > 0 || current->get_parent() == get_root())
         {
-            items.push_back(current);
-            current = current->get_parent();
+            return;
         }
-        String str = items[items.size() - 1]->get_text(0);
-        for (int i = items.size() - 2; i >= 0; i--)
-        {
-            str += '/' + items[i]->get_text(0);
-        }
-        emit_signal("fmod_object_selected", str);
+        emit_signal("fmod_object_selected", get_selected_path());
     }
 
     void EventTree::_bind_methods()
@@ -45,6 +44,7 @@ namespace FmodGodot
         BIND_BITFIELD_FLAG(VCAS);
         BIND_BITFIELD_FLAG(GLOBAL_PARAMETERS);
         BIND_PROPERTY_WITH_HINT(display_flags, Variant::Type::INT, PROPERTY_HINT_FLAGS, "BANKS:1,EVENTS:2,VCAS:4,GLOBAL_PARAMETERS:8")
+        ADD_SIGNAL(MethodInfo("fmod_object_activated", PropertyInfo(Variant::PACKED_STRING_ARRAY, "fmod_object_path")));
         ADD_SIGNAL(MethodInfo("fmod_object_selected", PropertyInfo(Variant::PACKED_STRING_ARRAY, "fmod_object_path")));
     }
     EventTree::EventTree()
@@ -52,6 +52,8 @@ namespace FmodGodot
         set_columns(1);
         set_hide_root(true);
         connect("item_activated", callable_mp(this, &EventTree::on_item_activated));
+        connect("item_selected", callable_mp(this, &EventTree::on_item_selected));
+        set_h_scroll_enabled(false);
     }
     EventTree::~EventTree()
     {
@@ -127,6 +129,25 @@ namespace FmodGodot
         {
             initRecur(get_root(), cache, "param:");
         }
+    }
+    String EventTree::get_selected_path()
+    {
+        TreeItem *current = get_selected();
+        if(!current){
+            return "";
+        }
+        Vector<TreeItem *> items;
+        while (current != get_root())
+        {
+            items.push_back(current);
+            current = current->get_parent();
+        }
+        String str = items[items.size() - 1]->get_text(0);
+        for (int i = items.size() - 2; i >= 0; i--)
+        {
+            str += '/' + items[i]->get_text(0);
+        }
+        return str;
     }
 }
 #endif

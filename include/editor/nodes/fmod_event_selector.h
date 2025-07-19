@@ -1,3 +1,4 @@
+#ifdef TOOLS_ENABLED
 #pragma once
 #include <classes/button.hpp>
 #include <classes/line_edit.hpp>
@@ -31,3 +32,4 @@ namespace FmodGodot
         EventTree *get_event_tree();
     };
 }
+#endif
