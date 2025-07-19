@@ -1,3 +1,4 @@
+#define TOOLS_ENABLED
 #ifdef TOOLS_ENABLED
 #include "fmod_audio_server.h"
 #include "fmod_object_details.h"
@@ -61,6 +62,7 @@ namespace FmodGodot
     } // namespace
     void FmodObjectDetails::_bind_methods()
     {
+        ClassDB::bind_method(D_METHOD("display_fmod_object", "p_path"), &FmodObjectDetails::display_fmod_object);
     }
     FmodObjectDetails::FmodObjectDetails()
     {
@@ -72,8 +74,6 @@ namespace FmodGodot
         box->add_child(header, false, INTERNAL_MODE_FRONT);
         add_child(box, false, InternalMode::INTERNAL_MODE_FRONT);
         flowlayout = memnew(HFlowContainer());
-        set_h_size_flags(SizeFlags::SIZE_EXPAND_FILL);
-        set_v_size_flags(SizeFlags::SIZE_EXPAND_FILL);
         flowlayout->set_h_size_flags(SizeFlags::SIZE_EXPAND_FILL);
         flowlayout->set_v_size_flags(SizeFlags::SIZE_EXPAND_FILL);
         add_child(flowlayout, false, InternalMode::INTERNAL_MODE_FRONT);
@@ -81,11 +81,26 @@ namespace FmodGodot
     FmodObjectDetails::~FmodObjectDetails()
     {
     }
+
+    namespace
+    {
+        inline const String bool_to_string(bool value)
+        {
+            if (value)
+            {
+                return "true";
+            }
+            else
+            {
+                return "false";
+            }
+        }
+    }
     void FmodObjectDetails::display_fmod_object(const String &p_path)
     {
         for (int i = flowlayout->get_child_count(true) - 1; i >= 0; i--)
         {
-            get_child(i)->queue_free();
+            flowlayout->get_child(i, true)->queue_free();
         }
         const FmodTheme *theme = FmodEditorInterface::get_singleton()->get_theme();
         Label *label = memnew(Label());
@@ -97,20 +112,38 @@ namespace FmodGodot
             icon->set_texture(theme->event_icon);
             Event event = cache->get_event(p_path);
             push_copy_label(flowlayout, "full path: ", event.full_path);
-            push_label(flowlayout, "guid: " + fmod_guid_to_string(event.guid));
+            push_label(flowlayout, String("guid: " + fmod_guid_to_string(event.guid)));
             if (event.is3d)
             {
-                push_label(flowlayout, "3D: " + event.is3d);
-                push_label(flowlayout, "Doppler Enabled: " + event.doppler_enabled);
+                push_label(flowlayout, String("3D: ") + bool_to_string(event.is3d));
+                push_label(flowlayout, String("Doppler Enabled: ") + bool_to_string(event.doppler_enabled));
                 int minutes = event.lengthMS / (60 * 1000);
                 int seconds = (event.lengthMS / 1000) % 60;
                 int milliseconds = event.lengthMS % 1000;
                 push_label(flowlayout, "Duration: " + String(":").join({itos(minutes).pad_zeros(2), itos(seconds).pad_zeros(2), itos(milliseconds).pad_zeros(3)}));
-                push_label(flowlayout, "Min Distance: " + rtos(event.min));
-                push_label(flowlayout, "Max Distance: " + rtos(event.max));
+                push_label(flowlayout, String("Min Distance: ") + rtos(event.min));
+                push_label(flowlayout, String("Max Distance: ") + rtos(event.max));
             }
-            push_label(flowlayout, "One Shot: " + event.one_shot);
-            push_label(flowlayout, "Stream: " + event.stream);
+            push_label(flowlayout, String("One Shot: ") + bool_to_string(event.is3d));
+            push_label(flowlayout, String("Stream: ") + bool_to_string(event.stream));
+
+            VBoxContainer *vbox = memnew(VBoxContainer());
+            flowlayout->add_child(vbox, false, INTERNAL_MODE_FRONT);
+            for (auto param : event.parameters)
+            {
+                if (param.discrete)
+                {
+                    push_label(vbox, param.full_path, FmodEditorInterface::get_singleton()->get_theme()->d_parameter_icon);
+                }
+                else
+                {
+                    push_label(vbox, param.full_path, FmodEditorInterface::get_singleton()->get_theme()->c_parameter_icon);
+                }
+
+                push_label(vbox, "\tGuid: " + fmod_guid_to_string(param.guid));
+                push_label(vbox, "\tRange [Min...Default..Max] [" + itos(param.min_value) + "..." + itos(param.default_value) + "..." + itos(param.max_value) + "]");
+            }
+
             // label->set_text("is3D: " + event.parameters);
         }
         else if (p_path.begins_with("bank"))

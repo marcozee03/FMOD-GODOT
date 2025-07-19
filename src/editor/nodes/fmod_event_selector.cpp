@@ -29,7 +29,7 @@ namespace FmodGodot
         windowTree = memnew(EventTree);
         windowTree->set_display_flags(EventTree::DisplayFlags::EVENTS);
         windowTree->set_select_mode(Tree::SelectMode::SELECT_SINGLE);
-        windowTree->connect("fmod_object_selected", callable_mp(this, &FmodEventPathSelector::on_fmod_object_selected));
+        windowTree->connect("fmod_object_activated", callable_mp(this, &FmodEventPathSelector::on_fmod_object_selected));
         windowTree->set_anchors_preset(LayoutPreset::PRESET_FULL_RECT);
         window->connect("close_requested", Callable(window, "hide"));
         window->add_child(windowTree);

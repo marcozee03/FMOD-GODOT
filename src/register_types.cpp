@@ -31,6 +31,7 @@
 #include <classes/editor_interface.hpp>
 #include "fmod_object_details.h"
 #include "fmod_editor_interface.h"
+#include "fmod_event_browser.h"
 #endif
 
 using namespace godot;
@@ -155,6 +156,7 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
     GDREGISTER_INTERNAL_CLASS(FmodBankImporter);
     GDREGISTER_INTERNAL_CLASS(BankInspectorPlugin);
     GDREGISTER_INTERNAL_CLASS(FmodObjectDetails);
+    GDREGISTER_INTERNAL_CLASS(FmodEventBrowser);
     EditorPlugins::add_by_type<FmodEditorPlugin>();
 #endif // TOOLS_ENABLED
   }

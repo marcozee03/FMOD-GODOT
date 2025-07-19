@@ -11,6 +11,9 @@ namespace FmodGodot
         Ref<Texture2D> c_parameter_icon;
         Ref<Texture2D> d_parameter_icon;
         Ref<Texture2D> bank_icon;
+        Ref<Texture2D> fmod_icon;
+        Ref<Texture2D> bank_loader_icon;
+        Ref<Texture2D> snapshot_icon;
 
     public:
         FmodTheme(/* args */);

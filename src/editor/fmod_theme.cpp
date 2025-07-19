@@ -9,6 +9,9 @@ namespace FmodGodot
         event_icon = ResourceLoader::get_singleton()->load("res://addons/FmodGodot/icons/event_icon.svg");
         c_parameter_icon = ResourceLoader::get_singleton()->load("res://addons/FmodGodot/icons/c_parameter_icon.svg");
         d_parameter_icon = ResourceLoader::get_singleton()->load("res://addons/FmodGodot/icons/d_parameter_icon.svg");
+        bank_loader_icon = ResourceLoader::get_singleton()->load("res://addons/FmodGodot/icons/bank_loader_icon.svg");
+        snapshot_icon = ResourceLoader::get_singleton()->load("res://addons/FmodGodot/icons/snapshot_icon.svg");
+        fmod_icon = ResourceLoader::get_singleton()->load("res://addons/FmodGodot/icons/fmod_icon.svg");
     }
 
     FmodTheme::~FmodTheme()
