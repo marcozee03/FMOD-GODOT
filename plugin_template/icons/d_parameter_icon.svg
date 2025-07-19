@@ -1,9 +1,1 @@
-<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 21" width="18" height="21">
-	<title>d_parameter_icon</title>
-	<defs>
-		<image  width="18" height="21" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAVCAMAAAB8FU7dAAAAAXNSR0IB2cksfwAAAGxQTFRFAAAAAAAAAAAAAAAAAAAAHx8fTExMSEhIMTExAAAAAAAAOzs7jo6OiIiIj4+PXFxcAAAAODg4h4eHgICAV1dXPz8/Q0NDKysrAAAAX19fAAAANzc3NjY2VlZWf39/AAAAGxsbAwMDTk5OR0dHZLhzlQAAACR0Uk5Ti+ztr93/////6NX//////+H/////////8P///////+r/////RH/TkgAAAHVJREFUeJx1kNsSgjAMRAPSIlQrFsKlykX4/3/U6YwlbeA8ntnZSRYgSUMukAmZE+S1gFLd7gT9qKB8mppgGqLQ0Xa9V4P94xVaEafQou96cfXmSnEVdY2Bmk5SPzUvrTtb7Mof/VnjFG78bbKE0vFeB6vy7b+Cnhf2Pv5vKwAAAABJRU5ErkJggg=="/>
-	</defs>
-	<style>
-	</style>
-	<use id="Background" href="#img1" x="0" y="0"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><defs><linearGradient id="a" x2="0" y1="1" y2="15" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff5f5f"/><stop offset=".5" stop-color="#e1da5b"/><stop offset="1" stop-color="#5fff97"/></linearGradient></defs><path d="M2.305 1C1.582 1 1 1.582 1 2.305v11.39C1 14.418 1.582 15 2.305 15h11.39c.723 0 1.305-.582 1.305-1.305V2.305C15 1.582 14.418 1 13.695 1Zm.533 1h10.324c.464 0 .838.374.838.838v10.324a.836.836 0 0 1-.838.838H2.838A.836.836 0 0 1 2 13.162V2.838C2 2.374 2.374 2 2.838 2" style="fill:url(#a);fill-opacity:1;fill-rule:nonzero"/><path d="M14 5H8v6H2" style="fill:none;stroke:url(#a);stroke-linecap:square;stroke-linejoin:round;stroke-opacity:1"/></svg>

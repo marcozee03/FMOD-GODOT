@@ -1,3 +1,4 @@
+// #define TOOLS_ENABLED
 #ifdef TOOLS_ENABLED
 #include <fmod.h>
 #include <fmod_studio.h>
@@ -11,6 +12,8 @@
 #include "fmod_editor_cache.h"
 #include "classes/tree_item.hpp"
 #include "globals.h"
+#include "classes/editor_interface.hpp"
+#include <classes/theme.hpp>
 using namespace godot;
 namespace FmodGodot
 {
@@ -61,10 +64,11 @@ namespace FmodGodot
             {
                 auto child = root->create_child();
                 child->set_text(0, str);
-                PackedStringArray subcontents = cache->get_contents(current_path + str);
-                if (!cache->get_contents(str).is_empty())
+                PackedStringArray subcontents = cache->get_contents(current_path + String("/") + str);
+                if (!subcontents.is_empty())
                 {
-                    recurOverEvents(child, cache, subcontents, current_path + str + '/');
+                    child->set_icon(0, EditorInterface::get_singleton()->get_editor_theme()->get_icon("Folder", "EditorIcons"));
+                    recurOverEvents(child, cache, subcontents, current_path + String("/") + str);
                 }
             }
         }
@@ -72,15 +76,17 @@ namespace FmodGodot
         {
             TreeItem *item = root->create_child(-1);
             item->set_text(0, current_path);
+            item->set_icon(0, EditorInterface::get_singleton()->get_editor_theme()->get_icon("Folder", "EditorIcons"));
             auto event_contents = cache->get_contents(current_path);
-            for (auto str : event_contents)
+            for (const String &str : event_contents)
             {
                 auto child = item->create_child();
                 child->set_text(0, str);
-                PackedStringArray subcontents = cache->get_contents(current_path + str);
+                PackedStringArray subcontents = cache->get_contents(current_path + String("/") + str);
                 if (!subcontents.is_empty())
                 {
-                    recurOverEvents(child, cache, subcontents, current_path + str + '/');
+                    child->set_icon(0, EditorInterface::get_singleton()->get_editor_theme()->get_icon("Folder", "EditorIcons"));
+                    recurOverEvents(child, cache, subcontents, current_path + String("/") + str);
                 }
             }
         }
