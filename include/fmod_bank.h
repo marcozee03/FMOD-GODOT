@@ -10,6 +10,7 @@ namespace FmodGodot
     {
         friend class FmodBankFormatLoader;
         friend class FmodBankLoader;
+        friend class FmodAudioServer;
         GDCLASS(FmodBank, Resource);
 
     private:

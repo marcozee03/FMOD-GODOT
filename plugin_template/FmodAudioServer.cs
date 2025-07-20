@@ -54,7 +54,8 @@ public const string template = "template_release";
         private static extern int get_fmod_core(out IntPtr handle);
         [DllImport(Version.dll)]
         private static extern int get_fmod_studio(out IntPtr handle);
-
+        [DLLImport(Version.dll)]
+        private static extern play_one_shot_by_id(Vector4i guid, Vector3 position = Vector3.Zero);
         public static void PlayOneShot(string path)
         {
             Studio.getEvent(path, out var _event).ToString();
@@ -82,10 +83,11 @@ public const string template = "template_release";
         }
         public static void PlayOneShot(GUID @event)
         {
-            Studio.getEventByID(@event, out var _event);
-            _event.createInstance(out var instance);
-            instance.start();
-            instance.release();
+            play_one_shot_by_id(@event)
+            // Studio.getEventByID(@event, out var _event);
+            // _event.createInstance(out var instance);
+            // instance.start();
+            // instance.release();
         }
     }
 }

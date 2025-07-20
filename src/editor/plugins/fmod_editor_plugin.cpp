@@ -59,6 +59,9 @@ namespace FmodGodot
         remove_inspector_plugin(eventInspector);
         remove_inspector_plugin(bankInspector);
         remove_import_plugin(bankImporter);
+        // memdelete(eventInspector);
+        // memdelete(bankInspector);
+        // memdelete(bankImporter);
     }
 }
 #endif

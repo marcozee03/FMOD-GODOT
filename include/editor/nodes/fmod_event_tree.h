@@ -33,7 +33,8 @@ namespace FmodGodot
         void set_display_flags(int p_flags);
         int get_display_flags() const;
         void LoadEvents();
-        String get_selected_path();
+        String get_item_path(TreeItem* item);
+        Variant _get_drag_data(const Vector2& p_vec2) override;
     };
 
 }

@@ -1,6 +1,10 @@
+#define TOOLS_ENABLED
 #ifdef TOOLS_ENABLED
 #include "fmod_editor_interface.h"
 #include "fmod_audio_server.h"
+#include <classes/os.hpp>
+#include <classes/project_settings.hpp>
+#include "fmod_string_names.h"
 namespace FmodGodot
 {
     FmodEditorInterface *FmodEditorInterface::singleton = nullptr;
@@ -20,12 +24,14 @@ namespace FmodGodot
     }
     void FmodEditorInterface::restart_server()
     {
-    }
-    void FmodEditorInterface::restart_server_with_live_update(short port)
-    {
+        FmodAudioServer::get_singleton()->finish();\
+        FmodAudioServer::get_singleton()->init_with_project_settings();
+        FmodAudioServer::get_singleton()->load_start_up_banks();
     }
     void FmodEditorInterface::build_banks()
     {
+        //TODO fix don't want it to open fmod studio (will also halt godot till it is closed)
+        OS::get_singleton()->execute(ProjectSettings::get_singleton()->get_setting_with_override(FMOD_STUDIO_PATH), {"-build", ProjectSettings::get_singleton()->get_setting_with_override(FMOD_PROJECT_PATH)});
     }
     void FmodEditorInterface::_bind_methods() {}
     const FmodEditorCache *FmodEditorInterface::get_cache() const

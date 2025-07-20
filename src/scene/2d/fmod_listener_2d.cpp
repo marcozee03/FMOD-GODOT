@@ -3,6 +3,7 @@
 #include "fmod_globals.h"
 #include "globals.h"
 #include <classes/rigid_body2d.hpp>
+#include "fmod_studio.h"
 using namespace godot;
 namespace FmodGodot
 {
@@ -73,8 +74,14 @@ namespace FmodGodot
     }
     void FmodListener2D::set_listener_index(int index)
     {
-        listener_index = Math::clamp(index, 0, FMOD_MAX_LISTENERS - 1);
+        int count;
+        FMOD_Studio_System_GetNumListeners(FmodAudioServer::get_singleton()->get_studio(), &count);
 
+        listener_index = Math::clamp(index, 0, FMOD_MAX_LISTENERS - 1);
+        if (count < index + 1)
+        {
+            FMOD_Studio_System_SetNumListeners(FmodAudioServer::get_singleton()->get_studio(), index + 1);
+        }
         // FmodAudioServer::get_singleton()->
     }
 
