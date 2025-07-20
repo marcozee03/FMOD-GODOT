@@ -80,8 +80,18 @@ namespace FmodGodot
         FMOD_STUDIO_SYSTEM *studio_system;
         bool initialized;
         bool muted;
+        Vector<Ref<FmodBank>> start_up_banks;
         // core api
+
     public:
+        FmodAudioServer();
+        ~FmodAudioServer();
+        static InitSettings get_fmod_settings();
+        FMOD_SYSTEM *get_core();
+        FMOD_STUDIO_SYSTEM *get_studio();
+        void get_core_ref(FMOD_SYSTEM **core);
+        void get_studio_ref(FMOD_STUDIO_SYSTEM **studio);
+
         FMOD_STUDIO_EVENTINSTANCE *create_instance(const Vector4i p_guid) const;
 
         void play_one_shot_by_id(const Vector4i p_guid, const godot::Vector3 p_position = godot::Vector3()) const;
@@ -116,7 +126,7 @@ namespace FmodGodot
         FMOD_STUDIO_VCA *get_vca(const String &p_path) const;
         FMOD_RESULT load_bank(const String &p_bankName, bool loadSamples = false);
         FMOD_RESULT load_bank_by_file(const String &p_path, bool loadSamples = false);
-        // FMOD_RESULT load_bank(FmodBank bank, bool loadSamples = false);
+        void unload_banks();
         bool has_bank_loaded(const String &p_bankName) const;
 
         bool have_all_banks_loaded() const;
@@ -130,9 +140,9 @@ namespace FmodGodot
         void set_listener_location(RigidBody3D *rigidBody2D, Node3D *attenuationObject = nullptr);
         void set_listener_location(int listenerIndex, RigidBody3D *rigidBody, Node3D *attenuationObject = nullptr);
         void set_listener_location(int listenerIndex, Node3D *p_node, Node3D *attenuationObject = nullptr);
+        void load_start_up_banks();
 
     private:
-        void load_start_up_banks();
         Vector<AttachedInstance> instances;
         void thread_func();
         int find_instance(FMOD_STUDIO_EVENTINSTANCE *p_event);
@@ -141,7 +151,6 @@ namespace FmodGodot
         template <typename Node3D>
         void _attach_instance_3d(Node3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event, Attachment p_attachment, bool p_non_rigid_body_velocity = false);
 
-    private:
         bool thread_exited;
         mutable bool exit_thread = false;
         Ref<Thread> thread;
@@ -151,7 +160,8 @@ namespace FmodGodot
     public:
         static FmodAudioServer *singleton;
         static FmodAudioServer *get_singleton();
-        FMOD_RESULT init();
+        FMOD_RESULT init_with_project_settings();
+        FMOD_RESULT init(const InitSettings &p_settings);
         void lock();
         void unlock();
         void finish();
@@ -159,19 +169,6 @@ namespace FmodGodot
     protected:
         static void _bind_methods();
         // void _notification(int p_what);
-
-    public:
-        FmodAudioServer();
-        ~FmodAudioServer();
-        static FMOD_SYSTEM *get_global_core();
-        static FMOD_STUDIO_SYSTEM *get_global_studio();
-        static void get_global_core_ref(FMOD_SYSTEM **core);
-        static void get_global_studio_ref(FMOD_STUDIO_SYSTEM **studio);
-        FMOD_SYSTEM *get_core();
-        FMOD_STUDIO_SYSTEM *get_studio();
-        void get_core_ref(FMOD_SYSTEM **core);
-        void get_studio_ref(FMOD_STUDIO_SYSTEM **studio);
-        void unload_banks();
     };
 
     template <typename Node2D>

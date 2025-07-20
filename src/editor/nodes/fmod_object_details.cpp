@@ -1,4 +1,3 @@
-#define TOOLS_ENABLED
 #ifdef TOOLS_ENABLED
 #include "fmod_audio_server.h"
 #include "fmod_object_details.h"

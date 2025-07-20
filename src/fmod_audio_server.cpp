@@ -13,6 +13,7 @@
 #include "fmod_string_names.h"
 #include "classes/os.hpp"
 #include "fmod_editor_interface.h"
+#include "classes/resource_loader.hpp"
 #ifdef TOOLS_ENABLED
 #include <classes/editor_interface.hpp>
 #include <classes/editor_settings.hpp>
@@ -21,6 +22,42 @@ using namespace std;
 using namespace godot;
 namespace FmodGodot
 {
+    namespace
+    {
+        void get_live_update_settings(FmodAudioServer::InitSettings &settings)
+        {
+
+            auto pj = ProjectSettings::get_singleton();
+            settings.live_update = static_cast<FmodAudioServer::LiveUpdate>(
+                static_cast<int>(pj->get_setting_with_override(LIVE_UPDATE)));
+            settings.live_update_port = pj->get_setting_with_override(LIVE_UPDATE_PORT);
+        }
+        void get_debug_settings(FmodAudioServer::InitSettings &settings)
+        {
+            auto pj = ProjectSettings::get_singleton();
+            settings.logging_level = pj->get_setting_with_override(LOGGING_LEVEL);
+            settings.debug_type = pj->get_setting_with_override(DEBUG_TYPE);
+            settings.debug_display = pj->get_setting_with_override(DEBUG_DISPLAY);
+        }
+
+    }
+    FmodAudioServer::InitSettings FmodAudioServer::get_fmod_settings()
+    {
+        FmodAudioServer::InitSettings settings;
+        auto pj = ProjectSettings::get_singleton();
+        settings.sample_rate = pj->get_setting_with_override(SAMPLE_RATE);
+        settings.dspbuffer_length = pj->get_setting_with_override(BUFFER_LENGTH);
+        settings.dspbuffer_count = pj->get_setting_with_override(BUFFER_COUNT);
+        settings.software_channels = pj->get_setting_with_override(REAL_COUNT);
+        settings.virtual_channels = pj->get_setting_with_override(VIRTUAL_COUNT);
+        settings.encryption_key = pj->get_setting_with_override(ENCRYPTION_KEY);
+        settings.rolloff_scale = pj->get_setting_with_override(ROLLOFF_SCALE);
+        settings.doppler_scale = pj->get_setting_with_override(DOPPLER_SCALE);
+        settings.distance_factor = pj->get_setting_with_override(DISTANCE_FACTOR);
+        get_live_update_settings(settings);
+        get_debug_settings(settings);
+        return settings;
+    }
     FMOD_RESULT godot_file_error_to_fmod_file_error(Error err)
     {
         switch (err)
@@ -80,64 +117,19 @@ namespace FmodGodot
     FmodAudioServer::~FmodAudioServer()
     {
     }
-    namespace
-    {
-        void get_live_update_settings(FmodAudioServer::InitSettings &settings)
-        {
-            // #ifdef TOOLS_ENABLED
-            //             Ref<EditorSettings> es = EditorInterface::get_singleton()->get_editor_settings();
-            //             settings.live_update = static_cast<FmodAudioServer::LiveUpdate>(
-            //                 static_cast<int>(es->get_setting(LIVE_UPDATE)));
-            //             settings.live_update_port = es->get_setting(LIVE_UPDATE_PORT);
-            // #else
-            auto pj = ProjectSettings::get_singleton();
-            settings.live_update = static_cast<FmodAudioServer::LiveUpdate>(
-                static_cast<int>(pj->get_setting_with_override(LIVE_UPDATE)));
-            settings.live_update_port = pj->get_setting_with_override(LIVE_UPDATE_PORT);
-            // #endif // TOOLS_ENABLED
-        }
-        void get_debug_settings(FmodAudioServer::InitSettings &settings)
-        {
-            // #ifdef TOOLS_ENABLED
-            //             Ref<EditorSettings> es = EditorInterface::get_singleton()->get_editor_settings();
-            //             settings.logging_level = es->get_setting(LOGGING_LEVEL);
-            //             settings.debug_type = es->get_setting(DEBUG_TYPE);
-            //             settings.debug_display = es->get_setting(DEBUG_DISPLAY);
-            // #else
-            auto pj = ProjectSettings::get_singleton();
-            settings.logging_level = pj->get_setting_with_override(LOGGING_LEVEL);
-            settings.debug_type = pj->get_setting_with_override(DEBUG_TYPE);
-            settings.debug_display = pj->get_setting_with_override(DEBUG_DISPLAY);
-            // #endif // TOOLS_ENABLED
-        }
 
-        FmodAudioServer::InitSettings get_settings()
-        {
-            FmodAudioServer::InitSettings settings;
-            auto pj = ProjectSettings::get_singleton();
-            settings.sample_rate = pj->get_setting_with_override(SAMPLE_RATE);
-            settings.dspbuffer_length = pj->get_setting_with_override(BUFFER_LENGTH);
-            settings.dspbuffer_count = pj->get_setting_with_override(BUFFER_COUNT);
-            settings.software_channels = pj->get_setting_with_override(REAL_COUNT);
-            settings.virtual_channels = pj->get_setting_with_override(VIRTUAL_COUNT);
-            settings.encryption_key = pj->get_setting_with_override(ENCRYPTION_KEY);
-            settings.rolloff_scale = pj->get_setting_with_override(ROLLOFF_SCALE);
-            settings.doppler_scale = pj->get_setting_with_override(DOPPLER_SCALE);
-            settings.distance_factor = pj->get_setting_with_override(DISTANCE_FACTOR);
-            get_live_update_settings(settings);
-            get_debug_settings(settings);
-            return settings;
-        }
+    FMOD_RESULT FmodAudioServer::init_with_project_settings()
+    {
+        return init(get_fmod_settings());
     }
 
-    FMOD_RESULT FmodAudioServer::init()
+    FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
     {
         mutex.instantiate();
         thread.instantiate();
-        InitSettings settings = get_settings();
-
+        exit_thread = false;
         FMOD_STUDIO_INITFLAGS studio_init = FMOD_STUDIO_INIT_NORMAL;
-        switch (settings.live_update)
+        switch (p_settings.live_update)
         {
         case DISABLED: // disabled
             studio_init = FMOD_STUDIO_INIT_NORMAL;
@@ -157,7 +149,7 @@ namespace FmodGodot
             break;
         }
         FMOD_RESULT result;
-        result = FMOD_Debug_Initialize(settings.logging_level | settings.debug_type | settings.debug_display, FMOD_DEBUG_MODE_TTY, 0, nullptr);
+        result = FMOD_Debug_Initialize(p_settings.logging_level | p_settings.debug_type | p_settings.debug_display, FMOD_DEBUG_MODE_TTY, 0, nullptr);
 
         result = FMOD_Studio_System_Create(&studio_system, FMOD_VERSION);
         result = FMOD_Studio_System_GetCoreSystem(studio_system, &core_system);
@@ -166,22 +158,22 @@ namespace FmodGodot
         FMOD_ADVANCEDSETTINGS fmod_settings;
         fmod_settings.cbSize = sizeof(FMOD_ADVANCEDSETTINGS);
         FMOD_System_GetAdvancedSettings(core_system, &fmod_settings);
-        fmod_settings.profilePort = settings.live_update_port;
+        fmod_settings.profilePort = p_settings.live_update_port;
         FMOD_System_SetAdvancedSettings(core_system, &fmod_settings);
-        FMOD_System_SetSoftwareFormat(core_system, settings.sample_rate, FMOD_SPEAKERMODE_DEFAULT, 0);
-        FMOD_System_SetDSPBufferSize(core_system, settings.dspbuffer_length, settings.dspbuffer_count);
-        FMOD_System_SetSoftwareChannels(core_system, settings.software_channels);
-        FMOD_System_Set3DSettings(core_system, settings.doppler_scale, settings.distance_factor, settings.rolloff_scale);
+        FMOD_System_SetSoftwareFormat(core_system, p_settings.sample_rate, FMOD_SPEAKERMODE_DEFAULT, 0);
+        FMOD_System_SetDSPBufferSize(core_system, p_settings.dspbuffer_length, p_settings.dspbuffer_count);
+        FMOD_System_SetSoftwareChannels(core_system, p_settings.software_channels);
+        FMOD_System_Set3DSettings(core_system, p_settings.doppler_scale, p_settings.distance_factor, p_settings.rolloff_scale);
         FMOD_System_SetFileSystem(core_system, open_callback, close_callback, read_callback, seek_callback, NULL, NULL, 2048);
         // studio settings
         FMOD_STUDIO_ADVANCEDSETTINGS studio_settings;
         studio_settings.cbsize = sizeof(FMOD_STUDIO_ADVANCEDSETTINGS);
         FMOD_Studio_System_GetAdvancedSettings(studio_system, &studio_settings);
         studio_settings.cbsize = sizeof(FMOD_STUDIO_ADVANCEDSETTINGS);
-        studio_settings.encryptionkey = settings.encryption_key.utf8();
+        studio_settings.encryptionkey = p_settings.encryption_key.utf8();
         FMOD_Studio_System_SetAdvancedSettings(studio_system, &studio_settings);
 
-        result = FMOD_Studio_System_Initialize(studio_system, settings.virtual_channels, studio_init, FMOD_INIT_NORMAL, 0);
+        result = FMOD_Studio_System_Initialize(studio_system, p_settings.virtual_channels, studio_init, FMOD_INIT_NORMAL, 0);
         if (result != FMOD_OK)
         {
             std::cout << "\ninit" << FMOD_ErrorString(result);
@@ -193,9 +185,9 @@ namespace FmodGodot
         }
         initialized = true;
         thread->start(callable_mp(this, &FmodAudioServer::thread_func), Thread::Priority::PRIORITY_NORMAL);
-        load_start_up_banks();
         return result;
     }
+
     void FmodAudioServer::_physics_process()
     {
         lock();
@@ -245,7 +237,8 @@ namespace FmodGodot
             OS::get_singleton()->delay_usec(20);
             tree = cast_to<SceneTree>(Engine::get_singleton()->get_main_loop());
         }
-        tree->connect("physics_frame", callable_mp(this, &FmodAudioServer::_physics_process));
+        Callable physics_callback = callable_mp(this, &FmodAudioServer::_physics_process);
+        tree->connect("physics_frame", physics_callback);
         while (!exit_thread)
         {
             FMOD_3D_ATTRIBUTES attributes;
@@ -285,6 +278,7 @@ namespace FmodGodot
             FMOD_Studio_System_Update(studio_system);
             OS::get_singleton()->delay_usec(20);
         }
+        tree->disconnect("physics_frame", physics_callback);
         FMOD_Studio_System_Release(studio_system);
     }
 
@@ -489,13 +483,8 @@ namespace FmodGodot
     {
 
         Array arr;
-        // #ifdef TOOLS_ENABLED
-        //         int what = EditorInterface::get_singleton()->get_editor_settings()->get_setting(LOAD_BANKS);
-        //         arr = EditorInterface::get_singleton()->get_editor_settings()->get_setting(SPECIFIED_BANKS);
-        // #else
         int what = ProjectSettings::get_singleton()->get_setting_with_override(LOAD_BANKS);
         arr = ProjectSettings::get_singleton()->get_setting_with_override(SPECIFIED_BANKS);
-        // #endif
         switch (what)
         {
         case 0: // none
@@ -509,7 +498,16 @@ namespace FmodGodot
             auto dir = DirAccess::open(ProjectSettings::get_singleton()->get_setting_with_override(BANK_DIRECTORY));
             for (auto file : dir->get_files())
             {
+                if (!file.ends_with(".bank"))
+                {
+                    continue;
+                }
+                start_up_banks.push_back(ResourceLoader::get_singleton()->load(ProjectSettings::get_singleton()->get_setting_with_override(BANK_DIRECTORY).stringify() + "/" + file));
+#ifdef TOOLS_ENABLED
+                // Hacky but adds redundancy for restarting the audio server to apply project settings changes. since bank resources will become invalid and no longer
+                // be refcount the new bank instances. Shouldn't matter in game builds. the above line makes sure banks aren't unloaded unwillingly
                 load_bank_by_file(ProjectSettings::get_singleton()->get_setting_with_override(BANK_DIRECTORY).stringify() + "/" + file);
+#endif
             }
             break;
         }
@@ -519,6 +517,7 @@ namespace FmodGodot
     }
 
 #pragma region server api
+
     FMOD_RESULT FmodAudioServer::load_bank_by_file(const String &path, bool loadSamples)
     {
         FMOD_STUDIO_BANK *bank;
@@ -541,7 +540,6 @@ namespace FmodGodot
 
         return result;
     }
-
     FMOD_RESULT FmodAudioServer::load_bank(const String &p_name, bool loadSamples)
     {
 
@@ -556,36 +554,6 @@ namespace FmodGodot
         }
         return FMOD_ERR_FILE_NOTFOUND;
     }
-
-    // FMOD_RESULT FmodAudioServer::load_bank(FmodBank p_bank, bool loadSamples)
-    // {
-
-    //     PackedByteArray BankMemory = p_bank.;
-    //     Studio::Bank *bank;
-    //     FMOD_RESULT result = studio_system->loadBankMemory((char *)BankMemory.ptr(), BankMemory.size(), FMOD_STUDIO_LOAD_MEMORY, FMOD_STUDIO_LOAD_BANK_NORMAL, &bank);
-    //     if (result == FMOD_OK)
-    //     {
-    //         banks.insert(p_bank.get_path(), 1);
-    //         if (loadSamples)
-    //         {
-    //             bank->loadSampleData();
-    //         }
-    //     }
-    //     else if (result == FMOD_ERR_EVENT_ALREADY_LOADED)
-    //     {
-    //         banks[p_bank.get_path()] = banks[p_bank.get_path()] + 1;
-    //         if (loadSamples)
-    //         {
-    //             bank->loadSampleData();
-    //         }
-    //     }
-    //     else
-    //     {
-    //         godot::_err_print_error("load_bank", "FmodAudioServer.cpp", 103, "Couldn't load bank:" + path + " error:" + result, true, true);
-    //     }
-
-    //     return result;
-    // }
 
     void FmodAudioServer::unload_banks()
     {
@@ -614,24 +582,6 @@ namespace FmodGodot
     {
         return studio_system;
     }
-
-    FMOD_SYSTEM *FmodAudioServer::get_global_core()
-    {
-        return singleton->get_core();
-    }
-    FMOD_STUDIO_SYSTEM *FmodAudioServer::get_global_studio()
-    {
-        return singleton->get_studio();
-    }
-    void FmodAudioServer::get_global_core_ref(FMOD_SYSTEM **core)
-    {
-        singleton->get_core_ref(core);
-    }
-    void FmodAudioServer::get_global_studio_ref(FMOD_STUDIO_SYSTEM **studio)
-    {
-        singleton->get_studio_ref(studio);
-    }
-
     FMOD_STUDIO_EVENTINSTANCE *FmodAudioServer::create_instance(const Vector4i p_guid) const
     {
         FMOD_GUID guid = cast_to_FMOD_GUID(p_guid);
@@ -641,7 +591,8 @@ namespace FmodGodot
         FMOD_Studio_EventDescription_CreateInstance(description, &event);
         return event;
     }
-    void FmodAudioServer::play_one_shot_by_id(const Vector4i p_guid, const Vector3 p_position) const
+
+     void FmodAudioServer::play_one_shot_by_id(const Vector4i p_guid, const Vector3 p_position) const
     {
         FMOD_STUDIO_EVENTINSTANCE *event = create_instance(p_guid);
         FMOD_3D_ATTRIBUTES attr;
@@ -817,7 +768,7 @@ namespace FmodGodot
 
     bool FmodAudioServer::have_all_banks_loaded() const
     {
-        // TODO is alway true when synchronous
+        // TODO works because banks are loaded syncronously. but should be more robust.
         return true;
     }
 
@@ -884,6 +835,7 @@ namespace FmodGodot
             FMOD_Studio_System_SetListenerAttributes(studio_system, listenerIndex, &node_attr, nullptr);
         }
     }
+
     void FmodAudioServer::set_listener_location(int listenerIndex, Node3D *p_node, Node3D *attenuationObject)
     {
         FMOD_3D_ATTRIBUTES node_attr;
@@ -905,7 +857,7 @@ namespace FmodGodot
     {
         GDE_EXPORT int get_fmod_core(FMOD_SYSTEM **core)
         {
-            FmodAudioServer::get_global_core_ref(core);
+            FmodAudioServer::get_singleton()->get_core_ref(core);
             if (core == NULL)
             {
                 return 1;
@@ -917,7 +869,7 @@ namespace FmodGodot
         }
         GDE_EXPORT int get_fmod_studio(FMOD_STUDIO_SYSTEM **studio)
         {
-            FmodAudioServer::get_global_studio_ref(studio);
+            FmodAudioServer::get_singleton()->get_studio_ref(studio);
             if (studio == NULL)
             {
                 return 1;
@@ -928,4 +880,5 @@ namespace FmodGodot
             }
         }
     }
+
 }
