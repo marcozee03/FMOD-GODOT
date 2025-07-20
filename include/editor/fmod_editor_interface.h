@@ -14,6 +14,7 @@ namespace FmodGodot
         FmodEditorCache cache;
         FmodTheme theme;
         static FmodEditorInterface *singleton;
+        bool live_update_enabled = false;
 
     protected:
         static void _bind_methods();
@@ -22,7 +23,6 @@ namespace FmodGodot
         FmodEditorInterface();
         ~FmodEditorInterface();
         void restart_server();
-        void restart_server_with_live_update(short port);
         void build_banks();
         void refresh();
         const FmodEditorCache *get_cache() const;

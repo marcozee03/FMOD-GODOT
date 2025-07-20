@@ -78,7 +78,9 @@ namespace FmodGodot
     godot::Dictionary propinfo = Dictionary();
     // ADD_EDITOR_SETTING("Fmod/Debug/logging_level", true, false, true, 1, Variant::Type::INT, PROPERTY_HINT_ENUM, "NONE:0,ERROR:1,WARNING:2,LOG:4", propinfo);
     ADD_PROJECT_SETTING(LIVE_UPDATE, true, false, true, 0, Variant::Type::INT, PROPERTY_HINT_ENUM, "Disabled:0, Enabled:1, Development Build Only:2", propinfo);
+    ADD_PROJECT_SETTING(LIVE_UPDATE + String(".editor"), true, false, true, 0, Variant::Type::INT, PROPERTY_HINT_ENUM, "Disabled:0, Enabled:1, Development Build Only:2", propinfo);
     ADD_PROJECT_SETTING(LIVE_UPDATE_PORT, true, false, false, 9264, Variant::Type::INT, PROPERTY_HINT_RANGE, "0,65536", propinfo);
+    ADD_PROJECT_SETTING(LIVE_UPDATE_PORT + String(".editor"), true, false, false, 9265, Variant::Type::INT, PROPERTY_HINT_RANGE, "0,65536", propinfo);
     ADD_PROJECT_SETTING(SAMPLE_RATE, true, false, false, 48000, Variant::Type::INT, PROPERTY_HINT_RANGE, "8000,192000", propinfo);
     ADD_PROJECT_SETTING(REAL_COUNT, true, false, false, 64, Variant::Type::INT, PROPERTY_HINT_NONE, "", propinfo);
     ADD_PROJECT_SETTING(VIRTUAL_COUNT, true, false, false, 1024, Variant::Type::INT, PROPERTY_HINT_RANGE, "0,4095", propinfo);
@@ -88,12 +90,12 @@ namespace FmodGodot
     ADD_PROJECT_SETTING(DISTANCE_FACTOR, true, false, false, 1, Variant::Type::FLOAT, PROPERTY_HINT_NONE, "", propinfo);
     ADD_PROJECT_SETTING(ROLLOFF_SCALE, true, false, false, 1, Variant::Type::FLOAT, PROPERTY_HINT_NONE, "", propinfo);
 
-    ADD_PROJECT_SETTING(SOURCE_TYPE, true, false, false, 1, Variant::Type::INT, PROPERTY_HINT_ENUM, "FMOD Studio Project:0,Single Platform Build:1, Multiple Platform Build:2", propinfo);
-    ADD_PROJECT_SETTING(FMOD_STUDIO_PATH, true, false, false, "", Variant::Type::STRING, PROPERTY_HINT_FILE, "", propinfo);
-    ADD_PROJECT_SETTING(FMOD_PROJECT_PATH, true, false, false, "", Variant::Type::STRING, PROPERTY_HINT_NONE, "", propinfo);
+    ADD_PROJECT_SETTING(SOURCE_TYPE, true, false, false, 1, Variant::Type::INT, PROPERTY_HINT_ENUM, "FMOD Studio Project(WIP):0,Single Platform Build:1, Multiple Platform Build(WIP):2", propinfo);
+    ADD_PROJECT_SETTING(FMOD_STUDIO_PATH, true, false, false, "", Variant::Type::STRING, PROPERTY_HINT_GLOBAL_FILE, "", propinfo);
+    ADD_PROJECT_SETTING(FMOD_PROJECT_PATH, true, false, false, "", Variant::Type::STRING, PROPERTY_HINT_GLOBAL_FILE, "", propinfo);
     ADD_PROJECT_SETTING(BANK_DIRECTORY, true, false, false, "res://banks/", Variant::Type::STRING, PROPERTY_HINT_DIR, "", propinfo);
     ADD_PROJECT_SETTING(LOAD_BANKS, true, false, false, 0, Variant::Type::INT, PROPERTY_HINT_ENUM, "None:0,Specified:1,All:2", propinfo);
-    ADD_PROJECT_SETTING(SPECIFIED_BANKS, true, false, false, {}, Variant::Type::ARRAY, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":FmodBank", propinfo);
+    ADD_PROJECT_SETTING(SPECIFIED_BANKS, true, false, false, {}, Variant::Type::PACKED_STRING_ARRAY, PROPERTY_HINT_TYPE_STRING, String::num(Variant::STRING) + "/" + String::num(PROPERTY_HINT_FILE) + ":*.bank", propinfo);
     ADD_PROJECT_SETTING(LOAD_SAMPLE_DATA, true, false, false, false, Variant::Type::BOOL, PROPERTY_HINT_NONE, "", propinfo);
     ADD_PROJECT_SETTING(ENCRYPTION_KEY, true, false, false, "", Variant::Type::STRING, PROPERTY_HINT_NONE, "", propinfo);
 
@@ -118,7 +120,7 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
     GDREGISTER_CLASS(FmodAudioServer);
     audio_server = memnew(FmodAudioServer);
     FmodAudioServer::singleton = audio_server;
-    audio_server->init();
+    audio_server->init_with_project_settings();
     Engine::get_singleton()->register_singleton("FmodAudioServer", audio_server);
   }
   if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
@@ -127,8 +129,6 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
     GDREGISTER_CLASS(FmodListener2D);
     GDREGISTER_CLASS(FmodListener3D);
     GDREGISTER_ABSTRACT_CLASS(FmodBank);
-    GDREGISTER_CLASS(FmodEventPathSelector);
-    GDREGISTER_CLASS(EventTree);
     GDREGISTER_INTERNAL_CLASS(FmodBankFormatLoader);
     GDREGISTER_INTERNAL_CLASS(FmodBankFormatSaver);
     GDREGISTER_CLASS(FmodEventEmitter2D);
@@ -138,6 +138,7 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
     ResourceSaver::get_singleton()->add_resource_format_saver(bankSaver);
     ResourceLoader::get_singleton()->add_resource_format_loader(bankLoader);
     GDREGISTER_CLASS(FmodBankLoader);
+    audio_server->load_start_up_banks();
   }
 
   // ClassDB::register_class<FMODEventEmitter2D>();
@@ -145,10 +146,14 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
   if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
   {
 #ifdef TOOLS_ENABLED
+    GDREGISTER_INTERNAL_CLASS(FmodEventPathSelector);
+    GDREGISTER_INTERNAL_CLASS(EventTree);
+
     GDREGISTER_INTERNAL_CLASS(FmodEditorInterface);
     editor_interface = memnew(FmodEditorInterface);
     editor_interface->refresh();
     Engine::get_singleton()->register_singleton("FmodEditorInterface", editor_interface);
+
     GDREGISTER_INTERNAL_CLASS(FmodEditorPlugin)
     GDREGISTER_INTERNAL_CLASS(EventInspector)
     GDREGISTER_INTERNAL_CLASS(EventPathSelectorProperty)

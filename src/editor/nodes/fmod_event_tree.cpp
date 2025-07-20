@@ -1,4 +1,3 @@
-// #define TOOLS_ENABLED
 #ifdef TOOLS_ENABLED
 #include <fmod.h>
 #include <fmod_studio.h>
@@ -14,6 +13,7 @@
 #include "globals.h"
 #include "classes/editor_interface.hpp"
 #include <classes/theme.hpp>
+#include "classes/label.hpp"
 using namespace godot;
 namespace FmodGodot
 {
@@ -24,7 +24,7 @@ namespace FmodGodot
         {
             return;
         }
-        emit_signal("fmod_object_activated", get_selected_path());
+        emit_signal("fmod_object_activated", get_item_path(get_selected()));
     }
 
     void EventTree::on_item_selected()
@@ -34,7 +34,7 @@ namespace FmodGodot
         {
             return;
         }
-        emit_signal("fmod_object_selected", get_selected_path());
+        emit_signal("fmod_object_selected", get_item_path(get_selected()));
     }
 
     void EventTree::_bind_methods()
@@ -130,10 +130,11 @@ namespace FmodGodot
             initRecur(get_root(), cache, "param:");
         }
     }
-    String EventTree::get_selected_path()
+    String EventTree::get_item_path(TreeItem *item)
     {
-        TreeItem *current = get_selected();
-        if(!current){
+        TreeItem *current = item;
+        if (!current)
+        {
             return "";
         }
         Vector<TreeItem *> items;
@@ -148,6 +149,18 @@ namespace FmodGodot
             str += '/' + items[i]->get_text(0);
         }
         return str;
+    }
+    Variant EventTree::_get_drag_data(const Vector2 &p_vec2)
+    {
+        TreeItem *item = get_item_at_position(p_vec2);
+        if (item)
+        {
+            Label *label = memnew(Label());
+            label->set_text(get_item_path(item));
+            set_drag_preview(label);
+            return get_item_path(item);
+        }
+        return Variant();
     }
 }
 #endif

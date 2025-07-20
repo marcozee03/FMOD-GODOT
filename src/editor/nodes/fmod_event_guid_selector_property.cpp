@@ -38,7 +38,7 @@ namespace FmodGodot
 
     void EventGUIDSelectorProperty::on_text_changed(String newText)
     {
-        FMOD_STUDIO_SYSTEM *studio = FmodAudioServer::get_global_studio();
+        FMOD_STUDIO_SYSTEM *studio = FmodAudioServer::get_singleton()->get_studio();
         FMOD_GUID guid;
         FMOD_Studio_System_LookupID(studio, newText.utf8(), &guid);
         eventSelector->get_line_edit()->set_tooltip_text(fmod_guid_to_string(guid));
@@ -74,7 +74,7 @@ namespace FmodGodot
         int size = 128;
         int retrieved = 0;
         char *str = new char[size];
-        FMOD_STUDIO_SYSTEM *studio = FmodAudioServer::get_global_studio();
+        FMOD_STUDIO_SYSTEM *studio = FmodAudioServer::get_singleton()->get_studio();
         if (!FMOD_Studio_System_IsValid(studio))
         {
             print_error("fmod studio system is not valid");
