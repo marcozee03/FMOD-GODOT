@@ -136,23 +136,23 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
   if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
   {
 #ifdef TOOLS_ENABLED
-    // GDREGISTER_INTERNAL_CLASS(FmodEventPathSelector);
-    // GDREGISTER_INTERNAL_CLASS(EventTree);
+    GDREGISTER_INTERNAL_CLASS(FmodEventPathSelector);
+    GDREGISTER_INTERNAL_CLASS(EventTree);
 
-    // GDREGISTER_INTERNAL_CLASS(FmodEditorInterface);
-    // editor_interface = memnew(FmodEditorInterface);
-    // editor_interface->refresh();
-    // Engine::get_singleton()->register_singleton("FmodEditorInterface", editor_interface);
+    GDREGISTER_INTERNAL_CLASS(FmodEditorInterface);
+    editor_interface = memnew(FmodEditorInterface);
+    editor_interface->refresh();
+    Engine::get_singleton()->register_singleton("FmodEditorInterface", editor_interface);
 
-    // GDREGISTER_INTERNAL_CLASS(FmodEditorPlugin)
-    // GDREGISTER_INTERNAL_CLASS(EventInspector)
-    // GDREGISTER_INTERNAL_CLASS(EventPathSelectorProperty)
-    // GDREGISTER_INTERNAL_CLASS(EventGUIDSelectorProperty)
-    // GDREGISTER_INTERNAL_CLASS(FmodBankImporter);
-    // GDREGISTER_INTERNAL_CLASS(BankInspectorPlugin);
-    // GDREGISTER_INTERNAL_CLASS(FmodObjectDetails);
-    // GDREGISTER_INTERNAL_CLASS(FmodEventBrowser);
-    // EditorPlugins::add_by_type<FmodEditorPlugin>();
+    GDREGISTER_INTERNAL_CLASS(FmodEditorPlugin)
+    GDREGISTER_INTERNAL_CLASS(EventInspector)
+    GDREGISTER_INTERNAL_CLASS(EventPathSelectorProperty)
+    GDREGISTER_INTERNAL_CLASS(EventGUIDSelectorProperty)
+    GDREGISTER_INTERNAL_CLASS(FmodBankImporter);
+    GDREGISTER_INTERNAL_CLASS(BankInspectorPlugin);
+    GDREGISTER_INTERNAL_CLASS(FmodObjectDetails);
+    GDREGISTER_INTERNAL_CLASS(FmodEventBrowser);
+    EditorPlugins::add_by_type<FmodEditorPlugin>();
 #endif // TOOLS_ENABLED
   }
 }
@@ -168,8 +168,8 @@ void uninitialize_fmod_module(ModuleInitializationLevel p_level)
   if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
   {
 #ifdef TOOLS_ENABLED
-    // memdelete(editor_interface);
-    // Engine::get_singleton()->unregister_singleton("FmodEditorInterface");
+    Engine::get_singleton()->unregister_singleton("FmodEditorInterface");
+    memdelete(editor_interface);
 #endif // TOOLS_ENABLED
   }
   if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
