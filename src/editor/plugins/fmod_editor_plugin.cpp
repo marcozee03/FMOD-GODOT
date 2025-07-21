@@ -1,4 +1,4 @@
-#define TOOLS_ENABLED
+
 #ifdef TOOLS_ENABLED
 #include "fmod_editor_plugin.h"
 #include "fmod_bank_importer.h"
@@ -26,21 +26,9 @@ namespace FmodGodot
 
     FmodEditorPlugin::FmodEditorPlugin()
     {
-        // eventInspector = memnew(EventInspector);
-        // add_inspector_plugin(eventInspector);
-        // bankInspector = memnew(BankInspectorPlugin);
-        // add_inspector_plugin(bankInspector);
-        // bankImporter = memnew(FmodBankImporter);
-        // add_import_plugin(bankImporter);
-        // add_control_to_bottom_panel()
     }
     FmodEditorPlugin::~FmodEditorPlugin()
     {
-        // remove_inspector_plugin(eventInspector);
-        // remove_inspector_plugin(bankInspector);
-        // remove_import_plugin(bankImporter);
-        // memdelete(eventInspector);
-        // memdelete(bankLoaderInspector);
     }
 
     void FmodEditorPlugin::_enter_tree()
@@ -59,9 +47,6 @@ namespace FmodGodot
         remove_inspector_plugin(eventInspector);
         remove_inspector_plugin(bankInspector);
         remove_import_plugin(bankImporter);
-        // memdelete(eventInspector);
-        // memdelete(bankInspector);
-        // memdelete(bankImporter);
     }
 }
 #endif

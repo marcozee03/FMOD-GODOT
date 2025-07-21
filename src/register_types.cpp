@@ -102,14 +102,6 @@ namespace FmodGodot
     ADD_PROJECT_SETTING(LOGGING_LEVEL, true, false, false, 1, Variant::Type::INT, PROPERTY_HINT_ENUM, "NONE:0,ERROR:1,WARNING:2,LOG:4", propinfo);
     ADD_PROJECT_SETTING(DEBUG_TYPE, true, false, false, 0, Variant::Type::INT, PROPERTY_HINT_FLAGS, "MEMORY:256,FILE:512,CODEC:1024,TRACE:2048", propinfo);
     ADD_PROJECT_SETTING(DEBUG_DISPLAY, true, false, false, 0, Variant::Type::INT, PROPERTY_HINT_FLAGS, "TIMESTAMPS:65536,LINENUMBERS:131072,THREAD:262144", propinfo);
-    // #ifdef TOOLS_ENABLED
-    //     ADD_EDITOR_SETTING(LOGGING_LEVEL, 1, Variant::Type::INT, PROPERTY_HINT_ENUM, "NONE:0,ERROR:1,WARNING:2,LOG:4", propinfo);
-    //     ADD_EDITOR_SETTING(DEBUG_TYPE, 0, Variant::Type::INT, PROPERTY_HINT_FLAGS, "MEMORY:256,FILE:512,CODEC:1024,TRACE:2048", propinfo);
-    //     ADD_EDITOR_SETTING(DEBUG_DISPLAY, 0, Variant::Type::INT, PROPERTY_HINT_FLAGS, "TIMESTAMPS:65536,LINENUMBERS:131072,THREAD:262144", propinfo);
-    //     ADD_EDITOR_SETTING(LIVE_UPDATE, 0, Variant::Type::INT, PROPERTY_HINT_ENUM, "Disabled:0, Enabled:1", propinfo);
-    //     ADD_EDITOR_SETTING(LIVE_UPDATE_PORT, 9265, Variant::Type::INT, PROPERTY_HINT_RANGE, "0,65536", propinfo);
-    //     ADD_EDITOR_SETTING(LOAD_BANKS, 2, Variant::Type::INT, PROPERTY_HINT_ENUM, "None:0,Specified:1,All:2", propinfo);
-    // #endif
   }
 }
 void initialize_fmod_module(ModuleInitializationLevel p_level)
@@ -133,36 +125,34 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
     GDREGISTER_INTERNAL_CLASS(FmodBankFormatSaver);
     GDREGISTER_CLASS(FmodEventEmitter2D);
     GDREGISTER_CLASS(FmodEventEmitter3D);
-    bankSaver = memnew(FmodBankFormatSaver);
-    bankLoader = memnew(FmodBankFormatLoader);
+    bankLoader = memnew(FmodBankFormatLoader());
+    bankSaver = memnew(FmodBankFormatSaver());
     ResourceSaver::get_singleton()->add_resource_format_saver(bankSaver);
     ResourceLoader::get_singleton()->add_resource_format_loader(bankLoader);
     GDREGISTER_CLASS(FmodBankLoader);
     audio_server->load_start_up_banks();
   }
 
-  // ClassDB::register_class<FMODEventEmitter2D>();
-
   if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
   {
 #ifdef TOOLS_ENABLED
-    GDREGISTER_INTERNAL_CLASS(FmodEventPathSelector);
-    GDREGISTER_INTERNAL_CLASS(EventTree);
+    // GDREGISTER_INTERNAL_CLASS(FmodEventPathSelector);
+    // GDREGISTER_INTERNAL_CLASS(EventTree);
 
-    GDREGISTER_INTERNAL_CLASS(FmodEditorInterface);
-    editor_interface = memnew(FmodEditorInterface);
-    editor_interface->refresh();
-    Engine::get_singleton()->register_singleton("FmodEditorInterface", editor_interface);
+    // GDREGISTER_INTERNAL_CLASS(FmodEditorInterface);
+    // editor_interface = memnew(FmodEditorInterface);
+    // editor_interface->refresh();
+    // Engine::get_singleton()->register_singleton("FmodEditorInterface", editor_interface);
 
-    GDREGISTER_INTERNAL_CLASS(FmodEditorPlugin)
-    GDREGISTER_INTERNAL_CLASS(EventInspector)
-    GDREGISTER_INTERNAL_CLASS(EventPathSelectorProperty)
-    GDREGISTER_INTERNAL_CLASS(EventGUIDSelectorProperty)
-    GDREGISTER_INTERNAL_CLASS(FmodBankImporter);
-    GDREGISTER_INTERNAL_CLASS(BankInspectorPlugin);
-    GDREGISTER_INTERNAL_CLASS(FmodObjectDetails);
-    GDREGISTER_INTERNAL_CLASS(FmodEventBrowser);
-    EditorPlugins::add_by_type<FmodEditorPlugin>();
+    // GDREGISTER_INTERNAL_CLASS(FmodEditorPlugin)
+    // GDREGISTER_INTERNAL_CLASS(EventInspector)
+    // GDREGISTER_INTERNAL_CLASS(EventPathSelectorProperty)
+    // GDREGISTER_INTERNAL_CLASS(EventGUIDSelectorProperty)
+    // GDREGISTER_INTERNAL_CLASS(FmodBankImporter);
+    // GDREGISTER_INTERNAL_CLASS(BankInspectorPlugin);
+    // GDREGISTER_INTERNAL_CLASS(FmodObjectDetails);
+    // GDREGISTER_INTERNAL_CLASS(FmodEventBrowser);
+    // EditorPlugins::add_by_type<FmodEditorPlugin>();
 #endif // TOOLS_ENABLED
   }
 }
@@ -174,6 +164,18 @@ void uninitialize_fmod_module(ModuleInitializationLevel p_level)
     Engine::get_singleton()->unregister_singleton("FmodAudioServer");
     memdelete(audio_server);
     return;
+  }
+  if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
+  {
+#ifdef TOOLS_ENABLED
+    // memdelete(editor_interface);
+    // Engine::get_singleton()->unregister_singleton("FmodEditorInterface");
+#endif // TOOLS_ENABLED
+  }
+  if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
+  {
+    ResourceLoader::get_singleton()->remove_resource_format_loader(bankLoader);
+    ResourceSaver::get_singleton()->remove_resource_format_saver(bankSaver);
   }
 }
 

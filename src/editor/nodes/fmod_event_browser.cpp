@@ -1,4 +1,4 @@
-#define TOOLS_ENABLED
+
 #ifdef TOOLS_ENABLED
 #include "fmod_event_browser.h"
 #include <classes/button.hpp>
