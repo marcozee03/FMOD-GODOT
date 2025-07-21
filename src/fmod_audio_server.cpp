@@ -92,7 +92,9 @@ namespace FmodGodot
     {
         ((FileAccess *)handle)->close();
         ((FileAccess *)handle)->unreference();
-        return godot_file_error_to_fmod_file_error(((FileAccess *)handle)->get_error());
+        FMOD_RESULT result = godot_file_error_to_fmod_file_error(((FileAccess *)handle)->get_error());
+        memdelete((FileAccess *)handle);
+        return result;
     }
     FMOD_RESULT seek_callback(void *handle, unsigned int pos, void *userdata)
     {
@@ -112,10 +114,10 @@ namespace FmodGodot
     {
         studio_system = nullptr;
         core_system = nullptr;
-        ProjectSettings *ps = ProjectSettings::get_singleton();
     }
     FmodAudioServer::~FmodAudioServer()
     {
+        finish();
     }
 
     FMOD_RESULT FmodAudioServer::init_with_project_settings()
@@ -128,6 +130,7 @@ namespace FmodGodot
         mutex.instantiate();
         thread.instantiate();
         exit_thread = false;
+        thread_exited = false;
         FMOD_STUDIO_INITFLAGS studio_init = FMOD_STUDIO_INIT_NORMAL;
         switch (p_settings.live_update)
         {
@@ -176,12 +179,7 @@ namespace FmodGodot
         result = FMOD_Studio_System_Initialize(studio_system, p_settings.virtual_channels, studio_init, FMOD_INIT_NORMAL, 0);
         if (result != FMOD_OK)
         {
-            std::cout << "\ninit" << FMOD_ErrorString(result);
-        }
-
-        if (result != FMOD_OK)
-        {
-            std::cout << "\ndsp" << FMOD_ErrorString(result);
+            UtilityFunctions::printerr("Init FmodAudioServer Error", FMOD_ErrorString(result));
         }
         initialized = true;
         thread->start(callable_mp(this, &FmodAudioServer::thread_func), Thread::Priority::PRIORITY_NORMAL);
@@ -190,6 +188,10 @@ namespace FmodGodot
 
     void FmodAudioServer::_physics_process()
     {
+        if (thread_exited)
+        {
+            return;
+        }
         lock();
         for (int i = 0; i < instances.size(); i++)
         {
@@ -278,7 +280,11 @@ namespace FmodGodot
             FMOD_Studio_System_Update(studio_system);
             OS::get_singleton()->delay_usec(20);
         }
-        tree->disconnect("physics_frame", physics_callback);
+        // mainly here for the editor
+        if (UtilityFunctions::is_instance_id_valid(tree->get_instance_id()))
+        {
+            tree->disconnect("physics_frame", physics_callback);
+        }
         FMOD_Studio_System_Release(studio_system);
     }
 
@@ -325,6 +331,7 @@ namespace FmodGodot
         exit_thread = true;
         thread->wait_to_finish();
         thread.unref();
+        initialized = false;
         thread_exited = true;
         mutex.unref();
     }
@@ -332,101 +339,9 @@ namespace FmodGodot
 #pragma endregion
     void FmodAudioServer::_bind_methods()
     {
-        // BIND_ENUM_CONSTANT(FMOD_OK);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_BADCOMMAND);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_CHANNEL_ALLOC);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_CHANNEL_STOLEN);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_DMA);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_DSP_CONNECTION);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_DSP_DONTPROCESS);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_DSP_FORMAT);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_DSP_INUSE);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_DSP_NOTFOUND);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_DSP_RESERVED);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_DSP_SILENCE);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_DSP_TYPE);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_FILE_BAD);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_FILE_COULDNOTSEEK);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_FILE_DISKEJECTED);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_FILE_EOF);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_FILE_ENDOFDATA);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_FILE_NOTFOUND);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_FORMAT);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_HEADER_MISMATCH);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_HTTP);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_HTTP_ACCESS);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_HTTP_PROXY_AUTH);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_HTTP_SERVER_ERROR);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_HTTP_TIMEOUT);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_INITIALIZATION);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_INITIALIZED);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_INTERNAL);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_INVALID_FLOAT);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_INVALID_HANDLE);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_INVALID_PARAM);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_INVALID_POSITION);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_INVALID_SPEAKER);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_INVALID_SYNCPOINT);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_INVALID_THREAD);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_INVALID_VECTOR);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_MAXAUDIBLE);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_MEMORY);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_MEMORY_CANTPOINT);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_NEEDS3D);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_NEEDSHARDWARE);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_NET_CONNECT);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_NET_SOCKET_ERROR);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_NET_URL);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_NET_WOULD_BLOCK);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_NOTREADY);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_OUTPUT_ALLOCATED);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_OUTPUT_CREATEBUFFER);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_OUTPUT_DRIVERCALL);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_OUTPUT_FORMAT);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_OUTPUT_INIT);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_OUTPUT_NODRIVERS);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_PLUGIN);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_PLUGIN_MISSING);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_PLUGIN_RESOURCE);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_PLUGIN_VERSION);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_RECORD);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_REVERB_CHANNELGROUP);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_REVERB_INSTANCE);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_SUBSOUNDS);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_SUBSOUND_ALLOCATED);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_SUBSOUND_CANTMOVE);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_TAGNOTFOUND);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_TOOMANYCHANNELS);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_TRUNCATED);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_UNIMPLEMENTED);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_UNINITIALIZED);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_UNSUPPORTED);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_VERSION);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_EVENT_ALREADY_LOADED);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_EVENT_LIVEUPDATE_BUSY);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_EVENT_LIVEUPDATE_MISMATCH);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_EVENT_LIVEUPDATE_TIMEOUT);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_EVENT_NOTFOUND);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_STUDIO_UNINITIALIZED);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_STUDIO_NOT_LOADED);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_INVALID_STRING);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_ALREADY_LOCKED);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_NOT_LOCKED);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_RECORD_DISCONNECTED);
-        // BIND_ENUM_CONSTANT(FMOD_ERR_TOOMANYSAMPLES);
-        // BIND_ENUM_CONSTANT(FMOD_RESULT_FORCEINT);
-
-        // BIND_ENUM_CONSTANT(LEVEL_NONE)
-        // BIND_ENUM_CONSTANT(LEVEL_ERROR)
-        // BIND_ENUM_CONSTANT(LEVEL_WARNING)
-        // BIND_ENUM_CONSTANT(LEVEL_LOG)
-        // BIND_ENUM_CONSTANT(TYPE_MEMORY)
-        // BIND_ENUM_CONSTANT(TYPE_FILE)
-        // BIND_ENUM_CONSTANT(TYPE_CODEC)
-        // BIND_ENUM_CONSTANT(TYPE_TRACE)
-        // BIND_ENUM_CONSTANT(DISPLAY_TIMESTAMPS)
-        // BIND_ENUM_CONSTANT(DISPLAY_LINENUMBERS)
-        // BIND_ENUM_CONSTANT(DISPLAY_THREAD)
+        BIND_ENUM_CONSTANT(DISABLED);
+        BIND_ENUM_CONSTANT(ENABLED);
+        BIND_ENUM_CONSTANT(DEV_ONLY);
 
         ClassDB::bind_method(D_METHOD("unload_banks"), &FmodAudioServer::unload_banks);
 
@@ -443,7 +358,7 @@ namespace FmodGodot
         ClassDB::bind_method(D_METHOD("play_one_shot_rigid_body3d_attached_by_path", "path", "rigid_body3d"), &FmodAudioServer::play_one_shot_rigid_body3d_attached_by_path);
         ClassDB::bind_method(D_METHOD("play_one_shot_rigid_body2d_attached_by_id", "guid", "rigid_body2d"), &FmodAudioServer::play_one_shot_rigid_body2d_attached_by_id);
         ClassDB::bind_method(D_METHOD("play_one_shot_rigid_2d_attached_by_path", "path", "rigid_body2d"), &FmodAudioServer::play_one_shot_rigid_body2d_attached_by_path);
-        // bool any_sample_data_loading();
+        ClassDB::bind_method(D_METHOD("any_sample_data_loading"), &FmodAudioServer::any_sample_data_loading);
         // ClassDB::bind_method(D_METHOD("attach_instance_to_node3d", "node", "instance", "non_rigid_body_velocity"), &FmodAudioServer::attach_instance_to_node3d);
         // void attach_instance_to_node3D(Node3D * p_node, FMOD_STUDIO_EVENTINSTANCE * p_instance, bool p_non_rigid_body_velocity = false);
         // void attach_instance_to_rigid_body_3D(RigidBody3D * p_node, FMOD_STUDIO_EVENTINSTANCE * p_instance);
@@ -452,7 +367,7 @@ namespace FmodGodot
 
         // void detach_instance_from_node(FMOD_STUDIO_EVENTINSTANCE * p_instance);
 
-        // Vector4i path_to_guid(String p_path);
+        ClassDB::bind_method(D_METHOD("path_to_guid", "p_path"), &FmodAudioServer::path_to_guid);
         // FMOD_STUDIO_EVENTDESCRIPTION *get_event_description(String p_path);
         // FMOD_STUDIO_EVENTDESCRIPTION *get_event_description(Vector4i p_guid);
         // void pause_all_events(bool p_pause);
@@ -592,7 +507,7 @@ namespace FmodGodot
         return event;
     }
 
-     void FmodAudioServer::play_one_shot_by_id(const Vector4i p_guid, const Vector3 p_position) const
+    void FmodAudioServer::play_one_shot_by_id(const Vector4i p_guid, const Vector3 p_position) const
     {
         FMOD_STUDIO_EVENTINSTANCE *event = create_instance(p_guid);
         FMOD_3D_ATTRIBUTES attr;
@@ -879,6 +794,127 @@ namespace FmodGodot
                 return 0;
             }
         }
-    }
 
+#define FS FmodAudioServer::get_singleton()
+        FMOD_STUDIO_EVENTINSTANCE *create_instance(const Vector4i p_guid)
+        {
+            return FS->create_instance(p_guid);
+        }
+
+        GDE_EXPORT void play_one_shot_by_id(const Vector4i p_guid, const godot::Vector3 p_position = godot::Vector3())
+        {
+            FS->play_one_shot_by_id(p_guid, p_position);
+        }
+        GDE_EXPORT void play_one_shot_by_path(const String &p_path, const godot::Vector3 p_position = godot::Vector3())
+        {
+            play_one_shot_by_path(p_path, p_position);
+        }
+        GDE_EXPORT void play_one_shot_3d_attached_by_id(const Vector4i p_guid, Node3D *p_node, bool p_non_rigid_body_velocity = false)
+        {
+            FS->play_one_shot_3d_attached_by_id(p_guid, p_node, p_non_rigid_body_velocity);
+        }
+        GDE_EXPORT void play_one_shot_3d_attached_by_path(const String &p_path, Node3D *p_node, bool p_non_rigid_body_velocity = false)
+        {
+            FS->play_one_shot_3d_attached_by_path(p_path, p_node, p_non_rigid_body_velocity);
+        }
+        GDE_EXPORT void play_one_shot_2d_attached_by_id(const Vector4i p_guid, Node2D *p_node, bool p_non_rigid_body_velocity = false)
+        {
+            FS->play_one_shot_2d_attached_by_id(p_guid, p_node, p_non_rigid_body_velocity);
+        }
+        GDE_EXPORT void play_one_shot_2d_attached_by_path(const String &p_path, Node2D *p_node, bool p_non_rigid_body_velocity = false)
+        {
+            FS->play_one_shot_2d_attached_by_path(p_path, p_node, p_non_rigid_body_velocity);
+        }
+
+        GDE_EXPORT void play_one_shot_rigid_body3d_attached_by_id(const Vector4i p_guid, RigidBody3D *p_rigid_body3d)
+        {
+            FS->play_one_shot_rigid_body3d_attached_by_id(p_guid, p_rigid_body3d);
+        }
+        GDE_EXPORT void play_one_shot_rigid_body3d_attached_by_path(const String &p_path, RigidBody3D *p_rigid_body3d)
+        {
+            FS->play_one_shot_rigid_body3d_attached_by_path(p_path, p_rigid_body3d);
+        }
+        GDE_EXPORT void play_one_shot_rigid_body2d_attached_by_id(const Vector4i p_guid, RigidBody2D *p_rigid_body2d)
+        {
+            FS->play_one_shot_rigid_body2d_attached_by_id(p_guid, p_rigid_body2d);
+        }
+        GDE_EXPORT void play_one_shot_rigid_body2d_attached_by_path(const String &p_path, RigidBody2D *p_rigid_body2d)
+        {
+            FS->play_one_shot_rigid_body2d_attached_by_path(p_path, p_rigid_body2d);
+        }
+        GDE_EXPORT bool any_sample_data_loading()
+        {
+            return FS->any_sample_data_loading();
+        }
+        GDE_EXPORT void attach_instance_to_node3d(Node3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event, bool p_non_rigid_body_velocity = false)
+        {
+            FS->attach_instance_to_node3d(p_node, p_event, p_non_rigid_body_velocity);
+        }
+        GDE_EXPORT void attach_instance_to_rigid_body3d(RigidBody3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event)
+        {
+            attach_instance_to_rigid_body3d(p_node, p_event);
+        }
+        GDE_EXPORT void attach_instance_to_node2D(Node2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event, bool p_non_rigid_body_velocity = false)
+        {
+            FS->attach_instance_to_node2D(p_node, p_event, p_non_rigid_body_velocity);
+        }
+        GDE_EXPORT void attach_instance_to_rigid_body2d(RigidBody2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event)
+        {
+            attach_instance_to_rigid_body2d(p_node, p_event);
+        }
+        GDE_EXPORT void detach_instance_from_node(FMOD_STUDIO_EVENTINSTANCE *p_event)
+        {
+            detach_instance_from_node(p_event);
+        }
+
+        GDE_EXPORT Vector4i path_to_guid(const String &p_path)
+        {
+            return FmodAudioServer::get_singleton()->path_to_guid(p_path);
+        }
+        GDE_EXPORT FMOD_STUDIO_EVENTDESCRIPTION *get_event_description_by_path(const String &p_path)
+        {
+            return FS->get_event_description(p_path);
+        }
+
+        GDE_EXPORT FMOD_STUDIO_EVENTDESCRIPTION *get_event_description_by_id(Vector4i p_guid)
+        {
+            return FS->get_event_description(p_guid);
+        }
+        GDE_EXPORT void pause_all_events(bool p_pause)
+        {
+            FS->pause_all_events(p_pause);
+        }
+
+        GDE_EXPORT bool is_muted()
+        {
+            return FS->is_muted();
+        }
+        GDE_EXPORT void set_muted(bool p_muted)
+        {
+            FS->set_muted(p_muted);
+        }
+
+        GDE_EXPORT FMOD_STUDIO_BUS *get_bus(const String &p_path)
+        {
+            return FS->get_bus(p_path);
+        }
+        // GDE_EXPORT FMOD_STUDIO_VCA *get_vca(const String &p_path);
+        // GDE_EXPORT FMOD_RESULT load_bank(const String &p_bankName, bool loadSamples = false);
+        // GDE_EXPORT FMOD_RESULT load_bank_by_file(const String &p_path, bool loadSamples = false);
+        // GDE_EXPORT void unload_banks();
+        // GDE_EXPORT bool has_bank_loaded(const String &p_bankName);
+
+        // GDE_EXPORT bool have_all_banks_loaded();
+
+        // GDE_EXPORT void set_listener_location(Node2D *p_node, Node2D *p_attenuationObject = nullptr);
+        // GDE_EXPORT void set_listener_location(RigidBody2D *p_rigidBody2D, Node2D *p_attenuationObject = nullptr);
+        // GDE_EXPORT void set_listener_location(int p_listenerIndex, RigidBody2D *p_rigidBody2D, Node2D *p_attenuationObject = nullptr);
+        // GDE_EXPORT void set_listener_location(int p_istenerIndex, Node2D *p_node, Node2D *p_attenuationObject = nullptr);
+
+        // GDE_EXPORT void set_listener_location(Node3D *p_node, Node3D *attenuationObject = nullptr);
+        // GDE_EXPORT void set_listener_location(RigidBody3D *rigidBody2D, Node3D *attenuationObject = nullptr);
+        // GDE_EXPORT void set_listener_location(int listenerIndex, RigidBody3D *rigidBody, Node3D *attenuationObject = nullptr);
+        // GDE_EXPORT void set_listener_location(int listenerIndex, Node3D *p_node, Node3D *attenuationObject = nullptr);
+        // GDE_EXPORT void load_start_up_banks();
+    }
 }

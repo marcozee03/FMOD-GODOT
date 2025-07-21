@@ -1,4 +1,4 @@
-#define TOOLS_ENABLED
+
 #ifdef TOOLS_ENABLED
 #include "fmod_editor_interface.h"
 #include "fmod_audio_server.h"

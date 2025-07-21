@@ -231,3 +231,4 @@ namespace FmodGodot
         unlock();
     }
 }
+VARIANT_ENUM_CAST(FmodGodot::FmodAudioServer::LiveUpdate);
