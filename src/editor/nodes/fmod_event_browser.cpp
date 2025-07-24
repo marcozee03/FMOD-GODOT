@@ -1,4 +1,3 @@
-
 #ifdef TOOLS_ENABLED
 #include "fmod_event_browser.h"
 #include <classes/button.hpp>
@@ -41,6 +40,7 @@ namespace FmodGodot
         tree->set_h_size_flags(SIZE_EXPAND_FILL);
         split->add_child(details);
         tree->connect("fmod_object_selected", Callable(details, "display_fmod_object"), CONNECT_PERSIST);
+        refresh->connect("pressed", callable_mp(tree, &EventTree::LoadEvents));
     }
     void FmodGodot::FmodEventBrowser::_bind_methods()
     {

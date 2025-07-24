@@ -1,5 +1,6 @@
 #include "fmod_bank.h"
 #include "fmod_audio_server.h"
+#include "globals.h"
 namespace FmodGodot
 {
     FmodBank::FmodBank()
@@ -11,29 +12,35 @@ namespace FmodGodot
         unload();
     }
 
-    FMOD_RESULT FmodBank::unload()
+    int FmodBank::unload()
     {
         return FMOD_Studio_Bank_Unload(bank);
     }
-    FMOD_RESULT FmodBank::loadSampleData()
+    int FmodBank::load_sample_data()
     {
         return FMOD_Studio_Bank_LoadSampleData(bank);
     }
-    FMOD_RESULT FmodBank::unloadSampleData()
+    int FmodBank::unload_sample_data()
     {
         return FMOD_Studio_Bank_Unload(bank);
     }
-    FMOD_STUDIO_LOADING_STATE FmodBank::getLoadingState() const
+    int FmodBank::get_loading_state() const
     {
         FMOD_STUDIO_LOADING_STATE state;
         FMOD_Studio_Bank_GetLoadingState(bank, &state);
         return state;
     }
-    FMOD_STUDIO_LOADING_STATE FmodBank::getSampleLoadingState() const
+    int FmodBank::get_sample_loading_state() const
     {
         FMOD_STUDIO_LOADING_STATE state;
         FMOD_Studio_Bank_GetSampleLoadingState(bank, &state);
         return state;
     }
-    void FmodBank::_bind_methods() {}
+    void FmodBank::_bind_methods()
+    {
+        BIND_METHOD(get_sample_loading_state);
+        BIND_METHOD(get_loading_state);
+        BIND_METHOD(unload_sample_data);
+        BIND_METHOD(unload);
+    }
 }

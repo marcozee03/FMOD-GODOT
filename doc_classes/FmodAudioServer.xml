@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FmodAudioServer" inherits="Object" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		FmodAudioServer is a high level interface for interacting with the FMOD api. Integrated with godot;
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="any_sample_data_loading">
+			<return type="bool" />
+			<description>
+				if [code]true[/code] Sample data in a bank or event is currently.
+			</description>
+		</method>
+		<method name="get_singleton" qualifiers="static">
+			<return type="FmodAudioServer" />
+			<description>
+				Retrieves the FmodAudioServer instance.
+			</description>
+		</method>
+		<method name="has_bank_loaded" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="bank_name" type="String" />
+			<description>
+				if [code]true[/code] bank with the given name is loaded. false if not
+				loaded or no such bank exists
+			</description>
+		</method>
+		<method name="have_all_banks_loaded" qualifiers="const">
+			<return type="bool" />
+			<description>
+				if [code]true[/code] if all banks in the audio server have finished
+				loading. (currently always true since it's loaded synchonously)
+			</description>
+		</method>
+		<method name="load_bank">
+			<return type="int" />
+			<param index="0" name="bank_name" type="String" />
+			<param index="1" name="load_samples" type="bool" default="false" />
+			<description>
+				loads the bank given bank_name. bank_name can be of 2 formats a path to the
+				file or "bank:/". If using "bank:/" it will search the banks directory
+				specified in project settings based for a file with name after the slash
+				"/" without the .bank file extension
+			</description>
+		</method>
+		<method name="path_to_guid" qualifiers="const">
+			<return type="Vector4i" />
+			<param index="0" name="p_path" type="String" />
+			<description>
+				Looks up the guid of the given path. The Strings bank must be loaded.
+			</description>
+		</method>
+		<method name="play_one_shot_2d_attached_by_id">
+			<return type="void" />
+			<param index="0" name="guid" type="Vector4i" />
+			<param index="1" name="node" type="Node2D" />
+			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
+			<description>
+				Plays and attaches fmod event (from guid) to node2D. Tracks position and 
+				optionally velocity.
+			</description>
+		</method>
+		<method name="play_one_shot_2d_attached_by_path">
+			<return type="void" />
+			<param index="0" name="path" type="String" />
+			<param index="1" name="node" type="Node2D" />
+			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
+			<description>
+				Plays and attaches fmod event (from path) to node2D. Tracks position and 
+				optionally velocity.
+			</description>
+		</method>
+		<method name="play_one_shot_3d_attached_by_id">
+			<return type="void" />
+			<param index="0" name="guid" type="Vector4i" />
+			<param index="1" name="node" type="Node3D" />
+			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
+			<description>
+				Plays and attaches fmod event (from guid) to node3D. Tracks position and 
+				optionally velocity.
+			</description>
+		</method>
+		<method name="play_one_shot_3d_attached_by_path">
+			<return type="void" />
+			<param index="0" name="path" type="String" />
+			<param index="1" name="node" type="Node3D" />
+			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
+			<description>
+				Plays and attaches fmod event (from path) to node3D tracks position and
+				optionally velocity.
+			</description>
+		</method>
+		<method name="play_one_shot_by_id" qualifiers="const">
+			<return type="void" />
+			<param index="0" name="guid" type="Vector4i" />
+			<param index="1" name="position" type="Vector3" default="Vector3(0, 0, 0)" />
+			<description>
+				Plays one shot event at world position (from guid). In 2D Z is normally zero
+			</description>
+		</method>
+		<method name="play_one_shot_by_path" qualifiers="const">
+			<return type="void" />
+			<param index="0" name="path" type="String" />
+			<param index="1" name="position" type="Vector3" default="Vector3(0, 0, 0)" />
+			<description>
+				Plays one shot event at world position(from path). In 2D Z is normally
+				zero. Strings bank must be loaded.
+			</description>
+		</method>
+		<method name="play_one_shot_rigid_2d_attached_by_path">
+			<return type="void" />
+			<param index="0" name="path" type="String" />
+			<param index="1" name="rigid_body2d" type="RigidBody2D" />
+			<description>
+				Plays one shot event (from path) and attaches it to rigidbody. Tracks position and
+				velocity
+			</description>
+		</method>
+		<method name="play_one_shot_rigid_body2d_attached_by_id">
+			<return type="void" />
+			<param index="0" name="guid" type="Vector4i" />
+			<param index="1" name="rigid_body2d" type="RigidBody2D" />
+			<description>
+				Plays one shot event (from guid) and attaches it to rigidbody. Tracks
+				position and velocity
+			</description>
+		</method>
+		<method name="play_one_shot_rigid_body3d_attached_by_id">
+			<return type="void" />
+			<param index="0" name="guid" type="Vector4i" />
+			<param index="1" name="rigid_body3d" type="RigidBody3D" />
+			<description>
+				Plays one shot event (from guid) and attaches it to rigidbody. Tracks
+				position and velocity
+			</description>
+		</method>
+		<method name="play_one_shot_rigid_body3d_attached_by_path">
+			<return type="void" />
+			<param index="0" name="path" type="String" />
+			<param index="1" name="rigid_body3d" type="RigidBody3D" />
+			<description>
+				Plays one shot event (from path) and attaches it to rigidbody. Tracks
+				position and velocity. Strings bank must be loaded.
+			</description>
+		</method>
+		<method name="set_listener_2d_location">
+			<return type="void" />
+			<param index="0" name="listener_index" type="int" />
+			<param index="1" name="node" type="Node2D" />
+			<param index="2" name="attnenuation_object" type="Node2D" />
+			<description>
+				Sets the fmod listener to copy transform and velocity of node and position
+				of attenuation object
+			</description>
+		</method>
+		<method name="set_listener_2d_rigidbody_location">
+			<return type="void" />
+			<param index="0" name="listener_index" type="int" />
+			<param index="1" name="rigidbody" type="RigidBody2D" />
+			<param index="2" name="attnenuation_object" type="Node2D" />
+			<description>
+				Sets the fmod listener to copy transform and velocity of node and position
+				of attenuation object
+			</description>
+		</method>
+		<method name="set_listener_3d_location">
+			<return type="void" />
+			<param index="0" name="listener_index" type="int" />
+			<param index="1" name="node" type="Node3D" />
+			<param index="2" name="attnenuation_object" type="Node3D" />
+			<description>
+				Sets the fmod listener to copy transform and velocity of node and position
+				of attenuation object
+			</description>
+		</method>
+		<method name="set_listener_3d_rigidbody_location">
+			<return type="void" />
+			<param index="0" name="listener_index" type="int" />
+			<param index="1" name="rigidbody" type="RigidBody3D" />
+			<param index="2" name="attnenuation_object" type="Node3D" />
+			<description>
+				Sets the fmod listener to copy transform and velocity of node and position
+				of attenuation object
+			</description>
+		</method>
+		<method name="unload_banks">
+			<return type="void" />
+			<description>
+				Sets the fmod listener to copy transform and velocity of node and position
+				of attenuation object
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="muted" type="bool" setter="set_muted" getter="is_muted" default="true">
+		</member>
+	</members>
+	<constants>
+		<constant name="DISABLED" value="0" enum="LiveUpdate">
+		</constant>
+		<constant name="ENABLED" value="1" enum="LiveUpdate">
+		</constant>
+		<constant name="DEV_ONLY" value="2" enum="LiveUpdate">
+		</constant>
+	</constants>
+</class>

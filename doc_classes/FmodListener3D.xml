@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FmodListener3D" inherits="Node3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="attached_to_parent" type="bool" setter="set_attached_to_parent" getter="is_attached_to_parent" default="false">
+		</member>
+		<member name="listener_index" type="int" setter="set_listener_index" getter="get_listener_index" default="110">
+		</member>
+	</members>
+</class>

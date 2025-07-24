@@ -43,7 +43,7 @@ namespace FmodGodot
         FMOD_Studio_System_LookupID(studio, newText.utf8(), &guid);
         eventSelector->get_line_edit()->set_tooltip_text(fmod_guid_to_string(guid));
 
-        Vector4i newValue = cast_to_Vector4i(guid);
+        Vector4i newValue = cast_to_vector4i(guid);
         if (newValue == Vector4i(0, 0, 0, 0))
         {
             _err_print_error("on_text_changed", __FILE__, __LINE__, "Could not find FMOD_GUID for [" + newText + "] setting will not persist only guid is stored", true, true);
@@ -81,7 +81,7 @@ namespace FmodGodot
             updating = false;
             return;
         }
-        FMOD_GUID guid = cast_to_FMOD_GUID(currentValue);
+        FMOD_GUID guid = cast_to_fmod_guid(currentValue);
         FMOD_LOOKUP_FULL_STRING(FMOD_Studio_System_LookupPath, studio, &guid, str, size, retrieved)
         eventSelector->get_line_edit()->set_text(str);
         eventSelector->get_line_edit()->set_tooltip_text(fmod_guid_to_string(guid));
