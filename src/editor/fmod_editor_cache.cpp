@@ -79,6 +79,10 @@ namespace FmodGodot
     {
         return parameter_cache[path];
     }
+    VCA FmodEditorCache::get_vca(const String &path) const
+    {
+        return vca_cache[path];
+    }
 
     PackedStringArray FmodEditorCache::get_contents(const String &p_path) const
     {

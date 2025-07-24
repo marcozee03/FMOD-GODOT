@@ -40,7 +40,7 @@ namespace FmodGodot
         {
             FMOD_STUDIO_PARAMETER_DESCRIPTION param;
             FMOD_Studio_EventDescription_GetParameterDescriptionByIndex(description, i, &param);
-            parameters.write[i] = {param.name, param.defaultvalue};
+            parameters.write[i] = {param.name, cast_to_vector2i(param.id), param.defaultvalue};
         }
     }
     void FmodEventEmitter3D::_bind_methods()
@@ -54,8 +54,12 @@ namespace FmodGodot
         BIND_PROPERTY(attenuation_min, Variant::Type::INT);
         BIND_PROPERTY(attenuation_max, Variant::Type::INT);
         BIND_BOOL_PROPERTY(allow_fadeout);
-        ClassDB::bind_method(D_METHOD("start"), &FmodEventEmitter3D::start);
-        ClassDB::bind_method(D_METHOD("stop"), &FmodEventEmitter3D::stop);
+        BIND_METHOD(start);
+        BIND_METHOD(stop);
+        BIND_METHOD(set_parameter, "name", "value");
+        BIND_METHOD(set_parameter_by_id, "id", "value");
+        BIND_METHOD(get_parameter, "name");
+        BIND_METHOD(get_parameter_by_id, "id");
     }
 
     bool FmodEventEmitter3D::_set(const StringName &p_name, const Variant &p_property)
@@ -171,7 +175,7 @@ namespace FmodGodot
     {
         if (!FMOD_Studio_EventDescription_IsValid(description))
         {
-            FMOD_GUID guid = cast_to_FMOD_GUID(event_guid);
+            FMOD_GUID guid = cast_to_fmod_guid(event_guid);
             FMOD_RESULT result = FMOD_Studio_System_GetEventByID(FmodAudioServer::get_singleton()->get_studio(), &guid, &description);
             if (preload_sample_data)
             {
@@ -254,7 +258,7 @@ namespace FmodGodot
             FMOD_Studio_EventInstance_Release(event_instance);
         }
 
-        FMOD_GUID guid = cast_to_FMOD_GUID(event_guid);
+        FMOD_GUID guid = cast_to_fmod_guid(event_guid);
         FMOD_Studio_System_GetEventByID(FmodAudioServer::get_singleton()->get_studio(), &guid, &description);
         if (preload_sample_data)
         {
@@ -343,5 +347,53 @@ namespace FmodGodot
     void FmodEventEmitter3D::set_allow_fadeout(bool p_allow_fadeout)
     {
         allow_fadeout = p_allow_fadeout;
+    }
+    void FmodEventEmitter3D::set_parameter(const String &name, float value)
+    {
+        for (int i = 0; i < parameters.size(); i++)
+        {
+            if (name.casecmp_to(parameters[i].name) == 0)
+            {
+                parameters.write[i].value = value;
+                return;
+            }
+        }
+        print_error("No parameter of name: ", name, " in ", get_name());
+    }
+    void FmodEventEmitter3D::set_parameter_by_id(const Vector2i &id, float value)
+    {
+        for (int i = 0; i < parameters.size(); i++)
+        {
+            if (id == parameters[i].id)
+            {
+                parameters.write[i].value = value;
+                return;
+            }
+        }
+        print_error("No parameter with id: ", id);
+    }
+    float FmodEventEmitter3D::get_parameter(const String &p_name) const
+    {
+        for (int i = 0; i < parameters.size(); i++)
+        {
+            if (p_name.casecmp_to(parameters[i].name) == 0)
+            {
+                return parameters[i].value;
+            }
+        }
+        print_error("No parameter of name: ", p_name, " in ", get_name());
+        return NAN;
+    }
+    float FmodEventEmitter3D::get_parameter_by_id(const Vector2i &p_id) const
+    {
+        for (int i = 0; i < parameters.size(); i++)
+        {
+            if (p_id == parameters[i].id)
+            {
+                return parameters[i].value;
+            }
+        }
+        print_error("No parameter with id: ", p_id);
+        return NAN;
     }
 }

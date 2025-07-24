@@ -1,6 +1,7 @@
 #pragma once
 #include <classes/node3d.hpp>
 #include "fmod_audio_server.h"
+#include <variant/vector2i.hpp>
 namespace FmodGodot
 {
     class FmodEventEmitter3D : public Node3D
@@ -9,6 +10,7 @@ namespace FmodGodot
         struct parameter
         {
             const char *name;
+            Vector2i id;
             float value;
         };
 
@@ -75,6 +77,11 @@ namespace FmodGodot
 
         bool is_allow_fadeout() const;
         void set_allow_fadeout(bool p_allow_fadeout);
+
+        void set_parameter(const String &name, float value);
+        void set_parameter_by_id(const Vector2i &id, float value);
+        float get_parameter(const String &p_name) const;
+        float get_parameter_by_id(const Vector2i &p_id) const;
     };
 
 }

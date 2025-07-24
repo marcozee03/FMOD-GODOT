@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FmodBankLoader" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Loads specified banks when it enters the scene tree.
+	</brief_description>
+	<description>
+		Add banks to load them into this scene. Stores FmodBanks preventing them from
+		unloading until all bank loaders referencing them are freed.
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="banks" type="FmodBank[]" setter="set_banks" getter="get_banks" default="[]">
+		</member>
+		<member name="preload_sample_data" type="bool" setter="set_preload_sample_data" getter="is_preload_sample_data" default="true">
+		</member>
+	</members>
+</class>

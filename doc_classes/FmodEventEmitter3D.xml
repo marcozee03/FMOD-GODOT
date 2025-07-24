@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FmodEventEmitter3D" inherits="Node3D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_parameter" qualifiers="const">
+			<return type="float" />
+			<param index="0" name="name" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="get_parameter_by_id" qualifiers="const">
+			<return type="float" />
+			<param index="0" name="id" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="set_parameter">
+			<return type="void" />
+			<param index="0" name="name" type="String" />
+			<param index="1" name="value" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="set_parameter_by_id">
+			<return type="void" />
+			<param index="0" name="id" type="Vector2i" />
+			<param index="1" name="value" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="start">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="stop">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="allow_fadeout" type="bool" setter="set_allow_fadeout" getter="is_allow_fadeout" default="true">
+		</member>
+		<member name="attenuation_max" type="float" setter="set_attenuation_max" getter="get_attenuation_max" default="100.0">
+		</member>
+		<member name="attenuation_min" type="float" setter="set_attenuation_min" getter="get_attenuation_min" default="1.0">
+		</member>
+		<member name="event" type="Vector4i" setter="set_event" getter="get_event" default="Vector4i(0, 0, 0, 0)">
+		</member>
+		<member name="non_rigid_body_velocity" type="bool" setter="set_non_rigid_body_velocity" getter="is_non_rigid_body_velocity" default="false">
+		</member>
+		<member name="one_shot" type="bool" setter="set_one_shot" getter="is_one_shot" default="true">
+		</member>
+		<member name="override_attenuation" type="bool" setter="set_override_attenuation" getter="is_override_attenuation" default="false">
+		</member>
+		<member name="preload_sample_data" type="bool" setter="set_preload_sample_data" getter="is_preload_sample_data" default="false">
+		</member>
+		<member name="trigger_once" type="bool" setter="set_trigger_once" getter="is_trigger_once" default="false">
+		</member>
+	</members>
+</class>
