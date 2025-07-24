@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FmodBank" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		An FmodBank that contains audio information.
+	</brief_description>
+	<description>
+		stores fmod audio information. A sound's bank must be loaded before it is played
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_loading_state" qualifiers="const">
+			<return type="int" />
+			<description>
+				The banks current loading state.
+			</description>
+		</method>
+		<method name="get_sample_loading_state" qualifiers="const">
+			<return type="int" />
+			<description>
+				The audio samples current loading state.
+			</description>
+		</method>
+		<method name="unload">
+			<return type="int" />
+			<description>
+				Unloads the bank. will unload the bank even if other Objects reference
+				this resource
+			</description>
+		</method>
+		<method name="unload_sample_data">
+			<return type="int" />
+			<description>
+				Unloads the banks sample data. 
+			</description>
+		</method>
+	</methods>
+</class>

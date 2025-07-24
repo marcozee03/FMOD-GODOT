@@ -8,7 +8,7 @@ namespace FmodGodot
     std::ostream &operator<<(std::ostream &stream, const Bank object)
     {
         stream << '[';
-        for (const String &str : object.events)
+        for (const String &str : object.children)
         {
             stream << str.utf8() << ',';
         }
