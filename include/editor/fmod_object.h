@@ -39,7 +39,9 @@ namespace FmodGodot
         friend std::ostream &operator<<(std::ostream &stream, const Bank object);
         String full_path;
         Vector4i guid;
-        Vector<String> events;
+        // event and vca paths
+        Vector<String> children;
+        // Vector<String> vca;
     };
     struct VCA
     {

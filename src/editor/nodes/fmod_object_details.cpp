@@ -55,6 +55,7 @@ namespace FmodGodot
             Callable copy = Callable(DisplayServer::get_singleton(), "clipboard_set");
 
             button->connect("pressed", copy.bind(p_copy_text));
+            button->set_flat(true);
             control->add_child(box, false, Node::INTERNAL_MODE_FRONT);
         }
 
@@ -110,8 +111,8 @@ namespace FmodGodot
             header->set_text("Event");
             icon->set_texture(theme->event_icon);
             Event event = cache->get_event(p_path);
-            push_copy_label(flowlayout, "full path: ", event.full_path);
-            push_label(flowlayout, String("guid: " + fmod_guid_to_string(event.guid)));
+            push_copy_label(flowlayout, "Full Path: ", event.full_path);
+            push_label(flowlayout, String("Guid: " + fmod_guid_to_string(event.guid)));
             if (event.is3d)
             {
                 push_label(flowlayout, String("3D: ") + bool_to_string(event.is3d));
@@ -153,17 +154,42 @@ namespace FmodGodot
             VBoxContainer *vbox = memnew(VBoxContainer());
             push_copy_label(vbox, "Full Path: ", bank.full_path);
             push_label(vbox, "Guid: " + fmod_guid_to_string(bank.guid));
-            for (auto event : bank.events)
+            for (auto event : bank.children)
             {
-                push_copy_label(vbox, "", event, theme->event_icon);
+                if (event.begins_with("event:/"))
+                {
+                    push_copy_label(vbox, "", event, theme->event_icon);
+                }
+                else
+                {
+                    push_copy_label(vbox, "", event, theme->vca_icon);
+                }
             }
             flowlayout->add_child(vbox, false, Node::INTERNAL_MODE_FRONT);
         }
         else if (p_path.begins_with("vca"))
         {
+            header->set_text("VCA:" + p_path.get_file().get_basename());
+            VCA vca = cache->get_vca(p_path);
+            push_label(flowlayout, "Full Path: " + p_path);
+            push_label(flowlayout, "Guid: " + fmod_guid_to_string(vca.guid));
+
+            icon->set_texture(theme->vca_icon);
         }
         else if (p_path.begins_with("param:"))
         {
+            header->set_text("Global Parameter:" + p_path.get_file().get_basename());
+            Parameter parameter = cache->get_parameter(p_path);
+            if (parameter.discrete)
+            {
+                icon->set_texture(theme->d_parameter_icon);
+            }
+            else
+            {
+                icon->set_texture(theme->c_parameter_icon);
+            }
+            push_copy_label(flowlayout, "Name:", parameter.full_path.get_file());
+            push_label(flowlayout, "Guid:" + fmod_guid_to_string(parameter.guid));
         }
     }
 }

@@ -8,9 +8,10 @@ namespace FmodGodot
     class FmodEventEmitter2D : public Node2D
     {
         GDCLASS(FmodEventEmitter2D, Node2D);
-        struct parameter
+        struct ParameterReference
         {
             const char *name;
+            Vector2i id;
             float value;
         };
 
@@ -29,7 +30,7 @@ namespace FmodGodot
     protected:
         FMOD_STUDIO_EVENTDESCRIPTION *description;
         FMOD_STUDIO_EVENTINSTANCE *event_instance;
-        Vector<parameter> parameters;
+        Vector<ParameterReference> parameters;
         void refresh_parameters();
         void set_parameters();
         bool validate_event_description();
@@ -77,5 +78,9 @@ namespace FmodGodot
 
         bool is_allow_fadeout() const;
         void set_allow_fadeout(bool p_allow_fadeout);
+        void set_parameter(const String& name, float value);
+        void set_parameter_by_id(const Vector2i& id, float value);
+        float get_parameter(const String& p_name) const;
+        float get_parameter_by_id(const Vector2i& p_id) const ;
     };
 }

@@ -24,9 +24,12 @@ void FmodBankLoader::_enter_tree()
     {
         return;
     }
-    for (Ref<FmodBank> bank : banks)
+    if (preload_sample_data)
     {
-        FMOD_Studio_Bank_LoadSampleData(bank->bank);
+        for (Ref<FmodBank> bank : banks)
+        {
+            FMOD_Studio_Bank_LoadSampleData(bank->bank);
+        }
     }
 }
 TypedArray<Ref<FmodBank>> FmodBankLoader::get_banks()

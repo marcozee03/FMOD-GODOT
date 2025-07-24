@@ -8,6 +8,7 @@ namespace FmodGodot
     class FmodBankFormatLoader;
     class FmodBank : public Resource
     {
+
         friend class FmodBankFormatLoader;
         friend class FmodBankLoader;
         friend class FmodAudioServer;
@@ -29,24 +30,24 @@ namespace FmodGodot
         Vector4i getID() const;
         // string getPath(char *path, int size, int *retrieved) const;
         // Loading control
-        FMOD_RESULT unload();
-        FMOD_RESULT loadSampleData();
-        FMOD_RESULT unloadSampleData();
+        int unload();
+        int load_sample_data();
+        int unload_sample_data();
 
-        FMOD_STUDIO_LOADING_STATE getLoadingState() const;
-        FMOD_STUDIO_LOADING_STATE getSampleLoadingState() const;
+        int get_loading_state() const;
+        int get_sample_loading_state() const;
 
         // Enumeration
-        int getStringCount() const;
-        FMOD_RESULT getStringInfo(int index, FMOD_GUID *id, char *path, int size, int *retrieved) const;
-        int getEventCount() const;
-        FMOD_RESULT getEventList(FMOD_STUDIO_EVENTDESCRIPTION **array, int capacity, int *count) const;
-        int getBusCount() const;
-        FMOD_RESULT getBusList(FMOD_STUDIO_BUS **array, int capacity, int *count) const;
-        int getVCACount() const;
-        FMOD_RESULT getVCAList(FMOD_STUDIO_VCA **array, int capacity, int *count) const;
+        // int getStringCount() const;
+        // FMOD_RESULT getStringInfo(int index, FMOD_GUID *id, char *path, int size, int *retrieved) const;
+        // int getEventCount() const;
+        // FMOD_RESULT getEventList(FMOD_STUDIO_EVENTDESCRIPTION **array, int capacity, int *count) const;
+        // int getBusCount() const;
+        // FMOD_RESULT getBusList(FMOD_STUDIO_BUS **array, int capacity, int *count) const;
+        // int getVCACount() const;
+        // FMOD_RESULT getVCAList(FMOD_STUDIO_VCA **array, int capacity, int *count) const;
 
-        FMOD_RESULT getUserData(void **userdata) const;
-        FMOD_RESULT setUserData(void *userdata);
+        // FMOD_RESULT getUserData(void **userdata) const;
+        // FMOD_RESULT setUserData(void *userdata);
     };
 }

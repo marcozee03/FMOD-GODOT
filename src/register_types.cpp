@@ -58,19 +58,6 @@ FmodEditorInterface *editor_interface;
   dictionary.get_or_add("hint", property_hint);                                                                                                                   \
   dictionary.get_or_add("hint_string", hint_string);                                                                                                              \
   godot::ProjectSettings::get_singleton()->add_property_info(dictionary)
-
-#define ADD_EDITOR_SETTING(setting_str, default_value, variant_type, property_hint, hint_string, dictionary)            \
-  if (!godot::EditorInterface::get_singleton()->get_editor_settings()->has_setting(setting_str))                        \
-  {                                                                                                                     \
-    godot::EditorInterface::get_singleton()->get_editor_settings()->set_setting(setting_str, default_value);            \
-  }                                                                                                                     \
-  godot::EditorInterface::get_singleton()->get_editor_settings()->set_initial_value(setting_str, default_value, false); \
-  dictionary = godot::Dictionary();                                                                                     \
-  dictionary.get_or_add("name", setting_str);                                                                           \
-  dictionary.get_or_add("type", variant_type);                                                                          \
-  dictionary.get_or_add("hint", property_hint);                                                                         \
-  dictionary.get_or_add("hint_string", hint_string);                                                                    \
-  godot::EditorInterface::get_singleton()->get_editor_settings()->add_property_info(dictionary)
 namespace FmodGodot
 {
   void loadSettings()
@@ -95,7 +82,23 @@ namespace FmodGodot
     ADD_PROJECT_SETTING(FMOD_PROJECT_PATH, true, false, false, "", Variant::Type::STRING, PROPERTY_HINT_GLOBAL_FILE, "", propinfo);
     ADD_PROJECT_SETTING(BANK_DIRECTORY, true, false, false, "res://banks/", Variant::Type::STRING, PROPERTY_HINT_DIR, "", propinfo);
     ADD_PROJECT_SETTING(LOAD_BANKS, true, false, false, 0, Variant::Type::INT, PROPERTY_HINT_ENUM, "None:0,Specified:1,All:2", propinfo);
-    ADD_PROJECT_SETTING(SPECIFIED_BANKS, true, false, false, {}, Variant::Type::PACKED_STRING_ARRAY, PROPERTY_HINT_TYPE_STRING, String::num(Variant::STRING) + "/" + String::num(PROPERTY_HINT_FILE) + ":*.bank", propinfo);
+
+    // if (!godot::ProjectSettings::get_singleton()->has_setting(SPECIFIED_BANKS))
+    // {
+    //   godot::ProjectSettings::get_singleton()->set_setting(SPECIFIED_BANKS, {});
+    // }
+    // godot::ProjectSettings::get_singleton()->set_initial_value(SPECIFIED_BANKS, {});
+    // godot::ProjectSettings::get_singleton()->set_as_basic(SPECIFIED_BANKS, true);
+    // godot::ProjectSettings::get_singleton()->set_as_internal(SPECIFIED_BANKS, false);
+    // godot::ProjectSettings::get_singleton()->set_restart_if_changed(SPECIFIED_BANKS, false);
+    // propinfo = godot::Dictionary();
+    // propinfo.get_or_add("name", SPECIFIED_BANKS);
+    // propinfo.get_or_add("type", Variant::Type::PACKED_STRING_ARRAY);
+    // propinfo.get_or_add("hint", PROPERTY_HINT_NONE);
+    // propinfo.get_or_add("hint_string", "");
+    // godot::ProjectSettings::get_singleton()->add_property_info(propinfo);
+
+    ADD_PROJECT_SETTING(SPECIFIED_BANKS, true, false, false, PackedStringArray(), Variant::Type::PACKED_STRING_ARRAY, PROPERTY_HINT_NONE, "", propinfo);
     ADD_PROJECT_SETTING(LOAD_SAMPLE_DATA, true, false, false, false, Variant::Type::BOOL, PROPERTY_HINT_NONE, "", propinfo);
     ADD_PROJECT_SETTING(ENCRYPTION_KEY, true, false, false, "", Variant::Type::STRING, PROPERTY_HINT_NONE, "", propinfo);
 

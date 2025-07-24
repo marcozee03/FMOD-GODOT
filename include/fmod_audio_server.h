@@ -124,8 +124,8 @@ namespace FmodGodot
 
         FMOD_STUDIO_BUS *get_bus(const String &p_path) const;
         FMOD_STUDIO_VCA *get_vca(const String &p_path) const;
-        FMOD_RESULT load_bank(const String &p_bankName, bool loadSamples = false);
-        FMOD_RESULT load_bank_by_file(const String &p_path, bool loadSamples = false);
+        int load_bank(const String &p_bankName, bool loadSamples = false);
+        int load_bank_by_file(const String &p_path, bool loadSamples = false);
         void unload_banks();
         bool has_bank_loaded(const String &p_bankName) const;
 
@@ -133,13 +133,13 @@ namespace FmodGodot
 
         void set_listener_location(Node2D *p_node, Node2D *p_attenuationObject = nullptr);
         void set_listener_location(RigidBody2D *p_rigidBody2D, Node2D *p_attenuationObject = nullptr);
-        void set_listener_location(int p_listenerIndex, RigidBody2D *p_rigidBody2D, Node2D *p_attenuationObject = nullptr);
-        void set_listener_location(int p_istenerIndex, Node2D *p_node, Node2D *p_attenuationObject = nullptr);
+        void set_listener_2d_rigidbody_location(int p_listenerIndex, RigidBody2D *p_rigidBody2D, Node2D *p_attenuationObject = nullptr);
+        void set_listener_2d_location(int p_istenerIndex, Node2D *p_node, Node2D *p_attenuationObject = nullptr);
 
         void set_listener_location(Node3D *p_node, Node3D *attenuationObject = nullptr);
-        void set_listener_location(RigidBody3D *rigidBody2D, Node3D *attenuationObject = nullptr);
-        void set_listener_location(int listenerIndex, RigidBody3D *rigidBody, Node3D *attenuationObject = nullptr);
-        void set_listener_location(int listenerIndex, Node3D *p_node, Node3D *attenuationObject = nullptr);
+        void set_listener_location(RigidBody3D *rigidBody3D, Node3D *attenuationObject = nullptr);
+        void set_listener_3d_rigidbody_location(int listenerIndex, RigidBody3D *rigidBody, Node3D *attenuationObject = nullptr);
+        void set_listener_3d_location(int listenerIndex, Node3D *p_node, Node3D *attenuationObject = nullptr);
         void load_start_up_banks();
 
     private:

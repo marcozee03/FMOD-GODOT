@@ -5,6 +5,7 @@
 #include <iostream>
 #include <godot_cpp/variant/string.hpp>
 #include <fmod.h>
+#include <fmod_studio.h>
 #include <godot_cpp/variant/vector3.hpp>
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/node3d.hpp>
@@ -14,10 +15,11 @@ using namespace godot;
 namespace FmodGodot
 {
 
-    char *to_char_ptr(const String& str);
-    Vector4i cast_to_Vector4i(const FMOD_GUID &guid);
-
-    FMOD_GUID cast_to_FMOD_GUID(const Vector4i &v_guid);
+    char *to_char_ptr(const String& p_str);
+    Vector4i cast_to_vector4i(const FMOD_GUID &p_guid);
+    FMOD_GUID cast_to_fmod_guid(const Vector4i &p_guid);
+    FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(const Vector2i& p_id);
+    Vector2i cast_to_vector2i(const FMOD_STUDIO_PARAMETER_ID& p_id);
     FMOD_GUID string_to_fmod_guid(const char *guid);
     String fmod_guid_to_string(const FMOD_GUID &guid);
     String fmod_guid_to_string(const Vector4i &guid);
@@ -33,6 +35,7 @@ namespace FmodGodot
     FMOD_3D_ATTRIBUTES to_3d_attributes(godot::Vector2 pos);
     FMOD_3D_ATTRIBUTES to_3d_attributes(Node2D *node);
     FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody2D *rigidbody);
+
 #define FMOD_GET_FULL_STRING(function, object, char_ptr, size, retrieved)   \
     if (function(object, char_ptr, size, &retrieved) == FMOD_ERR_TRUNCATED) \
     {                                                                       \

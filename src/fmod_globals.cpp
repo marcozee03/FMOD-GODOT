@@ -1,45 +1,65 @@
 #include <godot_cpp/variant/vector4i.hpp>
 #include "fmod_globals.h"
-
-#include <stdio.h>
 #include <godot_cpp/variant/string.hpp>
-#include <fmod.h>
 #include <godot_cpp/variant/vector3.hpp>
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/rigid_body2d.hpp>
 #include <godot_cpp/classes/rigid_body3d.hpp>
+#include <bit>
 using namespace godot;
 namespace FmodGodot
 {
 
-    char* to_char_ptr(const String& str){
+    char *to_char_ptr(const String &str)
+    {
         return str.utf8().ptrw();
     }
 
-    Vector4i cast_to_Vector4i(const FMOD_GUID &guid)
+    Vector4i cast_to_vector4i(const FMOD_GUID &p_guid)
     {
         Vector4i v;
-        v.x = guid.Data1;
-        // For some reason unclear in fmod api docs must be reversed
-        // now that i think about it probably something to do with endianess
-        v.y = guid.Data3 << 16 | guid.Data2;
-        unsigned int *ptr = (unsigned int *)guid.Data4;
-        v.z = ptr[0];
-        v.w = ptr[1];
+        DEV_ASSERT(sizeof(Vector4i) == sizeof(FMOD_GUID));
+        memcpy(&v, &p_guid, sizeof(Vector4i));
         return v;
+        // v.x = *(int32_t *)&guid.Data1;
+        // // For some reason unclear in fmod api docs must be reversed
+        // // now that i think about it probably something to do with endianess
+        // auto y = (guid.Data3 << 16 | guid.Data2);
+        // int *ptr = (int *)guid.Data4;
+        // v.z = ptr[0];
+        // v.w = ptr[1];
+        // return v;
     }
 
-    FMOD_GUID cast_to_FMOD_GUID(const Vector4i &v_guid)
+    FMOD_GUID cast_to_fmod_guid(const Vector4i &p_guid)
     {
         FMOD_GUID eventguid;
-        eventguid.Data1 = v_guid.x;
-        eventguid.Data2 = (unsigned short)v_guid.y;
-        eventguid.Data3 = (unsigned short)(v_guid.y >> 16);
-        unsigned int *ptr = (unsigned int *)eventguid.Data4;
-        ptr[0] = v_guid.z;
-        ptr[1] = v_guid.w;
+        DEV_ASSERT(sizeof(Vector4i) == sizeof(FMOD_GUID));
+        memcpy(&eventguid, &p_guid, sizeof(Vector4i));
+        // eventguid.Data1 = v_guid.x;
+        // eventguid.Data2 = (unsigned short)v_guid.y;
+        // eventguid.Data3 = (unsigned short)(v_guid.y >> 16);
+        // unsigned int *ptr = (unsigned int *)eventguid.Data4;
+        // ptr[0] = v_guid.z;
+        // ptr[1] = v_guid.w;
         return eventguid;
+    }
+
+    FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(const Vector2i &p_id)
+    {
+        FMOD_STUDIO_PARAMETER_ID id;
+        DEV_ASSERT(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(Vector2i));
+        memcpy(&id, &p_id, sizeof(FMOD_STUDIO_PARAMETER_ID));
+        return id;
+    }
+
+    Vector2i cast_to_vector2i(const FMOD_STUDIO_PARAMETER_ID &p_id)
+    {
+        Vector2i id;
+        DEV_ASSERT(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(Vector2i));
+        memcpy(&id, &p_id, sizeof(Vector2i));
+        return id;
     }
     FMOD_GUID string_to_fmod_guid(const char *guid)
     {
@@ -62,11 +82,11 @@ namespace FmodGodot
     }
     String fmod_guid_to_string(const Vector4i &guid)
     {
-        return fmod_guid_to_string(cast_to_FMOD_GUID(guid));
+        return fmod_guid_to_string(cast_to_fmod_guid(guid));
     }
     /// @brief converts the godot vector into an fmod vector. Transforming it into the fmod vector space (negates the Y coordinate)
     /// @param vec the godot vector to convert
-    /// @return 
+    /// @return
     FMOD_VECTOR to_fmod_vector(godot::Vector3 vec)
     {
         FMOD_VECTOR temp;
@@ -124,7 +144,6 @@ namespace FmodGodot
         attributes.forward = {0, 0, -1};
         attributes.up = {0, 1, 0};
         attributes.position = to_fmod_vector(pos);
-
         return attributes;
     }
     FMOD_3D_ATTRIBUTES to_3d_attributes(Node2D *node)
