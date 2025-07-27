@@ -11,12 +11,15 @@
 			<return type="float" />
 			<param index="0" name="name" type="String" />
 			<description>
+				Gets the value of parameter by name. Returns NAN if parameter does not
+				exist.
 			</description>
 		</method>
 		<method name="get_parameter_by_id" qualifiers="const">
 			<return type="float" />
 			<param index="0" name="id" type="Vector2i" />
 			<description>
+				Gets the value of parameter by id. returns NAN if parameter does not exist
 			</description>
 		</method>
 		<method name="set_parameter">
@@ -24,6 +27,7 @@
 			<param index="0" name="name" type="String" />
 			<param index="1" name="value" type="float" />
 			<description>
+				Sets the value of parameter by name. Does nothing if no parameter exists.
 			</description>
 		</method>
 		<method name="set_parameter_by_id">
@@ -31,21 +35,26 @@
 			<param index="0" name="id" type="Vector2i" />
 			<param index="1" name="value" type="float" />
 			<description>
+				Sets the value of parameter by id. Does nothing if no parameter exists.
 			</description>
 		</method>
 		<method name="start">
 			<return type="void" />
 			<description>
+				starts playing the current event or plays a new oneshot
 			</description>
 		</method>
 		<method name="stop">
 			<return type="void" />
 			<description>
+				stops playing the last played sound.
 			</description>
 		</method>
 	</methods>
 	<members>
 		<member name="allow_fadeout" type="bool" setter="set_allow_fadeout" getter="is_allow_fadeout" default="true">
+		</member>
+		<member name="attached_to_rigidbody" type="bool" setter="set_attached_to_rigidbody" getter="is_attached_to_rigidbody" default="false">
 		</member>
 		<member name="attenuation_max" type="float" setter="set_attenuation_max" getter="get_attenuation_max" default="100.0">
 		</member>

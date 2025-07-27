@@ -31,7 +31,7 @@
 		<method name="unload_sample_data">
 			<return type="int" />
 			<description>
-				Unloads the banks sample data. 
+				Unloads the banks sample data.
 			</description>
 		</method>
 	</methods>

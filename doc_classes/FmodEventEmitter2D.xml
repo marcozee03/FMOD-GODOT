@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="FmodEventEmitter2D" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
+		Emits Fmod Events and places them in the 2d world
 	</brief_description>
 	<description>
+		FmodEventEmitter2D can be triggered with signals. Sounds will be played at the
+		emitters transform or it's parents.
 	</description>
 	<tutorials>
 	</tutorials>
@@ -11,12 +14,16 @@
 			<return type="float" />
 			<param index="0" name="name" type="String" />
 			<description>
+				gets the value of the parameter by name. returns NAN if parameter with
+				name does not exist.
 			</description>
 		</method>
 		<method name="get_parameter_by_id" qualifiers="const">
 			<return type="float" />
 			<param index="0" name="id" type="Vector2i" />
 			<description>
+				gets the value of the parameter by id. returns NAN if parameter with name
+				does not exist.
 			</description>
 		</method>
 		<method name="set_parameter">
@@ -24,6 +31,7 @@
 			<param index="0" name="name" type="String" />
 			<param index="1" name="value" type="float" />
 			<description>
+				sets the parameter with the given name.
 			</description>
 		</method>
 		<method name="set_parameter_by_id">
@@ -31,21 +39,27 @@
 			<param index="0" name="id" type="Vector2i" />
 			<param index="1" name="value" type="float" />
 			<description>
+				sets the parameter with the given id.
 			</description>
 		</method>
 		<method name="start">
 			<return type="void" />
 			<description>
+				Starts playing the Fmod Event from the beginning. Or plays a new one shot
+				event.
 			</description>
 		</method>
 		<method name="stop">
 			<return type="void" />
 			<description>
+				Stops the last played event.
 			</description>
 		</method>
 	</methods>
 	<members>
 		<member name="allow_fadeout" type="bool" setter="set_allow_fadeout" getter="is_allow_fadeout" default="false">
+		</member>
+		<member name="attached_to_rigidbody" type="bool" setter="set_attached_to_rigidbody" getter="is_attached_to_rigidbody" default="false">
 		</member>
 		<member name="attenuation_max" type="float" setter="set_attenuation_max" getter="get_attenuation_max" default="100.0">
 		</member>

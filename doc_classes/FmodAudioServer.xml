@@ -150,7 +150,7 @@
 			<return type="void" />
 			<param index="0" name="listener_index" type="int" />
 			<param index="1" name="node" type="Node2D" />
-			<param index="2" name="attnenuation_object" type="Node2D" />
+			<param index="2" name="attenuation_object" type="Node2D" />
 			<description>
 				Sets the fmod listener to copy transform and velocity of node and position
 				of attenuation object
@@ -160,7 +160,7 @@
 			<return type="void" />
 			<param index="0" name="listener_index" type="int" />
 			<param index="1" name="rigidbody" type="RigidBody2D" />
-			<param index="2" name="attnenuation_object" type="Node2D" />
+			<param index="2" name="attenuation_object" type="Node2D" />
 			<description>
 				Sets the fmod listener to copy transform and velocity of node and position
 				of attenuation object
@@ -170,7 +170,7 @@
 			<return type="void" />
 			<param index="0" name="listener_index" type="int" />
 			<param index="1" name="node" type="Node3D" />
-			<param index="2" name="attnenuation_object" type="Node3D" />
+			<param index="2" name="attenuation_object" type="Node3D" />
 			<description>
 				Sets the fmod listener to copy transform and velocity of node and position
 				of attenuation object
@@ -180,7 +180,7 @@
 			<return type="void" />
 			<param index="0" name="listener_index" type="int" />
 			<param index="1" name="rigidbody" type="RigidBody3D" />
-			<param index="2" name="attnenuation_object" type="Node3D" />
+			<param index="2" name="attenuation_object" type="Node3D" />
 			<description>
 				Sets the fmod listener to copy transform and velocity of node and position
 				of attenuation object
