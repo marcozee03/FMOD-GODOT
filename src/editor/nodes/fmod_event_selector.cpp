@@ -1,3 +1,4 @@
+#include "variant/vector2i.hpp"
 #ifdef TOOLS_ENABLED
 #include "fmod_event_selector.h"
 #include <godot_cpp/core/memory.hpp>
@@ -25,6 +26,7 @@ namespace FmodGodot
         add_child(hbox);
         window = memnew(Window);
         window->set_initial_position(Window::WindowInitialPosition::WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN);
+		window->set_size(Vector2i(500,500));
         add_child(window);
         windowTree = memnew(EventTree);
         windowTree->set_display_flags(EventTree::DisplayFlags::EVENTS);
