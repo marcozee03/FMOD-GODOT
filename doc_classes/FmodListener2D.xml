@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="FmodListener2D" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
+		Overrides the location Fmod Events are heard from.
 	</brief_description>
 	<description>
+		Place in the scene to set the position of the fmod listener(s). Number of
+		listeners in a scene is limited by fmod. having 2 listeners in a scene with the
+		same index will lead to undefined behavior.
 	</description>
 	<tutorials>
 	</tutorials>
 	<members>
 		<member name="attached_to_parent" type="bool" setter="set_attached_to_parent" getter="is_attached_to_parent" default="true">
 		</member>
-		<member name="listener_index" type="int" setter="set_listener_index" getter="get_listener_index" default="1">
+		<member name="listener_index" type="int" setter="set_listener_index" getter="get_listener_index" default="0">
 		</member>
 	</members>
 </class>

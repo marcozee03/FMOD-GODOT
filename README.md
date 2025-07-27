@@ -26,11 +26,6 @@ The editor will load all of the banks in the banks folder. and cache them at sta
 
 
 ![](images/event_browser.png)  
-### Completion
- ✅ Events  
- ✅ Banks  
-❌ VCA  
-❌ [ ] Parameter
 
 ## Class Overview
  - ![](./plugin_template/icons/fmod_icon.svg) **FmodAudioServer** API to play events. and attach events to objects for spatialization updating positions and velocity.
@@ -55,9 +50,51 @@ The editor will load all of the banks in the banks folder. and cache them at sta
 Open project Settings to adjust settings like error logging, banks loaded at runtime and more.
 ## Compiling From Source
 \[WIP\]
+Before starting you will need to add the fmod headers and libraries into the appropriate location.
+To simplest way to compile this addon to your project is to run the export.py script example below
+```
+python3 export.py -p \<platform> -o /path/to/godot_project/addons
+```
+**Flags**
+-o  
+    flag specifies where to copy the outputs of the command to notice how it should be the path to the addons directory of your godot project.  
+-p  
+    flag is currently one of 3 options "windows" "linux" and "all"  
+-f  
+    skips the prompt asking for your permission to override files in the output path.
+-sc  
+    skips the compilation steps and copies whatever is currently in the bin directory to output path.  
+  
+Alternatively refer to [Introduction to the buildsystem](https://docs.godotengine.org/en/stable/contributing/development/compiling/introduction_to_the_buildsystem.html)
+
+
+### C# Set-up
+To use the Fmod C# wrappers it is necessary to replace FMOD.VERSION.dll and FMOD.Studio.STUDIO_VERSION.dll constants to use the proper fmod library version. snippets below
+```
+    public partial class VERSION
+    {
+        public const int number = 0x00020307;
+#if DEBUG || TOOLS
+        public const string dll = "fmodL";
+#else
+        public const string dll = "fmod"; 
+#endif
+    }
+```
+```
+    public partial class STUDIO_VERSION
+    {
+#if DEBUG && !TOOLS  
+        public const string dll = "fmodstudioL";
+#else
+        public const string dll     = "fmodstudio"; 
+#endif
+    }
+```
 ## Pre-built packages
 \[WIP none currently\]
 
 
-# C# roadmap
-currently C# should be able to acces the Fmod Studio and Core Systems with a tweak to the fmod C# wrapper. For GDextension it is planned to add additional interop with the audio server. and remove the old PlayOneShot methods in FmodAudioServer.cs. A module version of this extension is in consideration for better C# support
+# C# API/Plans
+C# is currently able to interact with the FmodAudioServer and from there interact interact with FMOD_Studio_System and FMOD_Core_System objects.
+A module version of this extension is in consideration for more natural C# support
