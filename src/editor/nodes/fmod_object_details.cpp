@@ -1,5 +1,6 @@
+#include "fmod_globals.h"
 #ifdef TOOLS_ENABLED
-#include "fmod_audio_server.h"
+#include "fmod_editor_interface.h"
 #include "fmod_object_details.h"
 #include <classes/editor_interface.hpp>
 #include <classes/theme.hpp>

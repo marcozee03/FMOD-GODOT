@@ -3,7 +3,6 @@
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include "fmod_event_selector.h"
-#include "fmod_event_tree.h"
 #include "fmod_event_path_selector_property.h"
 #include <godot_cpp/core/class_db.hpp>
 // #include <godot_cpp/classes/event_s
@@ -14,17 +13,19 @@ namespace FmodGodot
     {
         eventSelector = memnew(FmodEventPathSelector);
         add_child(eventSelector);
-        eventSelector->get_line_edit()->connect("text_changed", callable_mp(this, &EventPathSelectorProperty::on_text_changed));
+        eventSelector->get_line_edit()->connect("text_submitted", callable_mp(this, &EventPathSelectorProperty::on_text_changed));
+        eventSelector->get_line_edit()->connect("editing_toggled", callable_mp(this, &EventPathSelectorProperty::on_editing_toggled));
     }
     EventPathSelectorProperty::~EventPathSelectorProperty()
     {
     }
+	void EventPathSelectorProperty::on_editing_toggled(bool toggled_on){
+		if(!toggled_on){
+			on_text_changed(eventSelector->get_line_edit()->get_text());
+		}
+	}
     void EventPathSelectorProperty::on_text_changed(String newText)
     {
-        if (updating)
-        {
-            return;
-        }
         if (currentValue == newText)
         {
             return;

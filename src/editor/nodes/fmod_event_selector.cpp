@@ -1,3 +1,4 @@
+#include "fmod_editor_interface.h"
 #include "variant/vector2i.hpp"
 #ifdef TOOLS_ENABLED
 #include "fmod_event_selector.h"
@@ -7,7 +8,6 @@
 #include <godot_cpp/core/memory.hpp>
 #include "fmod_event_tree.h"
 #include "fmod_globals.h"
-#include "fmod_audio_server.h"
 #include <godot_cpp/godot.hpp>
 using namespace godot;
 namespace FmodGodot

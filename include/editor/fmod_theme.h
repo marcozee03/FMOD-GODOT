@@ -4,21 +4,21 @@
 using namespace godot;
 namespace FmodGodot
 {
-    class FmodTheme
-    {
-    public:
-        Ref<Texture2D> event_icon;
-        Ref<Texture2D> c_parameter_icon;
-        Ref<Texture2D> d_parameter_icon;
-        Ref<Texture2D> bank_icon;
-        Ref<Texture2D> fmod_icon;
-        Ref<Texture2D> bank_loader_icon;
-        Ref<Texture2D> snapshot_icon;
-        Ref<Texture2D> vca_icon;
+class FmodTheme
+{
+  public:
+    Ref<Texture2D> event_icon;
+    Ref<Texture2D> c_parameter_icon;
+    Ref<Texture2D> d_parameter_icon;
+    Ref<Texture2D> bank_icon;
+    Ref<Texture2D> fmod_icon;
+    Ref<Texture2D> bank_loader_icon;
+    Ref<Texture2D> snapshot_icon;
+    Ref<Texture2D> vca_icon;
 
-    public:
-        FmodTheme(/* args */);
-        ~FmodTheme();
-    };
-}
+  public:
+    FmodTheme(/* args */);
+    ~FmodTheme();
+};
+} // namespace FmodGodot
 #endif
