@@ -6,28 +6,28 @@
 using namespace godot;
 namespace FmodGodot
 {
-    class FmodEditorInterface : public Object
-    {
-        GDCLASS(FmodEditorInterface, Object)
-    private:
-        /* data */
-        FmodEditorCache cache;
-        FmodTheme theme;
-        static FmodEditorInterface *singleton;
-        bool live_update_enabled = false;
+class FmodEditorInterface : public Object
+{
+    GDCLASS(FmodEditorInterface, Object)
+  private:
+    /* data */
+    FmodEditorCache cache;
+    FmodTheme theme;
+    static FmodEditorInterface *singleton;
+    bool live_update_enabled = false;
 
-    protected:
-        static void _bind_methods();
+  protected:
+    static void _bind_methods();
 
-    public:
-        FmodEditorInterface();
-        ~FmodEditorInterface();
-        void restart_server();
-        void build_banks();
-        void refresh();
-        const FmodEditorCache *get_cache() const;
-        const FmodTheme *get_theme() const;
-        static FmodEditorInterface *get_singleton();
-    };
-}
+  public:
+    FmodEditorInterface();
+    ~FmodEditorInterface();
+    void restart_server();
+    void build_banks();
+    void refresh();
+    const FmodEditorCache *get_cache() const;
+    const FmodTheme *get_theme() const;
+    static FmodEditorInterface *get_singleton();
+};
+} // namespace FmodGodot
 #endif
