@@ -1,22 +1,21 @@
 
 #ifdef TOOLS_ENABLED
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/packed_string_array.hpp>
-#include <godot_cpp/templates/vector.hpp>
-#include <iostream>
 #include <godot_cpp/core/print_string.hpp>
+#include <godot_cpp/templates/vector.hpp>
+#include <godot_cpp/variant/packed_string_array.hpp>
+#include <godot_cpp/variant/string.hpp>
+#include <iostream>
 using namespace std;
-template <typename Data>
-class PathTree
+template <typename Data> class PathTree
 {
 
-private:
+  private:
     struct BranchNode;
     struct DataNode;
 
     struct Node
     {
-    public:
+      public:
         virtual DataNode *add(const String &name, Data data) = 0;
         virtual BranchNode *add(const String &name) = 0;
 
@@ -31,8 +30,10 @@ private:
 
     struct BranchNode : Node
     {
-    public:
-        BranchNode(const String &name) : Node(name, true) {}
+      public:
+        BranchNode(const String &name) : Node(name, true)
+        {
+        }
         ~BranchNode();
         Vector<Node *> children;
         DataNode *add(const String &name, Data data) override;
@@ -45,7 +46,7 @@ private:
     };
     struct DataNode : Node
     {
-    public:
+      public:
         DataNode(const String &p_name, Data p_data) : Node(p_name, false)
         {
             data = p_data;
@@ -59,7 +60,7 @@ private:
         PackedStringArray get_contents() const override;
     };
 
-public:
+  public:
     struct TreeItem
     {
         Node *node;
@@ -85,12 +86,12 @@ public:
         }
     };
 
-private:
+  private:
     Node *find_node(const String &path, bool lastIsData = false);
     const Node *find_node(const String &path) const;
     BranchNode root;
 
-public:
+  public:
     PathTree(/* args */);
     virtual ~PathTree();
 
@@ -104,8 +105,7 @@ public:
     PackedStringArray get_contents(const String &path) const;
     TreeItem get_root() const;
 };
-template <typename Data>
-typename PathTree<Data>::Node *PathTree<Data>::find_node(const String &path, bool last_is_data)
+template <typename Data> typename PathTree<Data>::Node *PathTree<Data>::find_node(const String &path, bool last_is_data)
 {
     Node *current_branch = &root;
     PackedStringArray split = path.split("/", false);
@@ -133,8 +133,7 @@ typename PathTree<Data>::Node *PathTree<Data>::find_node(const String &path, boo
     return current_branch;
 }
 
-template <typename Data>
-const typename PathTree<Data>::Node *PathTree<Data>::find_node(const String &path) const
+template <typename Data> const typename PathTree<Data>::Node *PathTree<Data>::find_node(const String &path) const
 {
     const Node *current_branch = &root;
     PackedStringArray split = path.split("/", false);
@@ -150,24 +149,19 @@ const typename PathTree<Data>::Node *PathTree<Data>::find_node(const String &pat
     }
     return current_branch;
 }
-template <typename Data>
-PathTree<Data>::PathTree() : root("")
+template <typename Data> PathTree<Data>::PathTree() : root("")
 {
 }
 
-template <typename Data>
-PathTree<Data>::~PathTree()
+template <typename Data> PathTree<Data>::~PathTree()
 {
 }
-template <typename Data>
-Data &PathTree<Data>::operator[](const String &path)
+template <typename Data> Data &PathTree<Data>::operator[](const String &path)
 {
-    return ((PathTree<Data>::DataNode *)find_node(path, true))
-        ->data;
+    return ((PathTree<Data>::DataNode *)find_node(path, true))->data;
 }
 
-template <typename Data>
-Data PathTree<Data>::operator[](const String &path) const
+template <typename Data> Data PathTree<Data>::operator[](const String &path) const
 {
     const Node *node = find_node(path);
     if (!node)
@@ -178,21 +172,18 @@ Data PathTree<Data>::operator[](const String &path) const
     return ((PathTree<Data>::DataNode *)node)->data;
 }
 
-template <typename Data>
-void PathTree<Data>::add_data(const String &path, Data data)
+template <typename Data> void PathTree<Data>::add_data(const String &path, Data data)
 {
     DataNode *node = (DataNode *)find_node(path, true);
     node->data = data;
 }
 
-template <typename Data>
-void PathTree<Data>::add(const String &path)
+template <typename Data> void PathTree<Data>::add(const String &path)
 {
     find_node(path, false);
 }
 
-template <typename Data>
-void PathTree<Data>::clear()
+template <typename Data> void PathTree<Data>::clear()
 {
     for (auto child : root.children)
     {
@@ -201,8 +192,7 @@ void PathTree<Data>::clear()
     root.children.resize(0);
 }
 
-template <typename Data>
-void PathTree<Data>::print() const
+template <typename Data> void PathTree<Data>::print() const
 {
     std::cout << root.name.utf8() << std::endl;
     for (auto child : root.children)
@@ -210,8 +200,7 @@ void PathTree<Data>::print() const
         child->print(1);
     }
 }
-template <typename Data>
-PackedStringArray PathTree<Data>::get_contents(const String &path) const
+template <typename Data> PackedStringArray PathTree<Data>::get_contents(const String &path) const
 {
     if (path.begins_with("/"))
     {
@@ -230,8 +219,7 @@ PackedStringArray PathTree<Data>::get_contents(const String &path) const
         }
     }
 }
-template <typename Data>
-typename PathTree<Data>::TreeItem PathTree<Data>::get_root() const
+template <typename Data> typename PathTree<Data>::TreeItem PathTree<Data>::get_root() const
 {
     return {&root};
 }
@@ -241,20 +229,17 @@ PathTree<Data>::Node::Node(const String &name, bool p_has_children) : has_childr
     this->name = name;
 }
 
-template <typename Data>
-typename PathTree<Data>::DataNode *PathTree<Data>::DataNode::add(const String &name, Data data)
+template <typename Data> typename PathTree<Data>::DataNode *PathTree<Data>::DataNode::add(const String &name, Data data)
 {
     return nullptr;
 }
 
-template <typename Data>
-typename PathTree<Data>::BranchNode *PathTree<Data>::DataNode::add(const String &name)
+template <typename Data> typename PathTree<Data>::BranchNode *PathTree<Data>::DataNode::add(const String &name)
 {
     return nullptr;
 }
 
-template <typename Data>
-const typename PathTree<Data>::Node *PathTree<Data>::DataNode::find(const String &name) const
+template <typename Data> const typename PathTree<Data>::Node *PathTree<Data>::DataNode::find(const String &name) const
 {
     if (name.casecmp_to(Node::name) == 0)
     {
@@ -266,8 +251,7 @@ const typename PathTree<Data>::Node *PathTree<Data>::DataNode::find(const String
     }
 }
 
-template <typename Data>
-typename PathTree<Data>::Node *PathTree<Data>::DataNode::find(const String &name)
+template <typename Data> typename PathTree<Data>::Node *PathTree<Data>::DataNode::find(const String &name)
 {
     if (name.casecmp_to(Node::name) == 0)
     {
@@ -279,8 +263,7 @@ typename PathTree<Data>::Node *PathTree<Data>::DataNode::find(const String &name
     }
 }
 
-template <typename Data>
-void PathTree<Data>::DataNode::print(int indent_level) const
+template <typename Data> void PathTree<Data>::DataNode::print(int indent_level) const
 {
     for (int i = 0; i < indent_level; i++)
     {
@@ -289,14 +272,12 @@ void PathTree<Data>::DataNode::print(int indent_level) const
     cout << Node::name.utf8() << " " << data << endl;
 }
 
-template <typename Data>
-PackedStringArray PathTree<Data>::DataNode::get_contents() const
+template <typename Data> PackedStringArray PathTree<Data>::DataNode::get_contents() const
 {
     return {};
 }
 
-template <typename Data>
-PathTree<Data>::BranchNode::~BranchNode()
+template <typename Data> PathTree<Data>::BranchNode::~BranchNode()
 {
     for (int i = 0; i < children.size(); i++)
     {
@@ -312,16 +293,14 @@ typename PathTree<Data>::DataNode *PathTree<Data>::BranchNode::add(const String 
     return node;
 }
 
-template <typename Data>
-typename PathTree<Data>::BranchNode *PathTree<Data>::BranchNode::add(const String &name)
+template <typename Data> typename PathTree<Data>::BranchNode *PathTree<Data>::BranchNode::add(const String &name)
 {
     BranchNode *branch = new BranchNode(name);
     children.push_back(branch);
     return branch;
 }
 
-template <typename Data>
-const typename PathTree<Data>::Node *PathTree<Data>::BranchNode::find(const String &name) const
+template <typename Data> const typename PathTree<Data>::Node *PathTree<Data>::BranchNode::find(const String &name) const
 {
     for (auto child : children)
     {
@@ -333,8 +312,7 @@ const typename PathTree<Data>::Node *PathTree<Data>::BranchNode::find(const Stri
     return nullptr;
 }
 
-template <typename Data>
-typename PathTree<Data>::Node *PathTree<Data>::BranchNode::find(const String &name)
+template <typename Data> typename PathTree<Data>::Node *PathTree<Data>::BranchNode::find(const String &name)
 {
     for (auto child : children)
     {
@@ -346,8 +324,7 @@ typename PathTree<Data>::Node *PathTree<Data>::BranchNode::find(const String &na
     return nullptr;
 }
 
-template <typename Data>
-PackedStringArray PathTree<Data>::BranchNode::get_contents() const
+template <typename Data> PackedStringArray PathTree<Data>::BranchNode::get_contents() const
 {
     PackedStringArray arr;
     for (Node *node : children)
@@ -358,8 +335,7 @@ PackedStringArray PathTree<Data>::BranchNode::get_contents() const
     return arr;
 }
 
-template <typename Data>
-void PathTree<Data>::BranchNode::print(int indent_level) const
+template <typename Data> void PathTree<Data>::BranchNode::print(int indent_level) const
 {
     for (int i = 0; i < indent_level; i++)
     {

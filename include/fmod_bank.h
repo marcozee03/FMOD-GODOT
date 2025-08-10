@@ -1,53 +1,53 @@
 #pragma once
+#include "fmod_globals.h"
 #include <fmod_studio.h>
 #include <godot_cpp/classes/resource.hpp>
-#include "fmod_globals.h"
 using namespace godot;
 namespace FmodGodot
 {
-    class FmodBankFormatLoader;
-    class FmodBank : public Resource
-    {
+class FmodBankFormatLoader;
+class FmodBank : public Resource
+{
 
-        friend class FmodBankFormatLoader;
-        friend class FmodBankLoader;
-        friend class FmodAudioServer;
-        GDCLASS(FmodBank, Resource);
+    friend class FmodBankFormatLoader;
+    friend class FmodBankLoader;
+    friend class FmodAudioServer;
+    GDCLASS(FmodBank, Resource);
 
-    private:
-        FMOD_STUDIO_BANK *bank;
+  private:
+    FMOD_STUDIO_BANK *bank;
 
-    protected:
-        static void _bind_methods();
+  protected:
+    static void _bind_methods();
 
-    public:
-        FmodBank();
-        ~FmodBank();
+  public:
+    FmodBank();
+    ~FmodBank();
 
-        bool isValid() const;
+    bool isValid() const;
 
-        // Property access
-        Vector4i getID() const;
-        // string getPath(char *path, int size, int *retrieved) const;
-        // Loading control
-        int unload();
-        int load_sample_data();
-        int unload_sample_data();
+    // Property access
+    Vector4i getID() const;
+    // string getPath(char *path, int size, int *retrieved) const;
+    // Loading control
+    int unload();
+    int load_sample_data();
+    int unload_sample_data();
 
-        int get_loading_state() const;
-        int get_sample_loading_state() const;
+    int get_loading_state() const;
+    int get_sample_loading_state() const;
 
-        // Enumeration
-        // int getStringCount() const;
-        // FMOD_RESULT getStringInfo(int index, FMOD_GUID *id, char *path, int size, int *retrieved) const;
-        // int getEventCount() const;
-        // FMOD_RESULT getEventList(FMOD_STUDIO_EVENTDESCRIPTION **array, int capacity, int *count) const;
-        // int getBusCount() const;
-        // FMOD_RESULT getBusList(FMOD_STUDIO_BUS **array, int capacity, int *count) const;
-        // int getVCACount() const;
-        // FMOD_RESULT getVCAList(FMOD_STUDIO_VCA **array, int capacity, int *count) const;
+    // Enumeration
+    // int getStringCount() const;
+    // FMOD_RESULT getStringInfo(int index, FMOD_GUID *id, char *path, int size, int *retrieved) const;
+    // int getEventCount() const;
+    // FMOD_RESULT getEventList(FMOD_STUDIO_EVENTDESCRIPTION **array, int capacity, int *count) const;
+    // int getBusCount() const;
+    // FMOD_RESULT getBusList(FMOD_STUDIO_BUS **array, int capacity, int *count) const;
+    // int getVCACount() const;
+    // FMOD_RESULT getVCAList(FMOD_STUDIO_VCA **array, int capacity, int *count) const;
 
-        // FMOD_RESULT getUserData(void **userdata) const;
-        // FMOD_RESULT setUserData(void *userdata);
-    };
-}
+    // FMOD_RESULT getUserData(void **userdata) const;
+    // FMOD_RESULT setUserData(void *userdata);
+};
+} // namespace FmodGodot
