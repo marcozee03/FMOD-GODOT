@@ -3,9 +3,13 @@
 ## About
 
 Fmod-Godot is a GDExtension library that integrates the Fmod API with the Godot
-Engine. The library provides a way for C# to interact directly with the fmod studio
-instance the FmodAudioServer uses to directly use the lower-level fmod studio and
-core apis.
+Engine. The library provides a way for C# to interact directly with the same FMOD Studio/Core system
+instances the FmodAudioServer uses. So, it is not limited to what the integration handles explicitly.  
+
+Unlike [FMOD GDExtension](https://github.com/utopia-rise/fmod-gdextension) this
+The extension doesn't expose the low-level FMOD and FMOD Studio APIs to GDScript.
+The initial design Goal/Motivation of this was to add a high-level integration
+with the Godot Engine while allowing C# to use the official FMOD C# wrapper.
 
 ## Features  
 
@@ -23,9 +27,9 @@ public Vector4I soundFX2;
 ```
 
 ``` GDScript
-@export_custom(PROPERTY_HINT_NONE, "FmodEvent)
+@export_custom(PROPERTY_HINT_NONE, "FmodEvent")
 var soundfx1 : String
-@export_custom(PROPERTY_HINT_NONE, "FmodEvent)
+@export_custom(PROPERTY_HINT_NONE, "FmodEvent")
 var soundfx2 : Vector4I
 ```
 
@@ -34,28 +38,28 @@ var soundfx2 : Vector4I
 ### Event Browser
 
 The editor will load all of the banks in the banks folder. and cache them at
-startup. to be referenced by inspectors. you can drag and drop events from the browser
+startup. to be referenced by inspectors. You can drag and drop events from the browser
 
 ![](images/event_browser.png)  
 
 ### Class Overview
 
 - ![](./plugin_template/icons/fmod_icon.svg)**FmodAudioServer**:
-    API to play events. and attach events to objects for spatialization updating
+    API to play events. and attach events to objects for specialization, updating
     positions and velocity.
 
 - ![](plugin_template/icons/bank_loader_icon.svg)**FmodBankLoader**: This node
  loads the banks in its bank list when it enters the scene tree. and unload
- them if no other bank loader node is loading the bank. banks loaded this way
+ them if no other bank loader node is loading the bank. Banks loaded this way
  are reference counted.
 
 - ![](plugin_template/icons/bank_icon.svg)**FmodBank**: Fmod Bank files are imported
-into godot and exported automatically. Banks can be opened in the inspector to view
+into Godot and exported automatically. Banks can be opened in the inspector to view
 what events they contain and their GUID.  
   ![](images/bank_inspector_example.png)
 
 - ![](plugin_template/icons/FmodEventEmitter2D.svg) **FmodEventEmitter2D/3D**:
-    Plays selected sound effect. Edit parameters, Spatialize the audio and more
+    Plays a selected sound effect. Edit parameters, spatialize the audio, and more
     \[WIKI goes here (WIP)\]
 
 - ![](plugin_template/icons/FmodListener2D.svg) **FmodListener2D/3D**: place
@@ -77,9 +81,9 @@ runtime and more.
 ### Compiling From Source
 
 \[WIP\]
-Before starting you will need to add the fmod headers and libraries into the appropriate
+Before starting, you will need to add the FMOD headers and libraries to the appropriate
 location. To simplest way to compile this addon to your project is to run the export.py
-script example below
+script example below.
 
 ``` python
 python3 export.py -p \<platform> -o /path/to/godot_project/addons
@@ -88,7 +92,7 @@ python3 export.py -p \<platform> -o /path/to/godot_project/addons
 **Flags**
 -o  
     flag specifies where to copy the outputs of the command to notice how it should
-    be the path to the addons directory of your godot project.  
+    be the path to the addons directory of your Godot project.  
 -p  
     flag is currently one of 3 options "windows" "linux" and "all"  
 -f  
@@ -145,3 +149,4 @@ snippets below
 
 C# is currently able to interact with the FmodAudioServer and from there interact interact with FMOD_Studio_System and FMOD_Core_System objects.
 A module version of this extension is in consideration for more natural C# support
+
