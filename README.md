@@ -17,9 +17,9 @@ with the Godot Engine while allowing C# to use the official FMOD C# wrapper.
 
 Add a FmodEvent tag to strings or Vector4Is to choose an FMOD_Event from the
 inspector to be passed to FMOD API Functions <sub>*Convert will Vector4i to an
-    FMOD::GUID with an implicit castand vice versa</sub>  
+    FMOD::GUID with an implicit cast and vice versa</sub>  
 
-```C#
+``` C#
 [Export(PropertyHint.None,"FmodEvent")]
 public string soundFX1;
 [Export(PropertyHint.None,"FmodEvent")]
@@ -86,7 +86,7 @@ location. To simplest way to compile this addon to your project is to run the ex
 script example below.
 
 ``` python
-python3 export.py -p \<platform> -o /path/to/godot_project/addons
+python3 export.py -p <platform> -o /path/to/godot_project/addons
 ```
 
 **Flags**
