@@ -4,6 +4,7 @@ import os
 import shutil
 import subprocess
 import sys
+import platform
 from pathlib import Path
 
 supported_platforms = ["linux", "windows"]
@@ -62,7 +63,9 @@ def main():
     )
     args, unknown = parser.parse_known_args(sys.argv)
     os_platform = args.platform
-    arch = os.uname().machine
+    arch = platform.machine()
+    if arch == "AMD64":
+        arch = "x86_64"
     if args.architecture != None:
         arch = args.architecture
     if not sys.argv.__contains__("-sc"):
