@@ -70,7 +70,7 @@ listeners into the scene that automatically update their position.
 | Platform | Support | Notes                                             |
 |----------|---------|---------------------------------------------------|
 |Linux     |✅       |Manually Tested                                    |
-|Windows   |🟨       |Untested should just need to modify SConstruct file|
+|Windows   |🟨       |Compiles sparsely tested                           |
 |Other     |❌       |Untested/Unsupported                               |
 
 ## Installation and Getting Started
