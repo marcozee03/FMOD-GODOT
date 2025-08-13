@@ -1,3 +1,4 @@
+#include "fmod_event_tree.h"
 #ifdef TOOLS_ENABLED
 #include "fmod_event_browser.h"
 #include "fmod_editor_interface.h"
@@ -14,7 +15,7 @@ FmodGodot::FmodEventBrowser::FmodEventBrowser()
     top_buttons = memnew(HBoxContainer);
     add_child(top_buttons, false, INTERNAL_MODE_FRONT);
     Button *refresh = memnew(Button());
-    refresh->connect("pressed", callable_mp(FmodEditorInterface::get_singleton(), &FmodEditorInterface::refresh));
+    refresh->connect("pressed", callable_mp(this, &FmodEventBrowser::refresh));
     refresh->set_text("Refresh");
     top_buttons->add_child(refresh);
 
@@ -43,6 +44,10 @@ FmodGodot::FmodEventBrowser::FmodEventBrowser()
     split->add_child(details);
     tree->connect("fmod_object_selected", Callable(details, "display_fmod_object"), CONNECT_PERSIST);
     refresh->connect("pressed", callable_mp(tree, &EventTree::LoadEvents));
+}
+void FmodGodot::FmodEventBrowser::refresh(){
+	FmodEditorInterface::get_singleton()->refresh();
+	tree->LoadEvents();
 }
 void FmodGodot::FmodEventBrowser::_bind_methods()
 {
