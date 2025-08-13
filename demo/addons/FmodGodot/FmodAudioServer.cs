@@ -28,9 +28,9 @@ namespace FmodGodot
             public const string template = "template_release";
 #endif
 #if GODOT_WINDOWS
-            public const string dll = $"libFmodGodot.windows.{template}.x86_64";
+            public const string dll = $"libFmodGodot.{template}";
 #elif GODOT_LINUXBSD
-            public const string dll = $"libFmodGodot.linux.{template}.x86_64";
+            public const string dll = $"libFmodGodot.{template}.so";
 #endif
         }
         private static FMOD.Studio.System studio;

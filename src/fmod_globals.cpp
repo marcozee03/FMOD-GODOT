@@ -81,30 +81,26 @@ String fmod_guid_to_string(const Vector4i &guid)
 {
     return fmod_guid_to_string(cast_to_fmod_guid(guid));
 }
-/// @brief converts the godot vector into an fmod vector. Transforming it into the fmod vector space (negates the Y
-/// coordinate)
-/// @param vec the godot vector to convert
+/// @brief converts the godot vector into an fmod vector.
+/// /// @param vec the godot vector to convert
 /// @return
 FMOD_VECTOR to_fmod_vector(godot::Vector3 vec)
 {
     FMOD_VECTOR temp;
     temp.x = vec.x;
-    temp.y = -vec.y;
+    temp.y = vec.y;
     temp.z = vec.z;
 
     return temp;
 }
-/// @brief converts the godot vector into an fmod vector. Transforming it into the fmod vector space (negates the Y
-/// coordinate)
-/// @param vec the godot vector to convert
+/// @brief converts the godot vector into an fmod vector.// @param vec the godot vector to convert
 /// @return
 FMOD_VECTOR to_fmod_vector(godot::Vector2 vec)
 {
-    return {vec.x, -vec.y, 0};
+    return {vec.x, vec.y, 0};
 }
 
-/// @brief converts the fmod vector into an godot vector. Transforming it into the godot vector space (negates the Y
-/// coordinate)
+/// @brief converts the fmod vector into an godot vector.
 /// @param vec the fmod vector to convert
 /// @return
 godot::Vector3 to_godot_vector(FMOD_VECTOR vec)

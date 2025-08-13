@@ -8,9 +8,15 @@
 
 config_version=5
 
+[Fmod]
+
+Debug/logging_level=4
+Banks/Initialization/load_banks=2
+
 [application]
 
 config/name="FMOD_Godot_Demo"
+run/main_scene="uid://du5edjhh7apcj"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 

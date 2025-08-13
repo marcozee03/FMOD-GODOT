@@ -8,7 +8,7 @@ namespace FmodGodot
     class FmodListener3D : public Node3D
     {
         GDCLASS(FmodListener3D, Node3D);
-        int listener_index;
+        int listener_index = 0;
 
     private:
         enum ParentType3D
@@ -25,7 +25,7 @@ namespace FmodGodot
             Node *parent_other;
         };
         /* data */
-        bool attached_to_parent;
+        bool attached_to_parent = false;
 
     protected:
         static void _bind_methods();

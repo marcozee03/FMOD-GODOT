@@ -15,42 +15,38 @@ FmodListener2D = "res://addons/FmodGodot/icons/FmodListener2D.svg"
 FmodListener3D = "res://addons/FmodGodot/icons/FmodListener3D.svg"
 [libraries]
 
-windows.editor.x86_64 = "res://addons/FmodGodot/bin/libs/windows/libFmodGodot.windows.editor.x86_64.dll"
-windows.debug.x86_64 = "res://addons/FmodGodot/bin/libs/windows/libFmodGodot.windows.template_debug.x86_64.dll"
-windows.release.x86_64 = "res://addons/FmodGodot/bin/libs/windows/libFmodGodot.windows.template_release.x86_64.dll"
+windows.editor.x86_64 = "res://addons/FmodGodot/bin/libs/windows/x86_64/libFmodGodot.editor.dll"
+windows.debug.x86_64 = "res://addons/FmodGodot/bin/libs/windows/x86_64/libFmodGodot.template_debug.dll"
+windows.release.x86_64 = "res://addons/FmodGodot/bin/libs/windows/x86_64/libFmodGodot.template_release.dll"
 
-linux.editor.x86_64 = "res://addons/FmodGodot/bin/libs/linux/libFmodGodot.linux.editor.x86_64.so"
+linux.editor.x86_64 = "res://addons/FmodGodot/bin/libs/linux/x86_64/libFmodGodot.editor.so"
 
-linux.release.x86_64 = "res://addons/FmodGodot/bin/libs/linux/libFmodGodot.linux.template_release.x86_64.so"
+linux.release.x86_64 = "res://addons/FmodGodot/bin/libs/linux/x86_64/libFmodGodot.template_release.so"
 [dependencies]
 
-windows.editor = {
-    "res://addons/FmodGodot/bin/libs/windows/fmod.dll" : "",
-    "res://addons/FmodGodot/bin/libs/windows/fmodstudio.dll" : ""
+windows.editor.x86_64 = {
+    "res://addons/FmodGodot/bin/libs/windows/x86_64/fmod.dll" : "",
+    "res://addons/FmodGodot/bin/libs/windows/x86_64/fmodstudio.dll" : ""
 }
-windows.debug = {
-    "res://addons/FmodGodot/bin/libs/windows/fmod.dll" : "",
-    "res://addons/FmodGodot/bin/libs/windows/fmodstudio.dll" : ""
+windows.debug.x86_64 = {
+    "res://addons/FmodGodot/bin/libs/windows/x86_64/fmod.dll" : "",
+    "res://addons/FmodGodot/bin/libs/windows/x86_64/fmodstudio.dll" : ""
 }
-windows.release = {
-    "res://addons/FmodGodot/bin/libs/windows/fmod.dll" : "",
-    "res://addons/FmodGodot/bin/libs/windows/fmodstudio.dll" : ""
+windows.release.x86_64 = {
+    "res://addons/FmodGodot/bin/libs/windows/x86_64/fmod.dll" : "",
+    "res://addons/FmodGodot/bin/libs/windows/x86_64/fmodstudio.dll" : ""
 }
 
 linux.editor.x86_64  = {
-    "res://addons/FmodGodot/bin/libs/linux/libfmodL.so": "",
-    "res://addons/FmodGodot/bin/libs/linux/libfmodstudioL.so": "",
-    "res://addons/FmodGodot/bin/libs/linux/libfmodL.so.14": "",
-    "res://addons/FmodGodot/bin/libs/linux/libfmodstudioL.so.14": "",
-    "res://addons/FmodGodot/bin/libs/linux/libfmodL.so.14.7": "",
-    "res://addons/FmodGodot/bin/libs/linux/libfmodstudioL.so.14.7": ""
+    "res://addons/FmodGodot/bin/libs/linux/x86_64/libfmodL.so.14": "",
+    "res://addons/FmodGodot/bin/libs/linux/x86_64/libfmodstudioL.so.14": "",
 }
 linux.debug.x86_64  = {
-    "res://addons/FmodGodot/bin/libs/linux/libfmodL.so": "",
-    "res://addons/FmodGodot/bin/libs/linux/libfmodstudioL.so": "",
+    "res://addons/FmodGodot/bin/libs/linux/x86_64/libfmodL.so.14": "",
+    "res://addons/FmodGodot/bin/libs/linux/x86_64/libfmodstudioL.so.14": "",
 }
 linux.release.x86_64 = {
-    "res://addons/FmodGodot/bin/libs/linux/libfmod.so.14.7": "",
-    "res://addons/FmodGodot/bin/libs/linux/libfmodstudio.so.14.7": "",
+    "res://addons/FmodGodot/bin/libs/linux/x86_64/libfmod.so.14": "",
+    "res://addons/FmodGodot/bin/libs/linux/x86_64/libfmodstudio.so.14": "",
 }
 
