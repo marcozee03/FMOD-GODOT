@@ -4,6 +4,8 @@
 #include "classes/resource_loader.hpp"
 #include "fmod_globals.h"
 #include "fmod_string_names.h"
+#include "fmod_studio.h"
+#include "fmod_studio_common.h"
 #include "globals.h"
 #include <classes/dir_access.hpp>
 #include <classes/os.hpp>
@@ -139,6 +141,8 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
         break;
     case ENABLED:
         studio_init = FMOD_STUDIO_INIT_LIVEUPDATE;
+        print_line("Live Update");
+        print_line(p_settings.live_update_port);
     case DEV_ONLY: // dev
 #if defined(TOOLS_ENABLED) || defined(DEBUG)
         studio_init = FMOD_STUDIO_INIT_LIVEUPDATE;
@@ -543,8 +547,9 @@ void FmodAudioServer::play_one_shot_by_id(const Vector4i p_guid, const Vector3 p
     FMOD_3D_ATTRIBUTES attr;
     attr.forward = {0, 0, -1};
     attr.up = {0, 1, 0};
-    attr.position = {p_position.x, -p_position.y, p_position.z};
+    attr.position = to_fmod_vector(p_position);
     attr.velocity = {0, 0, 0};
+    FMOD_Studio_EventInstance_Set3DAttributes(event, &attr);
     FMOD_Studio_EventInstance_Start(event);
     FMOD_Studio_EventInstance_Release(event);
 }
