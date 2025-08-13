@@ -18,7 +18,7 @@ class FmodEventBrowser : public VBoxContainer
     HBoxContainer *split;
     EventTree *tree;
     FmodObjectDetails *details;
-
+	void refresh();
   protected:
     static void _bind_methods();
 
