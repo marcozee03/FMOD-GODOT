@@ -2,11 +2,14 @@
 #include "classes/global_constants.hpp"
 #include "classes/os.hpp"
 #include "classes/resource_loader.hpp"
+#include "core/error_macros.hpp"
+#include "fmod_common.h"
 #include "fmod_globals.h"
 #include "fmod_string_names.h"
 #include "fmod_studio.h"
 #include "fmod_studio_common.h"
 #include "globals.h"
+#include "variant/utility_functions.hpp"
 #include <classes/dir_access.hpp>
 #include <classes/os.hpp>
 #include <fmod_errors.h>
@@ -60,6 +63,20 @@ FmodAudioServer::InitSettings FmodAudioServer::get_fmod_settings()
     get_debug_settings(settings);
     return settings;
 }
+
+FMOD_RESULT debug_callback(FMOD_DEBUG_FLAGS flags, const char *file, int line, const char *func, const char *message)
+{
+    if (flags & FMOD_DEBUG_LEVEL_ERROR)
+    {
+        _err_print_error(func, file, line, message, false, false);
+    }
+    else if (flags & FMOD_DEBUG_LEVEL_WARNING)
+    {
+        _err_print_error(func, file, line, message, true, false);
+    }
+    return FMOD_OK;
+}
+
 FMOD_RESULT godot_file_error_to_fmod_file_error(Error err)
 {
     switch (err)
@@ -418,7 +435,6 @@ FmodAudioServer *FmodAudioServer::get_singleton()
 }
 void FmodAudioServer::load_start_up_banks()
 {
-
     Array arr;
     int what = ProjectSettings::get_singleton()->get_setting_with_override(LOAD_BANKS);
     arr = ProjectSettings::get_singleton()->get_setting_with_override(SPECIFIED_BANKS);
@@ -444,16 +460,10 @@ void FmodAudioServer::load_start_up_banks()
             {
                 continue;
             }
+            ProjectSettings *ps = ProjectSettings::get_singleton();
             start_up_banks.push_back(ResourceLoader::get_singleton()->load(
-                ProjectSettings::get_singleton()->get_setting_with_override(BANK_DIRECTORY).stringify() + "/" + file));
-#ifdef TOOLS_ENABLED
-            // Hacky but adds redundancy for restarting the audio server to apply
-            // project settings changes. since bank resources will become invalid and
-            // no longer be refcount the new bank instances. Shouldn't matter in game
-            // builds. the above line makes sure banks aren't unloaded unwillingly
-            load_bank_by_file(ProjectSettings::get_singleton()->get_setting_with_override(BANK_DIRECTORY).stringify() +
-                              "/" + file);
-#endif
+                ps->get_setting_with_override(BANK_DIRECTORY).stringify() + "/" + file, String(),
+                godot::ResourceLoader::CACHE_MODE_REPLACE));
         }
         break;
     }
@@ -527,7 +537,15 @@ FMOD_SYSTEM *FmodAudioServer::get_core()
 {
     return core_system;
 }
+const FMOD_SYSTEM *FmodAudioServer::get_core() const
+{
+    return core_system;
+}
 FMOD_STUDIO_SYSTEM *FmodAudioServer::get_studio()
+{
+    return studio_system;
+}
+const FMOD_STUDIO_SYSTEM *FmodAudioServer::get_studio() const
 {
     return studio_system;
 }
@@ -733,9 +751,18 @@ void FmodAudioServer::set_listener_location(Node2D *p_node, Node2D *p_attenuatio
 {
     set_listener_2d_location(0, p_node, p_attenuation_object);
 }
+void FmodAudioServer::set_listener_location(int p_listener_index, Node2D *p_node, Node2D *p_attenuation_object)
+{
+    set_listener_2d_location(p_listener_index, p_node, p_attenuation_object);
+}
 void FmodAudioServer::set_listener_location(RigidBody2D *p_rigid_body2d, Node2D *p_attenuation_object)
 {
     set_listener_2d_rigidbody_location(0, p_rigid_body2d, p_attenuation_object);
+}
+void FmodAudioServer::set_listener_location(int p_listener_index, RigidBody2D *p_rigid_body2d,
+                                            Node2D *p_attenuation_object)
+{
+    set_listener_2d_rigidbody_location(p_listener_index, p_rigid_body2d, p_attenuation_object);
 }
 void FmodAudioServer::set_listener_2d_rigidbody_location(int p_listener_index, RigidBody2D *p_rigid_body_2d,
                                                          Node2D *p_attenuation_object)
@@ -774,9 +801,18 @@ void FmodAudioServer::set_listener_location(Node3D *p_node, Node3D *p_attenuatio
 {
     set_listener_3d_location(0, p_node, p_attenuation_object);
 }
+void FmodAudioServer::set_listener_location(int p_listener_index, Node3D *p_node, Node3D *p_attenuation_object)
+{
+    set_listener_3d_location(p_listener_index, p_node, p_attenuation_object);
+}
 void FmodAudioServer::set_listener_location(RigidBody3D *p_rigid_body3d, Node3D *p_attenuation_object)
 {
     set_listener_3d_rigidbody_location(0, p_rigid_body3d, p_attenuation_object);
+}
+void FmodAudioServer::set_listener_location(int p_listener_index, RigidBody3D *p_rigid_body3d,
+                                            Node3D *p_attenuation_object)
+{
+    set_listener_3d_rigidbody_location(p_listener_index, p_rigid_body3d, p_attenuation_object);
 }
 void FmodAudioServer::set_listener_3d_rigidbody_location(int listenerIndex, RigidBody3D *p_rigid_body3d,
                                                          Node3D *attenuationObject)

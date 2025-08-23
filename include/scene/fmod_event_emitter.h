@@ -30,7 +30,7 @@ template <class Derived, class NodeType, class RigidBody> class FmodEventEmitter
     bool allow_fadeout = true;
     bool attached_to_rigidbody;
 
-  protected:
+protected:
     FMOD_STUDIO_EVENTDESCRIPTION *description;
     FMOD_STUDIO_EVENTINSTANCE *event_instance;
     Vector<parameter> parameters;

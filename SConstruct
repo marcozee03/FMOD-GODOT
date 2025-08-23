@@ -63,7 +63,7 @@ if env["platform"] == "windows":
     env.Append(LIBS=["fmod_vc", "fmodstudio_vc"])
 elif env["platform"] == "linux":
     env.Append(LIBS=["libfmod%s" % logging, "libfmodstudio%s" % logging])
-    env.Append(LINKFLAGS=["-Wl,-soname,{}".format(libname)])
+    env.Append(LINKFLAGS=["-Wl,-soname,{}.1".format(libname)])
 library = env.SharedLibrary(
     "plugin_template/bin/libs/{}/{}/{}".format(env["platform"], env["arch"], libname),
     source=sources,
