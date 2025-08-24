@@ -30,7 +30,7 @@ namespace FmodGodot
 #if GODOT_WINDOWS
             public const string dll = $"libFmodGodot.{template}";
 #elif GODOT_LINUXBSD
-            public const string dll = $"libFmodGodot.{template}.so";
+            public const string dll = $"libFmodGodot.{template}.so.1";
 #endif
         }
         private static FMOD.Studio.System studio;

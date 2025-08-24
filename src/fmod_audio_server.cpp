@@ -3,6 +3,7 @@
 #include "classes/os.hpp"
 #include "classes/resource_loader.hpp"
 #include "core/error_macros.hpp"
+#include "core/print_string.hpp"
 #include "fmod_common.h"
 #include "fmod_globals.h"
 #include "fmod_string_names.h"
@@ -64,15 +65,19 @@ FmodAudioServer::InitSettings FmodAudioServer::get_fmod_settings()
     return settings;
 }
 
-FMOD_RESULT debug_callback(FMOD_DEBUG_FLAGS flags, const char *file, int line, const char *func, const char *message)
+FMOD_RESULT fmod_debug_callback(FMOD_DEBUG_FLAGS flags, const char *file, int line, const char *func, const char *message)
 {
     if (flags & FMOD_DEBUG_LEVEL_ERROR)
     {
-        _err_print_error(func, file, line, message, false, false);
+        _err_print_error(func, file, line, message, true, true);
     }
     else if (flags & FMOD_DEBUG_LEVEL_WARNING)
     {
-        _err_print_error(func, file, line, message, true, false);
+        _err_print_error(func, file, line, message, true, true);
+    }
+    else
+    {
+        print_line(message);
     }
     return FMOD_OK;
 }
@@ -174,7 +179,7 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
     }
     FMOD_RESULT result;
     result = FMOD_Debug_Initialize(p_settings.logging_level | p_settings.debug_type | p_settings.debug_display,
-                                   FMOD_DEBUG_MODE_TTY, 0, nullptr);
+                                   FMOD_DEBUG_MODE_CALLBACK, fmod_debug_callback, nullptr);
 
     result = FMOD_Studio_System_Create(&studio_system, FMOD_VERSION);
     result = FMOD_Studio_System_GetCoreSystem(studio_system, &core_system);
