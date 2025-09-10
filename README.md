@@ -116,6 +116,8 @@ snippets below
 
 #if DEBUG || TOOLS
         public const string logging = "L";
+#else
+        public const string logging = "";
 #endif
 #if GODOT_LINUXBSD
         public const string dll = $"fmod{logging}.so.14";
