@@ -148,9 +148,16 @@ namespace FmodGodot
         {
             play_one_shot_by_id(guid, position);
         }
+        public static void PlayOneShot(Vector4I guid, Vector2 position, float depth){
+            play_one_shot_by_id(guid,new Vector3(position.X, position.Y, depth));
+        }
         public static void PlayOneShot(string path, Vector3 position = default)
         {
             play_one_shot_by_path(path, position);
+        }
+        public static void PlayOneShot(string path, Vector2 position, float depth)
+        {
+             play_one_shot_by_path(path,new Vector3(position.X, position.Y, depth));
         }
         public static void PlayOneShotAttached(Vector4I guid, Node3D node, bool nonRigidBodyVelocity = false)
         {
