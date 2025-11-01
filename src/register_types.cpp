@@ -5,8 +5,10 @@
 #include "fmod_audio_server.h"
 #include "fmod_event_emitter_2d.h"
 #include "fmod_event_emitter_3d.h"
+#include "fmod_event_panner.h"
 #include "fmod_event_selector.h"
 #include <classes/engine.hpp>
+#include <fmod_event_panner.h>
 #include <gdextension_interface.h>
 #include <godot.hpp>
 #include <godot_cpp/classes/resource_saver.hpp>
@@ -16,6 +18,7 @@
 #include "fmod_bank_format_saver.h"
 #include "fmod_listener_2d.h"
 #include "fmod_listener_3d.h"
+#include "fmod_script_client.h"
 #include "fmod_string_names.h"
 #include "variant/variant.hpp"
 #include <classes/project_settings.hpp>
@@ -142,6 +145,7 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         ResourceSaver::get_singleton()->add_resource_format_saver(bankSaver);
         ResourceLoader::get_singleton()->add_resource_format_loader(bankLoader);
         GDREGISTER_CLASS(FmodBankLoader);
+        GDREGISTER_CLASS(FmodEventPanner);
         audio_server->load_start_up_banks();
     }
 
@@ -151,6 +155,7 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         GDREGISTER_INTERNAL_CLASS(FmodEventPathSelector);
         GDREGISTER_INTERNAL_CLASS(EventTree);
 
+        GDREGISTER_INTERNAL_CLASS(FmodScriptClient)
         GDREGISTER_INTERNAL_CLASS(FmodEditorInterface);
         editor_interface = memnew(FmodEditorInterface);
         editor_interface->refresh();
