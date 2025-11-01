@@ -1,5 +1,5 @@
-#include "fmod_event_tree.h"
 #ifdef TOOLS_ENABLED
+#include "fmod_event_tree.h"
 #include "fmod_event_browser.h"
 #include "fmod_editor_interface.h"
 #include "fmod_string_names.h"

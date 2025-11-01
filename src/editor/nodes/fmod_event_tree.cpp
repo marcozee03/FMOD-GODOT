@@ -1,11 +1,13 @@
+#include "classes/h_box_container.hpp"
+#include "classes/texture_rect.hpp"
 #ifdef TOOLS_ENABLED
-#include "fmod_event_tree.h"
 #include "classes/editor_interface.hpp"
 #include "classes/label.hpp"
 #include "classes/tree_item.hpp"
 #include "fmod_audio_server.h"
 #include "fmod_editor_cache.h"
 #include "fmod_editor_interface.h"
+#include "fmod_event_tree.h"
 #include "fmod_globals.h"
 #include "globals.h"
 #include <classes/project_settings.hpp>
@@ -155,11 +157,25 @@ String EventTree::get_item_path(TreeItem *item)
 Variant EventTree::_get_drag_data(const Vector2 &p_vec2)
 {
     TreeItem *item = get_item_at_position(p_vec2);
+    auto et = FmodEditorInterface::get_singleton()->get_theme();
     if (item)
     {
+        HBoxContainer *box = memnew(HBoxContainer);
+        TextureRect *text = memnew(TextureRect);
+        text->set_stretch_mode(godot::TextureRect::STRETCH_KEEP_ASPECT_CENTERED);
+        if (get_item_path(item).begins_with("event:/"))
+        {
+            text->set_texture(et->event_icon);
+        }
+        else if (get_item_path(item).begins_with("bank:/"))
+        {
+            text->set_texture(et->bank_icon);
+        }
         Label *label = memnew(Label());
-        label->set_text(get_item_path(item));
-        set_drag_preview(label);
+        label->set_text(get_item_path(item).substr(get_item_path(item).find(":/")));
+        box->add_child(label);
+        box->add_child(text);
+        set_drag_preview(box);
         return get_item_path(item);
     }
     return Variant();
