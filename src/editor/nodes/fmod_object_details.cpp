@@ -1,197 +1,216 @@
+#include "classes/control.hpp"
+#include "classes/h_separator.hpp"
+#include "classes/node.hpp"
+#include "core/memory.hpp"
 #include "fmod_globals.h"
 #ifdef TOOLS_ENABLED
 #include "fmod_editor_interface.h"
 #include "fmod_object_details.h"
-#include <classes/editor_interface.hpp>
-#include <classes/theme.hpp>
-#include <classes/rich_text_label.hpp>
-#include <classes/button.hpp>
-#include <classes/h_box_container.hpp>
-#include <classes/display_server.hpp>
-#include <classes/texture_rect.hpp>
 #include "fmod_theme.h"
+#include <classes/button.hpp>
+#include <classes/display_server.hpp>
+#include <classes/editor_interface.hpp>
+#include <classes/h_box_container.hpp>
+#include <classes/rich_text_label.hpp>
+#include <classes/texture_rect.hpp>
+#include <classes/theme.hpp>
 namespace FmodGodot
 {
-    namespace
+namespace
+{
+
+void push_label(Control *control, const String &text, Ref<Texture2D> icon = nullptr)
+{
+
+    Label *label = memnew(Label());
+    label->set_text(text);
+
+    if (icon.is_valid())
     {
-
-        void push_label(Control *control, const String &text, Ref<Texture2D> icon = nullptr)
-        {
-
-            Label *label = memnew(Label());
-            label->set_text(text);
-
-            if (icon.is_valid())
-            {
-                HBoxContainer *box = memnew(HBoxContainer());
-                TextureRect *rect = memnew(TextureRect());
-                rect->set_stretch_mode(TextureRect::STRETCH_KEEP_ASPECT_CENTERED);
-                rect->set_texture(icon);
-                box->add_child(rect, false, Node::INTERNAL_MODE_FRONT);
-                box->add_child(label, false, Node::INTERNAL_MODE_FRONT);
-                control->add_child(box, false, Node::INTERNAL_MODE_FRONT);
-            }
-            else
-            {
-                control->add_child(label, false, Node::INTERNAL_MODE_FRONT);
-            }
-        }
-
-        void push_copy_label(Control *control, const String &p_label, const String &p_copy_text, Ref<Texture2D> icon = nullptr)
-        {
-            HBoxContainer *box = memnew(HBoxContainer);
-            Label *label = memnew(Label());
-            Button *button = memnew(Button());
-            if (icon.is_valid())
-            {
-                TextureRect *rect = memnew(TextureRect());
-                rect->set_stretch_mode(TextureRect::STRETCH_KEEP_ASPECT_CENTERED);
-                rect->set_texture(icon);
-                box->add_child(rect, false, Node::INTERNAL_MODE_FRONT);
-            }
-            box->add_child(label);
-            box->add_child(button);
-            label->set_text(p_label + p_copy_text);
-            button->set_button_icon(EditorInterface::get_singleton()->get_editor_theme()->get_icon("ActionCopy", "EditorIcons"));
-            Callable copy = Callable(DisplayServer::get_singleton(), "clipboard_set");
-
-            button->connect("pressed", copy.bind(p_copy_text));
-            button->set_flat(true);
-            control->add_child(box, false, Node::INTERNAL_MODE_FRONT);
-        }
-
-    } // namespace
-    void FmodObjectDetails::_bind_methods()
-    {
-        ClassDB::bind_method(D_METHOD("display_fmod_object", "p_path"), &FmodObjectDetails::display_fmod_object);
+        HBoxContainer *box = memnew(HBoxContainer());
+        TextureRect *rect = memnew(TextureRect());
+        rect->set_stretch_mode(TextureRect::STRETCH_KEEP_ASPECT_CENTERED);
+        rect->set_texture(icon);
+        box->add_child(rect, false, Node::INTERNAL_MODE_FRONT);
+        box->add_child(label, false, Node::INTERNAL_MODE_FRONT);
+        control->add_child(box, false, Node::INTERNAL_MODE_FRONT);
     }
-    FmodObjectDetails::FmodObjectDetails()
+    else
     {
-        header = memnew(Label());
-        box = memnew(HBoxContainer());
-        icon = memnew(TextureRect());
-        icon->set_stretch_mode(TextureRect::STRETCH_KEEP_ASPECT_CENTERED);
-        box->add_child(icon, false, INTERNAL_MODE_FRONT);
-        box->add_child(header, false, INTERNAL_MODE_FRONT);
-        add_child(box, false, InternalMode::INTERNAL_MODE_FRONT);
-        flowlayout = memnew(HFlowContainer());
-        flowlayout->set_h_size_flags(SizeFlags::SIZE_EXPAND_FILL);
-        flowlayout->set_v_size_flags(SizeFlags::SIZE_EXPAND_FILL);
-        add_child(flowlayout, false, InternalMode::INTERNAL_MODE_FRONT);
-    }
-    FmodObjectDetails::~FmodObjectDetails()
-    {
-    }
-
-    namespace
-    {
-        inline const String bool_to_string(bool value)
-        {
-            if (value)
-            {
-                return "true";
-            }
-            else
-            {
-                return "false";
-            }
-        }
-    }
-    void FmodObjectDetails::display_fmod_object(const String &p_path)
-    {
-        for (int i = flowlayout->get_child_count(true) - 1; i >= 0; i--)
-        {
-            flowlayout->get_child(i, true)->queue_free();
-        }
-        const FmodTheme *theme = FmodEditorInterface::get_singleton()->get_theme();
-        Label *label = memnew(Label());
-        flowlayout->add_child(label);
-        const FmodEditorCache *cache = FmodEditorInterface::get_singleton()->get_cache();
-        if (p_path.begins_with("event"))
-        {
-            header->set_text("Event");
-            icon->set_texture(theme->event_icon);
-            Event event = cache->get_event(p_path);
-            push_copy_label(flowlayout, "Full Path: ", event.full_path);
-            push_label(flowlayout, String("Guid: " + fmod_guid_to_string(event.guid)));
-            if (event.is3d)
-            {
-                push_label(flowlayout, String("3D: ") + bool_to_string(event.is3d));
-                push_label(flowlayout, String("Doppler Enabled: ") + bool_to_string(event.doppler_enabled));
-                int minutes = event.lengthMS / (60 * 1000);
-                int seconds = (event.lengthMS / 1000) % 60;
-                int milliseconds = event.lengthMS % 1000;
-                push_label(flowlayout, "Duration: " + String(":").join({itos(minutes).pad_zeros(2), itos(seconds).pad_zeros(2), itos(milliseconds).pad_zeros(3)}));
-                push_label(flowlayout, String("Min Distance: ") + rtos(event.min));
-                push_label(flowlayout, String("Max Distance: ") + rtos(event.max));
-            }
-            push_label(flowlayout, String("One Shot: ") + bool_to_string(event.is3d));
-            push_label(flowlayout, String("Stream: ") + bool_to_string(event.stream));
-
-            VBoxContainer *vbox = memnew(VBoxContainer());
-            flowlayout->add_child(vbox, false, INTERNAL_MODE_FRONT);
-            for (auto param : event.parameters)
-            {
-                if (param.discrete)
-                {
-                    push_label(vbox, param.full_path, FmodEditorInterface::get_singleton()->get_theme()->d_parameter_icon);
-                }
-                else
-                {
-                    push_label(vbox, param.full_path, FmodEditorInterface::get_singleton()->get_theme()->c_parameter_icon);
-                }
-
-                push_label(vbox, "\tGuid: " + fmod_guid_to_string(param.guid));
-                push_label(vbox, "\tRange [Min...Default..Max] [" + itos(param.min_value) + "..." + itos(param.default_value) + "..." + itos(param.max_value) + "]");
-            }
-
-            // label->set_text("is3D: " + event.parameters);
-        }
-        else if (p_path.begins_with("bank"))
-        {
-            header->set_text("Bank:" + p_path.get_file().get_basename());
-            icon->set_texture(theme->bank_icon);
-            Bank bank = cache->get_bank(p_path);
-            VBoxContainer *vbox = memnew(VBoxContainer());
-            push_copy_label(vbox, "Full Path: ", bank.full_path);
-            push_label(vbox, "Guid: " + fmod_guid_to_string(bank.guid));
-            for (auto event : bank.children)
-            {
-                if (event.begins_with("event:/"))
-                {
-                    push_copy_label(vbox, "", event, theme->event_icon);
-                }
-                else
-                {
-                    push_copy_label(vbox, "", event, theme->vca_icon);
-                }
-            }
-            flowlayout->add_child(vbox, false, Node::INTERNAL_MODE_FRONT);
-        }
-        else if (p_path.begins_with("vca"))
-        {
-            header->set_text("VCA:" + p_path.get_file().get_basename());
-            VCA vca = cache->get_vca(p_path);
-            push_label(flowlayout, "Full Path: " + p_path);
-            push_label(flowlayout, "Guid: " + fmod_guid_to_string(vca.guid));
-
-            icon->set_texture(theme->vca_icon);
-        }
-        else if (p_path.begins_with("param:"))
-        {
-            header->set_text("Global Parameter:" + p_path.get_file().get_basename());
-            Parameter parameter = cache->get_parameter(p_path);
-            if (parameter.discrete)
-            {
-                icon->set_texture(theme->d_parameter_icon);
-            }
-            else
-            {
-                icon->set_texture(theme->c_parameter_icon);
-            }
-            push_copy_label(flowlayout, "Name:", parameter.full_path.get_file());
-            push_label(flowlayout, "Guid:" + fmod_guid_to_string(parameter.guid));
-        }
+        control->add_child(label, false, Node::INTERNAL_MODE_FRONT);
     }
 }
+
+void push_copy_label(Control *control, const String &p_label, const String &p_copy_text, Ref<Texture2D> icon = nullptr)
+{
+    HBoxContainer *box = memnew(HBoxContainer);
+    Label *label = memnew(Label());
+    Button *button = memnew(Button());
+    if (icon.is_valid())
+    {
+        TextureRect *rect = memnew(TextureRect());
+        rect->set_stretch_mode(TextureRect::STRETCH_KEEP_ASPECT_CENTERED);
+        rect->set_texture(icon);
+        box->add_child(rect, false, Node::INTERNAL_MODE_FRONT);
+    }
+    box->add_child(label);
+    box->add_child(button);
+    label->set_text(p_label + p_copy_text);
+    button->set_button_icon(
+        EditorInterface::get_singleton()->get_editor_theme()->get_icon("ActionCopy", "EditorIcons"));
+    Callable copy = Callable(DisplayServer::get_singleton(), "clipboard_set");
+
+    button->connect("pressed", copy.bind(p_copy_text));
+    button->set_flat(true);
+    control->add_child(box, false, Node::INTERNAL_MODE_FRONT);
+}
+
+} // namespace
+void FmodObjectDetails::_bind_methods()
+{
+    ClassDB::bind_method(D_METHOD("display_fmod_object", "p_path"), &FmodObjectDetails::display_fmod_object);
+}
+FmodObjectDetails::FmodObjectDetails()
+{
+    header = memnew(Label());
+    box = memnew(HBoxContainer());
+    icon = memnew(TextureRect());
+    icon->set_stretch_mode(TextureRect::STRETCH_KEEP_ASPECT_CENTERED);
+    box->add_child(icon, false, INTERNAL_MODE_FRONT);
+    box->add_child(header, false, INTERNAL_MODE_FRONT);
+    add_child(box, false, InternalMode::INTERNAL_MODE_FRONT);
+    add_child(memnew(HSeparator), false, INTERNAL_MODE_FRONT);
+    flowlayout = memnew(HFlowContainer());
+    flowlayout->set_h_size_flags(SizeFlags::SIZE_EXPAND_FILL);
+    flowlayout->set_v_size_flags(SizeFlags::SIZE_EXPAND_FILL);
+    add_child(flowlayout, false, InternalMode::INTERNAL_MODE_FRONT);
+    previewer = memnew(FmodEventPreviewer);
+    previewer->set_h_size_flags(SIZE_EXPAND_FILL);
+    previewer->set_v_size_flags(SIZE_EXPAND_FILL);
+    previewer->hide();
+    add_child(previewer, false, INTERNAL_MODE_FRONT);
+}
+FmodObjectDetails::~FmodObjectDetails()
+{
+}
+
+namespace
+{
+inline const String bool_to_string(bool value)
+{
+    if (value)
+    {
+        return "true";
+    }
+    else
+    {
+        return "false";
+    }
+}
+} // namespace
+void FmodObjectDetails::display_fmod_object(const String &p_path)
+{
+    for (int i = flowlayout->get_child_count(true) - 1; i >= 0; i--)
+    {
+        flowlayout->get_child(i, true)->queue_free();
+    }
+    const FmodTheme *theme = FmodEditorInterface::get_singleton()->get_theme();
+    Label *label = memnew(Label());
+    flowlayout->add_child(label);
+    const FmodEditorCache *cache = FmodEditorInterface::get_singleton()->get_cache();
+    previewer->hide();
+    if (p_path.begins_with("event"))
+    {
+
+        previewer->show();
+        header->set_text("Event");
+        icon->set_texture(theme->event_icon);
+        Event event = cache->get_event(p_path);
+        push_copy_label(flowlayout, "Full Path: ", event.full_path);
+        previewer->set_event_guid(event.guid);
+        push_label(flowlayout, String("Guid: " + fmod_guid_to_string(event.guid)));
+        if (event.is3d)
+        {
+            push_label(flowlayout, String("3D: ") + bool_to_string(event.is3d));
+            push_label(flowlayout, String("Doppler Enabled: ") + bool_to_string(event.doppler_enabled));
+            int minutes = event.lengthMS / (60 * 1000);
+            int seconds = (event.lengthMS / 1000) % 60;
+            int milliseconds = event.lengthMS % 1000;
+            push_label(flowlayout,
+                       "Duration: " + String(":").join({itos(minutes).pad_zeros(2), itos(seconds).pad_zeros(2),
+                                                        itos(milliseconds).pad_zeros(3)}));
+            push_label(flowlayout, String("Min Distance: ") + rtos(event.min));
+            push_label(flowlayout, String("Max Distance: ") + rtos(event.max));
+            previewer->set_panner_size(event.max * 2);
+        }
+        push_label(flowlayout, String("One Shot: ") + bool_to_string(event.is3d));
+        push_label(flowlayout, String("Stream: ") + bool_to_string(event.stream));
+
+        VBoxContainer *vbox = memnew(VBoxContainer());
+        flowlayout->add_child(vbox, false, INTERNAL_MODE_FRONT);
+        for (auto param : event.parameters)
+        {
+            if (param.discrete)
+            {
+                push_label(vbox, param.full_path, FmodEditorInterface::get_singleton()->get_theme()->d_parameter_icon);
+            }
+            else
+            {
+                push_label(vbox, param.full_path, FmodEditorInterface::get_singleton()->get_theme()->c_parameter_icon);
+            }
+
+            push_label(vbox, "\tGuid: " + fmod_guid_to_string(param.guid));
+            push_label(vbox, "\tRange [Min...Default..Max] [" + itos(param.min_value) + "..." +
+                                 itos(param.default_value) + "..." + itos(param.max_value) + "]");
+        }
+
+        // label->set_text("is3D: " + event.parameters);
+    }
+    else if (p_path.begins_with("bank"))
+    {
+        header->set_text("Bank:" + p_path.get_file().get_basename());
+        icon->set_texture(theme->bank_icon);
+        Bank bank = cache->get_bank(p_path);
+        VBoxContainer *vbox = memnew(VBoxContainer());
+        push_copy_label(vbox, "Full Path: ", bank.full_path);
+        push_label(vbox, "Guid: " + fmod_guid_to_string(bank.guid));
+        for (auto event : bank.children)
+        {
+            if (event.begins_with("event:/"))
+            {
+                push_copy_label(vbox, "", event, theme->event_icon);
+            }
+            else
+            {
+                push_copy_label(vbox, "", event, theme->vca_icon);
+            }
+        }
+        flowlayout->add_child(vbox, false, Node::INTERNAL_MODE_FRONT);
+    }
+    else if (p_path.begins_with("vca"))
+    {
+        header->set_text("VCA:" + p_path.get_file().get_basename());
+        VCA vca = cache->get_vca(p_path);
+        push_label(flowlayout, "Full Path: " + p_path);
+        push_label(flowlayout, "Guid: " + fmod_guid_to_string(vca.guid));
+
+        icon->set_texture(theme->vca_icon);
+    }
+    else if (p_path.begins_with("param:"))
+    {
+        header->set_text("Global Parameter:" + p_path.get_file().get_basename());
+        Parameter parameter = cache->get_parameter(p_path);
+        if (parameter.discrete)
+        {
+            icon->set_texture(theme->d_parameter_icon);
+        }
+        else
+        {
+            icon->set_texture(theme->c_parameter_icon);
+        }
+        push_copy_label(flowlayout, "Name:", parameter.full_path.get_file());
+        push_label(flowlayout, "Guid:" + fmod_guid_to_string(parameter.guid));
+    }
+}
+} // namespace FmodGodot
 #endif

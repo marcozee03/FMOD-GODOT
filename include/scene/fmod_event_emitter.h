@@ -1,10 +1,14 @@
 #pragma once
+#include "core/math.hpp"
+#include "core/print_string.hpp"
 #include "fmod_audio_server.h"
 #include "fmod_globals.h"
 #include "fmod_studio_common.h"
 #include "globals.h"
 #include "variant/packed_string_array.hpp"
+#include "variant/string.hpp"
 #include "variant/string_name.hpp"
+#include "variant/variant.hpp"
 #include <fmod_studio.h>
 namespace FmodGodot
 {
@@ -28,9 +32,10 @@ template <class Derived, class NodeType, class RigidBody> class FmodEventEmitter
     float attenuation_min = 1;
     float attenuation_max = 100;
     bool allow_fadeout = true;
-    bool attached_to_rigidbody;
+    bool attached_to_rigidbody = false;
+    float volume = 1;
 
-protected:
+  protected:
     FMOD_STUDIO_EVENTDESCRIPTION *description;
     FMOD_STUDIO_EVENTINSTANCE *event_instance;
     Vector<parameter> parameters;
@@ -71,6 +76,9 @@ protected:
 
     bool is_override_attenuation() const;
     void set_override_attenuation(bool p_override_attenuation);
+
+    float get_volume() const;
+    void set_volume(float volume);
 
     float get_attenuation_min() const;
     void set_attenuation_min(float p_attenuation_min);
@@ -193,6 +201,20 @@ bool FmodEventEmitter<Derived, NodeType, RigidBody>::_property_get_revert(const 
 }
 
 template <class Derived, class NodeType, class RigidBody>
+float FmodEventEmitter<Derived, NodeType, RigidBody>::get_volume() const
+{
+    return volume;
+}
+template <class Derived, class NodeType, class RigidBody>
+void FmodEventEmitter<Derived, NodeType, RigidBody>::set_volume(float p_volume)
+{
+    volume = Math::max(0.0f, p_volume);
+    if (!is_one_shot() && FMOD_Studio_EventInstance_IsValid(event_instance))
+    {
+        FMOD_Studio_EventInstance_SetVolume(event_instance, volume);
+    }
+}
+template <class Derived, class NodeType, class RigidBody>
 void FmodEventEmitter<Derived, NodeType, RigidBody>::_get_property_list(List<PropertyInfo> *p_list) const
 {
     if (!FMOD_Studio_EventDescription_IsValid(description))
@@ -290,6 +312,7 @@ template <class Derived, class NodeType, class RigidBody> void FmodEventEmitter<
     if (!FMOD_Studio_EventInstance_IsValid(event_instance))
     {
         FMOD_Studio_EventDescription_CreateInstance(description, &event_instance);
+        FMOD_Studio_EventInstance_SetVolume(event_instance, volume);
         if (is3D)
         {
             if (attached_to_rigidbody)
@@ -535,6 +558,7 @@ void FmodEventEmitter<Derived, NodeType, RigidBody>::_bind_methods()
 {
     typedef typename Derived::self_type self_type;
     BIND_PROPERTY_WITH_HINT(event, Variant::VECTOR4I, PROPERTY_HINT_NONE, "FmodEvent");
+    BIND_PROPERTY_WITH_HINT(volume, Variant::FLOAT, godot::PROPERTY_HINT_RANGE, "0,1,0.01,or_greater")
     BIND_BOOL_PROPERTY(one_shot)
     BIND_BOOL_PROPERTY(trigger_once);
     BIND_BOOL_PROPERTY(non_rigid_body_velocity);

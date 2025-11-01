@@ -1,7 +1,10 @@
 
+#include "core/memory.hpp"
+#include "fmod_globals.h"
+#include "fmod_script_client.h"
 #ifdef TOOLS_ENABLED
-#include "fmod_editor_interface.h"
 #include "fmod_audio_server.h"
+#include "fmod_editor_interface.h"
 #include "fmod_string_names.h"
 #include <classes/os.hpp>
 #include <classes/project_settings.hpp>
@@ -14,6 +17,7 @@ FmodEditorInterface::FmodEditorInterface()
     {
         singleton = this;
     }
+    script = memnew(FmodScriptClient);
 }
 FmodEditorInterface::~FmodEditorInterface()
 {
@@ -163,6 +167,14 @@ void FmodEditorInterface::refresh()
 
     delete[] banks;
     delete[] str;
+}
+void FmodEditorInterface::show_event_in_fmod_studio(Vector4i guid)
+{
+    String cmd = "studio.window.navigateTo(studio.project.lookup(\"" + fmod_guid_to_string(guid) + "\"));";
+    if (!script->send_script_command(cmd))
+    {
+        UtilityFunctions::print_rich("[color=grey] Command: \"" + cmd + "\" failed[/color]");
+    }
 }
 } // namespace FmodGodot
 #endif
