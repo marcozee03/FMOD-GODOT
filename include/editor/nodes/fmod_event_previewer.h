@@ -1,5 +1,6 @@
 #pragma once
 #include "classes/h_slider.hpp"
+#include "classes/spin_box.hpp"
 #include "classes/wrapped.hpp"
 #ifdef TOOLS_ENABLED
 #include "classes/button.hpp"
@@ -36,12 +37,13 @@ class FmodEventPreviewer : public VBoxContainer
     Button *play;
     Button *stop;
     Button *goToEvent;
+    SpinBox *radius;
     Button *frontview;
     FmodEventPanner *panner;
     FmodEventPreviewer();
     HSlider *scrub;
     Vector4i get_event_guid() const;
-    void _physics_process(double delta) override;
+    void _process(double delta) override;
     void set_event_guid(Vector4i p_event_guid);
     void set_event_path(const String &p_event_path);
     void set_panner_size(float size);

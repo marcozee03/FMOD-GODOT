@@ -1,6 +1,6 @@
+#include "fmod_project_explorer.h"
 #ifdef TOOLS_ENABLED
 #pragma once
-#include "fmod_event_tree.h"
 #include <classes/button.hpp>
 #include <classes/h_box_container.hpp>
 #include <classes/line_edit.hpp>
@@ -8,27 +8,26 @@
 using namespace godot;
 namespace FmodGodot
 {
-class FmodEventPathSelector : public Control
+class FmodEventSelector : public Control
 {
-    GDCLASS(FmodEventPathSelector, Control)
+    GDCLASS(FmodEventSelector, Control)
   private:
     HBoxContainer *hbox;
     LineEdit *lineEdit;
     Button *open_explorer;
     Window *window;
-    EventTree *windowTree;
+    FmodProjectExplorer *explorer;
 
   protected:
     static void _bind_methods();
 
   public:
-    FmodEventPathSelector();
-    ~FmodEventPathSelector();
+    FmodEventSelector();
+    ~FmodEventSelector();
     void _ready() override;
     void open_window();
     void on_fmod_object_selected(const String &p_path);
     LineEdit *get_line_edit();
-    EventTree *get_event_tree();
 };
 } // namespace FmodGodot
 #endif

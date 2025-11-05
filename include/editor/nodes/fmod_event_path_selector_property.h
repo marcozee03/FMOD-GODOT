@@ -13,7 +13,7 @@ class EventPathSelectorProperty : public EditorProperty
 {
     GDCLASS(EventPathSelectorProperty, EditorProperty)
   private:
-    FmodEventPathSelector *eventSelector;
+    FmodEventSelector *eventSelector;
     String currentValue;
     bool updating = false;
     void on_text_changed(String newText);

@@ -115,10 +115,11 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
     for (int i = flowlayout->get_child_count(true) - 1; i >= 0; i--)
     {
         flowlayout->get_child(i, true)->queue_free();
+        flowlayout->remove_child(flowlayout->get_child(i, true));
     }
     const FmodTheme *theme = FmodEditorInterface::get_singleton()->get_theme();
     Label *label = memnew(Label());
-    flowlayout->add_child(label);
+    flowlayout->add_child(label, false, INTERNAL_MODE_FRONT);
     const FmodEditorCache *cache = FmodEditorInterface::get_singleton()->get_cache();
     if (p_path.begins_with("event"))
     {
