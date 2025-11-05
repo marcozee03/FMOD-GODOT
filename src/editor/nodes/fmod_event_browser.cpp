@@ -1,10 +1,9 @@
 #include "classes/control.hpp"
-#include "fmod_event_previewer.h"
+#include "fmod_project_explorer.h"
 #include "variant/callable_method_pointer.hpp"
 #ifdef TOOLS_ENABLED
 #include "fmod_editor_interface.h"
 #include "fmod_event_browser.h"
-#include "fmod_event_tree.h"
 #include <classes/button.hpp>
 #include <classes/label.hpp>
 #include <classes/project_settings.hpp>
@@ -34,34 +33,14 @@ FmodGodot::FmodEventBrowser::FmodEventBrowser()
     restart_server->connect("pressed",
                             callable_mp(FmodEditorInterface::get_singleton(), &FmodEditorInterface::restart_server));
 
-    split = memnew(HBoxContainer());
-    split->set_v_size_flags(SIZE_EXPAND_FILL);
-    add_child(split);
-    tree = memnew(EventTree());
-    previewer = memnew(FmodEventPreviewer);
-    previewer->set_h_size_flags(SIZE_EXPAND_FILL);
-    tree->set_display_flags(EventTree::DisplayFlags::BANKS | EventTree::EVENTS | EventTree::VCAS |
-                            EventTree::GLOBAL_PARAMETERS);
-    tree->set_stretch_ratio(2.0);
-    split->add_child(tree);
-
-    previewer = memnew(FmodEventPreviewer);
-    previewer->set_h_size_flags(SIZE_EXPAND_FILL);
-    previewer->hide();
-    tree->connect("fmod_object_selected", callable_mp(previewer, &FmodEventPreviewer::set_event_path), CONNECT_PERSIST);
-
-    details = memnew(FmodObjectDetails());
-    tree->set_h_size_flags(SIZE_EXPAND_FILL);
-    split->add_child(details);
-    tree->connect("fmod_object_selected", Callable(details, "display_fmod_object"), CONNECT_PERSIST);
-    refresh->connect("pressed", callable_mp(tree, &EventTree::LoadEvents));
-
-    split->add_child(previewer);
+    explorer = memnew(FmodProjectExplorer);
+    explorer->set_v_size_flags(SIZE_EXPAND_FILL);
+    add_child(explorer);
 }
 void FmodGodot::FmodEventBrowser::refresh()
 {
     FmodEditorInterface::get_singleton()->refresh();
-    tree->LoadEvents();
+    explorer->refresh();
 }
 void FmodGodot::FmodEventBrowser::_bind_methods()
 {

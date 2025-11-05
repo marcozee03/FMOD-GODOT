@@ -4,11 +4,9 @@
 #include "classes/editor_interface.hpp"
 #include "classes/label.hpp"
 #include "classes/tree_item.hpp"
-#include "fmod_audio_server.h"
 #include "fmod_editor_cache.h"
 #include "fmod_editor_interface.h"
 #include "fmod_event_tree.h"
-#include "fmod_globals.h"
 #include "globals.h"
 #include <classes/project_settings.hpp>
 #include <classes/resource_loader.hpp>
@@ -47,8 +45,8 @@ void EventTree::_bind_methods()
     BIND_BITFIELD_FLAG(GLOBAL_PARAMETERS);
     BIND_PROPERTY_WITH_HINT(display_flags, Variant::Type::INT, PROPERTY_HINT_FLAGS,
                             "BANKS:1,EVENTS:2,VCAS:4,GLOBAL_PARAMETERS:8")
-    ADD_SIGNAL(MethodInfo("fmod_object_activated", PropertyInfo(Variant::PACKED_STRING_ARRAY, "fmod_object_path")));
-    ADD_SIGNAL(MethodInfo("fmod_object_selected", PropertyInfo(Variant::PACKED_STRING_ARRAY, "fmod_object_path")));
+    ADD_SIGNAL(MethodInfo("fmod_object_activated", PropertyInfo(Variant::STRING, "fmod_object_path")));
+    ADD_SIGNAL(MethodInfo("fmod_object_selected", PropertyInfo(Variant::STRING, "fmod_object_path")));
 }
 EventTree::EventTree()
 {

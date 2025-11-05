@@ -16,7 +16,7 @@ namespace FmodGodot
 {
 EventGUIDSelectorProperty::EventGUIDSelectorProperty()
 {
-    eventSelector = memnew(FmodEventPathSelector);
+    eventSelector = memnew(FmodEventSelector);
     add_child(eventSelector);
     eventSelector->get_line_edit()->connect("text_submitted",
                                             callable_mp(this, &EventGUIDSelectorProperty::on_text_changed));

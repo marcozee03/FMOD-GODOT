@@ -62,6 +62,7 @@ FmodEventPanner::View FmodEventPanner::get_view() const
 
 void FmodEventPanner::set_world_size(float p_size)
 {
+    event_position *= world_size / p_size;
     world_size = p_size;
     queue_redraw();
 }

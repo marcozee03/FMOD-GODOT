@@ -14,7 +14,7 @@ class EventGUIDSelectorProperty : public EditorProperty
 {
     GDCLASS(EventGUIDSelectorProperty, EditorProperty)
   private:
-    FmodEventPathSelector *eventSelector;
+    FmodEventSelector *eventSelector;
     Vector4i currentValue;
     bool updating = false;
     void on_text_changed(String newText);
