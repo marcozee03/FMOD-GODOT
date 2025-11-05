@@ -1,6 +1,5 @@
 #pragma once
 #ifdef TOOLS_ENABLED
-#include "fmod_event_previewer.h"
 #include <godot_cpp/classes/h_box_container.hpp>
 #include <godot_cpp/classes/h_flow_container.hpp>
 #include <godot_cpp/classes/label.hpp>
@@ -19,7 +18,6 @@ class FmodObjectDetails : public VBoxContainer
     TextureRect *icon;
     Label *header;
     HFlowContainer *flowlayout;
-    FmodEventPreviewer *previewer;
 
   protected:
     static void _bind_methods();
