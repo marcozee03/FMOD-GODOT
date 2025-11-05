@@ -1,7 +1,6 @@
 #pragma once
 #ifdef TOOLS_ENABLED
 #include "fmod_event_selector.h"
-#include "fmod_event_tree.h"
 #include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/classes/editor_property.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>

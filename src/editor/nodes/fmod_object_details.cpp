@@ -1,8 +1,11 @@
 #include "classes/control.hpp"
 #include "classes/h_separator.hpp"
 #include "classes/node.hpp"
+#include "classes/panel.hpp"
+#include "classes/panel_container.hpp"
 #include "core/memory.hpp"
 #include "fmod_globals.h"
+#include <type_traits>
 #ifdef TOOLS_ENABLED
 #include "fmod_editor_interface.h"
 #include "fmod_object_details.h"
@@ -75,20 +78,21 @@ FmodObjectDetails::FmodObjectDetails()
     header = memnew(Label());
     box = memnew(HBoxContainer());
     icon = memnew(TextureRect());
+    Panel *panel = memnew(Panel);
+    PanelContainer *panel_container = memnew(PanelContainer);
+    panel_container->set_v_size_flags(SIZE_EXPAND_FILL);
+    // add_child(panel, false, INTERNAL_MODE_FRONT);
+    // panel->add_child(box, false, INTERNAL_MODE_FRONT);
     icon->set_stretch_mode(TextureRect::STRETCH_KEEP_ASPECT_CENTERED);
     box->add_child(icon, false, INTERNAL_MODE_FRONT);
     box->add_child(header, false, INTERNAL_MODE_FRONT);
     add_child(box, false, InternalMode::INTERNAL_MODE_FRONT);
-    add_child(memnew(HSeparator), false, INTERNAL_MODE_FRONT);
     flowlayout = memnew(HFlowContainer());
     flowlayout->set_h_size_flags(SizeFlags::SIZE_EXPAND_FILL);
     flowlayout->set_v_size_flags(SizeFlags::SIZE_EXPAND_FILL);
-    add_child(flowlayout, false, InternalMode::INTERNAL_MODE_FRONT);
-    previewer = memnew(FmodEventPreviewer);
-    previewer->set_h_size_flags(SIZE_EXPAND_FILL);
-    previewer->set_v_size_flags(SIZE_EXPAND_FILL);
-    previewer->hide();
-    add_child(previewer, false, INTERNAL_MODE_FRONT);
+    add_child(panel_container);
+    panel_container->add_child(panel, false, INTERNAL_MODE_FRONT);
+    panel_container->add_child(flowlayout, false, InternalMode::INTERNAL_MODE_FRONT);
 }
 FmodObjectDetails::~FmodObjectDetails()
 {
@@ -118,31 +122,27 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
     Label *label = memnew(Label());
     flowlayout->add_child(label);
     const FmodEditorCache *cache = FmodEditorInterface::get_singleton()->get_cache();
-    previewer->hide();
     if (p_path.begins_with("event"))
     {
 
-        previewer->show();
         header->set_text("Event");
         icon->set_texture(theme->event_icon);
         Event event = cache->get_event(p_path);
         push_copy_label(flowlayout, "Full Path: ", event.full_path);
-        previewer->set_event_guid(event.guid);
         push_label(flowlayout, String("Guid: " + fmod_guid_to_string(event.guid)));
         if (event.is3d)
         {
             push_label(flowlayout, String("3D: ") + bool_to_string(event.is3d));
             push_label(flowlayout, String("Doppler Enabled: ") + bool_to_string(event.doppler_enabled));
-            int minutes = event.lengthMS / (60 * 1000);
-            int seconds = (event.lengthMS / 1000) % 60;
-            int milliseconds = event.lengthMS % 1000;
-            push_label(flowlayout,
-                       "Duration: " + String(":").join({itos(minutes).pad_zeros(2), itos(seconds).pad_zeros(2),
-                                                        itos(milliseconds).pad_zeros(3)}));
+
             push_label(flowlayout, String("Min Distance: ") + rtos(event.min));
             push_label(flowlayout, String("Max Distance: ") + rtos(event.max));
-            previewer->set_panner_size(event.max * 2);
         }
+        int minutes = event.lengthMS / (60 * 1000);
+        int seconds = (event.lengthMS / 1000) % 60;
+        int milliseconds = event.lengthMS % 1000;
+        push_label(flowlayout, "Duration: " + String(":").join({itos(minutes).pad_zeros(2), itos(seconds).pad_zeros(2),
+                                                                itos(milliseconds).pad_zeros(3)}));
         push_label(flowlayout, String("One Shot: ") + bool_to_string(event.is3d));
         push_label(flowlayout, String("Stream: ") + bool_to_string(event.stream));
 

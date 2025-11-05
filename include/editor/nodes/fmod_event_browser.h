@@ -1,7 +1,7 @@
 #pragma once
+#include "fmod_event_previewer.h"
 #ifdef TOOLS_ENABLED
 #include "classes/h_box_container.hpp"
-#include "classes/h_split_container.hpp"
 #include "classes/v_box_container.hpp"
 #include "fmod_event_tree.h"
 #include "fmod_object_details.h"
@@ -16,9 +16,11 @@ class FmodEventBrowser : public VBoxContainer
   private:
     HBoxContainer *top_buttons;
     HBoxContainer *split;
+    FmodEventPreviewer *previewer;
     EventTree *tree;
     FmodObjectDetails *details;
-	void refresh();
+    void refresh();
+
   protected:
     static void _bind_methods();
 

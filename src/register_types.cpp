@@ -1,14 +1,14 @@
 #include "register_types.h"
 #include "classes/global_constants.hpp"
+#include "core/class_db.hpp"
 #include "fmod_bank_loader.h"
 // #include "fmodeventemitter2d.h"
 #include "fmod_audio_server.h"
 #include "fmod_event_emitter_2d.h"
 #include "fmod_event_emitter_3d.h"
-#include "fmod_event_panner.h"
+#include "fmod_event_previewer.h"
 #include "fmod_event_selector.h"
 #include <classes/engine.hpp>
-#include <fmod_event_panner.h>
 #include <gdextension_interface.h>
 #include <godot.hpp>
 #include <godot_cpp/classes/resource_saver.hpp>
@@ -31,11 +31,13 @@
 #include "fmod_event_browser.h"
 #include "fmod_event_guid_selector_property.h"
 #include "fmod_event_inspector_plugin.h"
+#include "fmod_event_panner.h"
 #include "fmod_event_path_selector_property.h"
 #include "fmod_object_details.h"
 #include <classes/editor_interface.hpp>
 #include <classes/editor_plugin_registration.hpp>
 #include <classes/editor_settings.hpp>
+#include <fmod_event_panner.h>
 #endif
 
 using namespace godot;
@@ -145,7 +147,6 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         ResourceSaver::get_singleton()->add_resource_format_saver(bankSaver);
         ResourceLoader::get_singleton()->add_resource_format_loader(bankLoader);
         GDREGISTER_CLASS(FmodBankLoader);
-        GDREGISTER_CLASS(FmodEventPanner);
         audio_server->load_start_up_banks();
     }
 
@@ -169,6 +170,8 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         GDREGISTER_INTERNAL_CLASS(BankInspectorPlugin);
         GDREGISTER_INTERNAL_CLASS(FmodObjectDetails);
         GDREGISTER_INTERNAL_CLASS(FmodEventBrowser);
+        GDREGISTER_INTERNAL_CLASS(FmodEventPanner);
+        GDREGISTER_INTERNAL_CLASS(FmodEventPreviewer);
         EditorPlugins::add_by_type<FmodEditorPlugin>();
 #endif // TOOLS_ENABLED
     }

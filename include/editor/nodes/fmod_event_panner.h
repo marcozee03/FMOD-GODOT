@@ -17,9 +17,8 @@ class FmodEventPanner : public Control
     };
 
   private:
-    float size = 100;
+    float world_size = 100;
     bool dragging;
-    const int step = 10;
     float get_min_dimension() const;
     Rect2 get_local_square() const;
     Rect2 get_square() const;
@@ -35,14 +34,13 @@ class FmodEventPanner : public Control
 
     void set_view(View view);
     View get_view() const;
-
     Vector3 get_play_position();
 
     Vector4i get_event() const;
     void set_event(Vector4i p_event);
 
-    void set_size(float p_size);
-    float get_size() const;
+    void set_world_size(float p_size);
+    float get_world_size() const;
     void _gui_input(const Ref<InputEvent> &p_event) override;
     void _draw() override;
 };
