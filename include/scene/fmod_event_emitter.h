@@ -2,6 +2,7 @@
 #include "core/math.hpp"
 #include "core/print_string.hpp"
 #include "fmod_audio_server.h"
+#include "fmod_common.h"
 #include "fmod_globals.h"
 #include "fmod_studio_common.h"
 #include "globals.h"
@@ -14,6 +15,9 @@ namespace FmodGodot
 {
 template <class Derived, class NodeType, class RigidBody> class FmodEventEmitter : public NodeType
 {
+#ifdef TOOLS_ENABLED
+    friend class FmodEventPreviewer;
+#endif
     struct parameter
     {
         const char *name;
@@ -94,9 +98,38 @@ template <class Derived, class NodeType, class RigidBody> class FmodEventEmitter
     float get_parameter(const String &p_name) const;
     float get_parameter_by_id(const Vector2i &p_id) const;
     void _notification(int p_what);
+
+    bool is_playing() const;
+    bool is_paused() const;
+    void set_paused(bool isPaused);
+
     static const StringName &get_class_static();
 };
 
+template <class Derived, class NodeType, class RigidBody>
+bool FmodEventEmitter<Derived, NodeType, RigidBody>::is_paused() const
+{
+    if (!FMOD_Studio_EventInstance_IsValid(event_instance))
+    {
+        return true;
+    }
+    FMOD_BOOL paused;
+    FMOD_Studio_EventInstance_GetPaused(event_instance, &paused);
+    return paused;
+}
+
+template <class Derived, class NodeType, class RigidBody>
+void FmodEventEmitter<Derived, NodeType, RigidBody>::set_paused(bool isPaused)
+{
+    FMOD_Studio_EventInstance_SetPaused(event_instance, isPaused);
+}
+template <class Derived, class NodeType, class RigidBody>
+bool FmodEventEmitter<Derived, NodeType, RigidBody>::is_playing() const
+{
+    FMOD_STUDIO_PLAYBACK_STATE state;
+    FMOD_Studio_EventInstance_GetPlaybackState(event_instance, &state);
+    return state == FMOD_STUDIO_PLAYBACK_PLAYING;
+}
 template <class Derived, class NodeType, class RigidBody>
 const StringName &FmodEventEmitter<Derived, NodeType, RigidBody>::get_class_static()
 {
@@ -155,6 +188,11 @@ bool FmodEventEmitter<Derived, NodeType, RigidBody>::_set(const StringName &p_na
         if (str.casecmp_to(parameters[i].name) == 0)
         {
             parameters.write[i].value = (float)p_property;
+            if (FMOD_Studio_EventInstance_IsValid(event_instance))
+            {
+                FMOD_Studio_EventInstance_SetParameterByName(event_instance, parameters[i].name, (float)p_property,
+                                                             false);
+            }
             return true;
         }
     }
@@ -497,9 +535,14 @@ void FmodEventEmitter<Derived, NodeType, RigidBody>::set_parameter(const String 
         if (name.casecmp_to(parameters[i].name) == 0)
         {
             parameters.write[i].value = value;
+            if (FMOD_Studio_EventInstance_IsValid(event_instance))
+            {
+                FMOD_Studio_EventInstance_SetParameterByName(event_instance, parameters[i].name, value, false);
+            }
             return;
         }
     }
+
     print_error("No parameter of name: ", name, " in ", this->get_name());
 }
 template <class Derived, class NodeType, class RigidBody>
@@ -510,6 +553,10 @@ void FmodEventEmitter<Derived, NodeType, RigidBody>::set_parameter_by_id(const V
         if (id == parameters[i].id)
         {
             parameters.write[i].value = value;
+            if (FMOD_Studio_EventInstance_IsValid(event_instance))
+            {
+                FMOD_Studio_EventInstance_SetParameterByName(event_instance, parameters[i].name, value, false);
+            }
             return;
         }
     }
@@ -574,5 +621,7 @@ void FmodEventEmitter<Derived, NodeType, RigidBody>::_bind_methods()
     BIND_METHOD(get_parameter, "name");
     BIND_METHOD(get_parameter_by_id, "id");
     BIND_BOOL_PROPERTY(attached_to_rigidbody);
+    BIND_BOOL_PROPERTY(paused)
+    BIND_METHOD(is_playing);
 }
 } // namespace FmodGodot

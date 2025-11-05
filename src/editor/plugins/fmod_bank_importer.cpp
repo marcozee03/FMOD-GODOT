@@ -1,4 +1,3 @@
-// #define TOOLS_ENABLED
 #ifdef TOOLS_ENABLED
 #include <godot_cpp/classes/dir_access.hpp>
 #include "fmod_bank_importer.h"

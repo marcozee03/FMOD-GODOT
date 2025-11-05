@@ -1,9 +1,7 @@
-// #define TOOLS_ENABLED
 #ifdef TOOLS_ENABLED
 #include "fmod_event_guid_selector_property.h"
 #include "fmod_audio_server.h"
 #include "fmod_event_selector.h"
-#include "fmod_event_tree.h"
 #include <classes/project_settings.hpp>
 #include <fmod_errors.h>
 #include <fmod_globals.h>
