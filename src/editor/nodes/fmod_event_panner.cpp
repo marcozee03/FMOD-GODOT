@@ -1,4 +1,5 @@
 #include "classes/global_constants.hpp"
+#include "core/object.hpp"
 #include "fmod_string_names.h"
 #ifdef TOOLS_ENABLED
 #include "classes/control.hpp"
@@ -77,6 +78,7 @@ void FmodEventPanner::_bind_methods()
     BIND_ENUM_CONSTANT(FRONT);
     BIND_ENUM_CONSTANT(TOP);
     BIND_PROPERTY(view, Variant::Type::INT)
+    ADD_SIGNAL(MethodInfo("play_position_changed", PropertyInfo(Variant::VECTOR3, "play_position")));
 }
 
 void FmodEventPanner::_draw()
@@ -177,10 +179,12 @@ void FmodEventPanner::_gui_input(const Ref<InputEvent> &p_event)
             {
             case FRONT:
                 event_position = Vector3(position.x, position.y, event_position.z);
+                emit_signal("play_position_changed", get_play_position());
                 queue_redraw();
                 break;
             case TOP:
                 event_position = Vector3(position.x, event_position.y, position.y);
+                emit_signal("play_position_changed", get_play_position());
                 queue_redraw();
                 break;
             }
