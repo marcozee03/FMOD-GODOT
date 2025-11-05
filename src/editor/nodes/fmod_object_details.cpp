@@ -1,11 +1,9 @@
 #include "classes/control.hpp"
-#include "classes/h_separator.hpp"
 #include "classes/node.hpp"
 #include "classes/panel.hpp"
 #include "classes/panel_container.hpp"
 #include "core/memory.hpp"
 #include "fmod_globals.h"
-#include <type_traits>
 #ifdef TOOLS_ENABLED
 #include "fmod_editor_interface.h"
 #include "fmod_object_details.h"
