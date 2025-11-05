@@ -65,7 +65,8 @@ FmodAudioServer::InitSettings FmodAudioServer::get_fmod_settings()
     return settings;
 }
 
-FMOD_RESULT fmod_debug_callback(FMOD_DEBUG_FLAGS flags, const char *file, int line, const char *func, const char *message)
+FMOD_RESULT fmod_debug_callback(FMOD_DEBUG_FLAGS flags, const char *file, int line, const char *func,
+                                const char *message)
 {
     if (flags & FMOD_DEBUG_LEVEL_ERROR)
     {

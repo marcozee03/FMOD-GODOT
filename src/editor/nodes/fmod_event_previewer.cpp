@@ -70,6 +70,7 @@ FmodEventPreviewer::FmodEventPreviewer()
     radius->set_max(INFINITY);
     mediaControls->add_child(radius);
     radius->connect("value_changed", callable_mp(this, &FmodEventPreviewer::set_panner_size));
+    panner->connect("play_position_changed", Callable(emitter, "set_position"));
 }
 void FmodEventPreviewer::go_to_event()
 {
