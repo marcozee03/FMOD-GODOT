@@ -163,7 +163,7 @@ void FmodEditorInterface::refresh()
     {
         cache.add(to_cacheable_parameter(&params[i]));
     }
-    delete params;
+    delete[] params;
 
     delete[] banks;
     delete[] str;
