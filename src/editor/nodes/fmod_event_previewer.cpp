@@ -1,3 +1,4 @@
+#include "classes/spin_box.hpp"
 #include "fmod_studio.h"
 #ifdef TOOLS_ENABLED
 #include "classes/button.hpp"
@@ -49,7 +50,7 @@ FmodEventPreviewer::FmodEventPreviewer()
     play->connect("pressed", callable_mp(this, &FmodEventPreviewer::start));
     mediaControls->add_child(stop);
     stop->connect("pressed", Callable(emitter, "stop"));
-    stop->connect("pressed", Callable(this, "set_physics_process").bind(false));
+    stop->connect("pressed", Callable(this, "set_process").bind(false));
     stop->set_button_icon(et->get_icon("Stop", "EditorIcons"));
     mediaControls->add_child(goToEvent);
     goToEvent->set_button_icon(FmodEditorInterface::get_singleton()->get_theme()->fmod_icon);
@@ -61,6 +62,14 @@ FmodEventPreviewer::FmodEventPreviewer()
     scrub->set_step(0);
     scrub->connect("drag_started", callable_mp(this, &FmodEventPreviewer::on_start_drag));
     scrub->connect("drag_ended", callable_mp(this, &FmodEventPreviewer::on_end_drag));
+
+    radius = memnew(SpinBox);
+    radius->set_min(0.01);
+    radius->set_step(0.01);
+    radius->set_allow_greater(true);
+    radius->set_max(INFINITY);
+    mediaControls->add_child(radius);
+    radius->connect("value_changed", callable_mp(this, &FmodEventPreviewer::set_panner_size));
 }
 void FmodEventPreviewer::go_to_event()
 {
@@ -71,8 +80,13 @@ Vector4i FmodEventPreviewer::get_event_guid() const
     return emitter->get_event();
 }
 
-void FmodEventPreviewer::_physics_process(double delta)
+void FmodEventPreviewer::_process(double delta)
 {
+    if (!scrub->is_visible())
+    {
+        set_process(false);
+        return;
+    }
     if (emitter->is_paused())
     {
         return;
@@ -84,7 +98,7 @@ void FmodEventPreviewer::_physics_process(double delta)
 void FmodEventPreviewer::set_event_path(const String &p_event_path)
 {
     emitter->stop();
-    set_physics_process(false);
+    set_process(false);
     if (!p_event_path.begins_with("event:/"))
     {
         hide();
@@ -92,7 +106,16 @@ void FmodEventPreviewer::set_event_path(const String &p_event_path)
     }
     show();
     auto event = FmodEditorInterface::get_singleton()->get_cache()->get_event(p_event_path);
-    set_panner_size(event.max);
+    radius->set_value(event.max * 2);
+    // set_panner_size(event.max * 2);
+    if (event.lengthMS == 0)
+    {
+        scrub->hide();
+    }
+    else
+    {
+        scrub->show();
+    }
     scrub->set_value(0);
     scrub->set_max(event.lengthMS);
     set_event_guid(event.guid);
@@ -132,7 +155,7 @@ void FmodGodot::FmodEventPreviewer::start()
     {
         FMOD_Studio_EventInstance_SetTimelinePosition(emitter->event_instance, scrub->get_value());
     }
-    set_physics_process(true);
+    set_process(true);
 }
 void FmodGodot::FmodEventPreviewer::set_panner_size(float size)
 {
@@ -167,10 +190,10 @@ void FmodEventPreviewer::on_start_drag()
 
 void FmodEventPreviewer::on_end_drag(bool value_changed)
 {
-    emitter->set_paused(false);
     if (value_changed)
     {
         FMOD_Studio_EventInstance_SetTimelinePosition(emitter->event_instance, scrub->get_value());
     }
+    emitter->set_paused(false);
 }
 #endif

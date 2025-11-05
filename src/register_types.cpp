@@ -18,6 +18,7 @@
 #include "fmod_bank_format_saver.h"
 #include "fmod_listener_2d.h"
 #include "fmod_listener_3d.h"
+#include "fmod_project_explorer.h"
 #include "fmod_script_client.h"
 #include "fmod_string_names.h"
 #include "variant/variant.hpp"
@@ -153,7 +154,7 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
     if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
     {
 #ifdef TOOLS_ENABLED
-        GDREGISTER_INTERNAL_CLASS(FmodEventPathSelector);
+        GDREGISTER_INTERNAL_CLASS(FmodEventSelector);
         GDREGISTER_INTERNAL_CLASS(EventTree);
 
         GDREGISTER_INTERNAL_CLASS(FmodScriptClient)
@@ -172,6 +173,7 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         GDREGISTER_INTERNAL_CLASS(FmodEventBrowser);
         GDREGISTER_INTERNAL_CLASS(FmodEventPanner);
         GDREGISTER_INTERNAL_CLASS(FmodEventPreviewer);
+        GDREGISTER_INTERNAL_CLASS(FmodProjectExplorer);
         EditorPlugins::add_by_type<FmodEditorPlugin>();
 #endif // TOOLS_ENABLED
     }
