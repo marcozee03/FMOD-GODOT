@@ -25,7 +25,7 @@ FmodGodot::FmodEventBrowser::FmodEventBrowser()
     build->set_tooltip_text("The FMOD Studio project build path must be set inside this godot project");
     top_buttons->add_child(build);
     build->connect("pressed", callable_mp(FmodEditorInterface::get_singleton(), &FmodEditorInterface::build_banks));
-    build->set_disabled(true);
+    // build->set_disabled(true);
     Button *restart_server = memnew(Button());
     restart_server->set_text("Restart Server");
     restart_server->set_tooltip_text("restarts the fmod audio server");
