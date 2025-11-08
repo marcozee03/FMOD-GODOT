@@ -2,6 +2,7 @@
 #include "core/memory.hpp"
 #include "fmod_globals.h"
 #include "fmod_script_client.h"
+#include "variant/utility_functions.hpp"
 #ifdef TOOLS_ENABLED
 #include "fmod_audio_server.h"
 #include "fmod_editor_interface.h"
@@ -34,10 +35,13 @@ void FmodEditorInterface::restart_server()
 }
 void FmodEditorInterface::build_banks()
 {
-    // TODO fix don't want it to open fmod studio (will also halt godot till it is closed)
-    OS::get_singleton()->execute(
-        ProjectSettings::get_singleton()->get_setting_with_override(FMOD_STUDIO_PATH),
-        {"-build", ProjectSettings::get_singleton()->get_setting_with_override(FMOD_PROJECT_PATH)});
+    if (!script->send_script_command("studio.project.build()"))
+    {
+        UtilityFunctions::push_warning("Failed to build banks. Fmod Studio may not be open");
+    }
+    // OS::get_singleton()->execute(
+    // ProjectSettings::get_singleton()->get_setting_with_override(FMOD_STUDIO_PATH),
+    // {"-build", ProjectSettings::get_singleton()->get_setting_with_override(FMOD_PROJECT_PATH)});
 }
 void FmodEditorInterface::_bind_methods()
 {
