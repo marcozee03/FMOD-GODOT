@@ -6,8 +6,8 @@ To use the Fmod C# wrappers it is necessary to replace FMOD.VERSION.dll and
 FMOD.Studio.STUDIO_VERSION.dll constants to use the proper fmod library version.
 snippets below
 
-
 .. code-block::
+
     public partial class VERSION
     {
         public const int number = 0x00020309;
@@ -23,21 +23,21 @@ snippets below
         public const string dll = "fmod{logging}";
     #endif
     }
-```
 
 .. code-block::
+
     public partial class STUDIO_VERSION
     {
-#if DEBUG || TOOLS
+    #if DEBUG || TOOLS
         public const string logging = "L";
-#else
+    #else
         public const string logging = "";
-#endif
-#if GODOT_LINUXBSD
+    #endif
+    #if GODOT_LINUXBSD
         public const string dll = $"fmodstudio{logging}.so.14";
-#else
+    #else
         public const string dll = $"fmodstudio{logging};
-#endif
+    #endif
     }
 
 .. seealso:: For info on how to compile from source see
