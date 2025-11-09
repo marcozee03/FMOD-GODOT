@@ -1,5 +1,5 @@
 # FMOD Godot  
-
+[Documentation](https://fmod-godot.readthedocs.io/)
 ## About
 
 Fmod-Godot is a GDExtension library that integrates the Fmod API with the Godot
@@ -60,7 +60,6 @@ what events they contain and their GUID.
 
 - ![](plugin_template/icons/FmodEventEmitter2D.svg) **FmodEventEmitter2D/3D**:
     Plays a selected sound effect. Edit parameters, spatialize the audio, and more
-    \[WIKI goes here (WIP)\]
 
 - ![](plugin_template/icons/FmodListener2D.svg) **FmodListener2D/3D**: place
 listeners into the scene that automatically update their position.
@@ -89,7 +88,7 @@ script example below.
 python3 export.py -p <platform> -o /path/to/godot_project/addons
 ```
 
-**Flags**
+**Flags**  
 -o  
     flag specifies where to copy the outputs of the command to notice how it should
     be the path to the addons directory of your Godot project.  
@@ -151,4 +150,5 @@ snippets below
 
 C# is currently able to interact with the FmodAudioServer and from there interact interact with FMOD_Studio_System and FMOD_Core_System objects.
 A module version of this extension is in consideration for more natural C# support
+
 
