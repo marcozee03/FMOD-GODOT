@@ -94,8 +94,8 @@ void loadSettings()
     ADD_PROJECT_SETTING(ROLLOFF_SCALE, true, false, false, 1, Variant::Type::FLOAT, PROPERTY_HINT_NONE, "", propinfo);
 
     ADD_PROJECT_SETTING(SOURCE_TYPE, true, false, false, 1, Variant::Type::INT, PROPERTY_HINT_ENUM,
-                        "Single Platform Build:1, "
-                        "Multiple Platform Build(WIP):2",
+                        "Single Platform Build:0, "
+                        "Multiple Platform Build(WIP):1",
                         propinfo);
     ADD_PROJECT_SETTING(FMOD_STUDIO_PATH, true, false, false, "", Variant::Type::STRING, PROPERTY_HINT_GLOBAL_FILE, "",
                         propinfo);

@@ -12,9 +12,16 @@ FmodEventEmitter3D
 
 **Inherits:** ``Node3D``
 
-.. container:: contribute
+Emits Fmod Events and places them in the 2d world
 
-	There is currently no description for this class. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+.. rst-class:: classref-introduction-group
+
+Description
+-----------
+
+FmodEventEmitter3D can be triggered with signals. Sounds will be played at the
+
+emitters transform or it's parents.
 
 .. rst-class:: classref-reftable-group
 
@@ -41,9 +48,13 @@ Properties
    +--------------+-------------------------------------------------------------------------------------------+--------------------------+
    | ``bool``     | :ref:`override_attenuation<class_FmodEventEmitter3D_property_override_attenuation>`       | ``false``                |
    +--------------+-------------------------------------------------------------------------------------------+--------------------------+
+   | ``bool``     | :ref:`paused<class_FmodEventEmitter3D_property_paused>`                                   | ``true``                 |
+   +--------------+-------------------------------------------------------------------------------------------+--------------------------+
    | ``bool``     | :ref:`preload_sample_data<class_FmodEventEmitter3D_property_preload_sample_data>`         | ``false``                |
    +--------------+-------------------------------------------------------------------------------------------+--------------------------+
    | ``bool``     | :ref:`trigger_once<class_FmodEventEmitter3D_property_trigger_once>`                       | ``false``                |
+   +--------------+-------------------------------------------------------------------------------------------+--------------------------+
+   | ``float``    | :ref:`volume<class_FmodEventEmitter3D_property_volume>`                                   | ``1.0``                  |
    +--------------+-------------------------------------------------------------------------------------------+--------------------------+
 
 .. rst-class:: classref-reftable-group
@@ -58,6 +69,8 @@ Methods
    | ``float`` | :ref:`get_parameter<class_FmodEventEmitter3D_method_get_parameter>`\ (\ name\: ``String``\ ) |const|                        |
    +-----------+-----------------------------------------------------------------------------------------------------------------------------+
    | ``float`` | :ref:`get_parameter_by_id<class_FmodEventEmitter3D_method_get_parameter_by_id>`\ (\ id\: ``Vector2i``\ ) |const|            |
+   +-----------+-----------------------------------------------------------------------------------------------------------------------------+
+   | ``bool``  | :ref:`is_playing<class_FmodEventEmitter3D_method_is_playing>`\ (\ ) |const|                                                 |
    +-----------+-----------------------------------------------------------------------------------------------------------------------------+
    | |void|    | :ref:`set_parameter<class_FmodEventEmitter3D_method_set_parameter>`\ (\ name\: ``String``, value\: ``float``\ )             |
    +-----------+-----------------------------------------------------------------------------------------------------------------------------+
@@ -88,9 +101,7 @@ Property Descriptions
 - |void| **set_allow_fadeout**\ (\ value\: ``bool``\ )
 - ``bool`` **is_allow_fadeout**\ (\ )
 
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+if ``true`` sounds will fadeout
 
 .. rst-class:: classref-item-separator
 
@@ -107,9 +118,7 @@ Property Descriptions
 - |void| **set_attached_to_rigidbody**\ (\ value\: ``bool``\ )
 - ``bool`` **is_attached_to_rigidbody**\ (\ )
 
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+if ``true`` the event instance will attach to the parent rigidbody node.
 
 .. rst-class:: classref-item-separator
 
@@ -126,9 +135,7 @@ Property Descriptions
 - |void| **set_attenuation_max**\ (\ value\: ``float``\ )
 - ``float`` **get_attenuation_max**\ (\ )
 
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+if :ref:`override_attenuation<class_FmodEventEmitter3D_property_override_attenuation>` is ``true`` sets the event's maximum attenuation distance
 
 .. rst-class:: classref-item-separator
 
@@ -145,9 +152,7 @@ Property Descriptions
 - |void| **set_attenuation_min**\ (\ value\: ``float``\ )
 - ``float`` **get_attenuation_min**\ (\ )
 
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+if :ref:`override_attenuation<class_FmodEventEmitter3D_property_override_attenuation>` is ``true`` sets the event's minimum attenuation distance
 
 .. rst-class:: classref-item-separator
 
@@ -164,9 +169,7 @@ Property Descriptions
 - |void| **set_event**\ (\ value\: ``Vector4i``\ )
 - ``Vector4i`` **get_event**\ (\ )
 
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+The Fmod event to play
 
 .. rst-class:: classref-item-separator
 
@@ -183,9 +186,7 @@ Property Descriptions
 - |void| **set_non_rigid_body_velocity**\ (\ value\: ``bool``\ )
 - ``bool`` **is_non_rigid_body_velocity**\ (\ )
 
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+If not :ref:`attached_to_rigidbody<class_FmodEventEmitter3D_property_attached_to_rigidbody>` event instance tracks the velocity of the object
 
 .. rst-class:: classref-item-separator
 
@@ -202,9 +203,7 @@ Property Descriptions
 - |void| **set_one_shot**\ (\ value\: ``bool``\ )
 - ``bool`` **is_one_shot**\ (\ )
 
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+If ``true`` events will be played as one shots.
 
 .. rst-class:: classref-item-separator
 
@@ -220,6 +219,23 @@ Property Descriptions
 
 - |void| **set_override_attenuation**\ (\ value\: ``bool``\ )
 - ``bool`` **is_override_attenuation**\ (\ )
+
+If ``true`` the sound will attenuate with the values of :ref:`attenuation_min<class_FmodEventEmitter3D_property_attenuation_min>` and :ref:`attenuation_max<class_FmodEventEmitter3D_property_attenuation_max>`
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FmodEventEmitter3D_property_paused:
+
+.. rst-class:: classref-property
+
+``bool`` **paused** = ``true`` :ref:`🔗<class_FmodEventEmitter3D_property_paused>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_paused**\ (\ value\: ``bool``\ )
+- ``bool`` **is_paused**\ (\ )
 
 .. container:: contribute
 
@@ -240,9 +256,7 @@ Property Descriptions
 - |void| **set_preload_sample_data**\ (\ value\: ``bool``\ )
 - ``bool`` **is_preload_sample_data**\ (\ )
 
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+if ``true`` sample data will be preloaded
 
 .. rst-class:: classref-item-separator
 
@@ -258,6 +272,23 @@ Property Descriptions
 
 - |void| **set_trigger_once**\ (\ value\: ``bool``\ )
 - ``bool`` **is_trigger_once**\ (\ )
+
+if ``true`` sound can only be played once
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FmodEventEmitter3D_property_volume:
+
+.. rst-class:: classref-property
+
+``float`` **volume** = ``1.0`` :ref:`🔗<class_FmodEventEmitter3D_property_volume>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_volume**\ (\ value\: ``float``\ )
+- ``float`` **get_volume**\ (\ )
 
 .. container:: contribute
 
@@ -293,6 +324,20 @@ exist.
 ``float`` **get_parameter_by_id**\ (\ id\: ``Vector2i``\ ) |const| :ref:`🔗<class_FmodEventEmitter3D_method_get_parameter_by_id>`
 
 Gets the value of parameter by id. returns NAN if parameter does not exist
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FmodEventEmitter3D_method_is_playing:
+
+.. rst-class:: classref-method
+
+``bool`` **is_playing**\ (\ ) |const| :ref:`🔗<class_FmodEventEmitter3D_method_is_playing>`
+
+.. container:: contribute
+
+	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-item-separator
 

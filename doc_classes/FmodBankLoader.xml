@@ -11,8 +11,10 @@
 	</tutorials>
 	<members>
 		<member name="banks" type="FmodBank[]" setter="set_banks" getter="get_banks" default="[]">
+			The banks to load
 		</member>
 		<member name="preload_sample_data" type="bool" setter="set_preload_sample_data" getter="is_preload_sample_data" default="true">
+			if [code]true[/code] [member banks] sample data will be preloaded
 		</member>
 	</members>
 </class>

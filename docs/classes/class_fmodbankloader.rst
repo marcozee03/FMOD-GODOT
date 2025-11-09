@@ -57,9 +57,7 @@ Property Descriptions
 - |void| **set_banks**\ (\ value\: :ref:`Array<class_Array>`\[:ref:`FmodBank<class_FmodBank>`\]\ )
 - :ref:`Array<class_Array>`\[:ref:`FmodBank<class_FmodBank>`\] **get_banks**\ (\ )
 
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+The banks to load
 
 .. rst-class:: classref-item-separator
 
@@ -76,9 +74,7 @@ Property Descriptions
 - |void| **set_preload_sample_data**\ (\ value\: ``bool``\ )
 - ``bool`` **is_preload_sample_data**\ (\ )
 
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+if ``true`` :ref:`banks<class_FmodBankLoader_property_banks>` sample data will be preloaded
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

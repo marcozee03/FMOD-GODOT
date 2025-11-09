@@ -196,14 +196,18 @@
 	</methods>
 	<members>
 		<member name="muted" type="bool" setter="set_muted" getter="is_muted" default="true">
+			If [code]true[/code], All fmod sounds will be muted.
 		</member>
 	</members>
 	<constants>
 		<constant name="DISABLED" value="0" enum="LiveUpdate">
+			LiveUpdate will never be enabled.
 		</constant>
 		<constant name="ENABLED" value="1" enum="LiveUpdate">
+			LiveUpdate will always be enabled.
 		</constant>
 		<constant name="DEV_ONLY" value="2" enum="LiveUpdate">
+			LiveUpdate will only be enabled in Editor and Debug builds.
 		</constant>
 	</constants>
 </class>

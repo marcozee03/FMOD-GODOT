@@ -40,7 +40,7 @@ if not on_rtd:
     notfound_urls_prefix = ""
 
 # Specify the site name for the Open Graph extension.
-ogp_site_name = "Godot Engine documentation"
+ogp_site_name = "Fmod Godot Documentation"
 ogp_social_cards = {"enable": False}
 
 if not os.getenv("SPHINX_NO_GDSCRIPT"):
@@ -60,10 +60,8 @@ master_doc = "index"
 
 # General information about the project
 project = "Godot Engine"
-copyright = (
-    "2014-present Juan Linietsky, Ariel Manzur and the Godot community (CC BY 3.0)"
-)
-author = "Juan Linietsky, Ariel Manzur and the Godot community"
+copyright = "2025-Present Marco Zepeda (MIT License)"
+author = "Marco Zepeda"
 
 # Version info for the project, acts as replacement for |version| and |release|
 # The short X.Y version
@@ -81,7 +79,7 @@ if env_tags is not None:
 # Language / i18n
 
 supported_languages = {
-    "en": "Godot Engine %s documentation in English",
+    "en": "Fmod Godot %s documentation in English",
 }
 
 # RTD normalized their language codes to ll-cc (e.g. zh-cn),
@@ -109,8 +107,10 @@ exclude_patterns = [".*", "**/.*", "_build", "_tools"]
 # These imports should *not* be moved to the start of the file,
 # they depend on the sys.path.append call registering "_extensions".
 # GDScript syntax highlighting
+from gdscript import GDScriptLexer
 from sphinx.highlighting import lexers
 
+lexers["gdscript"] = GDScriptLexer()
 # fmt: on
 
 smartquotes = False
@@ -146,9 +146,9 @@ html_context = {
     "github_user": "marcozee03",  # Username
     "github_repo": "FMOD-GODOT",  # Repo name
     "github_version": "master",  # Version
-    "conf_py_path": "/docs",  # Path in the checkout to the docs root
+    "conf_py_path": "/",  # Path in the checkout to the docs root
     "godot_docs_title": supported_languages[language],
-    "godot_docs_basepath": "https://docs.godotengine.org/",
+    "godot_docs_basepath": "https://fmod-godot.readthedocs.io",
     "godot_docs_suffix": ".html",
     # Distinguish local development website from production website.
     # This prevents people from looking for changes on the production website after making local changes :)
@@ -156,7 +156,7 @@ html_context = {
     # Set this to `True` when in the `latest` branch to clearly indicate to the reader
     # that they are not reading the `stable` documentation.
     "godot_is_latest": True,
-    "godot_version": "4.6",
+    "godot_version": "0.1.0",
     # Enables a banner that displays the up-to-date status of each article.
     "godot_show_article_status": True,
     # Display user-contributed notes at the bottom of pages that don't have `:allow_comments: False` at the top.
@@ -188,7 +188,7 @@ html_js_files = [
 ]
 
 # Output file base name for HTML help builder
-htmlhelp_basename = "GodotEnginedoc"
+htmlhelp_basename = "FmodGodotdoc"
 
 # -- Options for reStructuredText parser ----------------------------------
 
@@ -203,9 +203,9 @@ file_insertion_enabled = False
 latex_documents = [
     (
         master_doc,
-        "GodotEngine.tex",
-        "Godot Engine Documentation",
-        "Juan Linietsky, Ariel Manzur and the Godot community",
+        "FmodGodot.tex",
+        "Fmod Godot Documentation",
+        "Marco Zepeda",
         "manual",
     ),
 ]
