@@ -8,18 +8,24 @@ location. To simplest way to compile this addon to your project is to run the ex
 script example below. Libraries should be placed in libs/<platform>/<architecture>
 
 .. code-block::
+
    python3 export.py -p <platform> -o /path/to/godot_project/addons
 
-**Flags**
+
+Flags
+-----
+
 -o  Output
     flag specifies where to copy the outputs of the command to notice how it should
     be the path to the addons directory of your Godot project.
 -p  Platform
     flag is currently one of 3 options "windows" "linux" and "all"
--f  force
+-f
     skips the prompt asking for your permission to override files in the output path.
--sc Skip
+-sc
     skips the compilation steps and copies whatever is currently in the bin
     directory to output path.
 
-Alternatively refer to `Link Introduction to the buildsystem <https://docs.godotengine.org/en/stable/contributing/development/compiling/introduction_to_the_buildsystem.html>
+Alternatively refer to `introduction to the buildsystem`_
+
+.. _introduction to the buildsystem: https://docs.godotengine.org/en/stable/contributing/development/compiling/introduction_to_the_buildsystem.html
