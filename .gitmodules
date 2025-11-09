@@ -2,3 +2,6 @@
 	path = godot-cpp
 	url = https://github.com/godotengine/godot-cpp
 	branch = master
+[submodule "docs/godot-docs"]
+	path = docs/godot-docs
+	url = https://github.com/godotengine/godot-docs.git
