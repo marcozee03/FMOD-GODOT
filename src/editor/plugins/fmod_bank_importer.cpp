@@ -1,6 +1,5 @@
 #include "classes/global_constants.hpp"
 #include "classes/project_settings.hpp"
-#include "fmod_string_names.h"
 #include "variant/packed_string_array.hpp"
 #include "variant/typed_array.hpp"
 #ifdef TOOLS_ENABLED
@@ -73,20 +72,21 @@ Error FmodGodot::FmodBankImporter::_import(const String &p_source_file, const St
 
     Ref<FmodBank> bank = memnew(FmodBank);
     ProjectSettings *ps = ProjectSettings::get_singleton();
-    switch ((int)ps->get_setting(SOURCE_TYPE))
-    {
-    case 1: // SINGLE_PLATFORM_BUILD
-        bank->set_path(p_source_file);
-        return ResourceSaver::get_singleton()->save(bank, String(".").join({p_save_path, _get_save_extension()}));
-    case 2: // MULTIPLE_PLATFORM_BUILD
-            // Ref<DirAccess> dir = DirAccess::open(ps->get_setting(BANK_DIRECTORY));
-            // for (auto directory : dir->get_directories())
-            // {
-            //         p_platform_variants.find_custom
-            //     ResourceSaver::get_singleton()->save(bank, String(".").join({p_save_path, _get_save_extension()}));
-            // }
-        break;
-    }
+    // switch ((int)ps->get_setting(SOURCE_TYPE))
+    // {
+    // case 0: // SINGLE_PLATFORM_BUILD
+    bank->set_path(p_source_file);
+    return ResourceSaver::get_singleton()->save(bank, String(".").join({p_save_path, _get_save_extension()}));
+    // case 1: // MULTIPLE_PLATFORM_BUILD
+    //         // Ref<DirAccess> dir = DirAccess::open(ps->get_setting(BANK_DIRECTORY));
+    //         // for (auto directory : dir->get_directories())
+    //         // {
+    //         //         p_platform_variants.find_custom
+    //         //     ResourceSaver::get_singleton()->save(bank, String(".").join({p_save_path,
+    //         _get_save_extension()}));
+    //         // }
+    //     break;
+    // }
     return godot::ERR_CANT_CREATE;
 }
 #endif

@@ -4,7 +4,6 @@
 #include "classes/resource_format_loader.hpp"
 #include "fmod_audio_server.h"
 #include "fmod_bank.h"
-#include "fmod_string_names.h"
 FmodGodot::FmodBankFormatLoader::FmodBankFormatLoader()
 {
 }
@@ -33,11 +32,11 @@ bool FmodGodot::FmodBankFormatLoader::_handles_type(const StringName &p_type) co
     return p_type.casecmp_to("FmodBank") == 0;
 }
 
-bool FmodGodot::FmodBankFormatLoader::_recognize_path(const String &p_path, const StringName &p_type) const
-{
-    return ResourceFormatLoader::_recognize_path(p_path, p_type) &&
-           p_path.begins_with(ProjectSettings::get_singleton()->get_setting_with_override(BANK_DIRECTORY));
-}
+// bool FmodGodot::FmodBankFormatLoader::_recognize_path(const String &p_path, const StringName &p_type) const
+// {
+//     return ResourceFormatLoader::_recognize_path(p_path, p_type) &&
+//            p_path.begins_with(ProjectSettings::get_singleton()->get_setting_with_override(BANK_DIRECTORY));
+// }
 Variant FmodGodot::FmodBankFormatLoader::_load(const String &path, const String &original_path, bool use_sub_threads,
                                                int32_t cache_mode) const
 {
