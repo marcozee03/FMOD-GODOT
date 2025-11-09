@@ -2,10 +2,11 @@
 #
 # Godot Engine documentation build configuration file
 
+import os
+import sys
+
 import sphinx
 import sphinx_rtd_theme
-import sys
-import os
 
 # -- General configuration ------------------------------------------------
 
@@ -36,13 +37,11 @@ on_rtd = os.environ.get("READTHEDOCS", None) == "True"
 # This makes it easier to test the custom 404 page by loading `/404.html`
 # on a local web server.
 if not on_rtd:
-    notfound_urls_prefix = ''
+    notfound_urls_prefix = ""
 
 # Specify the site name for the Open Graph extension.
 ogp_site_name = "Godot Engine documentation"
-ogp_social_cards = {
-    "enable": False
-}
+ogp_social_cards = {"enable": False}
 
 if not os.getenv("SPHINX_NO_GDSCRIPT"):
     extensions.append("gdscript")
@@ -83,19 +82,6 @@ if env_tags is not None:
 
 supported_languages = {
     "en": "Godot Engine %s documentation in English",
-    "de": "Godot Engine %s Dokumentation auf Deutsch",
-    "es": "Documentación de Godot Engine %s en español",
-    "fr": "Documentation de Godot Engine %s en français",
-    "fi": "Godot Engine %s dokumentaatio suomeksi",
-    "it": "Godot Engine %s documentazione in italiano",
-    "ja": "Godot Engine %sの日本語のドキュメント",
-    "ko": "Godot Engine %s 문서 (한국어)",
-    "pl": "Dokumentacja Godot Engine %s w języku polskim",
-    "pt_BR": "Documentação da Godot Engine %s em Português Brasileiro",
-    "ru": "Документация Godot Engine %s на русском языке",
-    "uk": "Документація до Godot Engine %s українською мовою",
-    "zh_CN": "Godot Engine %s 简体中文文档",
-    "zh_TW": "Godot Engine %s 正體中文 (台灣) 文件",
 }
 
 # RTD normalized their language codes to ll-cc (e.g. zh-cn),
@@ -123,10 +109,8 @@ exclude_patterns = [".*", "**/.*", "_build", "_tools"]
 # These imports should *not* be moved to the start of the file,
 # they depend on the sys.path.append call registering "_extensions".
 # GDScript syntax highlighting
-from gdscript import GDScriptLexer
 from sphinx.highlighting import lexers
 
-lexers["gdscript"] = GDScriptLexer()
 # fmt: on
 
 smartquotes = False
@@ -154,15 +138,15 @@ html_theme_options = {
     "flyout_display": "attached",
 }
 
-html_title = supported_languages[language] % ( "(" + version + ")" )
+html_title = supported_languages[language] % ("(" + version + ")")
 
 # Edit on GitHub options: https://docs.readthedocs.io/en/latest/guides/edit-source-links-sphinx.html
 html_context = {
     "display_github": not is_i18n,  # Integrate GitHub
-    "github_user": "godotengine",  # Username
-    "github_repo": "godot-docs",  # Repo name
+    "github_user": "marcozee03",  # Username
+    "github_repo": "FMOD-GODOT",  # Repo name
     "github_version": "master",  # Version
-    "conf_py_path": "/",  # Path in the checkout to the docs root
+    "conf_py_path": "/docs",  # Path in the checkout to the docs root
     "godot_docs_title": supported_languages[language],
     "godot_docs_basepath": "https://docs.godotengine.org/",
     "godot_docs_suffix": ".html",
@@ -197,8 +181,10 @@ if not on_rtd:
 
 html_js_files = [
     "js/custom.js",
-    ('https://plausible.godot.foundation/js/script.file-downloads.outbound-links.js',
-     {'defer': 'defer', 'data-domain': 'godotengine.org'}),
+    (
+        "https://plausible.godot.foundation/js/script.file-downloads.outbound-links.js",
+        {"defer": "defer", "data-domain": "godotengine.org"},
+    ),
 ]
 
 # Output file base name for HTML help builder
@@ -269,7 +255,9 @@ figure_language_filename = "{root}.{language}{ext}"
 
 cwd = os.getcwd()
 
-sphinx_original_get_image_filename_for_language = sphinx.util.i18n.get_image_filename_for_language
+sphinx_original_get_image_filename_for_language = (
+    sphinx.util.i18n.get_image_filename_for_language
+)
 
 
 def godot_get_image_filename_for_language(filename, env):
@@ -283,6 +271,7 @@ def godot_get_image_filename_for_language(filename, env):
     path = sphinx_original_get_image_filename_for_language(filename, env)
     path = os.path.abspath(os.path.join("../images/", os.path.relpath(path, cwd)))
     return path
+
 
 sphinx.util.i18n.get_image_filename_for_language = godot_get_image_filename_for_language
 
@@ -315,4 +304,4 @@ rst_epilog = """
 )
 
 # Needed so the table of contents is created for EPUB
-epub_tocscope = 'includehidden'
+epub_tocscope = "includehidden"
