@@ -59,4 +59,5 @@ Fmod Godot api calls will convert Vector4i to an FMOD::GUID with an implicit cas
 EventBrowser
 -------------
 The editor will load all of the banks in the banks folder. and cache them at startup. to be referenced by inspectors. You can drag and drop events from the browser
+
 .. image:: img/event_browser.png
