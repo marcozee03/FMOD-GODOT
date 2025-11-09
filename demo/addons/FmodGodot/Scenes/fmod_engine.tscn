@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cnf7mm764c6bp"]
-
-[ext_resource type="Script" path="res://addons/FmodGodot/FmodAudioServer.cs" id="1_st0s2"]
-
-[node name="FmodAudioServer" type="FmodAudioServer"]
-process_mode = 3
-script = ExtResource("1_st0s2")
