@@ -26,6 +26,11 @@
 				does not exist.
 			</description>
 		</method>
+		<method name="is_playing" qualifiers="const">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
 		<method name="set_parameter">
 			<return type="void" />
 			<param index="0" name="name" type="String" />
@@ -57,25 +62,39 @@
 		</method>
 	</methods>
 	<members>
-		<member name="allow_fadeout" type="bool" setter="set_allow_fadeout" getter="is_allow_fadeout" default="false">
+		<member name="allow_fadeout" type="bool" setter="set_allow_fadeout" getter="is_allow_fadeout" default="true">
+			if [code]true[/code] sounds will fadeout
 		</member>
 		<member name="attached_to_rigidbody" type="bool" setter="set_attached_to_rigidbody" getter="is_attached_to_rigidbody" default="false">
+			if [code]true[/code] the event instance will attach to the parent rigidbody node.
 		</member>
 		<member name="attenuation_max" type="float" setter="set_attenuation_max" getter="get_attenuation_max" default="100.0">
+			if [member override_attenuation] is [code]true[/code] sets the event's maximum attenuation distance
 		</member>
 		<member name="attenuation_min" type="float" setter="set_attenuation_min" getter="get_attenuation_min" default="1.0">
+			if [member override_attenuation] is [code]true[/code] sets the event's minimum attenuation distance
 		</member>
 		<member name="event" type="Vector4i" setter="set_event" getter="get_event" default="Vector4i(0, 0, 0, 0)">
+			The Fmod event to play
 		</member>
 		<member name="non_rigid_body_velocity" type="bool" setter="set_non_rigid_body_velocity" getter="is_non_rigid_body_velocity" default="false">
+			If not [member attached_to_rigidbody] event instance tracks the velocity of the object
 		</member>
 		<member name="one_shot" type="bool" setter="set_one_shot" getter="is_one_shot" default="true">
+			If [code]true[/code] events will be played as one shots.
 		</member>
 		<member name="override_attenuation" type="bool" setter="set_override_attenuation" getter="is_override_attenuation" default="false">
+			If [code]true[/code] the sound will attenuate with the values of [member attenuation_min] and [member attenuation_max]
+		</member>
+		<member name="paused" type="bool" setter="set_paused" getter="is_paused" default="true">
 		</member>
 		<member name="preload_sample_data" type="bool" setter="set_preload_sample_data" getter="is_preload_sample_data" default="false">
+			if [code]true[/code] sample data will be preloaded
 		</member>
 		<member name="trigger_once" type="bool" setter="set_trigger_once" getter="is_trigger_once" default="false">
+			if [code]true[/code] sound can only be played once
+		</member>
+		<member name="volume" type="float" setter="set_volume" getter="get_volume" default="1.0">
 		</member>
 	</members>
 </class>

@@ -1,63 +1,16 @@
 :allow_comments: False
 
-Godot Docs – *master* branch
+Fmod Godot Docs – *master* branch
 ============================
 
-.. only:: not i18n
+Welcome to the official documentation of `Fmod Godot <https://github.com/marcozee03/FMOD-GODOT/tree/master>`__,
 
-  .. note:: Godot's documentation is available in various languages and versions.
-            Expand the "Read the Docs" panel at the bottom of the sidebar to see
-            the list.
+Fmod-Godot is a GDExtension library that integrates the Fmod API with the Godot Engine. The library provides a way for C# to interact directly with the same FMOD Studio/Core system instances the FmodAudioServer uses. So, it is not limited to what the integration handles explicitly.
 
-.. only:: i18n
-
-  .. note:: This documentation is translated from the `original English one
-            <https://docs.godotengine.org/en/stable>`_ by community members
-            on `Weblate <https://hosted.weblate.org/projects/godot-engine/godot-docs>`_.
-
-            Depending on the translation effort's completion level, you may
-            find paragraphs or whole pages which are still in English. You can
-            help the community by providing new translations or reviewing existing
-            ones on Weblate.
-
-            For the time being, localized translations are only available for
-            the "stable" branch. You can still view the English documentation for
-            other engine versions using the "Read the Docs" panel at the bottom
-            of the sidebar.
-
-Welcome to the official documentation of `Godot Engine <https://godotengine.org>`__,
-the free and open source community-driven 2D and 3D game engine! If you are new
-to this documentation, we recommend that you read the
-:ref:`introduction page <doc_about_intro>` to get an overview of what this
-documentation has to offer.
+Unlike `FMOD GDExtension<https://github.com/utopia-rise/fmod-gdextension> this The extension doesn't expose the low-level FMOD and FMOD Studio APIs to GDScript. The initial design Goal/Motivation of this was to add a high-level integration with the Godot Engine while allowing C# to use the official FMOD C# wrapper.
 
 The table of contents in the sidebar should let you easily access the documentation
 for your topic of interest. You can also use the search function in the top-left corner.
-
-Get involved
-------------
-
-Godot Engine is an open source project developed by a community of volunteers.
-The documentation team can always use your feedback and help to improve the
-tutorials and class reference. If you don't understand something, or cannot find
-what you are looking for in the docs, help us make the documentation better
-by letting us know!
-
-Submit an issue or pull request on the `GitHub repository <https://github.com/godotengine/godot-docs/issues>`_,
-help us `translate the documentation <https://hosted.weblate.org/engage/godot-engine/>`_
-into your language, or talk to us on the ``#documentation`` channel on the
-`Godot Contributors Chat <https://chat.godotengine.org/>`_!
-
-.. centered:: |weblate_widget|
-
-Offline documentation
----------------------
-
-To browse the documentation offline, you can download an HTML copy (updated every Monday): `stable <https://nightly.link/godotengine/godot-docs/workflows/build_offline_docs/master/godot-docs-html-stable.zip>`__, `latest <https://nightly.link/godotengine/godot-docs/workflows/build_offline_docs/master/godot-docs-html-master.zip>`__, `3.6 <https://nightly.link/godotengine/godot-docs/workflows/build_offline_docs/master/godot-docs-html-3.6.zip>`__. Extract the ZIP archive then open
-the top-level ``index.html`` in a web browser.
-
-For mobile devices or e-readers, you can also download an ePub copy (updated every Monday): `stable <https://nightly.link/godotengine/godot-docs/workflows/build_offline_docs/master/godot-docs-epub-stable.zip>`__, `latest <https://nightly.link/godotengine/godot-docs/workflows/build_offline_docs/master/godot-docs-epub-master.zip>`__, `3.6 <https://nightly.link/godotengine/godot-docs/workflows/build_offline_docs/master/godot-docs-epub-3.6.zip>`__. Extract the ZIP archive then open
-the ``GodotEngine.epub`` file in an e-book reader application.
 
 .. Below is the main table-of-content tree of the documentation website.
    It is hidden on the page itself, but it makes up the sidebar for navigation.
@@ -69,12 +22,6 @@ the ``GodotEngine.epub`` file in an e-book reader application.
    :name: sec-general
 
    about/introduction
-   about/list_of_features
-   about/system_requirements
-   about/faq
-   about/complying_with_licenses
-   about/release_policy
-   about/docs_changelog
 
 .. toctree::
    :hidden:
@@ -83,10 +30,6 @@ the ``GodotEngine.epub`` file in an e-book reader application.
    :name: sec-learn
 
    getting_started/introduction/index
-   getting_started/step_by_step/index
-   getting_started/first_2d_game/index
-   getting_started/first_3d_game/index
-
 
 .. Sections below are split into two groups. First come meta sections, covering
    general matters. Below that different areas of the engine are listed.
@@ -97,56 +40,7 @@ the ``GodotEngine.epub`` file in an e-book reader application.
    :caption: Manual
    :name: sec-tutorials
 
-   tutorials/best_practices/index
-   tutorials/troubleshooting
-   tutorials/editor/index
-   tutorials/migrating/index
-
-   tutorials/2d/index
-   tutorials/3d/index
-   tutorials/animation/index
-   tutorials/assets_pipeline/index
-   tutorials/audio/index
-   tutorials/export/index
-   tutorials/io/index
-   tutorials/i18n/index
-   tutorials/inputs/index
-   tutorials/math/index
-   tutorials/navigation/index
-   tutorials/networking/index
-   tutorials/performance/index
-   tutorials/physics/index
-   tutorials/platform/index
-   tutorials/plugins/index
-   tutorials/rendering/index
-   tutorials/scripting/index
-   tutorials/shaders/index
-   tutorials/ui/index
-   tutorials/xr/index
-
-
-.. toctree::
-   :hidden:
-   :maxdepth: 1
-   :caption: Engine details
-   :name: sec-engine-details
-
-   engine_details/architecture/index
-   engine_details/development/index
-   engine_details/editor/index
-   engine_details/class_reference/index
-   engine_details/file_formats/index
-
-
-.. toctree::
-   :hidden:
-   :maxdepth: 1
-   :caption: Community
-   :name: sec-community
-
-   community/asset_library/index
-   community/channels
-   community/tutorials
+   tutorials/placeholder/index
 
 
 .. toctree::

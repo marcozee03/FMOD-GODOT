@@ -33,11 +33,13 @@ Properties
 .. table::
    :widths: auto
 
-   +----------+-----------------------------------------------------------------------------+----------+
-   | ``bool`` | :ref:`attached_to_parent<class_FmodListener2D_property_attached_to_parent>` | ``true`` |
-   +----------+-----------------------------------------------------------------------------+----------+
-   | ``int``  | :ref:`listener_index<class_FmodListener2D_property_listener_index>`         | ``0``    |
-   +----------+-----------------------------------------------------------------------------+----------+
+   +-----------+-----------------------------------------------------------------------------+-----------+
+   | ``bool``  | :ref:`attached_to_parent<class_FmodListener2D_property_attached_to_parent>` | ``false`` |
+   +-----------+-----------------------------------------------------------------------------+-----------+
+   | ``int``   | :ref:`listener_index<class_FmodListener2D_property_listener_index>`         | ``0``     |
+   +-----------+-----------------------------------------------------------------------------+-----------+
+   | ``float`` | :ref:`listener_weight<class_FmodListener2D_property_listener_weight>`       | ``1.0``   |
+   +-----------+-----------------------------------------------------------------------------+-----------+
 
 .. rst-class:: classref-section-separator
 
@@ -52,16 +54,14 @@ Property Descriptions
 
 .. rst-class:: classref-property
 
-``bool`` **attached_to_parent** = ``true`` :ref:`🔗<class_FmodListener2D_property_attached_to_parent>`
+``bool`` **attached_to_parent** = ``false`` :ref:`🔗<class_FmodListener2D_property_attached_to_parent>`
 
 .. rst-class:: classref-property-setget
 
 - |void| **set_attached_to_parent**\ (\ value\: ``bool``\ )
 - ``bool`` **is_attached_to_parent**\ (\ )
 
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+If ``true`` the listener will attenuate based on the parent transform.
 
 .. rst-class:: classref-item-separator
 
@@ -78,9 +78,32 @@ Property Descriptions
 - |void| **set_listener_index**\ (\ value\: ``int``\ )
 - ``int`` **get_listener_index**\ (\ )
 
-.. container:: contribute
+The listener index of this node. Sets the number of listeners to at least it's listener index - 1.
 
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FmodListener2D_property_listener_weight:
+
+.. rst-class:: classref-property
+
+``float`` **listener_weight** = ``1.0`` :ref:`🔗<class_FmodListener2D_property_listener_weight>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_listener_weight**\ (\ value\: ``float``\ )
+- ``float`` **get_listener_weight**\ (\ )
+
+Listener weighting is a factor which determines how much the listener influences the mix. It is taken into account for 3D panning, doppler, and the automatic distance event parameter. A listener with a weight of 0 has no effect on the mix.
+
+
+
+Listener weighting can be used to fade in and out multiple listeners. For example to do a crossfade, an additional listener can be created with a weighting of 0 that ramps up to 1 while the old listener weight is ramped down to 0. After the crossfade is finished the number of listeners can be reduced to 1 again.
+
+
+
+The sum of all the listener weights should add up to at least 1. It is a user error to set all listener weights to 0.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

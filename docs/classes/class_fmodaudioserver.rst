@@ -99,11 +99,7 @@ enum **LiveUpdate**: :ref:`🔗<enum_FmodAudioServer_LiveUpdate>`
 
 :ref:`LiveUpdate<enum_FmodAudioServer_LiveUpdate>` **DISABLED** = ``0``
 
-.. container:: contribute
-
-	There is currently no description for this enum. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-
+LiveUpdate will never be enabled.
 
 .. _class_FmodAudioServer_constant_ENABLED:
 
@@ -111,11 +107,7 @@ enum **LiveUpdate**: :ref:`🔗<enum_FmodAudioServer_LiveUpdate>`
 
 :ref:`LiveUpdate<enum_FmodAudioServer_LiveUpdate>` **ENABLED** = ``1``
 
-.. container:: contribute
-
-	There is currently no description for this enum. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-
+LiveUpdate will always be enabled.
 
 .. _class_FmodAudioServer_constant_DEV_ONLY:
 
@@ -123,11 +115,7 @@ enum **LiveUpdate**: :ref:`🔗<enum_FmodAudioServer_LiveUpdate>`
 
 :ref:`LiveUpdate<enum_FmodAudioServer_LiveUpdate>` **DEV_ONLY** = ``2``
 
-.. container:: contribute
-
-	There is currently no description for this enum. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
-
-
+LiveUpdate will only be enabled in Editor and Debug builds.
 
 .. rst-class:: classref-section-separator
 
@@ -149,9 +137,7 @@ Property Descriptions
 - |void| **set_muted**\ (\ value\: ``bool``\ )
 - ``bool`` **is_muted**\ (\ )
 
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+If ``true``, All fmod sounds will be muted.
 
 .. rst-class:: classref-section-separator
 
