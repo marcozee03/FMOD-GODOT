@@ -20,8 +20,9 @@ windows.debug.x86_64 = "res://addons/FmodGodot/bin/libs/windows/x86_64/libFmodGo
 windows.release.x86_64 = "res://addons/FmodGodot/bin/libs/windows/x86_64/libFmodGodot.template_release.dll"
 
 linux.editor.x86_64 = "res://addons/FmodGodot/bin/libs/linux/x86_64/libFmodGodot.editor.so"
-
+linux.debug.x86_64 = "res://addons/FmodGodot/bin/libs/linux/x86_64/libFmodGodot.template_debug.so"
 linux.release.x86_64 = "res://addons/FmodGodot/bin/libs/linux/x86_64/libFmodGodot.template_release.so"
+
 [dependencies]
 
 windows.editor.x86_64 = {
