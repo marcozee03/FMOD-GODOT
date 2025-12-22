@@ -61,23 +61,23 @@ namespace FmodGodot
         [DllImport(Version.dll)]
         private static extern void play_one_shot_by_id(Vector4I guid, Vector3 p_position = default);
         [DllImport(Version.dll)]
-        private static extern void play_one_shot_by_path(string p_path, Vector3 p_position = default);
+        private static extern void play_one_shot_by_path([MarshalAs(UnmanagedType.LPUTF8Str)] string p_path, Vector3 p_position = default);
         [DllImport(Version.dll)]
         private static extern void play_one_shot_3d_attached_by_id(Vector4I guid, IntPtr p_node, bool p_non_rigid_body_velocity = false);
         [DllImport(Version.dll)]
-        private static extern void play_one_shot_3d_attached_by_path(string p_path, IntPtr p_node, bool p_non_rigid_body_velocity = false);
+        private static extern void play_one_shot_3d_attached_by_path([MarshalAs(UnmanagedType.LPUTF8Str)]string p_path, IntPtr p_node, bool p_non_rigid_body_velocity = false);
         [DllImport(Version.dll)]
         private static extern void play_one_shot_2d_attached_by_id(Vector4I guid, IntPtr p_node, bool p_non_rigid_body_velocity = false);
         [DllImport(Version.dll)]
-        private static extern void play_one_shot_2d_attached_by_path(string p_path, IntPtr p_node, bool p_non_rigid_body_velocity = false);
+        private static extern void play_one_shot_2d_attached_by_path([MarshalAs(UnmanagedType.LPUTF8Str)]string p_path, IntPtr p_node, bool p_non_rigid_body_velocity = false);
         [DllImport(Version.dll)]
         private static extern void play_one_shot_rigid_body3d_attached_by_id(Vector4I guid, IntPtr p_rigid_body3d);
         [DllImport(Version.dll)]
-        private static extern void play_one_shot_rigid_body3d_attached_by_path(string p_path, IntPtr p_rigid_body3d);
+        private static extern void play_one_shot_rigid_body3d_attached_by_path([MarshalAs(UnmanagedType.LPUTF8Str)]string p_path, IntPtr p_rigid_body3d);
         [DllImport(Version.dll)]
         private static extern void play_one_shot_rigid_body2d_attached_by_id(Vector4I guid, IntPtr p_rigid_body2d);
         [DllImport(Version.dll)]
-        private static extern void play_one_shot_rigid_body2d_attached_by_path(string p_path, IntPtr p_rigid_body2d);
+        private static extern void play_one_shot_rigid_body2d_attached_by_path([MarshalAs(UnmanagedType.LPUTF8Str)]string p_path, IntPtr p_rigid_body2d);
         [DllImport(Version.dll)]
         private static extern bool any_sample_data_loading();
         [DllImport(Version.dll)]
@@ -91,9 +91,9 @@ namespace FmodGodot
         [DllImport(Version.dll)]
         private static extern void detach_instance_from_node(IntPtr p_event);
         [DllImport(Version.dll)]
-        private static extern Vector4I path_to_guid(string p_path);
+        private static extern Vector4I path_to_guid([MarshalAs(UnmanagedType.LPUTF8Str)]string p_path);
         [DllImport(Version.dll)]
-        private static extern IntPtr get_event_description_by_path(string p_path);
+        private static extern IntPtr get_event_description_by_path([MarshalAs(UnmanagedType.LPUTF8Str)]string p_path);
         [DllImport(Version.dll)]
         private static extern IntPtr get_event_description_by_id(Vector4I p_guid);
         [DllImport(Version.dll)]
@@ -103,17 +103,17 @@ namespace FmodGodot
         [DllImport(Version.dll)]
         private static extern void set_muted(bool p_muted);
         [DllImport(Version.dll)]
-        private static extern IntPtr get_bus(string p_path);
+        private static extern IntPtr get_bus([MarshalAs(UnmanagedType.LPUTF8Str)]string p_path);
         [DllImport(Version.dll)]
-        private static extern IntPtr get_vca(string p_path);
+        private static extern IntPtr get_vca([MarshalAs(UnmanagedType.LPUTF8Str)]string p_path);
         [DllImport(Version.dll)]
-        private static extern FMOD.RESULT load_bank(string p_bankName, bool loadSamples = false);
+        private static extern FMOD.RESULT load_bank([MarshalAs(UnmanagedType.LPUTF8Str)]string p_bankName, bool loadSamples = false);
         [DllImport(Version.dll)]
-        private static extern FMOD.RESULT load_bank_by_file(string p_path, bool loadSamples = false);
+        private static extern FMOD.RESULT load_bank_by_file([MarshalAs(UnmanagedType.LPUTF8Str)]string p_path, bool loadSamples = false);
         [DllImport(Version.dll)]
         private static extern void unload_banks();
         [DllImport(Version.dll)]
-        private static extern bool has_bank_loaded(string p_bankName);
+        private static extern bool has_bank_loaded([MarshalAs(UnmanagedType.LPUTF8Str)]string p_bankName);
         [DllImport(Version.dll)]
         private static extern bool have_all_banks_loaded();
         [DllImport(Version.dll)]
