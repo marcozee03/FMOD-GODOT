@@ -28,4 +28,4 @@ Flags
 
 Alternatively refer to `introduction to the buildsystem`_
 
-.. _introduction to the buildsystem: https://docs.godotengine.org/en/stable/contributing/development/compiling/introduction_to_the_buildsystem.html
+.. _introduction to the buildsystem: https://docs.godotengine.org/en/stable/engine_details/development/compiling/introduction_to_the_buildsystem.html
