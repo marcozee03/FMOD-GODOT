@@ -893,7 +893,7 @@ extern "C"
     }
     GDE_EXPORT void play_one_shot_by_path(const char *p_path, const godot::Vector3 p_position = godot::Vector3())
     {
-        play_one_shot_by_path(p_path, p_position);
+        FS->play_one_shot_by_path(p_path, p_position);
     }
     GDE_EXPORT void play_one_shot_3d_attached_by_id(const Vector4i p_guid, Node3D *p_node,
                                                     bool p_non_rigid_body_velocity = false)
