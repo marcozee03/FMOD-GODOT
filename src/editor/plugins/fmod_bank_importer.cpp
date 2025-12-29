@@ -28,7 +28,7 @@ String FmodGodot::FmodBankImporter::_get_importer_name() const
 
 String FmodGodot::FmodBankImporter::_get_visible_name() const
 {
-    return "fmod bank";
+    return "FMOD Bank";
 }
 void FmodGodot::FmodBankImporter::_bind_methods()
 {
@@ -70,13 +70,12 @@ Error FmodGodot::FmodBankImporter::_import(const String &p_source_file, const St
                                            const TypedArray<String> &p_gen_files) const
 {
 
-    Ref<FmodBank> bank = memnew(FmodBank);
-    ProjectSettings *ps = ProjectSettings::get_singleton();
+    // ProjectSettings *ps = ProjectSettings::get_singleton();
     // switch ((int)ps->get_setting(SOURCE_TYPE))
     // {
     // case 0: // SINGLE_PLATFORM_BUILD
-    bank->set_path(p_source_file);
-    return ResourceSaver::get_singleton()->save(bank, String(".").join({p_save_path, _get_save_extension()}));
+
+    return DirAccess::copy_absolute(p_source_file, String(".").join({p_save_path, _get_save_extension()}));
     // case 1: // MULTIPLE_PLATFORM_BUILD
     //         // Ref<DirAccess> dir = DirAccess::open(ps->get_setting(BANK_DIRECTORY));
     //         // for (auto directory : dir->get_directories())
