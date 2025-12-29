@@ -8,6 +8,7 @@
 using namespace std;
 using namespace godot;
 #include "fmod_bank.h"
+#include "fmod_globals.h"
 #include <godot_cpp/classes/mutex.hpp>
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/node3d.hpp>

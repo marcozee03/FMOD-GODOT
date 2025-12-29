@@ -1,5 +1,5 @@
 #pragma once
-#include "fmod_globals.h"
+#include "fmod_studio_common.h"
 #include <fmod_studio.h>
 #include <godot_cpp/classes/resource.hpp>
 using namespace godot;
@@ -24,10 +24,11 @@ class FmodBank : public Resource
     FmodBank();
     ~FmodBank();
 
-    bool isValid() const;
+    bool is_bank_valid() const;
 
-    // Property access
-    Vector4i getID() const;
+    size_t get_bank() const;
+    void set_bank(size_t p_bank_ptr);
+    Vector4i get_id() const;
     // string getPath(char *path, int size, int *retrieved) const;
     // Loading control
     int unload();
