@@ -9,8 +9,6 @@
 #include <godot_cpp/classes/rigid_body3d.hpp>
 #include <godot_cpp/variant/string.hpp>
 #include <godot_cpp/variant/vector3.hpp>
-#include <iostream>
-#include <stdio.h>
 using namespace godot;
 namespace FmodGodot
 {
