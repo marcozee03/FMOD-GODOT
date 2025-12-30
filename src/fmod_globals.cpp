@@ -1,5 +1,6 @@
 #include "fmod_globals.h"
-#include <bit>
+#include "fmod_common.h"
+#include <cstdio>
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/rigid_body2d.hpp>
@@ -16,10 +17,10 @@ char *to_char_ptr(const String &str)
     return str.utf8().ptrw();
 }
 
+static_assert(sizeof(Vector4i) == sizeof(FMOD_GUID));
 Vector4i cast_to_vector4i(const FMOD_GUID &p_guid)
 {
     Vector4i v;
-    DEV_ASSERT(sizeof(Vector4i) == sizeof(FMOD_GUID));
     memcpy(&v, &p_guid, sizeof(Vector4i));
     return v;
     // v.x = *(int32_t *)&guid.Data1;
@@ -35,7 +36,6 @@ Vector4i cast_to_vector4i(const FMOD_GUID &p_guid)
 FMOD_GUID cast_to_fmod_guid(const Vector4i &p_guid)
 {
     FMOD_GUID eventguid;
-    DEV_ASSERT(sizeof(Vector4i) == sizeof(FMOD_GUID));
     memcpy(&eventguid, &p_guid, sizeof(Vector4i));
     // eventguid.Data1 = v_guid.x;
     // eventguid.Data2 = (unsigned short)v_guid.y;
@@ -46,10 +46,10 @@ FMOD_GUID cast_to_fmod_guid(const Vector4i &p_guid)
     return eventguid;
 }
 
+static_assert(sizeof(Vector2i) == sizeof(FMOD_STUDIO_PARAMETER_ID));
 FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(const Vector2i &p_id)
 {
     FMOD_STUDIO_PARAMETER_ID id;
-    DEV_ASSERT(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(Vector2i));
     memcpy(&id, &p_id, sizeof(FMOD_STUDIO_PARAMETER_ID));
     return id;
 }
@@ -57,7 +57,6 @@ FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(const Vector2i &p_id)
 Vector2i cast_to_vector2i(const FMOD_STUDIO_PARAMETER_ID &p_id)
 {
     Vector2i id;
-    DEV_ASSERT(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(Vector2i));
     memcpy(&id, &p_id, sizeof(Vector2i));
     return id;
 }
