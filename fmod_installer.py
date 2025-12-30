@@ -52,8 +52,6 @@ def download_version(version : str, token : str, username : str):
         factor = 1000
         unit = "KB";
 
-    
-
     block_size = 1024;
     progress = 0;
     with open(filename, 'wb') as file:
@@ -63,7 +61,7 @@ def download_version(version : str, token : str, username : str):
             if progress != total_bytes:
                 progress %= total_bytes
             progress_bar(progress/factor, total_bytes / factor, unit, 2)
-            # print(progress / total_size);
+
 def progress_bar(partial : float, total: float,unit : str, rnd: int):
         prog = str(round(partial ,rnd)) + unit + "/" + str(round(total,rnd)) + unit + ' ' + str(round((partial/total) * 100, 2)) + '% '
         print("\r" + prog, end = "")
@@ -77,16 +75,13 @@ def progress_bar(partial : float, total: float,unit : str, rnd: int):
             else:
                 print('-', end='')
 
-
-
 def main():
     parser = argparse.ArgumentParser(
                     prog='FmodInstaller',
-                    description='Helper script for installing fmod godot',
-                    epilog='Text at the bottom of help')
-    subparsers = parser.add_subparsers(dest="command", required=True)
-    lv = subparsers.add_parser(name= "list_versions");
-    dv = subparsers.add_parser(name= "download_version");
+                    description='Download the fmod library to finish setting up the plugin')
+    subparsers = parser.add_subparsers(dest="command", help="Descriptions", required=True, description="")
+    lv = subparsers.add_parser(name= "list_versions",help="List FMOD versions", description="List the fmod versions available for download",);
+    dv = subparsers.add_parser(name= "download_version",help="Download FMOD Version", description="Download the specified version from the web");
     dv.add_argument("fmod_version");
     parser.add_argument("-u", "--username");
     parser.add_argument("-p", "--password");
