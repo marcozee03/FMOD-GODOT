@@ -144,11 +144,12 @@ snippets below
 
 ### Pre-built packages
 
-\[WIP none currently\]
+[Releases](https://github.com/marcozee03/FMOD-GODOT/releases)
 
 ## C# API/Plans
 
 C# is currently able to interact with the FmodAudioServer and from there interact interact with FMOD_Studio_System and FMOD_Core_System objects.
 A module version of this extension is in consideration for more natural C# support
+
 
 
