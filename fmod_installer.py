@@ -62,7 +62,7 @@ def download_version(version : str, token : str, username : str):
             for data in response.iter_content(block_size):
                 file.write(data)
                 progress += block_size
-                if progress != total_bytes:
+                if progress > total_bytes:
                     progress %= total_bytes
                 progress_bar(progress/factor, total_bytes / factor, unit, 2)
     except:
