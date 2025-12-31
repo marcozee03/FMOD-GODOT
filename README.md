@@ -1,15 +1,19 @@
 # FMOD Godot  
+
 [Documentation](https://fmod-godot.readthedocs.io/)
+
 ## About
 
 Fmod-Godot is a GDExtension library that integrates the Fmod API with the Godot
-Engine. The library provides a way for C# to interact directly with the same FMOD Studio/Core system
-instances the FmodAudioServer uses. So, it is not limited to what the integration handles explicitly.  
+Engine. The library provides a way for C# to interact directly with the same FMOD
+Studio/Core system instances the FmodAudioServer uses. So, it is not limited to
+what the integration handles explicitly.  
 
-Unlike [FMOD GDExtension](https://github.com/utopia-rise/fmod-gdextension) this
-The extension doesn't expose the low-level FMOD and FMOD Studio APIs to GDScript.
+Unlike [FMOD GDExtension](https://github.com/utopia-rise/fmod-gdextension)
+This extension doesn't expose the low-level FMOD and FMOD Studio APIs to GDScript.
 The initial design Goal/Motivation of this was to add a high-level integration
-with the Godot Engine while allowing C# to use the official FMOD C# wrapper.
+with the Godot Engine while allowing C# to use the official FMOD C# wrapper. GDScript
+can only directly interact with the newly added nodes
 
 ## Features  
 
@@ -69,7 +73,7 @@ listeners into the scene that automatically update their position.
 | Platform | Support | Notes                                             |
 |----------|---------|---------------------------------------------------|
 |Linux     |✅       |Manually Tested                                    |
-|Windows   |🟨       |Compiles sparsely tested                           |
+|Windows   |✅       |Manually Tested                                    |
 |Other     |❌       |Untested/Unsupported                               |
 
 ## Installation and Getting Started
@@ -102,10 +106,28 @@ python3 export.py -p <platform> -o /path/to/godot_project/addons
   
 Alternatively refer to [Introduction to the buildsystem](https://docs.godotengine.org/en/stable/contributing/development/compiling/introduction_to_the_buildsystem.html)
 
-#### C\# Set-up
+#### C\# Set-Up
 
-To use the Fmod C# wrappers it is necessary to replace FMOD.VERSION.dll and
-FMOD.Studio.STUDIO_VERSION.dll constants to use the proper fmod library version.
+##### Automatic Set-up
+
+Note: you must have python installed to run the installer  
+
+To run the install go to Project > Tools > Finish FMOD Godot setup  
+
+![](images/run_installer.png)  
+
+![](images/installer.png)
+
+Enter your fmod account info and the installer will close once complete
+
+##### Manual Set-Up
+
+You must download the FMOD files from FMOD's website and place the *.cs files
+somewhere in your project directory.
+  
+It is necessary to replace FMOD.VERSION.dll and FMOD.Studio.STUDIO_VERSION.dll
+constants to use the proper fmod library version. Which will be found in fmod.cs
+and fmod_studio.cs. .so.14 will change depending on what so file you are using.
 snippets below
 
 ``` C#
@@ -150,6 +172,3 @@ snippets below
 
 C# is currently able to interact with the FmodAudioServer and from there interact interact with FMOD_Studio_System and FMOD_Core_System objects.
 A module version of this extension is in consideration for more natural C# support
-
-
-

@@ -1,0 +1,193 @@
+[gd_scene format=3 uid="uid://s6fy8d50hcfr"]
+
+[ext_resource type="Script" path="res://addons/FmodGodot/fmod_installer.gd" id="1_v3j4w"]
+[ext_resource type="Texture2D" path="res://addons/FmodGodot/icons/godot.svg" id="2_tcd1b"]
+[ext_resource type="Texture2D" path="res://addons/FmodGodot/fmod-logo.svg" id="3_eqqbi"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_v4doc"]
+
+[node name="Control" type="Window" unique_id=520045287 node_paths=PackedStringArray("username", "password", "login", "install", "error", "cout", "progress_bar")]
+disable_3d = true
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(500, 300)
+wrap_controls = true
+transient = true
+visible = false
+unresizable = true
+borderless = true
+popup_window = true
+popup_wm_hint = true
+minimize_disabled = true
+maximize_disabled = true
+script = ExtResource("1_v3j4w")
+username = NodePath("BG/Login/HBoxContainer/UserInfo/username")
+password = NodePath("BG/Login/HBoxContainer/UserInfo/password")
+login = NodePath("BG/Login")
+install = NodePath("BG/Installing")
+error = NodePath("BG/Login/PanelContainer/Error")
+cout = NodePath("BG/Installing/PanelContainer/Error")
+progress_bar = NodePath("BG/Installing/ProgressBar")
+
+[node name="BG" type="Panel" parent="." unique_id=502259358]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Control" parent="BG" unique_id=855988089]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 0.22067901
+metadata/_edit_use_anchors_ = true
+
+[node name="Godot" type="TextureRect" parent="BG/Title" unique_id=1899204716]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.131
+anchor_bottom = 0.8360879
+texture = ExtResource("2_tcd1b")
+expand_mode = 5
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="Fmod" type="TextureRect" parent="BG/Title/Godot" unique_id=1538909953]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.2
+anchor_right = 3.4829195
+anchor_bottom = 0.8
+grow_vertical = 2
+texture = ExtResource("3_eqqbi")
+expand_mode = 2
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="BG/Title/Godot/Fmod" unique_id=1894703645]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.18438096
+anchor_top = 1.0029862
+anchor_right = 0.6528464
+anchor_bottom = 1.6766679
+grow_horizontal = 2
+grow_vertical = 0
+text = "Installer"
+label_settings = SubResource("LabelSettings_v4doc")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Login" type="Control" parent="BG" unique_id=1571726308]
+layout_mode = 1
+anchor_top = 0.221
+anchor_right = 1.0
+anchor_bottom = 1.0
+pivot_offset = Vector2(0, 1.7919922)
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BG/Login" unique_id=1497828584]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4965278
+anchor_top = 0.40371478
+anchor_right = 0.92795134
+anchor_bottom = 0.55974424
+offset_bottom = -10.6944275
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BG/Login/HBoxContainer" unique_id=2023438657]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="BG/Login/HBoxContainer/VBoxContainer" unique_id=2127176536]
+layout_mode = 2
+text = "Username:"
+
+[node name="Label2" type="Label" parent="BG/Login/HBoxContainer/VBoxContainer" unique_id=154699131]
+layout_mode = 2
+text = " Password:"
+
+[node name="UserInfo" type="VBoxContainer" parent="BG/Login/HBoxContainer" unique_id=1421363380]
+layout_mode = 2
+size_flags_horizontal = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="username" type="LineEdit" parent="BG/Login/HBoxContainer/UserInfo" unique_id=1912829772]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter Username"
+
+[node name="password" type="LineEdit" parent="BG/Login/HBoxContainer/UserInfo" unique_id=1572000609]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter Password"
+secret = true
+
+[node name="Submit" type="Button" parent="BG/Login" unique_id=1347435653]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.60200006
+anchor_top = 0.7475395
+anchor_right = 0.8068611
+anchor_bottom = 1.0
+offset_left = -3.0517578e-05
+offset_bottom = -28.000015
+text = "Submit"
+metadata/_edit_use_anchors_ = true
+
+[node name="PanelContainer" type="PanelContainer" parent="BG/Login" unique_id=1197454104]
+layout_mode = 0
+anchor_left = 0.049479168
+anchor_top = 0.26108178
+anchor_right = 0.4565972
+anchor_bottom = 0.69096184
+metadata/_edit_use_anchors_ = true
+
+[node name="Error" type="RichTextLabel" parent="BG/Login/PanelContainer" unique_id=1009904175]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Installing" type="Control" parent="BG" unique_id=795080589]
+visible = false
+bbcode_enabled=true
+layout_mode = 1
+anchor_top = 0.221
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(0, 1.7919922)
+metadata/_edit_use_anchors_ = true
+
+[node name="PanelContainer" type="PanelContainer" parent="BG/Installing" unique_id=463021883]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.26108178
+anchor_right = 0.95
+anchor_bottom = 0.69096184
+metadata/_edit_use_anchors_ = true
+
+[node name="Error" type="RichTextLabel" parent="BG/Installing/PanelContainer" unique_id=1449658448]
+layout_mode = 2
+bbcode_enabled=true
+metadata/_edit_use_anchors_ = true
+
+[node name="ProgressBar" type="ProgressBar" parent="BG/Installing" unique_id=1215590446]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.8335948
+anchor_right = 0.95000005
+anchor_bottom = 0.88113916
+grow_horizontal = 2
+grow_vertical = 0
+step = -1.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="BG/Login/Submit" to="." method="submit"]
