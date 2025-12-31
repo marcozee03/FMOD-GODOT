@@ -153,6 +153,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Installing" type="Control" parent="BG" unique_id=795080589]
 visible = false
+bbcode_enabled=true
 layout_mode = 1
 anchor_top = 0.221
 anchor_right = 1.0
@@ -173,6 +174,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Error" type="RichTextLabel" parent="BG/Installing/PanelContainer" unique_id=1449658448]
 layout_mode = 2
+bbcode_enabled=true
 metadata/_edit_use_anchors_ = true
 
 [node name="ProgressBar" type="ProgressBar" parent="BG/Installing" unique_id=1215590446]
