@@ -2,8 +2,27 @@
 
 C# installation guide
 ===============================
-To use the Fmod C# wrappers it is necessary to replace FMOD.VERSION.dll and
-FMOD.Studio.STUDIO_VERSION.dll constants to use the proper fmod library version.
+Automatic Install
+=================
+
+Note: you must have python installed to run the installer
+
+To run the install go to Project > Tools > Finish FMOD Godot setup
+
+.. image:: img/run_installer.png
+
+.. image:: img/installer.png
+
+Enter your fmod account info and the installer will close once complete
+
+Manual Install
+==============
+You must download the FMOD files from FMOD's website and place the *.cs files
+somewhere in your project directory.
+
+It is necessary to replace FMOD.VERSION.dll and FMOD.Studio.STUDIO_VERSION.dll
+constants to use the proper fmod library version. Which will be found in fmod.cs
+and fmod_studio.cs. .so.14 will change depending on what so file you are using.
 snippets below
 
 .. code-block::

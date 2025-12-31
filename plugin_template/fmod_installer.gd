@@ -99,9 +99,15 @@ func _process(delta: float) -> void:
 				pass
 		State.INSTALLING:
 			cout.text += stdio.get_as_text();
-			cout.text += "[color=red]"+ stderr.get_as_text() + "[/color]"
+			var err = stderr.get_as_text();
+			if err != "":
+				cout.text += "[color=red]"+ err + "[/color]"
 			if not OS.is_process_running(process_id):
 				current_state = State.NONE
+				if OS.get_process_exit_code(process_id) == 4:
+					fail("Install failed")
+				else:
+					on_hide()
 			pass
 func _unhandled_input(event: InputEvent) -> void:
 	if(event.is_pressed() && event.is_action("ui_cancel")):
