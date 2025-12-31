@@ -18,6 +18,7 @@ namespace FmodGodot
         FmodBankImporter *bankImporter;
         BankInspectorPlugin *bankInspector;
         FmodEventBrowser *browser;
+        Window* installer;
 
     protected:
         static void _bind_methods();

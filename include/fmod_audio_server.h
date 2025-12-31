@@ -1,5 +1,6 @@
 
 #pragma once
+#include "variant/utility_functions.hpp"
 #include <classes/node.hpp>
 #include <fmod.h>
 #include <fmod_studio.h>
@@ -82,6 +83,7 @@ class FmodAudioServer : public Object
   public:
     FmodAudioServer();
     ~FmodAudioServer();
+    static String get_version_number();
     static InitSettings get_fmod_settings();
     FMOD_SYSTEM *get_core();
     const FMOD_SYSTEM *get_core() const;
