@@ -166,7 +166,7 @@ snippets below
 
 ### Pre-built packages
 
-\[WIP none currently\]
+[Releases](https://github.com/marcozee03/FMOD-GODOT/releases)
 
 ## C# API/Plans
 
