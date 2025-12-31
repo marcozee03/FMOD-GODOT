@@ -1,5 +1,4 @@
 #pragma once
-#include "classes/popup.hpp"
 #ifdef TOOLS_ENABLED
 #include <classes/editor_plugin.hpp>
 #include "fmod_event_inspector_plugin.h"
@@ -19,7 +18,7 @@ namespace FmodGodot
         FmodBankImporter *bankImporter;
         BankInspectorPlugin *bankInspector;
         FmodEventBrowser *browser;
-        Popup* installer;
+        Window* installer;
 
     protected:
         static void _bind_methods();

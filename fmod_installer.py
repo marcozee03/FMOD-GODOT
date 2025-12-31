@@ -167,11 +167,12 @@ def main():
     dv.add_argument("fmod_version")
     parser.add_argument("-u", "--username")
     parser.add_argument("-p", "--password")
+    parser.add_argument("--noprompts", action="store_true")
     args = parser.parse_args()
 
     username = args.username
     password = args.password
-    if not args.command == "install_cs":
+    if args.command != "install_cs" and not args.noprompts:
         if not args.username :
             password = input("Enter FMOD account username:\n")
         if not args.password :
@@ -185,6 +186,7 @@ def main():
         download_version(version, token, args.username)
     elif args.command == "install_cs":
         install_cs_func(args.tarfile, args.output_directory)
+        print("Install Complete")
     exit(0)
         
     
