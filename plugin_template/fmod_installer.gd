@@ -27,10 +27,11 @@ enum State {
 	}
 var current_state : State = State.NONE
 func _init() -> void:
-	connect("popup_hide", on_hide,CONNECT_ONE_SHOT);
+	connect("close_requested", on_hide,CONNECT_ONE_SHOT);
 	pass
 func on_hide():
-	OS.kill(process_id)
+	if current_state == State.NONE:
+		hide();
 	
 func fail(message: String):
 	current_state = State.NONE
@@ -38,7 +39,7 @@ func fail(message: String):
 	install.hide()
 	error.text = message
 func download() -> void:
-	var dict = OS.execute_with_pipe("python3", ["addons/FmodGodot/fmod_installer.py", "-u", username.text, "-p", password.text, "download_version", FmodAudioServer.get_version_number()])	
+	var dict = OS.execute_with_pipe("python3", ["addons/FmodGodot/fmod_installer.py","--noprompts", "-u", username.text, "-p", password.text, "download_version", FmodAudioServer.get_version_number()])	
 	process_id = dict["pid"]
 	stdio = dict["stdio"]
 	stderr = dict["stderr"]
@@ -47,7 +48,7 @@ func download() -> void:
 	current_state = State.DOWNLOAD
 func install_cs() -> void:
 	var filename = 'fmodstudioapi%slinux.tar.gz' % FmodAudioServer.get_version_number().replace(".","")
-	var dict = OS.execute_with_pipe("python3", ["addons/FmodGodot/fmod_installer.py", "install_cs", filename, "addons/FmodGodot"])	
+	var dict = OS.execute_with_pipe("python3", ["addons/FmodGodot/fmod_installer.py","--noprompts", "install_cs", filename, "addons/FmodGodot"])	
 	process_id = dict["pid"]
 	stdio = dict["stdio"]
 	stderr = dict["stderr"]
@@ -102,3 +103,6 @@ func _process(delta: float) -> void:
 			if not OS.is_process_running(process_id):
 				current_state = State.NONE
 			pass
+func _unhandled_input(event: InputEvent) -> void:
+	if(event.is_pressed() && event.is_action("ui_cancel")):
+		on_hide();

@@ -6,12 +6,20 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_v4doc"]
 
-[node name="Control" type="PopupPanel" unique_id=1277439306 node_paths=PackedStringArray("username", "password", "login", "install", "error", "cout", "progress_bar")]
+[node name="Control" type="Window" unique_id=520045287 node_paths=PackedStringArray("username", "password", "login", "install", "error", "cout", "progress_bar")]
 disable_3d = true
 oversampling_override = 1.0
 initial_position = 2
 size = Vector2i(500, 300)
+wrap_controls = true
+transient = true
 visible = false
+unresizable = true
+borderless = true
+popup_window = true
+popup_wm_hint = true
+minimize_disabled = true
+maximize_disabled = true
 script = ExtResource("1_v3j4w")
 username = NodePath("BG/Login/HBoxContainer/UserInfo/username")
 password = NodePath("BG/Login/HBoxContainer/UserInfo/password")
@@ -21,15 +29,10 @@ error = NodePath("BG/Login/PanelContainer/Error")
 cout = NodePath("BG/Installing/PanelContainer/Error")
 progress_bar = NodePath("BG/Installing/ProgressBar")
 
-[node name="BG" type="Control" parent="." unique_id=1646500041]
-layout_mode = 3
+[node name="BG" type="Panel" parent="." unique_id=502259358]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
