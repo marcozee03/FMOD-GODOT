@@ -99,14 +99,14 @@ void FmodEventPanner::_draw()
         const float bottom_begin = square.get_center().y + grid_width / 2;
         const float top_begin = square.get_center().y - grid_width / 2;
         draw_line(Vector2(right_begin + grid_width * i, y_begin), Vector2(right_begin + grid_width * i, y_end),
-                  Color(0.102, .102, .102, .75));
+                  Color(0.502, .502, .502, .55));
         draw_line(Vector2(left_begin - grid_width * i, y_begin), Vector2(left_begin - grid_width * i, y_end),
-                  Color(.102, .102, .102, .75f));
+                  Color(.502, .502, .502, .55f));
 
         draw_line(Vector2(square.position.x, top_begin - grid_width * i),
-                  Vector2(square.get_end().x, top_begin - grid_width * i), Color(.102, .102, .102, .75));
+                  Vector2(square.get_end().x, top_begin - grid_width * i), Color(.502, .502, .502, .55));
         draw_line(Vector2(square.position.x, bottom_begin + grid_width * i),
-                  Vector2(square.get_end().x, bottom_begin + grid_width * i), Color(.102, .102, .102, .75));
+                  Vector2(square.get_end().x, bottom_begin + grid_width * i), Color(.502, .502, .502, .55));
     }
     switch (view)
     {
