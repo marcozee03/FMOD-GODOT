@@ -2,6 +2,7 @@
 #include "classes/global_constants.hpp"
 #include "classes/os.hpp"
 #include "classes/resource_loader.hpp"
+#include "core/defs.hpp"
 #include "core/error_macros.hpp"
 #include "core/print_string.hpp"
 #include "fmod_common.h"
@@ -373,7 +374,8 @@ void FmodAudioServer::_bind_methods()
     BIND_ENUM_CONSTANT(DISABLED);
     BIND_ENUM_CONSTANT(ENABLED);
     BIND_ENUM_CONSTANT(DEV_ONLY);
-
+    ClassDB::bind_static_method(get_class_static(), D_METHOD("get_version_number"),
+                                &FmodAudioServer::get_version_number);
     ClassDB::bind_method(D_METHOD("unload_banks"), &FmodAudioServer::unload_banks);
 
     BIND_BOOL_PROPERTY(muted);
@@ -1042,5 +1044,13 @@ extern "C"
         FS->set_listener_3d_location(listenerIndex, (Node3D *)internal::get_object_instance_binding(p_node),
                                      (Node3D *)internal::get_object_instance_binding(attenuationObject));
     }
+}
+godot::String FmodAudioServer::get_version_number()
+{
+    const unsigned int major = (FMOD_VERSION & 0xffff0000) >> 16;
+    const unsigned int minor = (FMOD_VERSION & 0x0000ff00) >> 8;
+    const unsigned int patch = (FMOD_VERSION & 0x000000ff);
+    return String(".").join({UtilityFunctions::var_to_str(major), UtilityFunctions::var_to_str(minor).pad_zeros(2),
+                             UtilityFunctions::var_to_str(patch).pad_zeros(2)});
 }
 } // namespace FmodGodot
