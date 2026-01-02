@@ -1,9 +1,11 @@
 #include "register_types.h"
+#include "fmod_event_audio_stream.h"
 #include "classes/global_constants.hpp"
 #include "core/class_db.hpp"
 #include "fmod_bank_loader.h"
 // #include "fmodeventemitter2d.h"
 #include "fmod_audio_server.h"
+#include "fmod_event_audio_stream_playback.h"
 #include "fmod_event_emitter_2d.h"
 #include "fmod_event_emitter_3d.h"
 #include "fmod_event_previewer.h"
@@ -142,6 +144,8 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         GDREGISTER_INTERNAL_CLASS(FmodBankFormatLoader);
         GDREGISTER_INTERNAL_CLASS(FmodBankFormatSaver);
         GDREGISTER_CLASS(FmodEventEmitter2D);
+        GDREGISTER_CLASS(FmodEventAudioStream);
+        GDREGISTER_CLASS(FmodEventAudioStreamPlayback);
         GDREGISTER_CLASS(FmodEventEmitter3D);
         bankLoader = memnew(FmodBankFormatLoader());
         bankSaver = memnew(FmodBankFormatSaver());
