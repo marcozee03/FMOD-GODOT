@@ -6150,6 +6150,18 @@
         "output": "src/fmod_bank.os"
     },
     {
+        "command": "g++ -o src/fmod_event_audio_stream.os -c  -std=c++17 -fno-exceptions -fPIC -Wwrite-strings -m64 -march=x86-64 -fvisibility=hidden -O2 -fPIC -DLINUX_ENABLED -DUNIX_ENABLED -DTHREADS_ENABLED -DHOT_RELOAD_ENABLED -DTOOLS_ENABLED -DDEBUG_ENABLED -DNDEBUG -DGDEXTENSION -Igodot-cpp/include -Igodot-cpp/gen/include -Igodot-cpp/include/godot_cpp -Igodot-cpp/gen/include/godot_cpp -Isrc -Isrc/scene -Isrc/scene/2d -Isrc/scene/3d -Isrc/editor -Isrc/editor/plugins -Isrc/editor/nodes -Iheaders -Iinclude -Iinclude/scene -Iinclude/scene/2d -Iinclude/scene/3d -Iinclude/editor -Iinclude/editor/plugins -Iinclude/editor/nodes src/fmod_event_audio_stream.cpp",
+        "directory": "/home/marco/repos/fmod_godot",
+        "file": "src/fmod_event_audio_stream.cpp",
+        "output": "src/fmod_event_audio_stream.os"
+    },
+    {
+        "command": "g++ -o src/fmod_event_audio_stream_playback.os -c  -std=c++17 -fno-exceptions -fPIC -Wwrite-strings -m64 -march=x86-64 -fvisibility=hidden -O2 -fPIC -DLINUX_ENABLED -DUNIX_ENABLED -DTHREADS_ENABLED -DHOT_RELOAD_ENABLED -DTOOLS_ENABLED -DDEBUG_ENABLED -DNDEBUG -DGDEXTENSION -Igodot-cpp/include -Igodot-cpp/gen/include -Igodot-cpp/include/godot_cpp -Igodot-cpp/gen/include/godot_cpp -Isrc -Isrc/scene -Isrc/scene/2d -Isrc/scene/3d -Isrc/editor -Isrc/editor/plugins -Isrc/editor/nodes -Iheaders -Iinclude -Iinclude/scene -Iinclude/scene/2d -Iinclude/scene/3d -Iinclude/editor -Iinclude/editor/plugins -Iinclude/editor/nodes src/fmod_event_audio_stream_playback.cpp",
+        "directory": "/home/marco/repos/fmod_godot",
+        "file": "src/fmod_event_audio_stream_playback.cpp",
+        "output": "src/fmod_event_audio_stream_playback.os"
+    },
+    {
         "command": "g++ -o src/fmod_globals.os -c  -std=c++17 -fno-exceptions -fPIC -Wwrite-strings -m64 -march=x86-64 -fvisibility=hidden -O2 -fPIC -DLINUX_ENABLED -DUNIX_ENABLED -DTHREADS_ENABLED -DHOT_RELOAD_ENABLED -DTOOLS_ENABLED -DDEBUG_ENABLED -DNDEBUG -DGDEXTENSION -Igodot-cpp/include -Igodot-cpp/gen/include -Igodot-cpp/include/godot_cpp -Igodot-cpp/gen/include/godot_cpp -Isrc -Isrc/scene -Isrc/scene/2d -Isrc/scene/3d -Isrc/editor -Isrc/editor/plugins -Isrc/editor/nodes -Iheaders -Iinclude -Iinclude/scene -Iinclude/scene/2d -Iinclude/scene/3d -Iinclude/editor -Iinclude/editor/plugins -Iinclude/editor/nodes src/fmod_globals.cpp",
         "directory": "/home/marco/repos/fmod_godot",
         "file": "src/fmod_globals.cpp",
