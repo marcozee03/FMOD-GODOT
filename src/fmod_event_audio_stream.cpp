@@ -29,10 +29,12 @@ TypedArray<Dictionary> FmodEventAudioStream::_get_parameter_list() const
 {
     TypedArray<Dictionary> list;
     int count;
-#ifdef TOOLS_ENABLEd
+#ifdef TOOLS_ENABLED
     if (Engine::get_singleton()->is_editor_hint())
     {
         auto EI = FmodGodot::FmodEditorInterface::get_singleton();
+        auto cache = EI->get_cache();
+        auto event_cache = cache->get_event_cache();
     }
 #endif
     FMOD_Studio_EventDescription_GetParameterDescriptionCount(description, &count);
