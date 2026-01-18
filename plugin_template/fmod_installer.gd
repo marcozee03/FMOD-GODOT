@@ -27,7 +27,7 @@ enum State {
 	}
 var current_state : State = State.NONE
 func _init() -> void:
-	connect("close_requested", on_hide,CONNECT_ONE_SHOT);
+	connect("close_requested", on_hide,CONNECT_PERSIST);
 	pass
 func on_hide():
 	if current_state == State.NONE:
@@ -47,6 +47,7 @@ func download() -> void:
 	install.show()
 	current_state = State.DOWNLOAD
 func install_cs() -> void:
+	progress_bar.value = 100.0
 	var filename = 'fmodstudioapi%slinux.tar.gz' % FmodAudioServer.get_version_number().replace(".","")
 	var dict = OS.execute_with_pipe("python3", ["addons/FmodGodot/fmod_installer.py","--noprompts", "install_cs", filename, "addons/FmodGodot"])	
 	process_id = dict["pid"]
@@ -88,7 +89,12 @@ func _process(delta: float) -> void:
 						return
 				fail("Unknown Login/Download error")
 			else:
-				var line = stdio.get_line()
+				
+				var line2 = stdio.get_line()
+				var line = line2;
+				while line2:
+					line = line2
+					line2 = stdio.get_line()
 				
 				if line and line.contains("%"):
 					var percentage : String = line.split(" ")[1].replace("%","")
@@ -112,3 +118,4 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if(event.is_pressed() && event.is_action("ui_cancel")):
 		on_hide();
+
