@@ -271,6 +271,7 @@ void FmodAudioServer::thread_func()
         OS::get_singleton()->delay_usec(20);
         tree = cast_to<SceneTree>(Engine::get_singleton()->get_main_loop());
     }
+    uint64_t tree_instance_id = tree->get_instance_id();
     Callable physics_callback = callable_mp(this, &FmodAudioServer::_physics_process);
     tree->connect("physics_frame", physics_callback);
     while (!exit_thread)
@@ -313,7 +314,7 @@ void FmodAudioServer::thread_func()
         OS::get_singleton()->delay_usec(20);
     }
     // mainly here for the editor
-    if (UtilityFunctions::is_instance_id_valid(tree->get_instance_id()))
+    if (UtilityFunctions::is_instance_id_valid(tree_instance_id))
     {
         tree->disconnect("physics_frame", physics_callback);
     }
