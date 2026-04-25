@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://c7teotyj8n3pq"]
+
+[ext_resource type="Script" uid="uid://ckc25o6g24rl2" path="res://character_body_3d.gd" id="1_iapjp"]
+[ext_resource type="Script" uid="uid://dioicovkqinvu" path="res://first_person_camera.gd" id="2_8n7uv"]
+[ext_resource type="FmodBank" uid="uid://cq25puvjuiswp" path="res://banks/SFX.bank" id="3_ayuu8"]
+[ext_resource type="Script" uid="uid://bk135lvt5ltri" path="res://gun.gd" id="3_ctgmk"]
+[ext_resource type="FmodBank" uid="uid://c5ihh0et4h4g8" path="res://banks/Master.bank" id="5_1hm1i"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8n7uv"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ayuu8"]
+
+[sub_resource type="Environment" id="Environment_8n7uv"]
+background_mode = 1
+background_color = Color(0.42912892, 0.74314743, 1, 1)
+
+[node name="Node3D" type="Node3D" unique_id=993189799]
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="." unique_id=175893538]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7622125, 3.087619, -1.191428)
+top_level = true
+visible = false
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1671030941]
+transform = Transform3D(1, 0, 0, 0, 0.36263323, 0.9319319, 0, -0.9319319, 0.36263323, 0, 13.197071, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=109610894]
+use_collision = true
+size = Vector3(32, 1, 32)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1433482840]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2053072, 0)
+script = ExtResource("1_iapjp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=155609621]
+shape = SubResource("CapsuleShape3D_8n7uv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D" unique_id=920232762]
+mesh = SubResource("CapsuleMesh_ayuu8")
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D" unique_id=1346509227]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45857906, 0)
+script = ExtResource("2_8n7uv")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CharacterBody3D/Camera3D" unique_id=526562003 node_paths=PackedStringArray("explo", "ray")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7622125, -0.1573832, -0.76339066)
+size = Vector3(0.25830078, 0.24371338, 0.69140625)
+script = ExtResource("3_ctgmk")
+explo = NodePath("../../../CSGSphere3D")
+ray = NodePath("RayCast3D")
+explosion = Vector4i(526938424, 1089855596, -128471909, -739394485)
+
+[node name="FmodEventEmitter3D" type="FmodEventEmitter3D" parent="CharacterBody3D/Camera3D/CSGBox3D" unique_id=756844569]
+event = Vector4i(63462863, 1083491563, 964216707, -396832587)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.33933818)
+
+[node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D/Camera3D/CSGBox3D" unique_id=503874387]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.029678106, 0.11768818, -0.46138513)
+target_position = Vector3(0, 0, -500)
+debug_shape_custom_color = Color(1, 0.60701716, 0.5481799, 1)
+
+[node name="FmodListener3D" type="FmodListener3D" parent="CharacterBody3D" unique_id=1960136347]
+attached_to_parent = true
+
+[node name="FmodEventEmitter3D" type="FmodEventEmitter3D" parent="CharacterBody3D" unique_id=2083839685]
+event = Vector4i(-385494015, 1195472629, -2064153176, 1900422219)
+param:Surface = 0.0
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=2134057300]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0790405, 8.017009)
+use_collision = true
+size = Vector3(1, 5.158081, 1)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=1323665225]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.6466146, 3.0790405, -9.096513)
+use_collision = true
+size = Vector3(1, 5.158081, 1)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=736274308]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3970885, 3.0790405, -4.6824136)
+use_collision = true
+size = Vector3(1, 5.158081, 1)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="." unique_id=967175851]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.6554117, 3.0790405, 2.7400985)
+use_collision = true
+size = Vector3(1, 5.158081, 1)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1714827212]
+environment = SubResource("Environment_8n7uv")
+
+[node name="FmodBankLoader" type="FmodBankLoader" parent="." unique_id=121269558]
+banks = Array[FmodBank]([ExtResource("3_ayuu8"), ExtResource("5_1hm1i")])
+preload_sample_data = true
+
+[connection signal="step" from="CharacterBody3D" to="CharacterBody3D/FmodEventEmitter3D" method="start"]
+[connection signal="shoot" from="CharacterBody3D/Camera3D/CSGBox3D" to="CharacterBody3D/Camera3D/CSGBox3D/FmodEventEmitter3D" method="start"]
