@@ -1,0 +1,14 @@
+[remap]
+
+importer="godot.fmod.bank"
+type="FmodBank"
+uid="uid://i3p10cugtlf5"
+path="res://.godot/imported/SFX.bank-b4f5333e09209dda020a3eaba517e715.bank"
+
+[deps]
+
+source_file="res://banks/SFX.bank"
+dest_files=["res://.godot/imported/SFX.bank-b4f5333e09209dda020a3eaba517e715.bank"]
+
+[params]
+
