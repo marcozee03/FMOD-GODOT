@@ -1,0 +1,14 @@
+[remap]
+
+importer="godot.fmod.bank"
+type="FmodBank"
+uid="uid://bq8kkps2tdj44"
+path="res://.godot/imported/Master.strings.bank-9ce038b146ce19a73704fb08a7962dfc.bank"
+
+[deps]
+
+source_file="res://banks/Master.strings.bank"
+dest_files=["res://.godot/imported/Master.strings.bank-9ce038b146ce19a73704fb08a7962dfc.bank"]
+
+[params]
+
