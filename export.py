@@ -12,7 +12,15 @@ supported_platforms = ["linux", "windows"]
 
 def buildForPlatform(platform, arch):
     p1 = subprocess.run(
-        ["scons", "target=template_release", "platform=%s" % platform, "arch=%s" % arch]
+        [
+            "scons", 
+            "use_static_cpp=no",
+            "debug_symbols=no",
+            "lto=auto",
+            "target=template_release", 
+            "platform=%s" % platform, 
+            "arch=%s" % arch
+        ]
     )
     if p1.returncode != 0:
         print("failed to build for release")
@@ -20,7 +28,9 @@ def buildForPlatform(platform, arch):
     p2 = subprocess.run(
         [
             "scons",
-            "debug_symbols=yes",
+            "use_static_cpp=no",
+            "debug_symbols=no",
+            "lto=auto",
             "target=template_debug",
             "platform=%s" % platform,
             "arch=%s" % arch,
@@ -32,7 +42,9 @@ def buildForPlatform(platform, arch):
     p3 = subprocess.run(
         [
             "scons",
-            "debug_symbols=yes",
+            "use_static_cpp=no",
+            "debug_symbols=no",
+            "lto=auto",
             "target=editor",
             "platform=%s" % platform,
             "arch=%s" % arch,
