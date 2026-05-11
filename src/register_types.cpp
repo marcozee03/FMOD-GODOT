@@ -15,7 +15,6 @@
 #include <godot_cpp/core/defs.hpp>
 // #include "resource_saver.hpp"
 #include "fmod_bank_format_loader.h"
-#include "fmod_bank_format_saver.h"
 #include "fmod_listener_2d.h"
 #include "fmod_listener_3d.h"
 #include "fmod_project_explorer.h"
@@ -45,8 +44,7 @@ using namespace godot;
 using namespace FmodGodot;
 
 static FmodAudioServer *audio_server;
-FmodBankFormatSaver *bankSaver;
-FmodBankFormatLoader *bankLoader;
+Ref<FmodBankFormatLoader> bankLoader;
 #ifdef TOOLS_ENABLED
 FmodEditorInterface *editor_interface;
 #endif
@@ -140,12 +138,9 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         GDREGISTER_CLASS(FmodListener3D);
         GDREGISTER_ABSTRACT_CLASS(FmodBank);
         GDREGISTER_INTERNAL_CLASS(FmodBankFormatLoader);
-        GDREGISTER_INTERNAL_CLASS(FmodBankFormatSaver);
         GDREGISTER_CLASS(FmodEventEmitter2D);
         GDREGISTER_CLASS(FmodEventEmitter3D);
-        bankLoader = memnew(FmodBankFormatLoader());
-        bankSaver = memnew(FmodBankFormatSaver());
-        ResourceSaver::get_singleton()->add_resource_format_saver(bankSaver);
+        bankLoader.instantiate();
         ResourceLoader::get_singleton()->add_resource_format_loader(bankLoader);
         GDREGISTER_CLASS(FmodBankLoader);
         audio_server->load_start_up_banks();
@@ -197,7 +192,6 @@ void uninitialize_fmod_module(ModuleInitializationLevel p_level)
     if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
     {
         ResourceLoader::get_singleton()->remove_resource_format_loader(bankLoader);
-        ResourceSaver::get_singleton()->remove_resource_format_saver(bankSaver);
     }
 }
 
