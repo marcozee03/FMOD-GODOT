@@ -1,6 +1,7 @@
 #include "fmod_audio_server.h"
 #include "classes/global_constants.hpp"
 #include "classes/os.hpp"
+#include "classes/resource.hpp"
 #include "classes/resource_loader.hpp"
 #include "core/defs.hpp"
 #include "core/error_macros.hpp"
@@ -444,17 +445,22 @@ FmodAudioServer *FmodAudioServer::get_singleton()
 }
 void FmodAudioServer::load_start_up_banks()
 {
-    Array arr;
     int what = ProjectSettings::get_singleton()->get_setting_with_override(LOAD_BANKS);
-    arr = ProjectSettings::get_singleton()->get_setting_with_override(SPECIFIED_BANKS);
     switch (what)
     {
     case 0: // none
     {
         return;
     }
-    case 1: // specified should be loaded by project settings?
-        break;
+    case 1: {
+        Array arr = ProjectSettings::get_singleton()->get_setting_with_override(SPECIFIED_BANKS);
+        for (auto bank : arr)
+        {
+            start_up_banks.push_back(
+                ResourceLoader::get_singleton()->load(bank, "FmodBank", ResourceLoader::CACHE_MODE_REPLACE));
+        }
+    }
+    break;
     case 2: // all
     {
         auto dir = DirAccess::open(ProjectSettings::get_singleton()->get_setting_with_override(BANK_DIRECTORY));
