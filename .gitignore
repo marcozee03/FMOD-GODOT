@@ -10,8 +10,7 @@ git-filter-repo
 /headers/*.h
 /headers/*.cs
 /headers/*.hpp
-*.so.*
-*.so
+/libs/**/*
 *.lib
 *.exp
 *.idx
