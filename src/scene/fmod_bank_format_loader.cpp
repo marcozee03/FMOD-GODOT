@@ -30,7 +30,11 @@ String FmodGodot::FmodBankFormatLoader::_get_resource_script_class(const String 
 }
 String FmodGodot::FmodBankFormatLoader::_get_resource_type(const String &path) const
 {
-    return "FmodBank";
+    if (path.get_extension() == "bank")
+    {
+        return "FmodBank";
+    }
+    return "";
 }
 bool FmodGodot::FmodBankFormatLoader::_handles_type(const StringName &p_type) const
 {
