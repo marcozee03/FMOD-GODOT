@@ -44,7 +44,7 @@ using namespace godot;
 using namespace FmodGodot;
 
 static FmodAudioServer *audio_server;
-Ref<FmodBankFormatLoader> bankLoader;
+Ref<FmodBankFormatLoader> bank_format_loader;
 #ifdef TOOLS_ENABLED
 FmodEditorInterface *editor_interface;
 #endif
@@ -140,8 +140,8 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         GDREGISTER_INTERNAL_CLASS(FmodBankFormatLoader);
         GDREGISTER_CLASS(FmodEventEmitter2D);
         GDREGISTER_CLASS(FmodEventEmitter3D);
-        bankLoader.instantiate();
-        ResourceLoader::get_singleton()->add_resource_format_loader(bankLoader);
+        bank_format_loader.instantiate();
+        ResourceLoader::get_singleton()->add_resource_format_loader(bank_format_loader);
         GDREGISTER_CLASS(FmodBankLoader);
         audio_server->load_start_up_banks();
     }
@@ -191,7 +191,8 @@ void uninitialize_fmod_module(ModuleInitializationLevel p_level)
     }
     if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
     {
-        ResourceLoader::get_singleton()->remove_resource_format_loader(bankLoader);
+        ResourceLoader::get_singleton()->remove_resource_format_loader(bank_format_loader);
+        bank_format_loader.unref();
     }
 }
 
