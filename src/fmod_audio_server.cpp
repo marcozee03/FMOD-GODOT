@@ -648,7 +648,7 @@ bool FmodAudioServer::any_sample_data_loading()
     int count;
     FMOD_Studio_System_GetBankCount(studio_system, &count);
     int retrieved;
-    FMOD_STUDIO_BANK **banks;
+    FMOD_STUDIO_BANK **banks = memnew_arr(FMOD_STUDIO_BANK*,count);
 
     FMOD_Studio_System_GetBankList(studio_system, banks, count, &retrieved);
     bool loading = false;
@@ -658,6 +658,7 @@ bool FmodAudioServer::any_sample_data_loading()
         FMOD_Studio_Bank_GetSampleLoadingState(banks[i], &state);
         loading |= (state == FMOD_STUDIO_LOADING_STATE_LOADING);
     }
+    memdelete_arr(banks);
     return loading;
 }
 
@@ -952,7 +953,7 @@ extern "C"
     }
     GDE_EXPORT void attach_instance_to_rigid_body3d(RigidBody3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event)
     {
-        attach_instance_to_rigid_body3d(p_node, p_event);
+        FS->attach_instance_to_rigid_body3d(p_node, p_event);
     }
     GDE_EXPORT void attach_instance_to_node2D(Node2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event,
                                               bool p_non_rigid_body_velocity = false)
@@ -961,11 +962,11 @@ extern "C"
     }
     GDE_EXPORT void attach_instance_to_rigid_body2d(RigidBody2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event)
     {
-        attach_instance_to_rigid_body2d(p_node, p_event);
+        FS->attach_instance_to_rigid_body2d(p_node, p_event);
     }
     GDE_EXPORT void detach_instance_from_node(FMOD_STUDIO_EVENTINSTANCE *p_event)
     {
-        detach_instance_from_node(p_event);
+        FS->detach_instance_from_node(p_event);
     }
 
     GDE_EXPORT Vector4i path_to_guid(const char *p_path)
