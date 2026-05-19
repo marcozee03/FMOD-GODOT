@@ -146,6 +146,7 @@ void FmodEventEmitter<Derived, NodeType, RigidBody>::_notification(int p_what)
     case godot::Node::NOTIFICATION_EXIT_TREE:
         if (FMOD_Studio_EventInstance_IsValid(event_instance))
         {
+            FMOD_Studio_EventInstance_Stop(event_instance, FMOD_STUDIO_STOP_IMMEDIATE);
             FMOD_Studio_EventInstance_Release(event_instance);
         }
         break;
