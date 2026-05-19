@@ -27,13 +27,6 @@ env.Append(
         "src/editor/plugins/",
         "src/editor/nodes/",
         "headers/",
-        "include/",
-        "include/scene/",
-        "include/scene/2d",
-        "include/scene/3d",
-        "include/editor/",
-        "include/editor/plugins/",
-        "include/editor/nodes",
     ]
 )
 logging = ""
