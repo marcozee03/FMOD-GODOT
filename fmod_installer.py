@@ -81,6 +81,7 @@ def download_version(version : str, token : str, target_platform : str):
     filename = get_file_name(version, target_platform)
     downloadlink = get_download_link(version, target_platform)
     if(downloadlink == None):
+        print("Failed to get download")
         exit (ERR_DOWNLOAD)
     # Next request a download link using the token!
     response = requests.get(downloadlink, headers = {"Authorization": f"Bearer {token}"})
@@ -209,7 +210,7 @@ def get_os()-> str:
         case "Windows":
             return "windows"
         case _:
-            print("Unsupported system")
+            print("Unsupported system %s" % platform.system())
             exit(ERR_UNSUPPORTED_OS)
 def copy_headers_and_libs(base_path:str, platform: str):
     core_inc = os.path.join(base_path, "core", "inc")
@@ -270,7 +271,7 @@ def main():
 
     username = args.username
     password = args.password
-    os = get_os();
+    current_os = get_os();
     if args.targetplatform == None:
         args.targetplatform = get_os() 
     if args.command != "install_cs" and not args.noprompts:
@@ -298,9 +299,10 @@ def main():
                 case "windows":
                     setup_windows(token, version)
                 case _:
+                    print("Unsupported system %s" % platform.system())
                     exit(ERR_UNSUPPORTED_OS)
         case _:
-            print("Unknown Command")
+            print("Unknown Command: %s" % args.command)
             exit(1);
     exit(0)
         
