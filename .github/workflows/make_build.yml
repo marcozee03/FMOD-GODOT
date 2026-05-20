@@ -100,11 +100,11 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: godot-cpp-template-${{ matrix.target.platform }}-${{ matrix.target.arch }}-${{ matrix.float-precision }}-${{ matrix.target-type }}
+          name: fmod-godot-${{ matrix.target.platform }}-${{ matrix.target.arch }}-${{ matrix.float-precision }}-${{ matrix.target-type }}
           path: |
-            ${{ github.workspace }}/bin/**
+            ${{ github.workspace }}/plugin_template/**
 
-  # Merges all the build artifacts together into a single godot-cpp-template artifact.
+  # Merges all the build artifacts together into a single fmod-godot artifact.
   # If you comment out this step, all the builds will be uploaded individually.
   merge:
     runs-on: ubuntu-22.04
@@ -113,6 +113,6 @@ jobs:
       - name: Merge Artifacts
         uses: actions/upload-artifact/merge@v4
         with:
-          name: godot-cpp-template
-          pattern: godot-cpp-template-*
+          name: fmod-godot
+          pattern: fmod-godot-*
           delete-merged: true

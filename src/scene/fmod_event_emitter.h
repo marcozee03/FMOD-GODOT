@@ -57,8 +57,8 @@ template <class Derived, class NodeType, class RigidBody> class FmodEventEmitter
     static void _bind_methods();
 
   public:
-    FmodEventEmitter<Derived, NodeType, RigidBody>() = default;
-    ~FmodEventEmitter<Derived, NodeType, RigidBody>() = default;
+    FmodEventEmitter() = default;
+    ~FmodEventEmitter() = default;
     void start();
     void stop();
     bool is_attached_to_rigidbody() const;
@@ -347,9 +347,9 @@ template <class Derived, class NodeType, class RigidBody> void FmodEventEmitter<
         event_instance = nullptr;
     }
     FMOD_BOOL is3D;
-    FMOD_Studio_EventDescription_Is3D(description, &is3D);
     if (!FMOD_Studio_EventInstance_IsValid(event_instance))
     {
+        FMOD_Studio_EventDescription_Is3D(description, &is3D);
         FMOD_Studio_EventDescription_CreateInstance(description, &event_instance);
         FMOD_Studio_EventInstance_SetVolume(event_instance, volume);
         if (is3D)
@@ -375,6 +375,7 @@ template <class Derived, class NodeType, class RigidBody> void FmodEventEmitter<
             }
         }
     }
+    FMOD_Studio_EventDescription_Is3D(description, &is3D);
     triggered = true;
     this->set_parameters();
     if (override_attenuation && is3D)

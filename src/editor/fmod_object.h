@@ -2,7 +2,6 @@
 #ifdef TOOLS_ENABLED
 #include <fmod_studio.h>
 #include <godot_cpp/templates/vector.hpp>
-#include <iostream>
 #include <variant/string.hpp>
 #include <variant/vector4i.hpp>
 using namespace godot;
@@ -11,7 +10,6 @@ namespace FmodGodot
 
 struct Parameter
 {
-    friend std::ostream &operator<<(std::ostream &stream, const Parameter object);
     String full_path;
     Vector4i guid;
     float min_value;
@@ -21,7 +19,6 @@ struct Parameter
 };
 struct Event
 {
-    friend std::ostream &operator<<(std::ostream &stream, const Event object);
     String full_path;
     Vector4i guid;
     bool is3d;
@@ -36,7 +33,6 @@ struct Event
 struct Bank
 {
 
-    friend std::ostream &operator<<(std::ostream &stream, const Bank object);
     String full_path;
     Vector4i guid;
     // event and vca paths
@@ -45,7 +41,6 @@ struct Bank
 };
 struct VCA
 {
-    friend std::ostream &operator<<(std::ostream &stream, const VCA object);
     String full_path;
     Vector4i guid;
 };

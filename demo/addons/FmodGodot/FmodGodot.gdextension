@@ -4,50 +4,105 @@ compatibility_minimum = 4.3
 
 [icons]
 
-FmodAudioServer = "./icons/fmod_icon.svg"
-FmodBankLoader = "./icons/bank_loader_icon.svg"
-EventTree = "./icons/event_icon.svg"
-EventSelector = "./icons/event_icon.svg"
-FmodBank = "./icons/bank_icon.svg"
-FmodEventEmitter2D = "./icons/FmodEventEmitter2D.svg"
-FmodEventEmitter3D = "./icons/FmodEventEmitter3D.svg"
-FmodListener2D = "./icons/FmodListener2D.svg"
-FmodListener3D = "./icons/FmodListener3D.svg"
+FmodAudioServer = "icons/fmod_icon.svg"
+FmodBankLoader = "icons/bank_loader_icon.svg"
+EventTree = "icons/event_icon.svg"
+EventSelector = "icons/event_icon.svg"
+FmodBank = "icons/bank_icon.svg"
+FmodEventEmitter2D = "icons/FmodEventEmitter2D.svg"
+FmodEventEmitter3D = "icons/FmodEventEmitter3D.svg"
+FmodListener2D = "icons/FmodListener2D.svg"
+FmodListener3D = "icons/FmodListener3D.svg"
 [libraries]
 
-windows.editor.x86_64 = "./bin/libs/windows/x86_64/libFmodGodot.editor.dll"
-windows.debug.x86_64 = "./bin/libs/windows/x86_64/libFmodGodot.template_debug.dll"
-windows.release.x86_64 = "./bin/libs/windows/x86_64/libFmodGodot.template_release.dll"
+windows.editor.x86_64 = "bin/windows/x86_64/libFmodGodot.windows.editor.x86_64.dll"
+windows.debug.x86_64 = "bin/windows/x86_64/libFmodGodot.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "bin/windows/x86_64/libFmodGodot.template_release.x86_64.dll"
 
-linux.editor.x86_64 = "./bin/libs/linux/x86_64/libFmodGodot.editor.so"
-linux.debug.x86_64 = "./bin/libs/linux/x86_64/libFmodGodot.template_debug.so"
-linux.release.x86_64 = "./bin/libs/linux/x86_64/libFmodGodot.template_release.so"
+linux.editor.x86_64 = "bin/linux/x86_64/libFmodGodot.linux.editor.x86_64.so"
+linux.debug.x86_64 = "bin/linux/x86_64/libFmodGodot.linux.template_debug.x86_64.so"
+linux.release.x86_64 = "bin/linux/x86_64/libFmodGodot.linux.template_release.x86_64.so"
+
+macos.editor = "bin/macos/libFmodGodot.macos.editor.framework"
+macos.debug  = "bin/macos/libFmodGodot.macos.template_debug.framework"
+macos.release  = "bin/macos/libFmodGodot.macos.template_release.framework"
+
+android.editor.x86_64 = "bin/android/x86_64/libFmodGodot.android.editor.x86_64.so"
+android.debug.x86_64 = "bin/android/x86_64/libFmodGodot.android.template_debug.x86_64.so"
+android.release.x86_64 = "bin/android/x86_64/libFmodGodot.android.template_release.x86_64.so"
+
+
+android.editor.arm64 = "bin/android/arm64/libFmodGodot.android.editor.arm64.so"
+android.debug.arm64 = "bin/android/arm64/libFmodGodot.android.template_debug.arm64.so"
+android.release.arm64 = "bin/android/arm64/libFmodGodot.android.template_release.arm64.so"
+
+ios.debug  = "bin/ios/libFmodGodot.ios.template_debug.xcframework"
+ios.editor  = "bin/ios/libFmodGodot.ios.template_debug.xcframework"
+ios.release  = "bin/ios/libFmodGodot.ios.template_release.xcframework"
 
 [dependencies]
 
 windows.editor.x86_64 = {
-    "./bin/libs/windows/x86_64/fmod.dll" : "",
-    "./bin/libs/windows/x86_64/fmodstudio.dll" : ""
+    "bin/windows/x86_64/fmod.dll" : "",
+    "bin/windows/x86_64/fmodstudio.dll" : ""
 }
 windows.debug.x86_64 = {
-    "./bin/libs/windows/x86_64/fmod.dll" : "",
-    "./bin/libs/windows/x86_64/fmodstudio.dll" : ""
+    "bin/windows/x86_64/fmod.dll" : "",
+    "bin/windows/x86_64/fmodstudio.dll" : ""
 }
 windows.release.x86_64 = {
-    "./bin/libs/windows/x86_64/fmod.dll" : "",
-    "./bin/libs/windows/x86_64/fmodstudio.dll" : ""
+    "bin/windows/x86_64/fmod.dll" : "",
+    "bin/windows/x86_64/fmodstudio.dll" : ""
+}
+macos.editor = { 
+    "bin/macos/libfmodL.dylib": "Contents/Frameworks",
+    "bin/macos/libfmodstudioL.dylib": "Contents/Frameworks" 
+}
+macos.debug = { 
+    "bin/macos/libfmodL.dylib": "Contents/Frameworks", 
+    "bin/macos/libfmodstudioL.dylib": "Contents/Frameworks" 
+}
+macos.release = { 
+    "bin/macos/libfmod.dylib": "Contents/Frameworks", 
+    "bin/macos/libfmodstudio.dylib": "Contents/Frameworks" 
 }
 
 linux.editor.x86_64  = {
-    "./bin/libs/linux/x86_64/libfmodL.so.14": "",
-    "./bin/libs/linux/x86_64/libfmodstudioL.so.14": "",
+    "bin/linux/x86_64/libfmodL.so.14": "",
+    "bin/linux/x86_64/libfmodstudioL.so.14": "",
 }
 linux.debug.x86_64  = {
-    "./bin/libs/linux/x86_64/libfmodL.so.14": "",
-    "./bin/libs/linux/x86_64/libfmodstudioL.so.14": "",
+    "bin/linux/x86_64/libfmodL.so.14": "",
+    "bin/linux/x86_64/libfmodstudioL.so.14": "",
 }
 linux.release.x86_64 = {
-    "./bin/libs/linux/x86_64/libfmod.so.14": "",
-    "./bin/libs/linux/x86_64/libfmodstudio.so.14": "",
+    "bin/linux/x86_64/libfmod.so.14": "",
+    "bin/linux/x86_64/libfmodstudio.so.14": "",
 }
+
+android.editor.x86_64  = {
+    "bin/android/x86_64/libfmodL.so.14": "",
+    "bin/android/x86_64/libfmodstudioL.so.14": "",
+}
+android.debug.x86_64  = {
+    "bin/android/x86_64/libfmodL.so.14": "",
+    "bin/android/x86_64/libfmodstudioL.so.14": "",
+}
+android.release.x86_64 = {
+    "bin/android/x86_64/libfmod.so.14": "",
+    "bin/android/x86_64/libfmodstudio.so.14": "",
+}
+android.editor.arm64  = {
+    "bin/android/arm64/libfmodL.so.14": "",
+    "bin/android/arm64/libfmodstudioL.so.14": "",
+}
+android.debug.arm64  = {
+    "bin/android/arm64/libfmodL.so.14": "",
+    "bin/android/arm64/libfmodstudioL.so.14": "",
+}
+android.release.arm64 = {
+    "bin/android/arm64/libfmod.so.14": "",
+    "bin/android/arm64/libfmodstudio.so.14": "",
+}
+
 
