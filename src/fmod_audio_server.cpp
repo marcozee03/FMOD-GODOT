@@ -1,7 +1,6 @@
 #include "fmod_audio_server.h"
 #include "classes/global_constants.hpp"
 #include "classes/os.hpp"
-#include "classes/resource.hpp"
 #include "classes/resource_loader.hpp"
 #include "core/defs.hpp"
 #include "core/error_macros.hpp"
@@ -15,6 +14,7 @@
 #include "variant/utility_functions.hpp"
 #include <classes/dir_access.hpp>
 #include <classes/os.hpp>
+#include <cstdint>
 #include <fmod_errors.h>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/file_access.hpp>
@@ -226,11 +226,11 @@ void FmodAudioServer::_physics_process()
         return;
     }
     lock();
-    for (int i = 0; i < instances.size(); i++)
+    for (uint32_t i = 0; i < instances.size(); i++)
     {
         if (!FMOD_Studio_EventInstance_IsValid(instances[i].instance))
         {
-            instances.write[i] = instances[instances.size() - 1];
+            instances[i] = instances[instances.size() - 1];
             instances.remove_at(instances.size() - 1);
             continue;
         }
@@ -244,7 +244,7 @@ void FmodAudioServer::_physics_process()
             velocity = (Vector3(pos.x, pos.y, 0) - instances[i].lastFramePosition) /
                        instances[i].node2D->get_physics_process_delta_time();
             attributes.velocity = to_fmod_vector(velocity);
-            instances.write[i].lastFramePosition = Vector3(pos.x, pos.y, 0);
+            instances[i].lastFramePosition = Vector3(pos.x, pos.y, 0);
             FMOD_Studio_EventInstance_Set3DAttributes(instances[i].instance, &attributes);
             break;
         }
@@ -253,7 +253,7 @@ void FmodAudioServer::_physics_process()
             velocity = (instances[i].node3D->get_global_position() - instances[i].lastFramePosition) /
                        instances[i].node3D->get_physics_process_delta_time();
             attributes.velocity = to_fmod_vector(velocity);
-            instances.write[i].lastFramePosition = instances[i].node3D->get_global_position();
+            instances[i].lastFramePosition = instances[i].node3D->get_global_position();
             FMOD_Studio_EventInstance_Set3DAttributes(instances[i].instance, &attributes);
             break;
         }
@@ -279,11 +279,11 @@ void FmodAudioServer::thread_func()
     {
         FMOD_3D_ATTRIBUTES attributes;
         lock();
-        for (int i = 0; i < instances.size(); i++)
+        for (uint32_t i = 0; i < instances.size(); i++)
         {
             if (!FMOD_Studio_EventInstance_IsValid(instances[i].instance))
             {
-                instances.write[i] = instances[instances.size() - 1];
+                instances[i] = instances[instances.size() - 1];
                 instances.remove_at(instances.size() - 1);
                 continue;
             }
@@ -322,17 +322,22 @@ void FmodAudioServer::thread_func()
     FMOD_Studio_System_Release(studio_system);
 }
 
+/**
+ * @brief Returns index of event instance or -1 if not found
+ *
+ * @param p_event 
+ * @return 
+ */
 int FmodAudioServer::find_instance(FMOD_STUDIO_EVENTINSTANCE *p_event)
 {
-    int instance_index = -1;
-    for (int i = 0; i < instances.size(); i++)
+    for (uint32_t i = 0; i < instances.size(); i++)
     {
         if (instances[i].instance == p_event)
         {
-            instance_index = i;
+            return i;
         }
     }
-    return instance_index;
+    return -1;
 }
 
 void FmodAudioServer::unlock()
@@ -648,7 +653,7 @@ bool FmodAudioServer::any_sample_data_loading()
     int count;
     FMOD_Studio_System_GetBankCount(studio_system, &count);
     int retrieved;
-    FMOD_STUDIO_BANK **banks = memnew_arr(FMOD_STUDIO_BANK*,count);
+    FMOD_STUDIO_BANK **banks = memnew_arr(FMOD_STUDIO_BANK *, count);
 
     FMOD_Studio_System_GetBankList(studio_system, banks, count, &retrieved);
     bool loading = false;
@@ -685,14 +690,11 @@ void FmodAudioServer::detach_instance_from_node(FMOD_STUDIO_EVENTINSTANCE *p_ins
 {
     lock();
     int i = find_instance(p_instance);
-    for (int i = 0; i < instances.size(); i++)
+    if (i != -1)
     {
-        if (instances[i].instance == p_instance)
-        {
-            instances.write[i] = instances[instances.size() - 1];
-            instances.remove_at(instances.size() - 1);
-            return;
-        }
+        instances[i] = instances[instances.size() - 1];
+        instances.remove_at(instances.size() - 1);
+        return;
     }
     unlock();
 }
@@ -969,9 +971,9 @@ extern "C"
         FS->detach_instance_from_node(p_event);
     }
 
-    GDE_EXPORT Vector4i path_to_guid(const char *p_path)
+    GDE_EXPORT FMOD_GUID path_to_guid(const char *p_path)
     {
-        return FmodAudioServer::get_singleton()->path_to_guid(p_path);
+        return cast_to_fmod_guid(FmodAudioServer::get_singleton()->path_to_guid(p_path));
     }
     GDE_EXPORT FMOD_STUDIO_EVENTDESCRIPTION *get_event_description_by_path(const char *p_path)
     {
@@ -1058,7 +1060,11 @@ godot::String FmodAudioServer::get_version_number()
     const unsigned int major = (FMOD_VERSION & 0xffff0000) >> 16;
     const unsigned int minor = (FMOD_VERSION & 0x0000ff00) >> 8;
     const unsigned int patch = (FMOD_VERSION & 0x000000ff);
-    return String(".").join({UtilityFunctions::var_to_str(major), UtilityFunctions::var_to_str(minor).pad_zeros(2),
-                             UtilityFunctions::var_to_str(patch).pad_zeros(2)});
+    //for some reason patch 13 is 0x13 instead of 0x0d so this fixes that
+    //I expect similar case for minor if that reaches a double digit. am Ignoring major for now
+    const unsigned int fixed_minor = minor - (6 * (minor / 16));
+    const unsigned int fixed_patch = patch - (6 * (patch / 16));
+    return String(".").join({UtilityFunctions::var_to_str(major), UtilityFunctions::var_to_str(fixed_minor).pad_zeros(2),
+                             UtilityFunctions::var_to_str(fixed_patch).pad_zeros(2)});
 }
 } // namespace FmodGodot

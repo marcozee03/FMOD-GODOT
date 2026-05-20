@@ -1,6 +1,7 @@
 #include "fmod_globals.h"
 #include "fmod_common.h"
-#include <cstdio>
+#include "variant/variant.hpp"
+#include "variant/vector2i.hpp"
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/rigid_body2d.hpp>
@@ -16,39 +17,32 @@ char *to_char_ptr(const String &str)
 {
     return str.utf8().ptrw();
 }
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wclass-memaccess"
 
-static_assert(sizeof(Vector4i) == sizeof(FMOD_GUID));
 Vector4i cast_to_vector4i(const FMOD_GUID &p_guid)
 {
+    static_assert(sizeof(Vector4i) == sizeof(FMOD_GUID),
+                  "Vector4i and FMOD_GUID must be the same size for type punning");
     Vector4i v;
     memcpy(&v, &p_guid, sizeof(Vector4i));
     return v;
-    // v.x = *(int32_t *)&guid.Data1;
-    // // For some reason unclear in fmod api docs must be reversed
-    // // now that i think about it probably something to do with endianess
-    // auto y = (guid.Data3 << 16 | guid.Data2);
-    // int *ptr = (int *)guid.Data4;
-    // v.z = ptr[0];
-    // v.w = ptr[1];
-    // return v;
 }
 
 FMOD_GUID cast_to_fmod_guid(const Vector4i &p_guid)
 {
+    static_assert(sizeof(Vector4i) == sizeof(FMOD_GUID),
+                  "Vector4i and FMOD_GUID must be the same size for type punning");
     FMOD_GUID eventguid;
     memcpy(&eventguid, &p_guid, sizeof(Vector4i));
-    // eventguid.Data1 = v_guid.x;
-    // eventguid.Data2 = (unsigned short)v_guid.y;
-    // eventguid.Data3 = (unsigned short)(v_guid.y >> 16);
-    // unsigned int *ptr = (unsigned int *)eventguid.Data4;
-    // ptr[0] = v_guid.z;
-    // ptr[1] = v_guid.w;
     return eventguid;
 }
 
 static_assert(sizeof(Vector2i) == sizeof(FMOD_STUDIO_PARAMETER_ID));
 FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(const Vector2i &p_id)
 {
+    static_assert(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(Vector2i),
+                  "Vector2i and FMOD_STUDIO_PARAMETER_ID must be the same size for type punning");
     FMOD_STUDIO_PARAMETER_ID id;
     memcpy(&id, &p_id, sizeof(FMOD_STUDIO_PARAMETER_ID));
     return id;
@@ -56,22 +50,25 @@ FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(const Vector2i &p_id)
 
 Vector2i cast_to_vector2i(const FMOD_STUDIO_PARAMETER_ID &p_id)
 {
+    static_assert(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(Vector2i),
+                  "Vector2i and FMOD_STUDIO_PARAMETER_ID must be the same size for type punning");
     Vector2i id;
     memcpy(&id, &p_id, sizeof(Vector2i));
     return id;
 }
-FMOD_GUID string_to_fmod_guid(const char *guid)
-{
-    FMOD_GUID result;
-    sscanf(guid, "{%8x-%4hx-%4hx-%2hhx%2hhx-%2hhx%2hhx%2hhx%2hhx%2hhx%2hhx}", &result.Data1, &result.Data2,
-           &result.Data3, &result.Data4[0], &result.Data4[1], &result.Data4[2], &result.Data4[3], &result.Data4[4],
-           &result.Data4[5], &result.Data4[6], &result.Data4[7]);
-    return result;
-}
+#pragma GCC diagnostic pop
+// FMOD_GUID string_to_fmod_guid(const char *guid)
+// {
+//     FMOD_GUID result;
+//     sscanf(guid, "{%8x-%4hx-%4hx-%2hhx%2hhx-%2hhx%2hhx%2hhx%2hhx%2hhx%2hhx}", &result.Data1, &result.Data2,
+//            &result.Data3, &result.Data4[0], &result.Data4[1], &result.Data4[2], &result.Data4[3], &result.Data4[4],
+//            &result.Data4[5], &result.Data4[6], &result.Data4[7]);
+//     return result;
+// }
 String fmod_guid_to_string(const FMOD_GUID &guid)
 {
     char result[39];
-    snprintf(result, sizeof(result), "{%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x}", guid.Data1, guid.Data2,
+    vformat( "{%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x}", guid.Data1, guid.Data2,
              guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], guid.Data4[3], guid.Data4[4], guid.Data4[5],
              guid.Data4[6], guid.Data4[7]);
     return result;

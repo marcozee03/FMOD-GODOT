@@ -8,7 +8,6 @@
 #include "fmod_common.h"
 #include "fmod_studio.h"
 #include "fmod_studio_common.h"
-#include "variant/utility_functions.hpp"
 FmodGodot::FmodBankFormatLoader::FmodBankFormatLoader()
 {
 }

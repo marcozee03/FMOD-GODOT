@@ -59,7 +59,7 @@ def exportDependencies(platform, arch):
     for file in os.listdir("libs/%s/%s" % (platform, arch)):
         shutil.copy(
             "libs/%s/%s/%s" % (platform, arch, file),
-            "plugin_template/bin/libs/%s/%s/%s" % (platform, arch, file),
+            "plugin_template/bin/%s/%s/%s" % (platform, arch, file),
         )
     shutil.copy("fmod_installer.py","plugin_template")
 

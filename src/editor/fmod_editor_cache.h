@@ -22,7 +22,6 @@ class FmodEditorCache
     void add(const VCA &p_vca);
     void clear();
     void refresh();
-    void print();
     const PathTree<Event> get_event_cache() const;
     const PathTree<Bank> get_bank_cache() const;
     const PathTree<Parameter> get_parameter_cache() const;
