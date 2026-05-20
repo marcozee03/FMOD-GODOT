@@ -54,6 +54,21 @@ jobs:
           platform: ${{ matrix.target.platform }}
           em-version: 3.1.62
 
+      # Install Python Requests
+      - name: Install python requests
+        if: ${{ matrix.target.platform == 'linux'}}
+        run: |
+          sudo apt-get install -y python3-requests
+      - name: Install python requests
+        if: ${{ matrix.target.platform == 'windows'}}
+        run: |
+          pip install -y requests
+
+      # Setup Fmod dependencies
+      - name: Setup FMOD
+        run: |
+          ./fmod_installer.py --username ${{ secrets.FMOD_USERNAME }} --password ${{ secrets.FMOD_PASSWORD }} setup 2.03.13
+
       # Build GDExtension (with caches)
 
       - name: Restore .scons_cache
