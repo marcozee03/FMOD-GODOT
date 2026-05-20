@@ -77,7 +77,7 @@ def get_file_name(version:str, platform : str) -> str:
     else:
         return f'fmodstudioapi{version}linux.tar.gz'
 
-def download_version(version : str, token : str, target_platform : str):
+def download_version(version : str, token : str, target_platform : str, show_progress_bar: bool):
     filename = get_file_name(version, target_platform)
     downloadlink = get_download_link(version, target_platform)
     if(downloadlink == None):
@@ -113,10 +113,11 @@ def download_version(version : str, token : str, target_platform : str):
         with open(os.path.join(script_dir, filename), 'wb') as file:
             for data in response.iter_content(block_size):
                 file.write(data)
-                progress += block_size
-                if progress > total_bytes:
-                    progress %= total_bytes
-                progress_bar(progress/factor, total_bytes / factor, unit, 2)
+                if show_progress_bar:
+                    progress += block_size
+                    if progress > total_bytes:
+                        progress %= total_bytes
+                    progress_bar(progress/factor, total_bytes / factor, unit, 2)
     except:
         exit(ERR_DOWNLOAD)
 
@@ -229,7 +230,7 @@ def copy_headers_and_libs(base_path:str, platform: str):
     shutil.copytree(studio_lib, os.path.join(script_dir, "libs", platform),dirs_exist_ok=True)
 
 def setup_linux(token : str, version : str):
-    download_version(version, token, 'linux')
+    download_version(version, token, 'linux', False)
     filename : str = get_file_name(version, 'linux')
     api = filename.removesuffix(".tar.gz")
     with tarfile.open(filename, 'r') as tar:
@@ -239,7 +240,7 @@ def setup_linux(token : str, version : str):
     copy_headers_and_libs(base_path=base_path, platform="linux")
 
 def setup_windows(token : str, version : str):
-    download_version(version, token, 'windows')
+    download_version(version, token, 'windows', False)
     filename : str = get_file_name(version, 'windows')
     subprocess.run([os.path.join(script_dir, filename), "/S"])
     
@@ -289,7 +290,7 @@ def main():
         case "download_version":
             token = get_token(username, password)
             version : str = args.fmod_version.replace('.', '')
-            download_version(version, token, args.targetplatform)
+            download_version(version, token, args.targetplatform, True)
         case "setup":
             token = get_token(username, password)
             version : str = args.fmod_version.replace('.', '')
