@@ -244,7 +244,7 @@ def setup_windows(token : str, version : str):
     filename : str = get_file_name(version, 'windows')
     subprocess.run([os.path.join(script_dir, filename), "/S"])
     
-    base_path = os.path.join(os.environ["ProgramFiles(x86)"], "FMOF SoundSystem", "FMOD Studio API Windows", "api")
+    base_path = os.path.join(os.environ["ProgramFiles(x86)"], "FMOD SoundSystem", "FMOD Studio API Windows", "api")
     lib_dst = os.path.join(script_dir, "libs", "windows");
     copy_headers_and_libs(base_path=base_path, platform="windows")
     if isdir(os.path.join(lib_dst, "x86_64")):

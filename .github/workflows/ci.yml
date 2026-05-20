@@ -77,8 +77,13 @@ jobs:
 
       # Setup Fmod dependencies
       - name: Setup FMOD
+        if: ${{ matrix.target.platform != 'windows' }}
         run: |
           ./fmod_installer.py --username ${{ secrets.FMOD_USERNAME }} --password ${{ secrets.FMOD_PASSWORD }} setup 2.03.13
+      - name: Setup FMOD
+        if: ${{ matrix.target.platform == 'windows' }}
+        run: |
+          python3 fmod_installer.py --username ${{ secrets.FMOD_USERNAME }} --password ${{ secrets.FMOD_PASSWORD }} setup 2.03.13
 
       # Build GDExtension (with caches)
 
