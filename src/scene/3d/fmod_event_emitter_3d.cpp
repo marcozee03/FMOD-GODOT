@@ -1,6 +1,5 @@
 #include "fmod_event_emitter_3d.h"
 #include "fmod_audio_server.h"
-#include "globals.h"
 #include "variant/packed_string_array.hpp"
 using namespace godot;
 namespace FmodGodot

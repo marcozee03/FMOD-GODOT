@@ -1,6 +1,5 @@
 
 #pragma once
-#include "variant/utility_functions.hpp"
 #include <classes/node.hpp>
 #include <fmod.h>
 #include <fmod_studio.h>
@@ -77,7 +76,7 @@ class FmodAudioServer : public Object
     FMOD_STUDIO_SYSTEM *studio_system;
     bool initialized;
     bool muted;
-    Vector<Ref<FmodBank>> start_up_banks;
+    LocalVector<Ref<FmodBank>> start_up_banks;
     // core api
 
   public:
@@ -153,7 +152,7 @@ class FmodAudioServer : public Object
     void load_start_up_banks();
 
   private:
-    Vector<AttachedInstance> instances;
+    LocalVector<AttachedInstance> instances;
     void thread_func();
     int find_instance(FMOD_STUDIO_EVENTINSTANCE *p_event);
     template <typename Node2D>
@@ -203,13 +202,13 @@ inline void FmodAudioServer::_attach_instance_2d(Node2D *p_node, FMOD_STUDIO_EVE
     }
     else
     {
-        instances.write[instance_index].node = p_node;
-        instances.write[instance_index].nonRigidbodyVelocity = p_non_rigid_body_velocity;
-        instances.write[instance_index].attachment = p_attachment;
-        instances.write[instance_index].lastFramePosition = {p_node->get_position().x, p_node->get_position().y, 0};
+        instances[instance_index].node = p_node;
+        instances[instance_index].nonRigidbodyVelocity = p_non_rigid_body_velocity;
+        instances[instance_index].attachment = p_attachment;
+        instances[instance_index].lastFramePosition = {p_node->get_position().x, p_node->get_position().y, 0};
         FMOD_3D_ATTRIBUTES attributes = to_3d_attributes(p_node);
         FMOD_Studio_EventInstance_Set3DAttributes(instances[instance_index].instance, &attributes);
-        instances.write[instance_index].instance = p_event;
+        instances[instance_index].instance = p_event;
     }
     unlock();
 }
@@ -234,13 +233,13 @@ inline void FmodAudioServer::_attach_instance_3d(Node3D *p_node, FMOD_STUDIO_EVE
     }
     else
     {
-        instances.write[instance_index].node = p_node;
-        instances.write[instance_index].nonRigidbodyVelocity = p_non_rigid_body_velocity;
-        instances.write[instance_index].attachment = p_attachment;
-        instances.write[instance_index].lastFramePosition = p_node->get_position();
+        instances[instance_index].node = p_node;
+        instances[instance_index].nonRigidbodyVelocity = p_non_rigid_body_velocity;
+        instances[instance_index].attachment = p_attachment;
+        instances[instance_index].lastFramePosition = p_node->get_position();
         FMOD_3D_ATTRIBUTES attributes = to_3d_attributes(p_node);
         FMOD_Studio_EventInstance_Set3DAttributes(instances[instance_index].instance, &attributes);
-        instances.write[instance_index].instance = p_event;
+        instances[instance_index].instance = p_event;
     }
     unlock();
 }

@@ -1,0 +1,35 @@
+name: Bug report
+description: Report a bug with FMOD Godot
+body:
+
+- type: markdown
+  attributes:
+    value: |
+      - Write a descriptive issue title above.
+      - Search [open](https://github.com/marcozee03/FMOD-GODOT/issues) and [closed](https://github.com/marcozee03/FMOD-GODOT/issues?q=is%3Aissue+is%3Aclosed) issues to ensure it has not already been reported.
+- type: input
+  attributes:
+    label: Fmod Godot version
+    description: >
+      Specify the Git commit hash of your Fmod Godot build or release version.
+    placeholder: v0.3.2;
+  validations:
+    required: true
+
+- type: input
+  attributes:
+    label: System information
+    description: |
+      Specify the OS version.
+    placeholder: Windows 10
+  validations:
+    required: true
+
+- type: textarea
+  attributes:
+    label: Issue description
+    description: |
+      Describe your issue briefly. What doesn't work, and how do you expect it to work instead?
+      You can include images or videos with drag and drop, and format code blocks or logs with <code>```</code> tags.
+  validations:
+    required: true
