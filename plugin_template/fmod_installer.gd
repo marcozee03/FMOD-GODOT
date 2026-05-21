@@ -39,7 +39,7 @@ func fail(message: String):
 	install.hide()
 	error.text = message
 func download() -> void:
-	var dict = OS.execute_with_pipe("python3", ["addons/FmodGodot/fmod_installer.py","--noprompts", "-u", username.text, "-p", password.text, "download_version", FmodAudioServer.get_version_number()])	
+	var dict = OS.execute_with_pipe("python3", ["addons/FmodGodot/fmod_installer.py","--targetplatform", "linux", "--noprompts", "-u", username.text, "-p", password.text, "download_version", FmodAudioServer.get_version_number()])	
 	process_id = dict["pid"]
 	stdio = dict["stdio"]
 	stderr = dict["stderr"]

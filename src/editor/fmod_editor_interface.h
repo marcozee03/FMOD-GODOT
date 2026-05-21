@@ -1,9 +1,6 @@
 #pragma once
-#include "core/print_string.hpp"
-#include "fmod_globals.h"
-#include "variant/string.hpp"
-#include "variant/utility_functions.hpp"
 #ifdef TOOLS_ENABLED
+#include "variant/string.hpp"
 #include "fmod_editor_cache.h"
 #include "fmod_script_client.h"
 #include "fmod_theme.h"

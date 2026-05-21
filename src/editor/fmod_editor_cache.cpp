@@ -2,7 +2,6 @@
 #include "fmod_editor_cache.h"
 #include "fmod_object.h"
 #include <godot_cpp/variant/packed_string_array.hpp>
-#include <iostream>
 #include <variant/utility_functions.hpp>
 namespace FmodGodot
 {
@@ -40,14 +39,6 @@ void FmodEditorCache::clear()
     vca_cache.clear();
     parameter_cache.clear();
 }
-void FmodEditorCache::print()
-{
-    event_cache.print();
-    bank_cache.print();
-    vca_cache.print();
-    parameter_cache.print();
-}
-
 const PathTree<Event> FmodEditorCache::get_event_cache() const
 {
     return event_cache;
