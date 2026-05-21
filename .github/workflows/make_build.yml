@@ -94,7 +94,7 @@ jobs:
         if: ${{ matrix.target.platform == 'windows' }}
         shell: pwsh
         run: |
-          Remove-Item bin/* -Include *.exp,*.lib,*.pdb -Force
+          Remove-Item plugin_template/bin/* -Include *.exp,*.lib,*.pdb -Force -Recurse
 
       # Upload the build
       - name: Upload Artifact
