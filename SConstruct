@@ -11,8 +11,8 @@ source_path = [
     os.path.join("godot-cpp", "include", "godot_cpp"),
     os.path.join("godot-cpp", "gen", "include", "godot_cpp"),
 ]
-env.Append(CCFLAGS=["-Wall"])
-env.Append(CCFLAGS=["-Werror"])
+# env.Append(CCFLAGS=["-Wall"])
+# env.Append(CCFLAGS=["-Werror"])
 logging = ""
 if env["target"] == "editor" or env["target"] == "template_debug":
     logging = "L"
