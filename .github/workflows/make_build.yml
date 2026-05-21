@@ -87,6 +87,7 @@ jobs:
 
       # Setup Fmod dependencies
       - name: Export Fmod Libraries
+        run: |
           python3 export.py push -p ${{ matrix.target.platform }} -a ${{ matrix.target.arch }}
 
       # Clean up compilation files
