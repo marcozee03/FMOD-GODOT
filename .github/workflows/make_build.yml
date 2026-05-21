@@ -60,11 +60,6 @@ jobs:
 
       # Setup Fmod dependencies
       - name: Setup FMOD
-        if: ${{ matrix.target.platform != 'windows' }}
-        run: |
-          ./fmod_installer.py --username ${{ secrets.FMOD_USERNAME }} --password ${{ secrets.FMOD_PASSWORD }} setup 2.03.13
-      - name: Setup FMOD
-        if: ${{ matrix.target.platform == 'windows' }}
         run: |
           python3 fmod_installer.py --username ${{ secrets.FMOD_USERNAME }} --password ${{ secrets.FMOD_PASSWORD }} setup 2.03.13
 
@@ -89,12 +84,18 @@ jobs:
           scons-cache: ${{ github.workspace }}/.scons-cache/
           cache-name: ${{ matrix.target.platform }}_${{ matrix.target.arch }}_${{ matrix.float-precision }}_${{ matrix.target-type }}
 
+
+      # Setup Fmod dependencies
+      - name: Export Fmod Libraries
+          python3 export.py push -p ${{ matrix.target.platform }} -a ${{ matrix.target.arch }}
+
       # Clean up compilation files
       - name: Windows - Delete compilation files
         if: ${{ matrix.target.platform == 'windows' }}
         shell: pwsh
         run: |
           Remove-Item plugin_template/bin/* -Include *.exp,*.lib,*.pdb -Force -Recurse
+
 
       # Upload the build
       - name: Upload Artifact
