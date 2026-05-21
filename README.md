@@ -2,6 +2,10 @@
 
 [Documentation](https://fmod-godot.readthedocs.io/)
 
+> [!Note]
+> Fmod is a commercial library. This is an Unofficial integration with the godot engine. Check [Licensing](https://www.fmod.com/licensing) for more info.
+> For official downloads of the library files check [Downloads](https://www.fmod.com/download)
+
 ## About
 
 Fmod-Godot is a GDExtension library that integrates the Fmod API with the Godot
@@ -83,34 +87,35 @@ runtime and more.
 
 ### Compiling From Source
 
-\[WIP\]
-Before starting, you will need to add the FMOD headers and libraries to the appropriate
-location. To simplest way to compile this addon to your project is to run the export.py
+> [!Note]
+> you will need python installed and the [requests](https://github.com/psf/requests) library
+
+You will need to add the FMOD headers and libraries to the appropriate location. 
+A helper script "fmod_installer.py" is provided. you will need to pass your fmod
+credentials either as arguments or interactively.
+``` bash
+python3 fmod_installer.py setup --username <username> --password <password> setup <fmod-version>
+```
+use --help for more info and other options.
+
+The simplest way to compile this addon to your project is to run the export.py
 script example below.
 
-``` python
-python3 export.py -p <platform> -o /path/to/godot_project/addons
+``` bash
+#builds the extension into the plugin_template folder and copies dependencies over.
+python3 export.py build -p <platform> -a <architecture>
+#copys output of build to destination folder
+python3 export.py export /path/to/godot_project/addons
 ```
 
-**Flags**  
--o  
-    flag specifies where to copy the outputs of the command to notice how it should
-    be the path to the addons directory of your Godot project.  
--p  
-    flag is currently one of 3 options "windows" "linux" and "all"  
--f  
-    skips the prompt asking for your permission to override files in the output path.
--sc  
-    skips the compilation steps and copies whatever is currently in the bin
-    directory to output path.  
-  
 Alternatively refer to [Introduction to the buildsystem](https://docs.godotengine.org/en/stable/contributing/development/compiling/introduction_to_the_buildsystem.html)
 
 #### C\# Set-Up
 
 ##### Automatic Set-up
 
-Note: you must have python installed to run the installer. Python Requests should be installed with pip
+> [!Note]
+> you must have python installed to run the installer and [requests](https://github.com/psf/requests)
 
 To run the install go to Project > Tools > Finish FMOD Godot setup  
 
