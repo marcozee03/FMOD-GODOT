@@ -6,7 +6,12 @@
 > Fmod is a commercial library. This is an Unofficial integration with the godot engine. Check [Licensing](https://www.fmod.com/licensing) for more info.
 > For official downloads of the library files check [Downloads](https://www.fmod.com/download)
 
+
 ## About
+
+> [!Note]
+> This is beta software. While it should be mostly stable. You may encounter bugs. So please take the time to submit a bug report.
+
 
 Fmod-Godot is a GDExtension library that integrates the Fmod API with the Godot
 Engine. The library provides a way for C# to interact directly with the same FMOD
