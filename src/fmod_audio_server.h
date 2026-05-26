@@ -1,5 +1,6 @@
 
 #pragma once
+#include "variant/variant.hpp"
 #include <classes/node.hpp>
 #include <fmod.h>
 #include <fmod_studio.h>
@@ -188,6 +189,10 @@ inline void FmodAudioServer::_attach_instance_2d(Node2D *p_node, FMOD_STUDIO_EVE
 {
     lock();
     int instance_index = find_instance(p_event);
+    if (!p_node->is_inside_tree())
+    {
+        print_error(vformat("Cannot Attach Fmod Event to node '%s' not inside tree", p_node->get_name()));
+    }
     if (instance_index == -1)
     {
         AttachedInstance instance;
@@ -219,6 +224,10 @@ inline void FmodAudioServer::_attach_instance_3d(Node3D *p_node, FMOD_STUDIO_EVE
 {
     lock();
     int instance_index = find_instance(p_event);
+    if (!p_node->is_inside_tree())
+    {
+        print_error(vformat("Cannot Attach Fmod Event to node '%s' not inside tree", p_node->get_name()));
+    }
     if (instance_index == -1)
     {
         AttachedInstance instance;
