@@ -12,6 +12,11 @@ supported_platforms = ["linux", "windows"]
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
+def get_arch()->str:
+    arch = platform.machine()
+    if arch == "AMD64":
+        arch = "x86_64"
+    return arch
 def buildForPlatform(platform, arch):
     p1 = subprocess.run(
         [
@@ -39,7 +44,7 @@ def buildForPlatform(platform, arch):
         ]
     )
     if p2.returncode != 0:
-        print("failed to build for release")
+        print("failed to build for debug")
         exit(1)
     p3 = subprocess.run(
         [
@@ -53,7 +58,7 @@ def buildForPlatform(platform, arch):
         ]
     )
     if p3.returncode != 0:
-        print("failed to build for release")
+        print("failed to build for editor")
         exit(1)
 
 def exportDependencies(platform, arch):
@@ -75,40 +80,32 @@ def main():
     export = subparsers.add_parser(name= "export",help="Export plugin", description="Copies the contents of plugin_template to destination. Likely <path>/<to>/<project>/addons")
     push = subparsers.add_parser(name= "push",help="Push Dependencies", description="Copies necessary files ie the fmod libs to plugin_template/")
     export.add_argument("destination", type=Path, help="the destination folder")
-    export.add_argument("-f", "--force",type=bool, help="Overwrite files in destination")
-    build.add_argument("-p", "--platform", type=str, help="the platform to build for")
+    export.add_argument("-f", "--force", help="Overwrite files in destination", action="store_true")
+    build.add_argument("-p", "--platform", type=str, help="the platform to build for", default=get_os())
     build.add_argument(
-        "-a", "--architecture", type=str, help="the cpu architecture to build for"
+        "-a", "--architecture", type=str, help="the cpu architecture to build for", default=get_arch()
     )
     
-    push.add_argument("-p", "--platform", type=str, help="the platform to build for")
+    push.add_argument("-p", "--platform", type=str, help="the platform to build for", default=get_os())
     push.add_argument(
-        "-a", "--architecture", type=str, help="the cpu architecture to build for"
+        "-a", "--architecture", type=str, help="the cpu architecture to build for", default=get_arch()
     )
     args = parser.parse_args()
 
-    os_platform = args.platform
-    if os_platform == None:
-        os_platform = get_os()
-    arch = platform.machine()
-    if arch == "AMD64":
-        arch = "x86_64"
-    if args.architecture != None:
-        arch = args.architecture
     match args.command:
         case "build":
-            if os_platform == "all":
+            if args.platform == "all":
                 for os_platform in supported_platforms:
-                    buildForPlatform(os_platform, arch)
-                    exportDependencies(os_platform, arch)
+                    buildForPlatform(os_platform, args.architecture)
+                    exportDependencies(os_platform, args.architecture)
             else:
-                buildForPlatform(os_platform, arch)
-                exportDependencies(os_platform, arch)
+                buildForPlatform(args.platform, args.architecture)
+                exportDependencies(args.platform, args.architecture)
         case "export":
             if args.destination == None or not args.destination.is_dir():
-                print('"' + str(args.output) + '" does not exist or is not a directory')
+                print('"' + str(args.destination) + '" does not exist or is not a directory')
                 return;
-            path = Path(args.output)
+            path = Path(args.destination)
             pathA = Path(str(path).removesuffix('"')).joinpath("FmodGodot")
             force = args.force
             if args.force == None:
@@ -125,12 +122,12 @@ def main():
             else:
                 shutil.copytree("plugin_template", pathA)
         case "push":
-            if os_platform == "all":
+            if args.platform == "all":
                 for os_platform in supported_platforms:
-                    buildForPlatform(os_platform, arch)
-                    exportDependencies(os_platform, arch)
+                    buildForPlatform(os_platform, args.architecture)
+                    exportDependencies(os_platform, args.architecture)
             else:
-                exportDependencies(os_platform, arch)
+                exportDependencies(args.platform, args.architecture)
         case _:
             exit(1)
 
