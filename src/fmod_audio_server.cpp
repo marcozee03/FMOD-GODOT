@@ -185,12 +185,19 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
                                    FMOD_DEBUG_MODE_CALLBACK, fmod_debug_callback, nullptr);
 
     result = FMOD_Studio_System_Create(&studio_system, FMOD_VERSION);
+    if (result != FMOD_OK)
+    {
+        print_error("Failed to create studio system");
+    }
     result = FMOD_Studio_System_GetCoreSystem(studio_system, &core_system);
+    if (result != FMOD_OK)
+    {
+        print_error("Failed to get core system");
+    }
 
-    // Core Settings
-    FMOD_ADVANCEDSETTINGS fmod_settings;
+    // Core Settings | Initialize to zero/NUll since thats default according to FMOD docs. and as recommended;
+    FMOD_ADVANCEDSETTINGS fmod_settings = {0};
     fmod_settings.cbSize = sizeof(FMOD_ADVANCEDSETTINGS);
-    FMOD_System_GetAdvancedSettings(core_system, &fmod_settings);
     fmod_settings.profilePort = p_settings.live_update_port;
     FMOD_System_SetAdvancedSettings(core_system, &fmod_settings);
     FMOD_System_SetSoftwareFormat(core_system, p_settings.sample_rate, FMOD_SPEAKERMODE_DEFAULT, 0);
@@ -232,10 +239,20 @@ void FmodAudioServer::_physics_process()
         {
             instances[i] = instances[instances.size() - 1];
             instances.remove_at(instances.size() - 1);
+            i--;
             continue;
         }
         FMOD_3D_ATTRIBUTES attributes;
         Vector3 velocity;
+        if (!instances[i].node->is_inside_tree())
+        {
+            FMOD_Studio_EventInstance_Stop(instances[i].instance, FMOD_STUDIO_STOP_IMMEDIATE);
+            FMOD_Studio_EventInstance_Release(instances[i].instance);
+            instances[i] = instances[instances.size() - 1];
+            instances.remove_at(instances.size() - 1);
+            i--;
+            continue;
+        }
         switch (instances[i].attachment)
         {
         case Attachment::NODE2D: {
@@ -285,6 +302,16 @@ void FmodAudioServer::thread_func()
             {
                 instances[i] = instances[instances.size() - 1];
                 instances.remove_at(instances.size() - 1);
+                i--;
+                continue;
+            }
+            if (!instances[i].node->is_inside_tree())
+            {
+                FMOD_Studio_EventInstance_Stop(instances[i].instance, FMOD_STUDIO_STOP_IMMEDIATE);
+                FMOD_Studio_EventInstance_Release(instances[i].instance);
+                instances[i] = instances[instances.size() - 1];
+                instances.remove_at(instances.size() - 1);
+                i--;
                 continue;
             }
             switch (instances[i].attachment)
@@ -325,8 +352,8 @@ void FmodAudioServer::thread_func()
 /**
  * @brief Returns index of event instance or -1 if not found
  *
- * @param p_event 
- * @return 
+ * @param p_event
+ * @return
  */
 int FmodAudioServer::find_instance(FMOD_STUDIO_EVENTINSTANCE *p_event)
 {
@@ -1060,11 +1087,12 @@ godot::String FmodAudioServer::get_version_number()
     const unsigned int major = (FMOD_VERSION & 0xffff0000) >> 16;
     const unsigned int minor = (FMOD_VERSION & 0x0000ff00) >> 8;
     const unsigned int patch = (FMOD_VERSION & 0x000000ff);
-    //for some reason patch 13 is 0x13 instead of 0x0d so this fixes that
-    //I expect similar case for minor if that reaches a double digit. am Ignoring major for now
+    // for some reason patch 13 is 0x13 instead of 0x0d so this fixes that
+    // I expect similar case for minor if that reaches a double digit. am Ignoring major for now
     const unsigned int fixed_minor = minor - (6 * (minor / 16));
     const unsigned int fixed_patch = patch - (6 * (patch / 16));
-    return String(".").join({UtilityFunctions::var_to_str(major), UtilityFunctions::var_to_str(fixed_minor).pad_zeros(2),
+    return String(".").join({UtilityFunctions::var_to_str(major),
+                             UtilityFunctions::var_to_str(fixed_minor).pad_zeros(2),
                              UtilityFunctions::var_to_str(fixed_patch).pad_zeros(2)});
 }
 } // namespace FmodGodot
