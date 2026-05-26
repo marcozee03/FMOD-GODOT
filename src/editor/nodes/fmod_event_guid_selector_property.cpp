@@ -77,7 +77,7 @@ void EventGUIDSelectorProperty::_update_property()
     currentValue = newValue;
     int size = 128;
     int retrieved = 0;
-    char *str = new char[size];
+    char *str = memnew_arr(char, size);
     FMOD_STUDIO_SYSTEM *studio = FmodAudioServer::get_singleton()->get_studio();
     if (!FMOD_Studio_System_IsValid(studio))
     {
@@ -90,7 +90,7 @@ void EventGUIDSelectorProperty::_update_property()
     eventSelector->get_line_edit()->set_text(str);
     eventSelector->get_line_edit()->set_tooltip_text(fmod_guid_to_string(guid));
     updating = false;
-    delete[] str;
+    memdelete_arr(str);
 }
 } // namespace FmodGodot
 #endif

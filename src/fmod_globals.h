@@ -37,26 +37,26 @@ FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody2D *rigidbody);
 #define FMOD_GET_FULL_STRING(function, object, char_ptr, size, retrieved)                                              \
     if (function(object, char_ptr, size, &retrieved) == FMOD_ERR_TRUNCATED)                                            \
     {                                                                                                                  \
-        delete[] char_ptr;                                                                                             \
+        memdelete_arr(char_ptr);                                                                                       \
         size = retrieved;                                                                                              \
-        char_ptr = new char[size];                                                                                     \
+        char_ptr = memnew_arr(char, size);                                                                             \
         function(object, char_ptr, size, &retrieved);                                                                  \
     }
 #define FMOD_LOOKUP_FULL_STRING(function, object, query, char_ptr, size, retrieved)                                    \
     if (function(object, query, char_ptr, size, &retrieved) == FMOD_ERR_TRUNCATED)                                     \
     {                                                                                                                  \
-        delete[] char_ptr;                                                                                             \
+        memdelete_arr(char_ptr);                                                                                       \
         size = retrieved;                                                                                              \
-        char_ptr = new char[size];                                                                                     \
+        char_ptr = memnew_arr(char, size);                                                                             \
         function(object, query, char_ptr, size, &retrieved);                                                           \
     }
 
 #define FMOD_GET_FULL_STRING_FUNC_CALL(function_call, char_ptr, size, retrieved)                                       \
     if (function_call == FMOD_ERR_TRUNCATED)                                                                           \
     {                                                                                                                  \
-        delete[] char_ptr;                                                                                             \
+        memdelete_arr(char_ptr);                                                                                       \
         size = retrieved;                                                                                              \
-        char_ptr = new char[size];                                                                                     \
+        char_ptr = memnew_arr(char, size);                                                                             \
         function_call;                                                                                                 \
     }
 } // namespace FmodGodot

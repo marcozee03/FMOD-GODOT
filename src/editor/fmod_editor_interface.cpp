@@ -2,6 +2,7 @@
 #include "core/memory.hpp"
 #include "fmod_globals.h"
 #include "fmod_script_client.h"
+#include "fmod_studio_common.h"
 #include "variant/utility_functions.hpp"
 #ifdef TOOLS_ENABLED
 #include "fmod_audio_server.h"
@@ -74,7 +75,7 @@ Event to_cacheable_event(FMOD_STUDIO_EVENTDESCRIPTION *description)
 {
     int size = 64;
     int retrieved = 0;
-    char *str = new char[size];
+    char *str = memnew_arr(char, size);
 
     FMOD_GET_FULL_STRING(FMOD_Studio_EventDescription_GetPath, description, str, size, retrieved);
     Event event;
@@ -103,7 +104,7 @@ Event to_cacheable_event(FMOD_STUDIO_EVENTDESCRIPTION *description)
         Parameter parameter = to_cacheable_parameter(&parameter_description);
         event.parameters.append(parameter);
     }
-    delete[] str;
+    memdelete_arr(str);
     return event;
 }
 } // namespace
@@ -116,11 +117,15 @@ void FmodEditorInterface::refresh()
     }
     int bank_count;
     FMOD_Studio_System_GetBankCount(studio, &bank_count);
-    FMOD_STUDIO_BANK **banks = new FMOD_STUDIO_BANK *[bank_count];
+    if (bank_count <= 0)
+    {
+        return;
+    }
+    FMOD_STUDIO_BANK **banks = memnew_arr(FMOD_STUDIO_BANK *, bank_count);
     FMOD_Studio_System_GetBankList(studio, banks, bank_count, &bank_count);
     int size = 64;
     int retrieved = 0;
-    char *str = new char[size];
+    char *str = memnew_arr(char, size);
     for (int i = 0; i < bank_count; i++)
     {
 
@@ -130,46 +135,60 @@ void FmodEditorInterface::refresh()
         Bank bank;
         bank.full_path = str;
         bank.guid = cast_to_vector4i(guid);
-        int event_count;
-        FMOD_Studio_Bank_GetEventCount(banks[i], &event_count);
-        FMOD_STUDIO_EVENTDESCRIPTION **descriptions = new FMOD_STUDIO_EVENTDESCRIPTION *[event_count];
-        FMOD_Studio_Bank_GetEventList(banks[i], descriptions, event_count, &event_count);
-        for (int j = 0; j < event_count; j++)
         {
-            Event event = to_cacheable_event(descriptions[j]);
-            bank.children.push_back(event.full_path);
-            cache.add(event);
+            int event_count;
+            FMOD_Studio_Bank_GetEventCount(banks[i], &event_count);
+            if (event_count > 0)
+            {
+                FMOD_STUDIO_EVENTDESCRIPTION **descriptions = memnew_arr(FMOD_STUDIO_EVENTDESCRIPTION *, event_count);
+                FMOD_Studio_Bank_GetEventList(banks[i], descriptions, event_count, &event_count);
+                for (int j = 0; j < event_count; j++)
+                {
+                    Event event = to_cacheable_event(descriptions[j]);
+                    bank.children.push_back(event.full_path);
+                    cache.add(event);
+                }
+                memdelete_arr(descriptions);
+            }
         }
-        FMOD_Studio_Bank_GetVCACount(banks[i], &event_count);
-        FMOD_STUDIO_VCA **vcas = new FMOD_STUDIO_VCA *[event_count];
-        FMOD_Studio_Bank_GetVCAList(banks[i], vcas, event_count, &event_count);
-        for (int j = 0; j < event_count; j++)
         {
-            VCA vca;
-            FMOD_GET_FULL_STRING(FMOD_Studio_VCA_GetPath, vcas[j], str, size, retrieved);
-            bank.children.push_back(str);
-            vca.full_path = str;
-            FMOD_Studio_VCA_GetID(vcas[i], &guid);
-            vca.guid = cast_to_vector4i(guid);
-            cache.add(vca);
+            int vca_count;
+            FMOD_Studio_Bank_GetVCACount(banks[i], &vca_count);
+            if (vca_count > 0)
+            {
+                FMOD_STUDIO_VCA **vcas = memnew_arr(FMOD_STUDIO_VCA *, vca_count);
+                FMOD_Studio_Bank_GetVCAList(banks[i], vcas, vca_count, &vca_count);
+                for (int j = 0; j < vca_count; j++)
+                {
+                    VCA vca;
+                    FMOD_GET_FULL_STRING(FMOD_Studio_VCA_GetPath, vcas[j], str, size, retrieved);
+                    bank.children.push_back(str);
+                    vca.full_path = str;
+                    FMOD_Studio_VCA_GetID(vcas[i], &guid);
+                    vca.guid = cast_to_vector4i(guid);
+                    cache.add(vca);
+                }
+                memdelete_arr(vcas);
+            }
         }
         cache.add(bank);
-        delete[] descriptions;
-        delete[] vcas;
     }
 
     int p_count;
     FMOD_Studio_System_GetParameterDescriptionCount(studio, &p_count);
-    FMOD_STUDIO_PARAMETER_DESCRIPTION *params = new FMOD_STUDIO_PARAMETER_DESCRIPTION[p_count];
-    FMOD_Studio_System_GetParameterDescriptionList(studio, params, p_count, &p_count);
-    for (int i = 0; i < p_count; i++)
+    if (p_count > 0)
     {
-        cache.add(to_cacheable_parameter(&params[i]));
+        FMOD_STUDIO_PARAMETER_DESCRIPTION *params = memnew_arr(FMOD_STUDIO_PARAMETER_DESCRIPTION, p_count);
+        FMOD_Studio_System_GetParameterDescriptionList(studio, params, p_count, &p_count);
+        for (int i = 0; i < p_count; i++)
+        {
+            cache.add(to_cacheable_parameter(&params[i]));
+        }
+        memdelete_arr(params);
     }
-    delete[] params;
 
-    delete[] banks;
-    delete[] str;
+    memdelete_arr(banks);
+    memdelete_arr(str);
 }
 void FmodEditorInterface::show_event_in_fmod_studio(Vector4i guid)
 {

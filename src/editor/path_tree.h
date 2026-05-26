@@ -188,7 +188,7 @@ template <typename Data> void PathTree<Data>::clear()
 {
     for (auto child : root.children)
     {
-        delete child;
+        memdelete(child);
     }
     root.children.resize(0);
 }
@@ -265,21 +265,21 @@ template <typename Data> PathTree<Data>::BranchNode::~BranchNode()
 {
     for (int i = 0; i < children.size(); i++)
     {
-        delete children[i];
+        memdelete(children[i]);
     }
 }
 
 template <typename Data>
 typename PathTree<Data>::DataNode *PathTree<Data>::BranchNode::add(const String &name, Data data)
 {
-    DataNode *node = new DataNode(name, data);
+    DataNode *node = memnew(DataNode(name, data));
     children.push_back(node);
     return node;
 }
 
 template <typename Data> typename PathTree<Data>::BranchNode *PathTree<Data>::BranchNode::add(const String &name)
 {
-    BranchNode *branch = new BranchNode(name);
+    BranchNode *branch = memnew(BranchNode(name));
     children.push_back(branch);
     return branch;
 }
