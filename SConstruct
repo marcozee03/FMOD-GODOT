@@ -103,8 +103,7 @@ gen_docs();
 
 env.Append(LIBPATH=["libs/%s/%s" % (env["platform"], env["arch"])])
 suffix = env['suffix'].replace(".dev", "").replace(".universal", "")
-
-lib_filename = "{}{}{}{}".format(env.subst('$SHLIBPREFIX'), libname, suffix, env.subst('$SHLIBSUFFIX'))
+lib_filename = "{}{}{}{}".format("lib", libname, suffix, env.subst('$SHLIBSUFFIX'))
 library = env.SharedLibrary(
     "plugin_template/bin/{}/{}/{}".format(env["platform"], env["arch"], lib_filename),
     source=sources,
