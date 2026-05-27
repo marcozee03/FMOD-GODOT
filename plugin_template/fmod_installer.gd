@@ -49,7 +49,7 @@ func download() -> void:
 func install_cs() -> void:
 	progress_bar.value = 100.0
 	var filename = 'fmodstudioapi%slinux.tar.gz' % FmodAudioServer.get_version_number().replace(".","")
-	var dict = OS.execute_with_pipe("python3", ["addons/FmodGodot/fmod_installer.py","--noprompts", "install_cs", filename, "addons/FmodGodot"])	
+	var dict = OS.execute_with_pipe("python3", ["addons/FmodGodot/fmod_installer.py","--noprompts", "install_cs", ProjectSettings.globalize_path( "%s/%s" % [get_script().get_path().get_base_dir(), filename]), "addons/FmodGodot"])	
 	process_id = dict["pid"]
 	stdio = dict["stdio"]
 	stderr = dict["stderr"]
