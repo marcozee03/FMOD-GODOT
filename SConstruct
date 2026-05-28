@@ -18,9 +18,11 @@ if env["target"] == "editor" or env["target"] == "template_debug":
     logging = "L"
 
 def linux_config():
+    suffix = env['target']
+    lib_filename = "{}{}.{}{}".format("lib", libname, suffix, env.subst('$SHLIBSUFFIX'))
     if env["platform"] == "linux":
         env.Append(LIBS=["libfmod%s" % logging, "libfmodstudio%s" % logging])
-        env.Append(LINKFLAGS=["-Wl,-soname,{}.{}".format(libname, so_number)])
+        env.Append(LINKFLAGS=["-Wl,-soname,{}.{}".format(lib_filename, so_number)])
 def windows_config():
     if env["platform"] == "windows":
         env.Append(LIBS=["fmod%s_vc" % logging, "fmodstudio%s_vc" % logging])
@@ -42,9 +44,11 @@ def ios_config():
             '-Wl,-undefined,dynamic_lookup', "-miphoneos-version-min=" + env["ios_min_version"]
         ])
 def android_config():
+    suffix = env['target']
+    lib_filename = "{}{}.{}{}".format("lib", libname, suffix, env.subst('$SHLIBSUFFIX'))
     if env["platform"] == "android":
         env.Append(LIBS=['libfmod%s.so' % logging, 'libfmodstudio%s.so' % logging])
-        env.Append(LINKFLAGS=["-Wl,-soname,{}.{}".format(libname, so_number)])
+        env.Append(LINKFLAGS=["-Wl,-soname,{}.{}".format(lib_filename, so_number)])
 def verify_godot_cpp():
     if not (os.path.isdir("godot-cpp") and os.listdir("godot-cpp")):
         print_error("""godot-cpp is not available within this folder, as Git submodules haven't been initialized.
