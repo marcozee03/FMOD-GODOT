@@ -17,7 +17,7 @@ FmodListener3D = "icons/FmodListener3D.svg"
 
 windows.editor.x86_64 = "bin/windows/x86_64/libFmodGodot.windows.editor.x86_64.dll"
 windows.debug.x86_64 = "bin/windows/x86_64/libFmodGodot.windows.template_debug.x86_64.dll"
-windows.release.x86_64 = "bin/windows/x86_64/libFmodGodot.template_release.x86_64.dll"
+windows.release.x86_64 = "bin/windows/x86_64/libFmodGodot.windows.template_release.x86_64.dll"
 
 linux.editor.x86_64 = "bin/linux/x86_64/libFmodGodot.linux.editor.x86_64.so"
 linux.debug.x86_64 = "bin/linux/x86_64/libFmodGodot.linux.template_debug.x86_64.so"
