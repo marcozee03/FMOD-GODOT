@@ -43,12 +43,12 @@ ios.release  = "bin/ios/libFmodGodot.ios.template_release.xcframework"
 [dependencies]
 
 windows.editor.x86_64 = {
-    "bin/windows/x86_64/fmod.dll" : "",
-    "bin/windows/x86_64/fmodstudio.dll" : ""
+    "bin/windows/x86_64/fmodL.dll" : "",
+    "bin/windows/x86_64/fmodstudioL.dll" : ""
 }
 windows.debug.x86_64 = {
-    "bin/windows/x86_64/fmod.dll" : "",
-    "bin/windows/x86_64/fmodstudio.dll" : ""
+    "bin/windows/x86_64/fmodL.dll" : "",
+    "bin/windows/x86_64/fmodstudioL.dll" : ""
 }
 windows.release.x86_64 = {
     "bin/windows/x86_64/fmod.dll" : "",
