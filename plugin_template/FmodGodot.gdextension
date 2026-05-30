@@ -15,30 +15,30 @@ FmodListener2D = "icons/FmodListener2D.svg"
 FmodListener3D = "icons/FmodListener3D.svg"
 [libraries]
 
-windows.editor.x86_64 = "bin/windows/x86_64/libFmodGodot.windows.editor.x86_64.dll"
-windows.debug.x86_64 = "bin/windows/x86_64/libFmodGodot.windows.template_debug.x86_64.dll"
-windows.release.x86_64 = "bin/windows/x86_64/libFmodGodot.windows.template_release.x86_64.dll"
+windows.editor.x86_64 = "bin/windows/x86_64/libFmodGodot.editor.dll"
+windows.debug.x86_64 = "bin/windows/x86_64/libFmodGodot.template_debug.dll"
+windows.release.x86_64 = "bin/windows/x86_64/libFmodGodot.template_release.dll"
 
-linux.editor.x86_64 = "bin/linux/x86_64/libFmodGodot.linux.editor.x86_64.so"
-linux.debug.x86_64 = "bin/linux/x86_64/libFmodGodot.linux.template_debug.x86_64.so"
-linux.release.x86_64 = "bin/linux/x86_64/libFmodGodot.linux.template_release.x86_64.so"
+linux.editor.x86_64 = "bin/linux/x86_64/libFmodGodot.editor.so"
+linux.debug.x86_64 = "bin/linux/x86_64/libFmodGodot.template_debug.so"
+linux.release.x86_64 = "bin/linux/x86_64/libFmodGodot.template_release.so"
 
-macos.editor = "bin/macos/libFmodGodot.macos.editor.framework"
-macos.debug  = "bin/macos/libFmodGodot.macos.template_debug.framework"
-macos.release  = "bin/macos/libFmodGodot.macos.template_release.framework"
+macos.editor = "bin/macos/libFmodGodot.editor.framework"
+macos.debug  = "bin/macos/libFmodGodot.template_debug.framework"
+macos.release  = "bin/macos/libFmodGodot.template_release.framework"
 
-android.editor.x86_64 = "bin/android/x86_64/libFmodGodot.android.editor.x86_64.so"
-android.debug.x86_64 = "bin/android/x86_64/libFmodGodot.android.template_debug.x86_64.so"
-android.release.x86_64 = "bin/android/x86_64/libFmodGodot.android.template_release.x86_64.so"
+android.editor.x86_64 = "bin/android/x86_64/libFmodGodot.editor.so"
+android.debug.x86_64 = "bin/android/x86_64/libFmodGodot.template_debug.so"
+android.release.x86_64 = "bin/android/x86_64/libFmodGodot.template_release.so"
 
 
-android.editor.arm64 = "bin/android/arm64/libFmodGodot.android.editor.arm64.so"
-android.debug.arm64 = "bin/android/arm64/libFmodGodot.android.template_debug.arm64.so"
-android.release.arm64 = "bin/android/arm64/libFmodGodot.android.template_release.arm64.so"
+android.editor.arm64 = "bin/android/arm64/libFmodGodot.editor.so"
+android.debug.arm64 = "bin/android/arm64/libFmodGodot.template_debug.so"
+android.release.arm64 = "bin/android/arm64/libFmodGodot.template_release.so"
 
-ios.debug  = "bin/ios/libFmodGodot.ios.template_debug.xcframework"
-ios.editor  = "bin/ios/libFmodGodot.ios.template_debug.xcframework"
-ios.release  = "bin/ios/libFmodGodot.ios.template_release.xcframework"
+ios.debug  = "bin/ios/libFmodGodot.template_debug.xcframework"
+ios.editor  = "bin/ios/libFmodGodot.template_debug.xcframework"
+ios.release  = "bin/ios/libFmodGodot.template_release.xcframework"
 
 [dependencies]
 
