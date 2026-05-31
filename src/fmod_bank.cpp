@@ -1,4 +1,5 @@
 #include "fmod_bank.h"
+#include "core/print_string.hpp"
 #include "fmod_common.h"
 #include "fmod_globals.h"
 #include "fmod_studio.h"
@@ -27,6 +28,7 @@ Vector4i FmodBank::get_id() const
 
 int FmodBank::unload()
 {
+    print_verbose("Unloading Bank", get_path());
     return FMOD_Studio_Bank_Unload(bank);
 }
 int FmodBank::load_sample_data()
@@ -35,7 +37,7 @@ int FmodBank::load_sample_data()
 }
 int FmodBank::unload_sample_data()
 {
-    return FMOD_Studio_Bank_Unload(bank);
+    return FMOD_Studio_Bank_UnloadSampleData(bank);
 }
 int FmodBank::get_loading_state() const
 {
