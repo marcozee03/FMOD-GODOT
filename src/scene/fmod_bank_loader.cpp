@@ -1,18 +1,20 @@
 #include "fmod_bank_loader.h"
-#include <godot_cpp/core/class_db.hpp>
-#include <godot_cpp/classes/engine.hpp>
+#include "variant/typed_array.hpp"
 #include <globals.h>
+#include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/core/class_db.hpp>
 using namespace godot;
 using namespace FmodGodot;
 void FmodBankLoader::_bind_methods()
 {
-    BIND_PROPERTY_WITH_HINT(banks, Variant::Type::ARRAY, PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":FmodBank");
+    BIND_PROPERTY_WITH_HINT(banks, Variant::Type::ARRAY, PROPERTY_HINT_TYPE_STRING,
+                            String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) +
+                                ":FmodBank");
     BIND_BOOL_PROPERTY(preload_sample_data);
 }
 
 FmodBankLoader::FmodBankLoader()
 {
-    banks = TypedArray<Ref<FmodBank>>();
 }
 FmodBankLoader::~FmodBankLoader()
 {
@@ -31,9 +33,14 @@ void FmodBankLoader::_enter_tree()
         }
     }
 }
-TypedArray<Ref<FmodBank>> FmodBankLoader::get_banks()
+TypedArray<FmodBank> FmodBankLoader::get_banks()
 {
-    return banks;
+    TypedArray<FmodBank> ret;
+    for (auto bank : banks)
+    {
+        ret.push_back(bank);
+    }
+    return ret;
 }
 void FmodGodot::FmodBankLoader::set_preload_sample_data(bool p_preload)
 {
@@ -43,7 +50,11 @@ bool FmodGodot::FmodBankLoader::is_preload_sample_data()
 {
     return preload_sample_data;
 }
-void FmodBankLoader::set_banks(TypedArray<Ref<FmodBank>> banks)
+void FmodBankLoader::set_banks(TypedArray<FmodBank> banks)
 {
-    this->banks = banks;
+    this->banks.clear();
+    for (auto var : banks)
+    {
+        this->banks.push_back(var);
+    }
 }

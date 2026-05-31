@@ -12,6 +12,7 @@
 #include "fmod_studio_common.h"
 #include "globals.h"
 #include "variant/utility_functions.hpp"
+#include "variant/variant.hpp"
 #include <classes/dir_access.hpp>
 #include <classes/os.hpp>
 #include <cstdint>
@@ -523,6 +524,7 @@ void FmodAudioServer::load_start_up_banks()
 
 int FmodAudioServer::load_bank_by_file(const String &path, bool loadSamples)
 {
+    print_verbose("Loading Bank at ", path);
     FMOD_STUDIO_BANK *bank;
     FMOD_RESULT result =
         FMOD_Studio_System_LoadBankFile(studio_system, path.utf8().ptr(), FMOD_STUDIO_LOAD_BANK_NORMAL, &bank);
@@ -539,8 +541,7 @@ int FmodAudioServer::load_bank_by_file(const String &path, bool loadSamples)
     }
     else
     {
-        godot::_err_print_error("load_bank", __FILE__, __LINE__,
-                                "Couldn't load bank:" + path + " error:" + FMOD_ErrorString(result), true, true);
+        print_error(vformat("Couldn't load bank at %s Error: %s", path, FMOD_ErrorString(result)));
     }
 
     return result;
@@ -570,6 +571,7 @@ void FmodAudioServer::unload_banks()
         return;
     }
     FMOD_Studio_System_UnloadAll(studio_system);
+    print_verbose("Unloading all banks");
     unlock();
 }
 void FmodAudioServer::get_core_ref(FMOD_SYSTEM **core)
