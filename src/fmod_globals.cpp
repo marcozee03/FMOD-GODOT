@@ -1,7 +1,7 @@
 #include "fmod_globals.h"
 #include "fmod_common.h"
-#include "variant/variant.hpp"
 #include "variant/vector2i.hpp"
+#include <cstdio>
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/rigid_body2d.hpp>
@@ -57,18 +57,18 @@ Vector2i cast_to_vector2i(const FMOD_STUDIO_PARAMETER_ID &p_id)
     return id;
 }
 #pragma GCC diagnostic pop
-// FMOD_GUID string_to_fmod_guid(const char *guid)
-// {
-//     FMOD_GUID result;
-//     sscanf(guid, "{%8x-%4hx-%4hx-%2hhx%2hhx-%2hhx%2hhx%2hhx%2hhx%2hhx%2hhx}", &result.Data1, &result.Data2,
-//            &result.Data3, &result.Data4[0], &result.Data4[1], &result.Data4[2], &result.Data4[3], &result.Data4[4],
-//            &result.Data4[5], &result.Data4[6], &result.Data4[7]);
-//     return result;
-// }
+FMOD_GUID string_to_fmod_guid(const char *guid)
+{
+    FMOD_GUID result;
+    sscanf(guid, "{%8x-%4hx-%4hx-%2hhx%2hhx-%2hhx%2hhx%2hhx%2hhx%2hhx%2hhx}", &result.Data1, &result.Data2,
+           &result.Data3, &result.Data4[0], &result.Data4[1], &result.Data4[2], &result.Data4[3], &result.Data4[4],
+           &result.Data4[5], &result.Data4[6], &result.Data4[7]);
+    return result;
+}
 String fmod_guid_to_string(const FMOD_GUID &guid)
 {
     char result[39];
-    vformat( "{%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x}", guid.Data1, guid.Data2,
+    snprintf(result, sizeof(result), "{%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x}", guid.Data1, guid.Data2,
              guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], guid.Data4[3], guid.Data4[4], guid.Data4[5],
              guid.Data4[6], guid.Data4[7]);
     return result;
