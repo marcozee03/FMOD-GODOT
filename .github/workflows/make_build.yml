@@ -95,7 +95,7 @@ jobs:
         if: ${{ matrix.target.platform == 'windows' }}
         shell: pwsh
         run: |
-          Remove-Item plugin_template/bin/* -Include *.exp,*.lib,*.pdb -Force -Recurse
+          Remove-Item plugin_template/bin/* -Include *.exp,*.lib,*.pdb,*.a -Force -Recurse
 
 
       # Upload the build
@@ -115,6 +115,6 @@ jobs:
       - name: Merge Artifacts
         uses: actions/upload-artifact/merge@v4
         with:
-          name: fmod-godot
+          name: FmodGodot
           pattern: fmod-godot-*
           delete-merged: true
