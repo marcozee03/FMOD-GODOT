@@ -1,9 +1,11 @@
 #include "register_types.h"
 #include "classes/global_constants.hpp"
 #include "core/class_db.hpp"
+#include "core/property_info.hpp"
 #include "fmod_bank_loader.h"
 // #include "fmodeventemitter2d.h"
 #include "fmod_audio_server.h"
+#include "fmod_console.h"
 #include "fmod_event_emitter_2d.h"
 #include "fmod_event_emitter_3d.h"
 #include "fmod_event_previewer.h"
@@ -18,12 +20,14 @@
 #include "fmod_listener_2d.h"
 #include "fmod_listener_3d.h"
 #include "fmod_project_explorer.h"
-#include "fmod_script_client.h"
 #include "fmod_string_names.h"
+#include "variant/array.hpp"
 #include "variant/variant.hpp"
 #include <classes/project_settings.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #ifdef TOOLS_ENABLED
+#include "fmod_script_client.h"
+#include "live_update_indicator.h"
 #include "bank_inspector_plugin.h"
 #include "fmod_bank_importer.h"
 #include "fmod_editor_interface.h"
@@ -48,76 +52,51 @@ Ref<FmodBankFormatLoader> bank_format_loader;
 #ifdef TOOLS_ENABLED
 FmodEditorInterface *editor_interface;
 #endif
-#define ADD_PROJECT_SETTING(setting_str, bool_basic, bool_internal, bool_restart_if_changed, default_value,            \
-                            variant_type, property_hint, hint_string, dictionary)                                      \
-    if (!godot::ProjectSettings::get_singleton()->has_setting(setting_str))                                            \
-    {                                                                                                                  \
-        godot::ProjectSettings::get_singleton()->set_setting(setting_str, default_value);                              \
-    }                                                                                                                  \
-    godot::ProjectSettings::get_singleton()->set_initial_value(setting_str, default_value);                            \
-    godot::ProjectSettings::get_singleton()->set_as_basic(setting_str, bool_basic);                                    \
-    godot::ProjectSettings::get_singleton()->set_as_internal(setting_str, bool_internal);                              \
-    godot::ProjectSettings::get_singleton()->set_restart_if_changed(setting_str, bool_restart_if_changed);             \
-    dictionary = godot::Dictionary();                                                                                  \
-    dictionary.get_or_add("name", setting_str);                                                                        \
-    dictionary.get_or_add("type", variant_type);                                                                       \
-    dictionary.get_or_add("hint", property_hint);                                                                      \
-    dictionary.get_or_add("hint_string", hint_string);                                                                 \
-    godot::ProjectSettings::get_singleton()->add_property_info(dictionary)
+
 namespace FmodGodot
 {
 void loadSettings()
 {
-    godot::Dictionary propinfo = Dictionary();
-    // ADD_EDITOR_SETTING("Fmod/Debug/logging_level", true, false, true, 1,
-    // Variant::Type::INT, PROPERTY_HINT_ENUM, "NONE:0,ERROR:1,WARNING:2,LOG:4",
-    // propinfo);
-    ADD_PROJECT_SETTING(LIVE_UPDATE, true, false, true, 0, Variant::Type::INT, PROPERTY_HINT_ENUM,
-                        "Disabled:0, Enabled:1, Development Build Only:2", propinfo);
-    ADD_PROJECT_SETTING(LIVE_UPDATE + String(".editor"), true, false, true, 0, Variant::Type::INT, PROPERTY_HINT_ENUM,
-                        "Disabled:0, Enabled:1, Development Build Only:2", propinfo);
-    ADD_PROJECT_SETTING(LIVE_UPDATE_PORT, true, false, false, 9264, Variant::Type::INT, PROPERTY_HINT_RANGE, "0,65536",
-                        propinfo);
-    ADD_PROJECT_SETTING(LIVE_UPDATE_PORT + String(".editor"), true, false, false, 9265, Variant::Type::INT,
-                        PROPERTY_HINT_RANGE, "0,65536", propinfo);
-    ADD_PROJECT_SETTING(SAMPLE_RATE, true, false, false, 48000, Variant::Type::INT, PROPERTY_HINT_RANGE, "8000,192000",
-                        propinfo);
-    ADD_PROJECT_SETTING(REAL_COUNT, true, false, false, 64, Variant::Type::INT, PROPERTY_HINT_NONE, "", propinfo);
-    ADD_PROJECT_SETTING(VIRTUAL_COUNT, true, false, false, 1024, Variant::Type::INT, PROPERTY_HINT_RANGE, "0,4095",
-                        propinfo);
-    ADD_PROJECT_SETTING(BUFFER_LENGTH, true, false, false, 1024, Variant::Type::INT, PROPERTY_HINT_NONE, "", propinfo);
-    ADD_PROJECT_SETTING(BUFFER_COUNT, true, false, false, 4, Variant::Type::INT, PROPERTY_HINT_NONE, "", propinfo);
-    ADD_PROJECT_SETTING(DOPPLER_SCALE, true, false, false, 1, Variant::Type::FLOAT, PROPERTY_HINT_NONE, "", propinfo);
-    ADD_PROJECT_SETTING(DISTANCE_FACTOR, true, false, false, 1, Variant::Type::FLOAT, PROPERTY_HINT_NONE, "", propinfo);
-    ADD_PROJECT_SETTING(ROLLOFF_SCALE, true, false, false, 1, Variant::Type::FLOAT, PROPERTY_HINT_NONE, "", propinfo);
+    GLOBAL_DEF_RST_BASIC(PropertyInfo(Variant::Type::INT, LIVE_UPDATE, godot::PROPERTY_HINT_ENUM,
+                                      "Disabled:0, Enabled:1, Development Build Only:2"),
+                         0);
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::INT, LIVE_UPDATE_PORT, godot::PROPERTY_HINT_RANGE, "0,65536"), 9264);
+    GLOBAL_DEF_BASIC(
+        PropertyInfo(Variant::Type::INT, LIVE_UPDATE_PORT + String(".editor"), godot::PROPERTY_HINT_RANGE, "0,65536"),
+        9265);
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::INT, SAMPLE_RATE, PROPERTY_HINT_RANGE, "8000,192000"), 48000);
+    GLOBAL_DEF_BASIC(REAL_COUNT, 64);
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::INT, VIRTUAL_COUNT, PROPERTY_HINT_RANGE, "0,4095"), 1024);
+    GLOBAL_DEF_BASIC(BUFFER_LENGTH, 1024);
+    GLOBAL_DEF_BASIC(BUFFER_COUNT, 4);
+    GLOBAL_DEF_BASIC(DOPPLER_SCALE, 1.0);
+    GLOBAL_DEF_BASIC(DISTANCE_FACTOR, 1.0);
+    GLOBAL_DEF_BASIC(ROLLOFF_SCALE, 1.0);
 
-    ADD_PROJECT_SETTING(SOURCE_TYPE, true, false, false, 1, Variant::Type::INT, PROPERTY_HINT_ENUM,
-                        "Single Platform Build:0, "
-                        "Multiple Platform Build(WIP):1",
-                        propinfo);
-    ADD_PROJECT_SETTING(FMOD_STUDIO_PATH, true, false, false, "", Variant::Type::STRING, PROPERTY_HINT_GLOBAL_FILE, "",
-                        propinfo);
-    ADD_PROJECT_SETTING(FMOD_PROJECT_PATH, true, false, false, "", Variant::Type::STRING, PROPERTY_HINT_GLOBAL_FILE, "",
-                        propinfo);
-    ADD_PROJECT_SETTING(BANK_DIRECTORY, true, false, false, "res://banks/", Variant::Type::STRING, PROPERTY_HINT_DIR,
-                        "", propinfo);
-    ADD_PROJECT_SETTING(LOAD_BANKS, true, false, false, 0, Variant::Type::INT, PROPERTY_HINT_ENUM,
-                        "None:0,Specified:1,All:2", propinfo);
-    ADD_PROJECT_SETTING(LOAD_BANKS + String(".editor"), true, false, false, 2, Variant::Type::INT, PROPERTY_HINT_ENUM,
-                        "None:0,Specified:1,All:2", propinfo);
-    ADD_PROJECT_SETTING(SPECIFIED_BANKS, true, false, false, Array(), Variant::Type::ARRAY, PROPERTY_HINT_TYPE_STRING,
-                        String::num(Variant::STRING) + "/" + String::num(PROPERTY_HINT_FILE) + ":*.bank", propinfo);
-    ADD_PROJECT_SETTING(LOAD_SAMPLE_DATA, true, false, false, false, Variant::Type::BOOL, PROPERTY_HINT_NONE, "",
-                        propinfo);
-    ADD_PROJECT_SETTING(ENCRYPTION_KEY, true, false, false, "", Variant::Type::STRING, PROPERTY_HINT_NONE, "",
-                        propinfo);
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::INT, SOURCE_TYPE, PROPERTY_HINT_ENUM,
+                                  "Single Platform Build:0, "
+                                  "Multiple Platform Build(WIP):1"),
+                     1);
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::STRING, FMOD_STUDIO_PATH, PROPERTY_HINT_GLOBAL_FILE, ""), "");
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::STRING, FMOD_PROJECT_PATH, PROPERTY_HINT_GLOBAL_FILE, ""), "");
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::STRING, BANK_DIRECTORY, PROPERTY_HINT_DIR, ""), "res://banks");
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::INT, LOAD_BANKS, PROPERTY_HINT_ENUM, "None:0,Specified:1 ,All:2,"), 0);
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::INT, LOAD_BANKS + String(".editor"), PROPERTY_HINT_ENUM,
+                                  "None:0,Specified:1 ,All:2,"),
+                     2);
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::ARRAY, SPECIFIED_BANKS, PROPERTY_HINT_TYPE_STRING,
+                                  vformat("%d/%d:*.bank", Variant::STRING, PROPERTY_HINT_FILE)),
+                     Array());
+    GLOBAL_DEF_BASIC(LOAD_SAMPLE_DATA, false);
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::STRING, ENCRYPTION_KEY, godot::PROPERTY_HINT_PASSWORD, ""), "");
 
-    ADD_PROJECT_SETTING(LOGGING_LEVEL, true, false, false, 1, Variant::Type::INT, PROPERTY_HINT_ENUM,
-                        "NONE:0,ERROR:1,WARNING:2,LOG:4", propinfo);
-    ADD_PROJECT_SETTING(DEBUG_TYPE, true, false, false, 0, Variant::Type::INT, PROPERTY_HINT_FLAGS,
-                        "MEMORY:256,FILE:512,CODEC:1024,TRACE:2048", propinfo);
-    ADD_PROJECT_SETTING(DEBUG_DISPLAY, true, false, false, 0, Variant::Type::INT, PROPERTY_HINT_FLAGS,
-                        "TIMESTAMPS:65536,LINENUMBERS:131072,THREAD:262144", propinfo);
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::INT, LOGGING_LEVEL, PROPERTY_HINT_ENUM, "NONE:0,ERROR:1,WARNING:2 ,LOG:4"),
+                     1);
+    GLOBAL_DEF_BASIC(
+        PropertyInfo(Variant::INT, DEBUG_TYPE, PROPERTY_HINT_FLAGS, "MEMORY:256,FILE:512,CODEC:1024,TRACE:2048"), 0);
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::INT, DEBUG_DISPLAY, PROPERTY_HINT_FLAGS,
+                                  "TIMESTAMPS:65536,LINENUMBERS:131072,THREAD:262144"),
+                     0);
 }
 } // namespace FmodGodot
 void initialize_fmod_module(ModuleInitializationLevel p_level)
@@ -169,6 +148,9 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         GDREGISTER_INTERNAL_CLASS(FmodEventPanner);
         GDREGISTER_INTERNAL_CLASS(FmodEventPreviewer);
         GDREGISTER_INTERNAL_CLASS(FmodProjectExplorer);
+        GDREGISTER_INTERNAL_CLASS(FmodConsole);
+        GDREGISTER_INTERNAL_CLASS(CommandInput);
+        GDREGISTER_INTERNAL_CLASS(LiveUpdateIndicator);
         EditorPlugins::add_by_type<FmodEditorPlugin>();
 #endif // TOOLS_ENABLED
     }

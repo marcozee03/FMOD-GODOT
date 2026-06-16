@@ -1,6 +1,6 @@
 #pragma once
 #ifdef TOOLS_ENABLED
-#include "classes/h_box_container.hpp"
+#include "classes/box_container.hpp"
 #include "fmod_event_previewer.h"
 #include "fmod_event_tree.h"
 #include "fmod_object_details.h"
@@ -10,18 +10,20 @@
 using namespace godot;
 namespace FmodGodot
 {
-class FmodProjectExplorer : public HBoxContainer
+class FmodProjectExplorer : public BoxContainer
 {
-    GDCLASS(FmodProjectExplorer, HBoxContainer)
+    GDCLASS(FmodProjectExplorer, BoxContainer)
   private:
     FmodEventPreviewer *previewer;
     EventTree *tree;
     FmodObjectDetails *details;
     void emit_object_selected(const String &name);
     void emit_object_activated(const String &name);
+    void _update_theme();
 
   protected:
     static void _bind_methods();
+    void _notification(int p_what);
 
   public:
     FmodProjectExplorer(/* args */);

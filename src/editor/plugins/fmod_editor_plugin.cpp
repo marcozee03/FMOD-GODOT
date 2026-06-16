@@ -1,11 +1,9 @@
 
-#include "classes/popup.hpp"
-#include "variant/callable_method_pointer.hpp"
 #ifdef TOOLS_ENABLED
+#include "classes/popup.hpp"
 #include "fmod_bank_importer.h"
 #include "fmod_editor_interface.h"
 #include "fmod_editor_plugin.h"
-#include "fmod_string_names.h"
 #include <classes/editor_interface.hpp>
 #include <classes/editor_settings.hpp>
 #include <classes/project_settings.hpp>
@@ -36,6 +34,8 @@ FmodEditorPlugin::~FmodEditorPlugin()
 
 void FmodEditorPlugin::_enter_tree()
 {
+    log = memnew(FmodConsole);
+    FmodEditorInterface::get_singleton()->set_console(log);
     eventInspector = memnew(EventInspector);
     add_inspector_plugin(eventInspector);
     bankInspector = memnew(BankInspectorPlugin);
@@ -43,13 +43,15 @@ void FmodEditorPlugin::_enter_tree()
     bankImporter = memnew(FmodBankImporter);
     add_import_plugin(bankImporter);
     browser = memnew(FmodEventBrowser());
-    add_control_to_bottom_panel(browser, "Fmod Event Browser");
+    add_dock(log);
+    add_dock(browser);
     Ref<PackedScene> installer_scene =
         ResourceLoader::get_singleton()->load("res://addons/FmodGodot/fmod_installer.tscn");
     installer = (Popup *)installer_scene->instantiate();
 
+    log->_set_fmod_script_client(FmodEditorInterface::get_singleton()->get_script_client());
     get_editor_interface()->get_base_control()->add_child(installer);
-    add_tool_menu_item("Finish FMOD Godot setup", Callable(installer,"popup"));
+    add_tool_menu_item("Finish FMOD Godot setup", Callable(installer, "popup"));
 }
 void FmodEditorPlugin::_exit_tree()
 {

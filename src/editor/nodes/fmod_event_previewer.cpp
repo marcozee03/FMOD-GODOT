@@ -1,5 +1,6 @@
 #include "classes/spin_box.hpp"
 #include "fmod_studio.h"
+#include "variant/vector3.hpp"
 #ifdef TOOLS_ENABLED
 #include "classes/button.hpp"
 #include "classes/control.hpp"
@@ -71,6 +72,7 @@ FmodEventPreviewer::FmodEventPreviewer()
     mediaControls->add_child(radius);
     radius->connect("value_changed", callable_mp(this, &FmodEventPreviewer::set_panner_size));
     panner->connect("play_position_changed", Callable(emitter, "set_position"));
+    panner->connect("event_rotation_changed", Callable(emitter, "set_rotation"));
 }
 void FmodEventPreviewer::go_to_event()
 {
@@ -108,6 +110,8 @@ void FmodEventPreviewer::set_event_path(const String &p_event_path)
     show();
     auto event = FmodEditorInterface::get_singleton()->get_cache()->get_event(p_event_path);
     radius->set_value(event.max * 2);
+    panner->set_attenuation_max(event.max);
+    panner->set_attenuation_min(event.min);
     // set_panner_size(event.max * 2);
     if (event.lengthMS == 0)
     {
@@ -151,6 +155,8 @@ void FmodEventPreviewer::set_event_guid(Vector4i p_event_guid)
 void FmodGodot::FmodEventPreviewer::start()
 {
     emitter->set_global_position(panner->get_play_position());
+    emitter->set_rotation(Vector3(0, 0, 0));
+    emitter->rotate(Vector3(0, 1, 0), panner->get_facing_angle());
     emitter->start();
     if (scrub->get_value() < scrub->get_max())
     {
