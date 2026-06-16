@@ -1,6 +1,6 @@
 [configuration]
 entry_symbol = "fmod_library_init"
-compatibility_minimum = 4.3
+compatibility_minimum = 4.6
 
 [icons]
 

@@ -50,6 +50,30 @@ const FmodEditorCache *FmodEditorInterface::get_cache() const
 {
     return &cache;
 }
+FmodScriptClient *FmodEditorInterface::get_script_client() const
+{
+    return script;
+}
+void FmodEditorInterface::set_console(FmodConsole *p_console)
+{
+    console = p_console;
+};
+void FmodEditorInterface::print(const String &message)
+{
+    console->add_message(message);
+}
+void FmodEditorInterface::print_warning(const String &message)
+{
+    console->add_message(message, FmodConsole::MSG_TYPE_WARNING);
+}
+void FmodEditorInterface::print_error(const String &message)
+{
+    console->add_message(message, FmodConsole::MSG_TYPE_ERROR);
+}
+void FmodEditorInterface::print_rich(const String &message)
+{
+    console->add_message(message, FmodConsole::MSG_TYPE_STD_RICH);
+}
 const FmodTheme *FmodEditorInterface::get_theme() const
 {
     return &theme;
@@ -117,7 +141,7 @@ void FmodEditorInterface::refresh()
     }
     int bank_count;
     FMOD_Studio_System_GetBankCount(studio, &bank_count);
-    if (bank_count <= 0)
+    if (bank_count < 0)
     {
         return;
     }

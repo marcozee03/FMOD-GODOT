@@ -1,4 +1,5 @@
 #include "fmod_globals.h"
+#include "classes/project_settings.hpp"
 #include "fmod_common.h"
 #include "variant/vector2i.hpp"
 #include <cstdio>
@@ -67,11 +68,9 @@ FMOD_GUID string_to_fmod_guid(const char *guid)
 }
 String fmod_guid_to_string(const FMOD_GUID &guid)
 {
-    char result[39];
-    snprintf(result, sizeof(result), "{%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x}", guid.Data1, guid.Data2,
-             guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], guid.Data4[3], guid.Data4[4], guid.Data4[5],
-             guid.Data4[6], guid.Data4[7]);
-    return result;
+    return vformat("{%08ux-%04ux-%04ux-%02ux%02ux-%02ux%02ux%02ux%02ux%02ux%02ux}", guid.Data1, guid.Data2, guid.Data3,
+                   guid.Data4[0], guid.Data4[1], guid.Data4[2], guid.Data4[3], guid.Data4[4], guid.Data4[5],
+                   guid.Data4[6], guid.Data4[7]);
 }
 String fmod_guid_to_string(const Vector4i &guid)
 {
@@ -156,3 +155,29 @@ FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody2D *rigidbody)
     return attributes;
 }
 } // namespace FmodGodot
+Variant _GLOBAL_DEF(const String &p_var, const Variant &p_default, bool p_restart_if_changed,
+                    bool p_ignore_value_in_docs, bool p_basic, bool p_internal)
+{
+    Variant ret;
+    if (!ProjectSettings::get_singleton()->has_setting(p_var))
+    {
+        ProjectSettings::get_singleton()->set(p_var, p_default);
+    }
+    ret = GLOBAL_GET(p_var);
+
+    ProjectSettings::get_singleton()->set_initial_value(p_var, p_default);
+    // ProjectSettings::get_singleton()->set_builtin_order(p_var);
+    ProjectSettings::get_singleton()->set_as_basic(p_var, p_basic);
+    ProjectSettings::get_singleton()->set_restart_if_changed(p_var, p_restart_if_changed);
+    // ProjectSettings::get_singleton()->set_ignore_value_in_docs(p_var, p_ignore_value_in_docs);
+    ProjectSettings::get_singleton()->set_as_internal(p_var, p_internal);
+    return ret;
+}
+
+Variant _GLOBAL_DEF(const PropertyInfo &p_info, const Variant &p_default, bool p_restart_if_changed, bool p_basic,
+                    bool p_internal)
+{
+    Variant ret = _GLOBAL_DEF(p_info.name, p_default, p_restart_if_changed, p_basic, p_internal);
+    ProjectSettings::get_singleton()->add_property_info(p_info);
+    return ret;
+}

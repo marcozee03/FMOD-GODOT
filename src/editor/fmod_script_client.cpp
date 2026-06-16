@@ -1,8 +1,9 @@
+#ifdef TOOLS_ENABLED
 #include "fmod_script_client.h"
 #include "classes/global_constants.hpp"
-#include "classes/stream_peer_tcp.hpp"
 #include "core/error_macros.hpp"
 #include "core/print_string.hpp"
+#include "fmod_editor_interface.h"
 #include "variant/array.hpp"
 #include "variant/packed_byte_array.hpp"
 #include "variant/utility_functions.hpp"
@@ -25,8 +26,9 @@ void FmodScriptClient::connect_to_fmod()
     }
     if (get_status() == STATUS_ERROR)
     {
-        print_line_rich(
-            "[color=red]FMOD Godot: Script Client failed to connect - Check FMOD Studio is running[/color]");
+        FmodEditorInterface::get_singleton()->print_error(
+            "FMOD Godot: Script Client failed to connect - Check FMOD Studio is running");
+        print_error("FMOD Godot: Script Client failed to connect - Check FMOD Studio is running");
         return;
     }
     while (get_available_bytes() == 0)
@@ -37,6 +39,8 @@ void FmodScriptClient::connect_to_fmod()
     String header = PackedByteArray(arr[1]).get_string_from_utf8().strip_edges(true, true);
     if (header.begins_with("log():"))
     {
+
+        FmodEditorInterface::get_singleton()->print_rich(vformat("[color=green]%s,[/color]", header.substr(6)));
         UtilityFunctions::print_rich("[color=green]FMOD Godot: Script Client returned " + header.substr(6) +
                                      "[/color]");
     }
@@ -49,7 +53,10 @@ bool FmodScriptClient::is_connected_to_studio()
 
 bool FmodScriptClient::send_script_command(const String &command)
 {
-
+    if (command.strip_edges().is_empty())
+    {
+        return "";
+    }
     if (!is_connected_to_studio())
     {
         connect_to_fmod();
@@ -59,7 +66,7 @@ bool FmodScriptClient::send_script_command(const String &command)
     {
         poll();
     }
-    Array arr = get_partial_data(128);
+    Array arr = get_partial_data(get_available_bytes());
     if ((int)arr[0] != Error::OK)
     {
         return false;
@@ -75,22 +82,34 @@ bool FmodScriptClient::send_script_command(const String &command)
 
 String FmodGodot::FmodScriptClient::get_script_output(const String &command)
 {
-
-    put_utf8_string(command);
-    PackedByteArray buffer;
-    while (get_available_bytes() > 0)
+    if (command.strip_edges().is_empty())
     {
-        buffer.append_array(get_data(get_available_bytes()));
+        return "";
+    }
+    if (!is_connected_to_studio())
+    {
+        connect_to_fmod();
+    }
+    put_data(command.to_utf8_buffer());
+    PackedByteArray buffer;
+    while (get_available_bytes() == 0)
+    {
         poll();
     }
-    String result = buffer.get_string_from_utf8().strip_edges(true, true);
-    if (result.begins_with("out():"))
+    while (get_available_bytes() > 0)
     {
-        return result.substr(6);
+        Array arr = get_data(get_available_bytes());
+        if ((int)arr[0] == Error::OK)
+        {
+            buffer.append_array(arr[1]);
+        }
+        poll();
     }
-    return "";
+    return buffer.get_string_from_utf8().strip_edges(true, true);
 }
 
 void FmodScriptClient::_bind_methods()
 {
+    // BIND_METHOD(get_script_output())
 }
+#endif

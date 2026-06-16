@@ -1,6 +1,7 @@
 #pragma once
 #include <godot_cpp/classes/control.hpp>
 #include <godot_cpp/variant/variant.hpp>
+#include <classes/project_settings.hpp>
 using namespace godot;
 
 #define BIND_PROPERTY(property, variantType)                                                                           \
@@ -28,3 +29,5 @@ using namespace godot;
                           PropertyInfo(godot::Variant::Type::BOOL, #property, property_hint, hint_string),             \
                           "set_" #property, "is_" #property);
 #define BIND_METHOD(method, ...) ClassDB::bind_method(D_METHOD(#method, ##__VA_ARGS__), &self_type::method);
+
+
