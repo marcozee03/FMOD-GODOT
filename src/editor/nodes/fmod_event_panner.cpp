@@ -268,7 +268,6 @@ void FmodEventPanner::_gui_input(const Ref<InputEvent> &p_event)
             queue_redraw();
             break;
         case MOUSE_BUTTON_WHEEL_DOWN:
-            rotation -= Math_PI / 16;
             rotation = fmod(rotation - (Math_PI / 16), Math_TAU);
             emit_signal("event_rotation_changed", get_play_position());
             queue_redraw();
