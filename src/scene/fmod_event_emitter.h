@@ -1,4 +1,5 @@
 #pragma once
+#include "classes/global_constants.hpp"
 #include "core/math.hpp"
 #include "core/print_string.hpp"
 #include "fmod_audio_server.h"
@@ -53,6 +54,7 @@ template <class Derived, class NodeType, class RigidBody> class FmodEventEmitter
     bool _property_get_revert(const StringName &p_name, Variant &r_property);
 
     void _get_property_list(List<PropertyInfo> *p_list) const;
+    void _validate_property(PropertyInfo &p_property) const;
 
     static void _bind_methods();
 
@@ -298,6 +300,19 @@ void FmodEventEmitter<Derived, NodeType, RigidBody>::_get_property_list(List<Pro
         p_list->push_back(info);
     }
 }
+template <class Derived, class NodeType, class RigidBody>
+inline void FmodEventEmitter<Derived, NodeType, RigidBody>::_validate_property(PropertyInfo &p_property) const
+{
+
+    if (p_property.name == StringName("attenuation_min"))
+    {
+        p_property.usage = override_attenuation ? PROPERTY_USAGE_DEFAULT : PROPERTY_USAGE_STORAGE;
+    }
+    if (p_property.name == StringName("attenuation_max"))
+    {
+        p_property.usage = override_attenuation ? PROPERTY_USAGE_DEFAULT : PROPERTY_USAGE_STORAGE;
+    }
+}
 
 template <class Derived, class NodeType, class RigidBody>
 void FmodEventEmitter<Derived, NodeType, RigidBody>::set_parameters()
@@ -494,7 +509,11 @@ bool FmodEventEmitter<Derived, NodeType, RigidBody>::is_override_attenuation() c
 template <class Derived, class NodeType, class RigidBody>
 void FmodEventEmitter<Derived, NodeType, RigidBody>::set_override_attenuation(bool p_override_attenuation)
 {
-    override_attenuation = p_override_attenuation;
+    if (override_attenuation != p_override_attenuation)
+    {
+        this->notify_property_list_changed();
+        override_attenuation = p_override_attenuation;
+    }
 }
 
 template <class Derived, class NodeType, class RigidBody>

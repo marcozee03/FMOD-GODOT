@@ -6,12 +6,10 @@
 > Fmod is a commercial library. This is an Unofficial integration with the godot engine. Check [Licensing](https://www.fmod.com/licensing) for more info.
 > For official downloads of the library files check [Downloads](https://www.fmod.com/download)
 
-
 ## About
 
 > [!Note]
 > This is beta software. While it should be mostly stable. You may encounter bugs. So please take the time to submit a bug report.
-
 
 Fmod-Godot is a GDExtension library that integrates the Fmod API with the Godot
 Engine. The library provides a way for C# to interact directly with the same FMOD
@@ -55,6 +53,11 @@ startup. to be referenced by inspectors. You can drag and drop events from the b
 
 ![](images/event_browser.png)  
 
+### Fmod Console
+
+The FMOD console allows you to interact with FMOD Studio's javascript api.
+![](images/fmod_console.png)  
+
 ### Class Overview
 
 - ![](./plugin_template/icons/fmod_icon.svg)**FmodAudioServer**:
@@ -95,12 +98,14 @@ runtime and more.
 > [!Note]
 > you will need python installed and the [requests](https://github.com/psf/requests) library
 
-You will need to add the FMOD headers and libraries to the appropriate location. 
+You will need to add the FMOD headers and libraries to the appropriate location.
 A helper script "fmod_installer.py" is provided. you will need to pass your fmod
 credentials either as arguments or interactively.
+
 ``` bash
 python3 fmod_installer.py setup --username <username> --password <password> setup <fmod-version>
 ```
+
 use --help for more info and other options.
 
 The simplest way to compile this addon to your project is to run the export.py
@@ -143,7 +148,7 @@ snippets below
 ``` C#
     public partial class VERSION
     {
-        public const int number = 0x00020309;
+        public const int number = 0x00020313;
 
 #if DEBUG || TOOLS
         public const string logging = "L";

@@ -59,4 +59,20 @@ FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody2D *rigidbody);
         char_ptr = memnew_arr(char, size);                                                                             \
         function_call;                                                                                                 \
     }
+#define GLOBAL_GET(m_var) ProjectSettings::get_singleton()->get_setting_with_override(m_var)
+
+#define GLOBAL_DEF(m_var, m_value) _GLOBAL_DEF(m_var, m_value)
+#define GLOBAL_DEF_RST(m_var, m_value) _GLOBAL_DEF(m_var, m_value, true)
+#define GLOBAL_GET(m_var) ProjectSettings::get_singleton()->get_setting_with_override(m_var)
+
+#define GLOBAL_DEF_BASIC(m_var, m_value) _GLOBAL_DEF(m_var, m_value, false, true)
+#define GLOBAL_DEF_RST_BASIC(m_var, m_value) _GLOBAL_DEF(m_var, m_value, true, true)
+
+#define GLOBAL_DEF_INTERNAL(m_var, m_value) _GLOBAL_DEF(m_var, m_value, false, false, true)
 } // namespace FmodGodot
+Variant _GLOBAL_DEF(const String &p_var, const Variant &p_default, bool p_restart_if_changed = false,
+                    bool p_ignore_value_in_docs = false, bool p_basic = false, bool p_internal = false);
+
+
+Variant _GLOBAL_DEF(const PropertyInfo &p_info, const Variant &p_default, bool p_restart_if_changed = false,
+                    bool p_basic = false, bool p_internal = false);

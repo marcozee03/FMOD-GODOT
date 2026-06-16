@@ -78,9 +78,14 @@ class FmodAudioServer : public Object
     bool initialized;
     bool muted;
     LocalVector<Ref<FmodBank>> start_up_banks;
+    bool live_update_connected;
+
     // core api
 
   public:
+    friend FMOD_RESULT F_CALL fmod_studio_system_callback(FMOD_STUDIO_SYSTEM *system,
+                                                          FMOD_STUDIO_SYSTEM_CALLBACK_TYPE type, void *commanddata,
+                                                          void *userdata);
     FmodAudioServer();
     ~FmodAudioServer();
     static String get_version_number();
@@ -91,6 +96,8 @@ class FmodAudioServer : public Object
     const FMOD_STUDIO_SYSTEM *get_studio() const;
     void get_core_ref(FMOD_SYSTEM **core);
     void get_studio_ref(FMOD_STUDIO_SYSTEM **studio);
+
+    bool is_live_update_connected() const;
 
     FMOD_STUDIO_EVENTINSTANCE *create_instance(const Vector4i p_guid) const;
 

@@ -1,4 +1,5 @@
 #pragma once
+#include "classes/button.hpp"
 #ifdef TOOLS_ENABLED
 #include <godot_cpp/classes/h_box_container.hpp>
 #include <godot_cpp/classes/h_flow_container.hpp>
@@ -14,13 +15,13 @@ class FmodObjectDetails : public VBoxContainer
     GDCLASS(FmodObjectDetails, VBoxContainer);
 
   private:
-    HBoxContainer *box;
-    TextureRect *icon;
-    Label *header;
+    Button *header;
     HFlowContainer *flowlayout;
+    void _update_theme();
 
   protected:
     static void _bind_methods();
+    void _notification(int p_what);
 
   public:
     FmodObjectDetails(/* args */);

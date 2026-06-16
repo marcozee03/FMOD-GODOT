@@ -4,6 +4,7 @@
 #include "classes/resource_loader.hpp"
 #include "core/defs.hpp"
 #include "core/error_macros.hpp"
+#include "core/object.hpp"
 #include "core/print_string.hpp"
 #include "fmod_common.h"
 #include "fmod_globals.h"
@@ -31,40 +32,25 @@ using namespace std;
 using namespace godot;
 namespace FmodGodot
 {
-namespace
-{
-void get_live_update_settings(FmodAudioServer::InitSettings &settings)
-{
-
-    auto pj = ProjectSettings::get_singleton();
-    settings.live_update =
-        static_cast<FmodAudioServer::LiveUpdate>(static_cast<int>(pj->get_setting_with_override(LIVE_UPDATE)));
-    settings.live_update_port = pj->get_setting_with_override(LIVE_UPDATE_PORT);
-}
-void get_debug_settings(FmodAudioServer::InitSettings &settings)
-{
-    auto pj = ProjectSettings::get_singleton();
-    settings.logging_level = pj->get_setting_with_override(LOGGING_LEVEL);
-    settings.debug_type = pj->get_setting_with_override(DEBUG_TYPE);
-    settings.debug_display = pj->get_setting_with_override(DEBUG_DISPLAY);
-}
-
-} // namespace
 FmodAudioServer::InitSettings FmodAudioServer::get_fmod_settings()
 {
     FmodAudioServer::InitSettings settings;
-    auto pj = ProjectSettings::get_singleton();
-    settings.sample_rate = pj->get_setting_with_override(SAMPLE_RATE);
-    settings.dspbuffer_length = pj->get_setting_with_override(BUFFER_LENGTH);
-    settings.dspbuffer_count = pj->get_setting_with_override(BUFFER_COUNT);
-    settings.software_channels = pj->get_setting_with_override(REAL_COUNT);
-    settings.virtual_channels = pj->get_setting_with_override(VIRTUAL_COUNT);
-    settings.encryption_key = pj->get_setting_with_override(ENCRYPTION_KEY);
-    settings.rolloff_scale = pj->get_setting_with_override(ROLLOFF_SCALE);
-    settings.doppler_scale = pj->get_setting_with_override(DOPPLER_SCALE);
-    settings.distance_factor = pj->get_setting_with_override(DISTANCE_FACTOR);
-    get_live_update_settings(settings);
-    get_debug_settings(settings);
+    settings.sample_rate = GLOBAL_GET(SAMPLE_RATE);
+    settings.dspbuffer_length = GLOBAL_GET(BUFFER_LENGTH);
+    settings.dspbuffer_count = GLOBAL_GET(BUFFER_COUNT);
+    settings.software_channels = GLOBAL_GET(REAL_COUNT);
+    settings.virtual_channels = GLOBAL_GET(VIRTUAL_COUNT);
+    settings.encryption_key = GLOBAL_GET(ENCRYPTION_KEY);
+    settings.rolloff_scale = GLOBAL_GET(ROLLOFF_SCALE);
+    settings.doppler_scale = GLOBAL_GET(DOPPLER_SCALE);
+    settings.distance_factor = GLOBAL_GET(DISTANCE_FACTOR);
+
+    settings.live_update = static_cast<FmodAudioServer::LiveUpdate>(static_cast<int>(GLOBAL_GET(LIVE_UPDATE)));
+    settings.live_update_port = GLOBAL_GET(LIVE_UPDATE_PORT);
+
+    settings.logging_level = GLOBAL_GET(LOGGING_LEVEL);
+    settings.debug_type = GLOBAL_GET(DEBUG_TYPE);
+    settings.debug_display = GLOBAL_GET(DEBUG_DISPLAY);
     return settings;
 }
 
@@ -84,6 +70,41 @@ FMOD_RESULT fmod_debug_callback(FMOD_DEBUG_FLAGS flags, const char *file, int li
         print_line(message);
     }
     return FMOD_OK;
+}
+FMOD_RESULT F_CALL fmod_studio_system_callback(FMOD_STUDIO_SYSTEM *system, FMOD_STUDIO_SYSTEM_CALLBACK_TYPE type,
+                                               void *commanddata, void *userdata)
+{
+    FmodAudioServer *as = (FmodAudioServer *)userdata;
+    if (as)
+    {
+        switch (type)
+        {
+        case FMOD_STUDIO_SYSTEM_CALLBACK_LIVEUPDATE_CONNECTED: {
+            as->emit_signal("live_update_connected");
+            as->live_update_connected = true;
+        }
+        break;
+
+        case FMOD_STUDIO_SYSTEM_CALLBACK_LIVEUPDATE_DISCONNECTED: {
+            as->emit_signal("live_update_disconnected");
+            as->live_update_connected = false;
+        }
+        break;
+        case FMOD_STUDIO_SYSTEM_CALLBACK_BANK_UNLOAD: {
+        }
+        break;
+        case FMOD_STUDIO_SYSTEM_CALLBACK_PREUPDATE: {
+            as->emit_signal("preupdate");
+        }
+        break;
+        case FMOD_STUDIO_SYSTEM_CALLBACK_POSTUPDATE: {
+            as->emit_signal("postupdate");
+        }
+        break;
+        }
+        return FMOD_OK;
+    }
+    return FMOD_ERR_INVALID_HANDLE;
 }
 
 FMOD_RESULT godot_file_error_to_fmod_file_error(Error err)
@@ -223,6 +244,9 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
         UtilityFunctions::printerr("Init FmodAudioServer Error", FMOD_ErrorString(result));
     }
     initialized = true;
+
+    FMOD_Studio_System_SetUserData(studio_system, this);
+    FMOD_Studio_System_SetCallback(studio_system, fmod_studio_system_callback, FMOD_STUDIO_SYSTEM_CALLBACK_ALL);
     thread->start(callable_mp(this, &FmodAudioServer::thread_func), Thread::Priority::PRIORITY_NORMAL);
     return result;
 }
@@ -470,6 +494,12 @@ void FmodAudioServer::_bind_methods()
     BIND_METHOD(set_listener_3d_location, "listener_index", "node", "attenuation_object");
     BIND_METHOD(set_listener_2d_rigidbody_location, "listener_index", "rigidbody", "attenuation_object");
     BIND_METHOD(set_listener_3d_rigidbody_location, "listener_index", "rigidbody", "attenuation_object");
+
+    ADD_SIGNAL(MethodInfo("preupdate"));
+    ADD_SIGNAL(MethodInfo("postupdate"));
+    // ADD_SIGNAL(MethodInfo("bank_unloaded"));
+    ADD_SIGNAL(MethodInfo("live_update_connected"));
+    ADD_SIGNAL(MethodInfo("live_update_disconnected"));
 }
 
 FmodAudioServer *FmodAudioServer::get_singleton()
@@ -581,6 +611,10 @@ void FmodAudioServer::get_core_ref(FMOD_SYSTEM **core)
 void FmodAudioServer::get_studio_ref(FMOD_STUDIO_SYSTEM **studio)
 {
     *studio = this->studio_system;
+}
+bool FmodAudioServer::is_live_update_connected() const
+{
+    return live_update_connected;
 }
 FMOD_SYSTEM *FmodAudioServer::get_core()
 {
