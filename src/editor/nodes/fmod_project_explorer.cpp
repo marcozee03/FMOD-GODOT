@@ -23,11 +23,13 @@ FmodGodot::FmodProjectExplorer::FmodProjectExplorer()
 
     previewer = memnew(FmodEventPreviewer);
     previewer->set_h_size_flags(SIZE_EXPAND_FILL);
+    previewer->set_v_size_flags(SIZE_EXPAND_FILL);
     previewer->hide();
     tree->connect("fmod_object_selected", callable_mp(previewer, &FmodEventPreviewer::set_event_path), CONNECT_PERSIST);
 
     details = memnew(FmodObjectDetails());
     tree->set_h_size_flags(SIZE_EXPAND_FILL);
+    tree->set_v_size_flags(SIZE_EXPAND_FILL);
     add_child(details);
     tree->connect("fmod_object_selected", Callable(details, "display_fmod_object"), CONNECT_PERSIST);
     tree->connect("fmod_object_selected", callable_mp(this, &FmodProjectExplorer::emit_object_selected));
@@ -43,6 +45,11 @@ void FmodProjectExplorer::emit_object_activated(const String &fmod_object_path)
 {
     emit_signal("fmod_object_activated", fmod_object_path);
 }
+void FmodProjectExplorer::_update_theme()
+{
+    tree->add_theme_stylebox_override("panel", get_theme_stylebox("panel", "Panel"));
+}
+
 void FmodProjectExplorer::set_display_flags(EventTree::DisplayFlags flags)
 {
     tree->set_display_flags(flags);
@@ -56,5 +63,16 @@ void FmodGodot::FmodProjectExplorer::_bind_methods()
     ADD_SIGNAL(MethodInfo("fmod_object_activated", PropertyInfo(Variant::STRING, "fmod_object_path")));
     ADD_SIGNAL(MethodInfo("fmod_object_selected", PropertyInfo(Variant::STRING, "fmod_object_path")));
 }
+void FmodProjectExplorer::_notification(int p_what)
+{
+    switch (p_what)
+    {
+    case NOTIFICATION_ENTER_TREE:
+    case NOTIFICATION_THEME_CHANGED:
+        _update_theme();
+        break;
+    }
+}
+
 } // namespace FmodGodot
 #endif
