@@ -1,6 +1,7 @@
 #include "fmod_globals.h"
 #include "classes/project_settings.hpp"
 #include "fmod_common.h"
+#include "variant/dictionary.hpp"
 #include "variant/vector2i.hpp"
 #include <cstdio>
 #include <godot_cpp/classes/node2d.hpp>
@@ -178,6 +179,8 @@ Variant _GLOBAL_DEF(const PropertyInfo &p_info, const Variant &p_default, bool p
                     bool p_internal)
 {
     Variant ret = _GLOBAL_DEF(p_info.name, p_default, p_restart_if_changed, p_basic, p_internal);
-    ProjectSettings::get_singleton()->add_property_info(p_info);
+    Dictionary prop = p_info;
+    prop.erase("usage");
+    ProjectSettings::get_singleton()->add_property_info(prop);
     return ret;
 }
