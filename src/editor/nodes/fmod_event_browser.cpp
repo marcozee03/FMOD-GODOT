@@ -37,7 +37,6 @@ FmodGodot::FmodEventBrowser::FmodEventBrowser()
     refresh_button->connect("pressed", callable_mp(this, &FmodEventBrowser::refresh));
     refresh_button->set_tooltip_text("Refresh FMOD explorer.");
     refresh_button->set_theme_type_variation("FlatButton");
-    top_buttons->add_child(refresh_button);
 
     hbox->add_child(top_buttons, false, INTERNAL_MODE_FRONT);
     hbox->add_child(hbox_right);
@@ -55,6 +54,7 @@ FmodGodot::FmodEventBrowser::FmodEventBrowser()
     restart_server->connect("pressed",
                             callable_mp(FmodEditorInterface::get_singleton(), &FmodEditorInterface::restart_server));
     hbox_right->add_child(memnew(LiveUpdateIndicator));
+    hbox_right->add_child(refresh_button);
 
     explorer = memnew(FmodProjectExplorer);
     explorer->set_v_size_flags(SIZE_EXPAND_FILL);
