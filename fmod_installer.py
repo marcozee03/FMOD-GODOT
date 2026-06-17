@@ -252,7 +252,15 @@ def setup_android(token : str, version : str):
         tar.extractall()
     os.remove(os.path.join(script_dir, filename))
     base_path = os.path.join(script_dir, api, "api")
+    lib_dst = os.path.join(script_dir, "libs", "android");
     copy_headers_and_libs(base_path=base_path, platform="android")
+    if isdir(os.path.join(lib_dst, "arm64")):
+        shutil.rmtree(os.path.join(lib_dst, "arm64"))
+    shutil.move(os.path.join(lib_dst, "arm64-v8a"), os.path.join(lib_dst, "arm64"))
+    if isdir(os.path.join(lib_dst, "arm")):
+        shutil.rmtree(os.path.join(lib_dst, "arm"))
+    shutil.move(os.path.join(lib_dst, "armeabi-v7a"), os.path.join(lib_dst, "arm"))
+
 
 def setup_windows(token : str, version : str):
     download_version(version, token, 'windows')
