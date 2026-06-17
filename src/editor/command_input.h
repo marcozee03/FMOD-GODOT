@@ -1,9 +1,10 @@
 #pragma once
+#include "variant/packed_string_array.hpp"
 #ifdef TOOLS_ENABLED
 #include "classes/text_edit.hpp"
 #include "classes/wrapped.hpp"
-#include <classes/input_event.hpp>
 #include "templates/local_vector.hpp"
+#include <classes/input_event.hpp>
 namespace FmodGodot
 {
 using namespace godot;
@@ -22,8 +23,10 @@ class CommandInput : public TextEdit
   public:
     CommandInput();
     void history_push(const String &command);
-    void update_height();
+    void _enter_tree() override;
     void _gui_input(const Ref<InputEvent> &event) override;
+    PackedStringArray get_history() const;
+    void load_history(const PackedStringArray &arr);
 };
 } // namespace FmodGodot
 #endif

@@ -121,9 +121,6 @@ class FmodConsole : public EditorDock
 
     Button *clear_button = nullptr;
 
-    Button *collapse_button = nullptr;
-    bool collapse = false;
-
     CommandInput *input = nullptr;
     FmodScriptClient *client = nullptr;
 
@@ -143,8 +140,6 @@ class FmodConsole : public EditorDock
     void _reset_message_counts();
     void _set_dock_tab_icon(Ref<Texture2D> p_icon);
     void _command_submitted(const String &command);
-
-    void _set_collapse(bool p_collapse);
 
     void _update_theme();
     void _editor_settings_changed();
