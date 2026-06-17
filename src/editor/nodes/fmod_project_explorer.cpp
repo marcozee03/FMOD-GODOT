@@ -31,6 +31,7 @@ FmodGodot::FmodProjectExplorer::FmodProjectExplorer()
     tree->connect("fmod_object_selected", callable_mp(previewer, &FmodEventPreviewer::set_event_path), CONNECT_PERSIST);
 
     details = memnew(FmodObjectDetails());
+    details->hide();
     tree->set_h_size_flags(SIZE_EXPAND_FILL);
     tree->set_v_size_flags(SIZE_EXPAND_FILL);
     tree->connect("fmod_object_selected", Callable(details, "display_fmod_object"), CONNECT_PERSIST);
@@ -42,6 +43,7 @@ FmodGodot::FmodProjectExplorer::FmodProjectExplorer()
 
 void FmodProjectExplorer::emit_object_selected(const String &fmod_object_path)
 {
+    details->show();
     emit_signal("fmod_object_selected", fmod_object_path);
 }
 void FmodProjectExplorer::emit_object_activated(const String &fmod_object_path)
@@ -50,7 +52,16 @@ void FmodProjectExplorer::emit_object_activated(const String &fmod_object_path)
 }
 void FmodProjectExplorer::_update_theme()
 {
-    tree->add_theme_stylebox_override("panel", get_theme_stylebox("panel", "Panel"));
+    if (!is_vertical())
+    {
+        tree->set_scroll_hint_mode(Tree::SCROLL_HINT_MODE_DISABLED);
+        tree->add_theme_stylebox_override("panel", get_theme_stylebox("panel", "Panel"));
+    }
+    else
+    {
+        tree->set_scroll_hint_mode(Tree::SCROLL_HINT_MODE_TOP);
+        tree->remove_theme_stylebox_override("panel");
+    }
 }
 
 void FmodProjectExplorer::set_display_flags(EventTree::DisplayFlags flags)

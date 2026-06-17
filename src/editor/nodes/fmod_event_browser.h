@@ -16,33 +16,19 @@ class FmodEventBrowser : public EditorDock
     VBoxContainer *vbox;
     HBoxContainer *top_buttons;
     HBoxContainer *hbox_right;
+    Button *refresh_button;
     FmodProjectExplorer *explorer;
     void refresh();
+    void _update_theme();
 
   protected:
     static void _bind_methods();
+    void _notification(int p_what);
 
   public:
     FmodEventBrowser(/* args */);
     ~FmodEventBrowser() = default;
-    void _update_layout(int p_layout) override
-    {
-        switch (p_layout)
-        {
-
-        case EditorDock::DOCK_LAYOUT_VERTICAL: {
-            explorer->set_vertical(true);
-        }
-        break;
-        case EditorDock::DOCK_LAYOUT_HORIZONTAL:
-        case EditorDock::DOCK_LAYOUT_FLOATING: {
-            explorer->set_vertical(false);
-        }
-        break;
-        default:
-            break;
-        }
-    }
+    void _update_layout(int p_layout) override;
 };
 } // namespace FmodGodot
 #endif
