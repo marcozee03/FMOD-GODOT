@@ -1,8 +1,8 @@
 #pragma once
+#ifdef TOOLS_ENABLED
 #include "classes/h_slider.hpp"
 #include "classes/spin_box.hpp"
 #include "classes/wrapped.hpp"
-#ifdef TOOLS_ENABLED
 #include "classes/button.hpp"
 #include "classes/editor_property.hpp"
 #include "classes/h_box_container.hpp"

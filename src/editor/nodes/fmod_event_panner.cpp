@@ -130,13 +130,13 @@ void FmodEventPanner::_draw_panning()
     switch (view)
     {
     case TOP:
-        draw_arc(square.get_center(), get_min_dimension() / 2,
+        draw_arc(square.get_center(), get_min_dimension() / 2 * .95,
                  Vector2(event_position.x, event_position.z).angle() - (arc_length / 2),
                  Vector2(event_position.x, event_position.z).angle() - (arc_length / 2) + arc_length,
                  get_min_dimension(), theme_cache.contrast_color, 2.0, true);
         break;
     case FRONT:
-        draw_arc(square.get_center(), get_min_dimension() / 2,
+        draw_arc(square.get_center(), get_min_dimension() / 2 * .95,
                  Vector2(event_position.x, -event_position.y).angle() - (arc_length / 2),
                  Vector2(event_position.x, -event_position.y).angle() - (arc_length / 2) + arc_length,
                  get_min_dimension(), theme_cache.contrast_color, 2.0, true);
