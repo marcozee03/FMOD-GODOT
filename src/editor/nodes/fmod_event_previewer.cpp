@@ -33,6 +33,7 @@ FmodEventPreviewer::FmodEventPreviewer()
     panner = memnew(FmodEventPanner);
     panner->set_h_size_flags(SIZE_EXPAND_FILL);
     panner->set_v_size_flags(SIZE_EXPAND_FILL);
+    panner->set_custom_minimum_size(Vector2(0, 100 * EditorInterface::get_singleton()->get_editor_scale()));
     add_child(emitter);
 
     scrub = memnew(HSlider);
@@ -110,6 +111,7 @@ void FmodEventPreviewer::set_event_path(const String &p_event_path)
     show();
     auto event = FmodEditorInterface::get_singleton()->get_cache()->get_event(p_event_path);
     radius->set_value(event.max * 2);
+    panner->set_visible(event.is3d);
     panner->set_attenuation_max(event.max);
     panner->set_attenuation_min(event.min);
     // set_panner_size(event.max * 2);
@@ -132,6 +134,7 @@ void FmodEventPreviewer::set_event_guid(Vector4i p_event_guid)
     {
         e_property->queue_free();
     }
+
     editor_properties.clear();
     for (Dictionary property : emitter->get_property_list())
     {

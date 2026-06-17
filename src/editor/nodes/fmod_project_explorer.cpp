@@ -1,4 +1,5 @@
 #include "classes/control.hpp"
+#include "classes/v_box_container.hpp"
 #include "fmod_event_previewer.h"
 #include "variant/callable_method_pointer.hpp"
 #include "variant/packed_string_array.hpp"
@@ -18,9 +19,11 @@ FmodGodot::FmodProjectExplorer::FmodProjectExplorer()
     tree = memnew(EventTree());
     tree->set_display_flags(EventTree::DisplayFlags::BANKS | EventTree::EVENTS | EventTree::VCAS |
                             EventTree::GLOBAL_PARAMETERS);
-    tree->set_stretch_ratio(2.0);
+    tree->set_stretch_ratio(1.0);
     add_child(tree);
 
+    VBoxContainer *vbox = memnew(VBoxContainer);
+    add_child(vbox);
     previewer = memnew(FmodEventPreviewer);
     previewer->set_h_size_flags(SIZE_EXPAND_FILL);
     previewer->set_v_size_flags(SIZE_EXPAND_FILL);
@@ -30,11 +33,11 @@ FmodGodot::FmodProjectExplorer::FmodProjectExplorer()
     details = memnew(FmodObjectDetails());
     tree->set_h_size_flags(SIZE_EXPAND_FILL);
     tree->set_v_size_flags(SIZE_EXPAND_FILL);
-    add_child(details);
     tree->connect("fmod_object_selected", Callable(details, "display_fmod_object"), CONNECT_PERSIST);
     tree->connect("fmod_object_selected", callable_mp(this, &FmodProjectExplorer::emit_object_selected));
     tree->connect("fmod_object_activated", callable_mp(this, &FmodProjectExplorer::emit_object_activated));
-    add_child(previewer);
+    vbox->add_child(details);
+    vbox->add_child(previewer);
 }
 
 void FmodProjectExplorer::emit_object_selected(const String &fmod_object_path)
