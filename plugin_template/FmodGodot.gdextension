@@ -27,14 +27,14 @@ linux.release.x86_64 = "bin/linux/x86_64/libFmodGodot.template_release.so"
 ;macos.debug  = "bin/macos/libFmodGodot.template_debug.framework"
 ;macos.release  = "bin/macos/libFmodGodot.template_release.framework"
 
-;android.editor.x86_64 = "bin/android/x86_64/libFmodGodot.editor.so"
-;android.debug.x86_64 = "bin/android/x86_64/libFmodGodot.template_debug.so"
-;android.release.x86_64 = "bin/android/x86_64/libFmodGodot.template_release.so"
+android.editor.x86_64 = "bin/android/x86_64/libFmodGodot.editor.so"
+android.debug.x86_64 = "bin/android/x86_64/libFmodGodot.template_debug.so"
+android.release.x86_64 = "bin/android/x86_64/libFmodGodot.template_release.so"
 
 
-;android.editor.arm64 = "bin/android/arm64/libFmodGodot.editor.so"
-;android.debug.arm64 = "bin/android/arm64/libFmodGodot.template_debug.so"
-;android.release.arm64 = "bin/android/arm64/libFmodGodot.template_release.so"
+android.editor.arm64 = "bin/android/arm64/libFmodGodot.editor.so"
+android.debug.arm64 = "bin/android/arm64/libFmodGodot.template_debug.so"
+android.release.arm64 = "bin/android/arm64/libFmodGodot.template_release.so"
 
 ;ios.debug  = "bin/ios/libFmodGodot.template_debug.xcframework"
 ;ios.editor  = "bin/ios/libFmodGodot.template_debug.xcframework"
@@ -80,29 +80,29 @@ linux.release.x86_64 = {
     "bin/linux/x86_64/libfmodstudio.so.14": "",
 }
 
-;android.editor.x86_64  = {
-;    "bin/android/x86_64/libfmodL.so.14": "",
-;    "bin/android/x86_64/libfmodstudioL.so.14": "",
-;}
-;android.debug.x86_64  = {
-;    "bin/android/x86_64/libfmodL.so.14": "",
-;    "bin/android/x86_64/libfmodstudioL.so.14": "",
-;}
-;android.release.x86_64 = {
-;    "bin/android/x86_64/libfmod.so.14": "",
-;    "bin/android/x86_64/libfmodstudio.so.14": "",
-;}
-;android.editor.arm64  = {
-;    "bin/android/arm64/libfmodL.so.14": "",
-;    "bin/android/arm64/libfmodstudioL.so.14": "",
-;}
-;android.debug.arm64  = {
-;    "bin/android/arm64/libfmodL.so.14": "",
-;    "bin/android/arm64/libfmodstudioL.so.14": "",
-;}
-;android.release.arm64 = {
-;    "bin/android/arm64/libfmod.so.14": "",
-;    "bin/android/arm64/libfmodstudio.so.14": "",
-;}
+android.editor.x86_64  = {
+    "bin/android/x86_64/libfmodL.so.14": "",
+    "bin/android/x86_64/libfmodstudioL.so.14": "",
+}
+android.debug.x86_64  = {
+    "bin/android/x86_64/libfmodL.so.14": "",
+    "bin/android/x86_64/libfmodstudioL.so.14": "",
+}
+android.release.x86_64 = {
+    "bin/android/x86_64/libfmod.so.14": "",
+    "bin/android/x86_64/libfmodstudio.so.14": "",
+}
+android.editor.arm64  = {
+    "bin/android/arm64/libfmodL.so.14": "",
+    "bin/android/arm64/libfmodstudioL.so.14": "",
+}
+android.debug.arm64  = {
+    "bin/android/arm64/libfmodL.so.14": "",
+    "bin/android/arm64/libfmodstudioL.so.14": "",
+}
+android.release.arm64 = {
+    "bin/android/arm64/libfmod.so.14": "",
+    "bin/android/arm64/libfmodstudio.so.14": "",
+}
 
 
