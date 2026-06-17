@@ -2,6 +2,7 @@
 #include "classes/editor_dock.hpp"
 #include "classes/h_box_container.hpp"
 #include "classes/v_box_container.hpp"
+#include "core/print_string.hpp"
 #include "fmod_project_explorer.h"
 #include "variant/callable_method_pointer.hpp"
 #ifdef TOOLS_ENABLED
@@ -32,10 +33,10 @@ FmodGodot::FmodEventBrowser::FmodEventBrowser()
     vbox->add_child(hbox);
     top_buttons = memnew(HBoxContainer);
     top_buttons->set_h_size_flags(SIZE_EXPAND_FILL);
-    Button *refresh = memnew(Button());
-    refresh->connect("pressed", callable_mp(this, &FmodEventBrowser::refresh));
-    refresh->set_text("Refresh");
-    top_buttons->add_child(refresh);
+    refresh_button = memnew(Button());
+    refresh_button->connect("pressed", callable_mp(this, &FmodEventBrowser::refresh));
+    refresh_button->set_tooltip_text("Refresh FMOD explorer.");
+    refresh_button->set_theme_type_variation("FlatButton");
 
     hbox->add_child(top_buttons, false, INTERNAL_MODE_FRONT);
     hbox->add_child(hbox_right);
@@ -53,19 +54,54 @@ FmodGodot::FmodEventBrowser::FmodEventBrowser()
     restart_server->connect("pressed",
                             callable_mp(FmodEditorInterface::get_singleton(), &FmodEditorInterface::restart_server));
     hbox_right->add_child(memnew(LiveUpdateIndicator));
+    hbox_right->add_child(refresh_button);
 
     explorer = memnew(FmodProjectExplorer);
     explorer->set_v_size_flags(SIZE_EXPAND_FILL);
     vbox->add_child(explorer);
-
 }
+void FmodEventBrowser::_update_layout(int p_layout)
+{
+    switch (p_layout)
+    {
+
+    case EditorDock::DOCK_LAYOUT_VERTICAL: {
+        explorer->set_vertical(true);
+    }
+    break;
+    case EditorDock::DOCK_LAYOUT_HORIZONTAL:
+    case EditorDock::DOCK_LAYOUT_FLOATING: {
+        explorer->set_vertical(false);
+    }
+    break;
+    default:
+        break;
+    }
+}
+
 void FmodGodot::FmodEventBrowser::refresh()
 {
     FmodEditorInterface::get_singleton()->refresh();
     explorer->refresh();
 }
+void FmodEventBrowser::_update_theme()
+{
+    refresh_button->add_theme_icon_override("icon", get_theme_icon("Reload", "EditorIcons"));
+}
+
 void FmodGodot::FmodEventBrowser::_bind_methods()
 {
 }
+void FmodEventBrowser::_notification(int p_what)
+{
+    switch (p_what)
+    {
+    case NOTIFICATION_ENTER_TREE:
+    case NOTIFICATION_THEME_CHANGED:
+        _update_theme();
+        break;
+    }
+}
+
 } // namespace FmodGodot
 #endif

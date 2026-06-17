@@ -55,6 +55,7 @@ EventTree::EventTree()
     connect("item_activated", callable_mp(this, &EventTree::on_item_activated));
     connect("item_selected", callable_mp(this, &EventTree::on_item_selected));
     set_h_scroll_enabled(false);
+    set_scroll_hint_mode(Tree::SCROLL_HINT_MODE_TOP);
 }
 EventTree::~EventTree()
 {
