@@ -1,4 +1,5 @@
 #ifdef TOOLS_ENABLED
+#include "classes/input_event_key.hpp"
 #include "command_input.h"
 #include "core/math.hpp"
 #include "core/object.hpp"
@@ -7,7 +8,6 @@
 #include <classes/editor_interface.hpp>
 #include <classes/global_constants.hpp>
 #include <classes/input_event.hpp>
-#include "classes/input_event_key.hpp"
 using namespace FmodGodot;
 using namespace godot;
 #define EDSCALE EditorInterface::get_singleton()->get_editor_scale()
@@ -17,6 +17,7 @@ void CommandInput::_bind_methods()
 }
 CommandInput::CommandInput()
 {
+    set_fit_content_height_enabled(true);
     history.reserve(history_length);
 }
 void CommandInput::history_push(const String &command)
@@ -27,10 +28,11 @@ void CommandInput::history_push(const String &command)
     }
     history.push_back(command);
 }
-void CommandInput::update_height()
+void FmodGodot::CommandInput::_enter_tree()
 {
-    set_custom_minimum_size(Vector2(EDSCALE * 150, get_line_height() * Math::min(1, get_line_count())));
+    set_line_wrapping_mode(TextEdit::LINE_WRAPPING_BOUNDARY);
 }
+
 void CommandInput::_gui_input(const Ref<InputEvent> &event)
 {
     if (event->is_action_pressed("ui_up"))
@@ -42,7 +44,7 @@ void CommandInput::_gui_input(const Ref<InputEvent> &event)
         }
         else
         {
-            set_text(history[history_index]);
+            set_text(history[history.size() - history_index - 1]);
         }
         accept_event();
     }
@@ -55,27 +57,28 @@ void CommandInput::_gui_input(const Ref<InputEvent> &event)
         }
         else
         {
-            set_text(history[history_index]);
+            set_text(history[history.size() - history_index - 1]);
         }
         accept_event();
     }
     Ref<InputEventKey> key = event;
     if (key.is_valid() && key->is_pressed())
     {
-        if (key->get_keycode_with_modifiers() == (KEY_ENTER | KEY_SHIFT))
+        if (key->get_keycode_with_modifiers() == (Key)(KEY_ENTER | KEY_MASK_SHIFT))
         {
-            update_height();
+            insert_text_at_caret("\n");
+            accept_event();
         }
-        else if (KEY_ENTER == key->get_keycode() || KEY_ENTER == key->get_physical_keycode())
+        else if (key->get_keycode_with_modifiers() == KEY_ENTER)
         {
             if (get_text().strip_edges().is_empty())
             {
                 return;
             }
             emit_signal("command_submitted", get_text());
-            if (history_index != -1 && get_text() == history[history_index])
+            if (history_index != -1 && get_text() == history[history.size() - history_index - 1])
             {
-                history.remove_at(history_index);
+                history.remove_at(history.size() - history_index - 1);
             }
             history_push(get_text());
             history_index = -1;
@@ -84,4 +87,23 @@ void CommandInput::_gui_input(const Ref<InputEvent> &event)
         }
     }
 }
+godot::PackedStringArray FmodGodot::CommandInput::get_history() const
+{
+    PackedStringArray arr;
+    arr.resize(history.size());
+    for (int i = 0; i < history.size(); i++)
+    {
+        arr[i] = history[i];
+    }
+    return arr;
+}
+void FmodGodot::CommandInput::load_history(const PackedStringArray &arr)
+{
+    history.clear();
+    history.reserve(history_length);
+    for (int i = 0; i < arr.size(); i++)
+    {
+        history.push_back(arr[i]);
+    }
+};
 #endif

@@ -1,10 +1,11 @@
+#include "command_input.h"
 #ifdef TOOLS_ENABLED
-#include "fmod_console.h"
 #include "classes/config_file.hpp"
 #include "classes/h_flow_container.hpp"
 #include "classes/line_edit.hpp"
 #include "classes/script_editor.hpp"
 #include "classes/v_box_container.hpp"
+#include "fmod_console.h"
 #include "fmod_script_client.h"
 #include "variant/callable_method_pointer.hpp"
 #include "variant/packed_string_array.hpp"
@@ -94,7 +95,6 @@ void FmodConsole::_update_theme()
     button->set_custom_minimum_size(Vector2(button->get_minimum_size().x * EDSCALE, 0));
 
     clear_button->set_button_icon(get_editor_theme_icon(SNAME("Clear")));
-    collapse_button->set_button_icon(get_editor_theme_icon(SNAME("CombineLines")));
 
     theme_cache.error_color = get_theme_color(SNAME("error_color"), EditorStringName(Editor));
     theme_cache.error_icon = get_editor_theme_icon(SNAME("Error"));
@@ -135,12 +135,6 @@ void FmodGodot::FmodConsole::_bind_methods()
 {
 }
 
-void FmodConsole::_set_collapse(bool p_collapse)
-{
-    collapse = p_collapse;
-    _rebuild_log();
-}
-
 void FmodConsole::_save_layout_to_config(const Ref<ConfigFile> &p_config, const String &p_section) const
 {
     for (const KeyValue<MessageType, LogFilter *> &E : type_filter_map)
@@ -148,7 +142,7 @@ void FmodConsole::_save_layout_to_config(const Ref<ConfigFile> &p_config, const 
         p_config->set_value(p_section, "_editor_log_filter_" + itos(E.key), E.value->is_active());
     }
 
-    p_config->set_value(p_section, "_editor_log_collapse", collapse);
+    p_config->set_value(p_section, "_command_history", input->get_history());
 }
 
 void FmodConsole::_load_layout_from_config(const Ref<ConfigFile> &p_config, const String &p_section)
@@ -159,8 +153,7 @@ void FmodConsole::_load_layout_from_config(const Ref<ConfigFile> &p_config, cons
     {
         E.value->set_active(p_config->get_value(p_section, "_editor_log_filter_" + itos(E.key), true));
     }
-    collapse_button->set_pressed(p_config->get_value(p_section, "_editor_log_collapse", false));
-
+    input->load_history(p_config->get_value(p_section, "_command_history", PackedStringArray({})));
     is_loading_state = false;
 }
 void FmodGodot::FmodConsole::_set_fmod_script_client(FmodScriptClient *p_client)
@@ -216,7 +209,7 @@ void FmodConsole::_process_message(const String &p_msg, MessageType p_type, bool
         LogMessage &previous = messages.write[messages.size() - 1];
         previous.count++;
 
-        _add_log_line(previous, collapse);
+        _add_log_line(previous);
     }
     else
     {
@@ -262,9 +255,9 @@ void FmodGodot::FmodConsole::_command_submitted(const String &command)
     {
         add_message(text.substr(8), MessageType::MSG_TYPE_ERROR);
     }
-    else if (text.begins_with("warning():"))
+    else if (text.begins_with("warn():"))
     {
-        add_message(text.substr(10), MessageType::MSG_TYPE_WARNING);
+        add_message(text.substr(7), MessageType::MSG_TYPE_WARNING);
     }
     else
     {
@@ -289,22 +282,11 @@ void FmodConsole::_rebuild_log()
     for (start_message_index = messages.size() - 1; start_message_index >= 0; start_message_index--)
     {
         LogMessage msg = messages[start_message_index];
-        if (collapse)
+        for (int i = 0; i < msg.count; i++)
         {
             if (_check_display_message(msg))
             {
                 line_count++;
-            }
-        }
-        else
-        {
-            // If not collapsing, log each instance on a line.
-            for (int i = 0; i < msg.count; i++)
-            {
-                if (_check_display_message(msg))
-                {
-                    line_count++;
-                }
             }
         }
         if (line_count >= line_limit)
@@ -322,19 +304,10 @@ void FmodConsole::_rebuild_log()
     {
         LogMessage msg = messages[msg_idx];
 
-        if (collapse)
+        for (int i = initial_skip; i < msg.count; i++)
         {
-            // If collapsing, only log one instance of the message.
+            initial_skip = 0;
             _add_log_line(msg);
-        }
-        else
-        {
-            // If not collapsing, log each instance on a line.
-            for (int i = initial_skip; i < msg.count; i++)
-            {
-                initial_skip = 0;
-                _add_log_line(msg);
-            }
         }
     }
 }
@@ -408,14 +381,6 @@ void FmodConsole::_add_log_line(LogMessage &p_message, bool p_replace_previous)
     {
         _set_dock_tab_icon(theme_cache.disconnected_icon);
     }
-    // If collapsing, add the count of this message in bold at the start of the line.
-    if (collapse && p_message.count > 1)
-    {
-        log->push_bold();
-        log->add_text(vformat("(%s) ", itos(p_message.count)));
-        log->pop();
-    }
-
     // Note that errors and warnings only support BBCode in the file part of the message.
     if (p_message.type == MSG_TYPE_STD_RICH || p_message.type == MSG_TYPE_ERROR || p_message.type == MSG_TYPE_WARNING)
     {
@@ -501,17 +466,6 @@ FmodConsole::FmodConsole()
     EditorInterface::get_singleton()->get_editor_settings()->get_shortcut("editor/clear_output");
     bottom_hf->add_child(clear_button);
 
-    // Collapse.
-    collapse_button = memnew(Button);
-    collapse_button->set_theme_type_variation("BottomPanelButton");
-    collapse_button->set_focus_mode(FOCUS_ACCESSIBILITY);
-    collapse_button->set_tooltip_text(
-        tr("Collapse duplicate messages into one log entry. Shows number of occurrences."));
-    collapse_button->set_toggle_mode(true);
-    collapse_button->set_pressed(false);
-    collapse_button->connect(SceneStringName(toggled), callable_mp(this, &FmodConsole::_set_collapse));
-    bottom_hf->add_child(collapse_button);
-
     // Search box
     input = memnew(CommandInput);
     input->set_h_size_flags(Control::SIZE_EXPAND_FILL);
@@ -545,7 +499,7 @@ FmodConsole::FmodConsole()
 
     LogFilter *input_filter = memnew(LogFilter(MSG_TYPE_INPUT));
     input_filter->initialize_button(tr("Editor Messages"), tr("Toggle visibility of sent commands."),
-                                     callable_mp(this, &FmodConsole::_set_filter_active));
+                                    callable_mp(this, &FmodConsole::_set_filter_active));
     hbox->add_child(input_filter->toggle_button);
     type_filter_map.insert(MSG_TYPE_INPUT, input_filter);
 }
