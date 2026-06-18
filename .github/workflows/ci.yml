@@ -20,9 +20,6 @@ jobs:
         # To make a full build with all combinations, use the make_build.yml workflow instead.
         include:
           - target: { platform: linux, arch: x86_64, os: ubuntu-22.04 }
-            target-type: template_debug
-            float-precision: single
-          - target: { platform: linux, arch: x86_64, os: ubuntu-22.04 }
             target-type: editor
             float-precision: single
           - target: { platform: windows, arch: x86_64, os: windows-latest }
@@ -31,9 +28,9 @@ jobs:
           # - target: { platform: macos, arch: universal, os: macos-latest }
           #   target-type: template_debug
           #   float-precision: single
-          # - target: { platform: android, arch: arm64, os: ubuntu-22.04 }
-          #   target-type: template_debug
-          #   float-precision: single
+          - target: { platform: android, arch: arm64, os: ubuntu-22.04 }
+            target-type: template_debug
+            float-precision: single
           # - target: { platform: web, arch: wasm32, os: ubuntu-22.04 }
           #   target-type: template_release
           #   float-precision: double
@@ -78,7 +75,7 @@ jobs:
       # Setup Fmod dependencies
       - name: Setup FMOD
         run: |
-          python3 fmod_installer.py --username ${{ secrets.FMOD_USERNAME }} --password ${{ secrets.FMOD_PASSWORD }} setup 2.03.13
+          python3 fmod_installer.py -t ${{ matrix.target.platform }} --username ${{ secrets.FMOD_USERNAME }} --password ${{ secrets.FMOD_PASSWORD }} setup 2.03.13
 
       # Build GDExtension (with caches)
 
