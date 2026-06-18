@@ -86,6 +86,7 @@ listeners into the scene that automatically update their position.
 |----------|---------|---------------------------------------------------|
 |Linux     |✅       |Manually Tested                                    |
 |Windows   |✅       |Manually Tested                                    |
+|Android   |🟨       |Builds are untested so there might be unfound bugs |
 |Other     |❌       |Untested/Unsupported                               |
 
 ## Installation and Getting Started

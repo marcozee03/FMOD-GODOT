@@ -236,6 +236,12 @@ def get_os()-> str:
             return "linux"
         case "Windows":
             return "windows"
+        case "Darwin":
+            return "macos"
+        case "Android":
+            return "android"
+        case "iOS":
+            return "ios"
         case _:
             print("Unsupported system %s" % platform.system())
             exit(ERR_UNSUPPORTED_OS)
@@ -265,6 +271,24 @@ def setup_linux(token : str, version : str):
     base_path = os.path.join(script_dir, api, "api")
     copy_headers_and_libs(base_path=base_path, platform="linux")
 
+def setup_android(token : str, version : str):
+    download_version(version, token, 'android')
+    filename : str = get_file_name(version, 'android')
+    api = filename.removesuffix(".tar.gz")
+    with tarfile.open(filename, 'r') as tar:
+        tar.extractall()
+    os.remove(os.path.join(script_dir, filename))
+    base_path = os.path.join(script_dir, api, "api")
+    lib_dst = os.path.join(script_dir, "libs", "android");
+    copy_headers_and_libs(base_path=base_path, platform="android")
+    if isdir(os.path.join(lib_dst, "arm64")):
+        shutil.rmtree(os.path.join(lib_dst, "arm64"))
+    shutil.move(os.path.join(lib_dst, "arm64-v8a"), os.path.join(lib_dst, "arm64"))
+    if isdir(os.path.join(lib_dst, "arm")):
+        shutil.rmtree(os.path.join(lib_dst, "arm"))
+    shutil.move(os.path.join(lib_dst, "armeabi-v7a"), os.path.join(lib_dst, "arm"))
+
+
 def setup_windows(token : str, version : str):
     download_version(version, token, 'windows')
     filename : str = get_file_name(version, 'windows')
@@ -290,6 +314,7 @@ def main():
     cs.add_argument("output_directory")
     dv.add_argument("fmod_version")
     st.add_argument("fmod_version")
+    st.add_argument("--android", action="store_true")
     parser.add_argument("-u", "--username")
     parser.add_argument("-p", "--password")
     parser.add_argument("-t","--targetplatform")
@@ -322,9 +347,14 @@ def main():
             version : str = args.fmod_version.replace('.', '')
             match current_os:
                 case "linux":
-                    setup_linux(token, version)
+                    if args.targetplatform == "android":
+                        setup_android(token, version)
+                    else:
+                        setup_linux(token, version)
                 case "windows":
                     setup_windows(token, version)
+                case "android":
+                    setup_android(token, version)
                 case _:
                     print("Unsupported system %s" % platform.system())
                     exit(ERR_UNSUPPORTED_OS)

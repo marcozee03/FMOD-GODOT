@@ -29,7 +29,7 @@ namespace FmodGodot
 #endif
 #if GODOT_WINDOWS
             public const string dll = $"libFmodGodot.{template}";
-#elif GODOT_LINUXBSD
+#elif GODOT_LINUXBSD || GODOT_ANDROID
             public const string dll = $"libFmodGodot.{template}.so.1";
 #endif
         }
