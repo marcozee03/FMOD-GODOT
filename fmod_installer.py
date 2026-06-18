@@ -147,6 +147,45 @@ def get_so_number(fmodtar: str) -> int:
                     return int(split_name[2]);
         print("could not get so number")
         exit(ERR_SO_NUMBER)
+vector_cast_snippet = \
+"""        public static implicit operator Godot.Vector3(VECTOR v)
+        {
+            return new Godot.Vector3(v.x, v.y, v.z);
+        }
+        public static implicit operator VECTOR(Godot.Vector3 v)
+        {
+            return new VECTOR()
+            {
+                x = v.X,
+                y = v.Y,
+                z = v.Z,
+            };
+        }
+"""
+fmod_version_snippet = \
+"""#if DEBUG || TOOLS
+        public const string logging = "L";
+#else
+        public const string logging = "";
+#endif
+#if GODOT_LINUXBSD
+        public const string dll = $"fmod{logging}.so.%s";
+#else
+        public const string dll = $"fmod{logging}";
+#endif
+"""
+fmod_studio_version_snippet = \
+"""#if DEBUG || TOOLS
+        public const string logging = "L";
+#else
+        public const string logging = "";
+#endif
+#if GODOT_LINUXBSD
+        public const string dll = $"fmodstudio{logging}.so.%s";
+#else
+        public const string dll = $"fmodstudio{logging}";
+#endif
+"""
 def copy_fmod_file(src_file: IO[bytes] | None,output_dir: str ,filename: str, so_number: int):
     if src_file == None:
         return
@@ -161,34 +200,22 @@ def copy_fmod_file(src_file: IO[bytes] | None,output_dir: str ,filename: str, so
                         file.write(line)
                         file.write(src_file.readline().decode('utf-8').replace('\r',''))
                         file.write(src_file.readline().decode('utf-8').replace('\r',''))
-                        file.write("#if DEBUG || TOOLS\n");
-                        file.write("        public const string logging = \"L\";\n")
-                        file.write("#else\n")
-                        file.write("        public const string logging = \"\";\n")
-                        file.write("#endif\n")
-                        file.write("#if GODOT_LINUXBSD\n")
-                        file.write("        public const string dll = $\"fmod{logging}.so.%s\";\n" % so_number)
-                        file.write("#else\n")
-                        file.write("        public const string dll = $\"fmod{logging}\";\n")
-                        file.write("#endif\n")
+                        file.write(fmod_version_snippet % so_number)
                         while not "}" in line:
                             line = src_file.readline().decode('utf-8')
+                    if "VECTOR" in line and "struct" in line:
+                        while not "}" in line:
+                            file.write(line)
+                            line = src_file.readline().decode('utf-8').replace('\r','')
+                        file.write(src_file.readline().decode('utf-8').replace('\r',''))
+                        file.write(vector_cast_snippet)
                 elif filename == 'fmod_studio.cs':
                     if "STUDIO_VERSION" in line and "class" in line:
                         file.write(line)
                         file.write(src_file.readline().decode('utf-8').replace('\r',''))
-                        file.write("#if DEBUG || TOOLS\n");
-                        file.write("        public const string logging = \"L\";\n")
-                        file.write("#else\n")
-                        file.write("        public const string logging = \"\";\n")
-                        file.write("#endif\n")
-                        file.write("#if GODOT_LINUXBSD\n")
-                        file.write("        public const string dll = $\"fmodstudio{logging}.so.%s\";\n" % so_number)
-                        file.write("#else\n")
-                        file.write("        public const string dll = $\"fmodstudio{logging}\";\n")
-                        file.write("#endif\n")
+                        file.write(fmod_studio_version_snippet % so_number)
                         while not "}" in line:
-                            line = src_file.readline().decode('utf-8')
+                            line = src_file.readline().decode('utf-8').replace('\r','')
                 file.write(line);
 
 def install_cs_func(fmodtar: str,output_directory: str):
