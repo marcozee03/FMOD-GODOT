@@ -26,8 +26,6 @@
 #include <classes/project_settings.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #ifdef TOOLS_ENABLED
-#include "fmod_script_client.h"
-#include "live_update_indicator.h"
 #include "bank_inspector_plugin.h"
 #include "fmod_bank_importer.h"
 #include "fmod_editor_interface.h"
@@ -38,6 +36,8 @@
 #include "fmod_event_panner.h"
 #include "fmod_event_path_selector_property.h"
 #include "fmod_object_details.h"
+#include "fmod_script_client.h"
+#include "live_update_indicator.h"
 #include <classes/editor_interface.hpp>
 #include <classes/editor_plugin_registration.hpp>
 #include <classes/editor_settings.hpp>
@@ -61,9 +61,9 @@ void loadSettings()
                                       "Disabled:0, Enabled:1, Development Build Only:2"),
                          0);
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::INT, LIVE_UPDATE_PORT, godot::PROPERTY_HINT_RANGE, "0,65536"), 9264);
-    GLOBAL_DEF_BASIC(
-        PropertyInfo(Variant::Type::INT, LIVE_UPDATE_PORT + String(".editor"), godot::PROPERTY_HINT_RANGE, "0,65536"),
-        9265);
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::INT, LIVE_UPDATE_PORT + String(".editor_hint"),
+                                  godot::PROPERTY_HINT_RANGE, "0,65536"),
+                     9265);
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::INT, SAMPLE_RATE, PROPERTY_HINT_RANGE, "8000,192000"), 48000);
     GLOBAL_DEF_BASIC(REAL_COUNT, 64);
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::INT, VIRTUAL_COUNT, PROPERTY_HINT_RANGE, "0,4095"), 1024);
@@ -81,7 +81,7 @@ void loadSettings()
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::STRING, FMOD_PROJECT_PATH, PROPERTY_HINT_GLOBAL_FILE, ""), "");
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::STRING, BANK_DIRECTORY, PROPERTY_HINT_DIR, ""), "res://banks");
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::INT, LOAD_BANKS, PROPERTY_HINT_ENUM, "None:0,Specified:1 ,All:2,"), 0);
-    GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::INT, LOAD_BANKS + String(".editor"), PROPERTY_HINT_ENUM,
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::INT, LOAD_BANKS + String(".editor_hint"), PROPERTY_HINT_ENUM,
                                   "None:0,Specified:1 ,All:2,"),
                      2);
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::ARRAY, SPECIFIED_BANKS, PROPERTY_HINT_TYPE_STRING,
@@ -134,8 +134,11 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         GDREGISTER_INTERNAL_CLASS(FmodScriptClient)
         GDREGISTER_INTERNAL_CLASS(FmodEditorInterface);
         editor_interface = memnew(FmodEditorInterface);
-        editor_interface->refresh();
         Engine::get_singleton()->register_singleton("FmodEditorInterface", editor_interface);
+        if (Engine::get_singleton()->is_editor_hint())
+        {
+            editor_interface->refresh();
+        }
 
         GDREGISTER_INTERNAL_CLASS(FmodEditorPlugin)
         GDREGISTER_INTERNAL_CLASS(EventInspector)
