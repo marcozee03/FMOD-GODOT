@@ -192,30 +192,30 @@ def copy_fmod_file(src_file: IO[bytes] | None,output_dir: str ,filename: str, so
     with open(os.path.join(output_dir,filename),'w') as file:
         if src_file != None:
             while True:
-                line = src_file.readline().decode('utf-8').replace('\r','')
+                line = src_file.readline().decode('utf-8', errors='replace').replace('\r','')
                 if not line:
                     break
                 if filename == "fmod.cs":
                     if "VERSION" in line and "class" in line:
                         file.write(line)
-                        file.write(src_file.readline().decode('utf-8').replace('\r',''))
-                        file.write(src_file.readline().decode('utf-8').replace('\r',''))
+                        file.write(src_file.readline().decode('utf-8', errors='replace').replace('\r',''))
+                        file.write(src_file.readline().decode('utf-8', errors='replace').replace('\r',''))
                         file.write(fmod_version_snippet % so_number)
                         while not "}" in line:
-                            line = src_file.readline().decode('utf-8')
+                            line = src_file.readline().decode('utf-8', errors='replace')
                     if "VECTOR" in line and "struct" in line:
                         while not "}" in line:
                             file.write(line)
-                            line = src_file.readline().decode('utf-8').replace('\r','')
-                        file.write(src_file.readline().decode('utf-8').replace('\r',''))
+                            line = src_file.readline().decode('utf-8', errors='replace').replace('\r','')
+                        file.write(src_file.readline().decode('utf-8', errors='replace').replace('\r',''))
                         file.write(vector_cast_snippet)
                 elif filename == 'fmod_studio.cs':
                     if "STUDIO_VERSION" in line and "class" in line:
                         file.write(line)
-                        file.write(src_file.readline().decode('utf-8').replace('\r',''))
+                        file.write(src_file.readline().decode('utf-8', errors='replace').replace('\r',''))
                         file.write(fmod_studio_version_snippet % so_number)
                         while not "}" in line:
-                            line = src_file.readline().decode('utf-8').replace('\r','')
+                            line = src_file.readline().decode('utf-8', errors='replace').replace('\r','')
                 file.write(line);
 
 def install_cs_func(fmodtar: str,output_directory: str):
