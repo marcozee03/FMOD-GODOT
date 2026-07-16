@@ -27,7 +27,6 @@ EventGUIDSelectorProperty::EventGUIDSelectorProperty()
 }
 EventGUIDSelectorProperty::~EventGUIDSelectorProperty()
 {
-    eventSelector->queue_free();
 }
 void EventGUIDSelectorProperty::on_editing_toggled(bool toggled_on)
 {
