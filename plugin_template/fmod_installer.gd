@@ -67,9 +67,8 @@ func _process(delta: float) -> void:
 		State.DOWNLOAD:
 			
 			if not OS.is_process_running(process_id):
-				print("stopped", process_id)
 				var res = OS.get_process_exit_code(process_id)
-				print(res)
+				print("Process [%s] exited with code %d" % [process_id, res])
 				error.text = stderr.get_as_text()
 				match (res):
 					0:
