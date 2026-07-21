@@ -529,7 +529,8 @@ void FmodAudioServer::load_start_up_banks()
         auto dir = DirAccess::open(ProjectSettings::get_singleton()->get_setting_with_override(BANK_DIRECTORY));
         if (DirAccess::get_open_error() != godot::OK)
         {
-            print_error(DirAccess::get_open_error());
+            print_error(
+                vformat("Failed To Open Bank Directory: '%s' with error code: %s", dir, DirAccess::get_open_error()));
             return;
         }
         for (auto file : dir->get_files())
