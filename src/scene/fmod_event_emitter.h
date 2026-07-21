@@ -1,5 +1,6 @@
 #pragma once
 #include "classes/global_constants.hpp"
+#include "core/error_macros.hpp"
 #include "core/math.hpp"
 #include "core/print_string.hpp"
 #include "fmod_audio_server.h"
@@ -10,6 +11,7 @@
 #include "variant/packed_string_array.hpp"
 #include "variant/string.hpp"
 #include "variant/string_name.hpp"
+#include "variant/utility_functions.hpp"
 #include "variant/variant.hpp"
 #include <fmod_studio.h>
 namespace FmodGodot
@@ -260,7 +262,7 @@ void FmodEventEmitter<Derived, NodeType, RigidBody>::_get_property_list(List<Pro
 {
     if (!FMOD_Studio_EventDescription_IsValid(description))
     {
-        print_error("event description was not valid defaulting to cache");
+        UtilityFunctions::push_warning("event description was not valid defaulting to cache");
         for (auto param : parameters)
         {
             PropertyInfo info;

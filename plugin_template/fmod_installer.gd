@@ -39,6 +39,12 @@ func fail(message: String):
 	install.hide()
 	error.text = message
 func download() -> void:
+	if OS.execute("python3", ["--version"]) != 0:
+		printerr("Make sure Python3 is installed and in PATH")
+		return;
+	if OS.execute("python3", ["-c", "import requests; print(requests.__version__)"]) != 0:
+		printerr("Make sure Python requests is installed")
+		return
 	var dict = OS.execute_with_pipe("python3", ["addons/FmodGodot/fmod_installer.py","--targetplatform", "linux", "--noprompts", "-u", username.text, "-p", password.text, "download_version", FmodAudioServer.get_version_number()])	
 	process_id = dict["pid"]
 	stdio = dict["stdio"]
@@ -113,8 +119,11 @@ func _process(delta: float) -> void:
 					fail("Install failed")
 				else:
 					on_hide()
+					login.show()
+					install.hide();
 			pass
 func _unhandled_input(event: InputEvent) -> void:
 	if(event.is_pressed() && event.is_action("ui_cancel")):
 		on_hide();
+
 
