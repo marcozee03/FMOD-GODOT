@@ -46,7 +46,7 @@
 			<param index="1" name="load_samples" type="bool" default="false" />
 			<description>
                                 loads [param bank_name] into memory. [param bank_name] can be a file path or a "bank:/&lt;bank_name&gt;" path.
-                [b]Note:[/b] For banks in the "bank:/" path to be found. See [member ProjectSettings.Fmod/Banks/Import/bank_directory]
+                                [b]Note:[/b] For banks in the "bank:/" path to be found. Go to [b] Project > Project Settings > Fmod > Banks [/b] and set [code]Bank Directory[/code] to the directory where banks are a stored in your project.
 			</description>
 		</method>
 		<method name="path_to_guid" qualifiers="const">
