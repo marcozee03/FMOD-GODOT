@@ -76,7 +76,7 @@ void loadSettings()
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::INT, SOURCE_TYPE, PROPERTY_HINT_ENUM,
                                   "Single Platform Build:0, "
                                   "Multiple Platform Build(WIP):1"),
-                     1);
+                     0);
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::STRING, FMOD_STUDIO_PATH, PROPERTY_HINT_GLOBAL_FILE, ""), "");
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::STRING, FMOD_PROJECT_PATH, PROPERTY_HINT_GLOBAL_FILE, ""), "");
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::STRING, BANK_DIRECTORY, PROPERTY_HINT_DIR, ""), "res://banks");
@@ -93,7 +93,7 @@ void loadSettings()
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::INT, LOGGING_LEVEL, PROPERTY_HINT_ENUM, "NONE:0,ERROR:1,WARNING:2 ,LOG:4"),
                      1);
     GLOBAL_DEF_BASIC(
-        PropertyInfo(Variant::INT, DEBUG_TYPE, PROPERTY_HINT_FLAGS, "MEMORY:256,FILE:512,CODEC:1024,TRACE:2048"), 0);
+        PropertyInfo(Variant::INT, DEBUG_TYPE, PROPERTY_HINT_FLAGS, "MEMORY:256,FILE:512,CODEC:1024,TRACE:2048, VIRTUAL:4096"), 0);
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::INT, DEBUG_DISPLAY, PROPERTY_HINT_FLAGS,
                                   "TIMESTAMPS:65536,LINENUMBERS:131072,THREAD:262144"),
                      0);
