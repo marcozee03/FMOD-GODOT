@@ -62,3 +62,11 @@ EventBrowser
 The editor will load all of the banks in the banks folder. and cache them at startup. to be referenced by inspectors. You can drag and drop events from the browser
 
 .. image:: img/event_browser.png
+
+Fmod Console
+------------
+
+The Fmod console allows you to interact with FMOD Scripting API straight from the godot editor. (Fmod Studio needs to be open) see `Terminal Interface`_ for more info
+
+.. _Terminal Interface: https://www.fmod.com/docs/2.03/studio/scripting-terminal-reference.html#terminal-interface
+.. image:: img/fmod_console.png

@@ -5,44 +5,19 @@ Project Setup
 
 Project Settings
 ----------------
+..note::
 
-Goto **Project > Project Settings > Fmod** If you do not see FMOD toggle advanced settings.
+    See :ref:`Project Settings <class_projectsettings>` for more info
 
-.. General
-.. ^^^^^^^
-..
-.. **Sample Rate** - The audio sample rate that FMOD's mixer should use. Lower sample rates reduce mixer CPU usage but also reduce audio quality.
-..
-.. **Live Update** - One of Disabled/Enabled/Development Build Only. Determines when Live Update is enabled. Combine with feature tags for additional customization.
-..
-.. **Live Update Port** - The network port that FMOD will use to accept connections from FMOD Studio.
-..
-.. **3D Settings**:
-..
-.. * Distance Factor - A factor for converting game distance units to FMOD distance units.
-.. * Doppler Scale - A scaling factor for doppler shift.
-.. * Rolloff Scale - A scaling factor for distance attenuation. When a sound uses a roll-off mode other than FMOD_3D_CUSTOMROLLOFF and the distance is greater than the sound's minimum distance, the distance is scaled by the roll-off scale.
-..
-.. **Channels**:
-..
-.. * Real Count - The number of channels that will be audible. Lowering this count will reduce the FMOD mixer's CPU usage. See the virtual voice system document for more information.
-.. * Virtual Count - The number of channels that can be played. Once the Real Channel Count is exceeded, the quietest channels will be virtualised, meaning they are not audible. See the virtual voice system document for more information.
-..
-.. **DSP**:
-..
-.. The DSP buffer configuration that the FMOD mixer should use.
-..
-.. * Buffer Length - The length of each DSP buffer.
-.. * Buffer Count - The number of DSP buffers to use.
-..
-.. Banks
-.. ^^^^^
-..
-.. **Source Type**:
-.. Specifies the method FMOD Godot uses to access your source .bank files.
-..
-.. * Single Platform Build - You have a directory containing .bank files for a single platform. You specify the location of the directory in the Build Path setting.
-..
-.. * **WORK IN PROGRESS** Multiple Platform Build - You have a directory containing .bank files for multiple platforms, with each platform in its own subdirectory. You specify the location of the top-level directory in the Build Path setting
-..
-.. * FMOD
+#. Go to **Project > Project Settings > Fmod** toggle advanced settings if you can't find fmod.
+#. Set Fmod Studio Path to the location of your fmod studio executable.
+#. Set the path to your fmod_studio project
+#. Set Bank Directory to match the output of your Fmod project build
+#. Set Source Type to Single Platform Build. Multiplatform builds are not yet supported.
+#. Set the other settings as needed for your project.
+
+Importing Banks
+---------------
+
+Next you have to put the banks you created in the Bank Directory you defined in Project Settings. From there you are all set. See :ref:`class reference <doc_class_reference>` for all the tools available to you. and the :ref:`Introduction <introduction_to_fmod_godot>` for a summary.
+

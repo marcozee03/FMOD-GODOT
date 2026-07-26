@@ -19,3 +19,4 @@ features.
    introduction_to_fmod_godot
    c_sharp_installation_guide
    compiling_from_source
+   project_setup
