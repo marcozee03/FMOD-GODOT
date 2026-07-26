@@ -10,6 +10,8 @@ on:
     paths:
       - 'src/**'
   pull_request:
+    paths:
+      - 'src/**'
   merge_group:
 
 jobs:
