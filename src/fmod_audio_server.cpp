@@ -530,7 +530,7 @@ void FmodAudioServer::load_start_up_banks()
         if (DirAccess::get_open_error() != godot::OK)
         {
             print_error(
-                vformat("Failed To Open Bank Directory: '%s' with error code: %s", dir, DirAccess::get_open_error()));
+                vformat("Failed To Open Bank Directory: '%s' with error code: %s", dir, UtilityFunctions::error_string(DirAccess::get_open_error())));
             return;
         }
         for (auto file : dir->get_files())
