@@ -2,6 +2,9 @@
 
 Fmod Godot Docs – *master* branch
 ============================
+.. note::
+
+    Fmod is a commercial library. This is an Unofficial integration with the godot engine. Check `Licensing`_ for more info. For official downloads of the library files check `Downloads`
 
 Welcome to the official documentation of `Fmod Godot <https://github.com/marcozee03/FMOD-GODOT/tree/master>`__,
 
@@ -52,3 +55,7 @@ for your topic of interest. You can also use the search function in the top-left
    :name: sec-class-ref
 
    classes/index
+
+
+.. _Licensing: https://www.fmod.com/licensing
+.. _Downloads: https://www.fmod.com/download

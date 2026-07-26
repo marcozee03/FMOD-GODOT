@@ -25,4 +25,5 @@ Variant types
     class_fmodeventemitter3d
     class_fmodlistener2d
     class_fmodlistener3d
+    class_projectsettings
 
