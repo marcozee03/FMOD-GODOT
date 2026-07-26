@@ -271,7 +271,7 @@ if ``true`` all banks have finished loading.
 
 loads ``bank_name`` into memory. ``bank_name`` can be a file path or a "bank:/<bank_name>" path.
 
-                **Note:** For banks in the "bank:/" path to be found. See :ref:`ProjectSettings.Fmod/Banks/Import/bank_directory<class_ProjectSettings_property_Fmod/Banks/Import/bank_directory>`
+                                **Note:** For banks in the "bank:/" path to be found. Go to ** Project > Project Settings > Fmod > Banks ** and set ``Bank Directory`` to the directory where banks are a stored in your project.
 
 .. rst-class:: classref-item-separator
 
