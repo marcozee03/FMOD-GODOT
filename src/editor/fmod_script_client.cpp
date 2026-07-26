@@ -29,6 +29,7 @@ void FmodScriptClient::connect_to_fmod()
         FmodEditorInterface::get_singleton()->print_error(
             "FMOD Godot: Script Client failed to connect - Check FMOD Studio is running");
         print_error("FMOD Godot: Script Client failed to connect - Check FMOD Studio is running");
+        disconnect_from_host();
         return;
     }
     while (get_available_bytes() == 0)
