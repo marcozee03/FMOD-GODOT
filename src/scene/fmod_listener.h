@@ -64,8 +64,8 @@ void FmodListener<Derived, NodeType, RigidBody>::set_listener_index(int p_listen
 {
     int count;
     FMOD_Studio_System_GetNumListeners(FmodAudioServer::get_singleton()->get_studio(), &count);
-    listener_index = Math::clamp(p_listener_index, 0, FMOD_MAX_LISTENERS);
-    if (count < listener_index + +1)
+    listener_index = Math::clamp(p_listener_index, 0, FMOD_MAX_LISTENERS - 1);
+    if (count < listener_index + 1)
     {
         FMOD_Studio_System_SetNumListeners(FmodAudioServer::get_singleton()->get_studio(), listener_index + 1);
     }
