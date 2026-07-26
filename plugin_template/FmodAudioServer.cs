@@ -126,20 +126,34 @@ namespace FmodGodot
         [DllImport(Version.dll)]
         private static extern void set_listener_3d_location(int listenerIndex, IntPtr p_node, IntPtr attenuationObject = 0);
 
-        public static void PlayOneShotWithParam(string path, float value, string paramName)
+        public static void PlayOneShotWithParam(string path, float value, string paramName, Vector3 position = default)
         {
 
             Studio.getEvent(path, out var _event).ToString();
             _event.createInstance(out var instance).ToString();
+            instance.set3DAttributes(new ATTRIBUTES_3D()
+            {
+                forward = Vector3.Forward,
+                up = Vector3.Up,
+                velocity = Vector3.Zero,
+                position = position
+            });
             instance.setParameterByName(paramName, value).ToString();
             instance.start().ToString();
             instance.release().ToString();
         }
-        public static void PlayOneShotWithParam(GUID guid, float value, string paramName)
+        public static void PlayOneShotWithParam(GUID guid, float value, string paramName, Vector3 position = default)
         {
 
             Studio.getEventByID(guid, out var _event).ToString();
             _event.createInstance(out var instance).ToString();
+            instance.set3DAttributes(new ATTRIBUTES_3D()
+            {
+                forward = Vector3.Forward,
+                up = Vector3.Up,
+                velocity = Vector3.Zero,
+                position = position
+            });
             instance.setParameterByName(paramName, value).ToString();
             instance.start().ToString();
             instance.release().ToString();
