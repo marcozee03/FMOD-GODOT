@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="FmodAudioServer" inherits="Object" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+<class name="FmodAudioServer" inherits="Object" api_type="extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
 		FmodAudioServer is a high level interface for interacting with the FMOD api. Integrated with godot;
 	</brief_description>
 	<description>
+                
 	</description>
 	<tutorials>
 	</tutorials>
@@ -11,28 +12,32 @@
 		<method name="any_sample_data_loading">
 			<return type="bool" />
 			<description>
-				if [code]true[/code] Sample data in a bank or event is currently.
+				if [code]true[/code] sample data in a bank or event is currently loading.
 			</description>
 		</method>
 		<method name="get_singleton" qualifiers="static">
 			<return type="FmodAudioServer" />
 			<description>
-				Retrieves the FmodAudioServer instance.
+				Returns the FmodAudioServer instance.
+			</description>
+		</method>
+		<method name="get_version_number" qualifiers="static">
+			<return type="String" />
+			<description>
+                                Returns the FMOD Version number.
 			</description>
 		</method>
 		<method name="has_bank_loaded" qualifiers="const">
 			<return type="bool" />
 			<param index="0" name="bank_name" type="String" />
 			<description>
-				if [code]true[/code] bank with the given name is loaded. false if not
-				loaded or no such bank exists
+                                if [code]true[/code] [param bank_name] is loaded. returns false if bank does not exist
 			</description>
 		</method>
 		<method name="have_all_banks_loaded" qualifiers="const">
 			<return type="bool" />
 			<description>
-				if [code]true[/code] if all banks in the audio server have finished
-				loading. (currently always true since it's loaded synchonously)
+                                if [code]true[/code] all banks have finished loading.
 			</description>
 		</method>
 		<method name="load_bank">
@@ -40,17 +45,16 @@
 			<param index="0" name="bank_name" type="String" />
 			<param index="1" name="load_samples" type="bool" default="false" />
 			<description>
-				loads the bank given bank_name. bank_name can be of 2 formats a path to the
-				file or "bank:/". If using "bank:/" it will search the banks directory
-				specified in project settings based for a file with name after the slash
-				"/" without the .bank file extension
+                                loads [param bank_name] into memory. [param bank_name] can be a file path or a "bank:/&lt;bank_name&gt;" path.
+                [b]Note:[/b] For banks in the "bank:/" path to be found. See [member Fmod/Banks/Import/bank_directory]
 			</description>
 		</method>
 		<method name="path_to_guid" qualifiers="const">
 			<return type="Vector4i" />
 			<param index="0" name="p_path" type="String" />
 			<description>
-				Looks up the guid of the given path. The Strings bank must be loaded.
+                                Returns the guid of the [param path].
+                                [b]Note:[/b] The Strings banks must be loaded
 			</description>
 		</method>
 		<method name="play_one_shot_2d_attached_by_id">
@@ -59,8 +63,7 @@
 			<param index="1" name="node" type="Node2D" />
 			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
 			<description>
-				Plays and attaches fmod event (from guid) to node2D. Tracks position and 
-				optionally velocity.
+                                Plays and attaches fmod event (from [param guid]) to [param node]. Tracks position and optionally velocity.
 			</description>
 		</method>
 		<method name="play_one_shot_2d_attached_by_path">
@@ -69,8 +72,8 @@
 			<param index="1" name="node" type="Node2D" />
 			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
 			<description>
-				Plays and attaches fmod event (from path) to node2D. Tracks position and 
-				optionally velocity.
+                                Plays and attaches fmod event (from [param path]) to [param node]. Tracks position and optionally velocity.
+                                [b]Note:[/b] The Strings banks must be loaded
 			</description>
 		</method>
 		<method name="play_one_shot_3d_attached_by_id">
@@ -79,8 +82,7 @@
 			<param index="1" name="node" type="Node3D" />
 			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
 			<description>
-				Plays and attaches fmod event (from guid) to node3D. Tracks position and 
-				optionally velocity.
+                                Plays and attaches fmod event (from [param guid]) to [param node]. Tracks position and optionally velocity.
 			</description>
 		</method>
 		<method name="play_one_shot_3d_attached_by_path">
@@ -89,8 +91,8 @@
 			<param index="1" name="node" type="Node3D" />
 			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
 			<description>
-				Plays and attaches fmod event (from path) to node3D tracks position and
-				optionally velocity.
+                                Plays and attaches fmod event (from [param path]) to [param node]. Tracks position and optionally velocity.
+                                [b]Note:[/b] The Strings banks must be loaded
 			</description>
 		</method>
 		<method name="play_one_shot_by_id" qualifiers="const">
@@ -98,7 +100,8 @@
 			<param index="0" name="guid" type="Vector4i" />
 			<param index="1" name="position" type="Vector3" default="Vector3(0, 0, 0)" />
 			<description>
-				Plays one shot event at world position (from guid). In 2D Z is normally zero
+                            Plays one shot event at [param position] in world space (from [param guid]). In 2D Z is normally zero
+                            [b]Note:[/b] In 2D if you want the sound to align with the XY plane Z should be zero
 			</description>
 		</method>
 		<method name="play_one_shot_by_path" qualifiers="const">
@@ -106,8 +109,10 @@
 			<param index="0" name="path" type="String" />
 			<param index="1" name="position" type="Vector3" default="Vector3(0, 0, 0)" />
 			<description>
-				Plays one shot event at world position(from path). In 2D Z is normally
-				zero. Strings bank must be loaded.
+                                
+                                Plays one shot event at [param position] in world space (from [param guid]). In 2D Z is normally zero
+                                [b]Note:[/b] In 2D if you want the sound to align with the XY plane Z should be zero
+                                [b]Note:[/b] The Strings banks must be loaded
 			</description>
 		</method>
 		<method name="play_one_shot_rigid_2d_attached_by_path">
@@ -115,8 +120,8 @@
 			<param index="0" name="path" type="String" />
 			<param index="1" name="rigid_body2d" type="RigidBody2D" />
 			<description>
-				Plays one shot event (from path) and attaches it to rigidbody. Tracks position and
-				velocity
+                                Plays one shot event (from [param path]) and attaches it to [param rigid_body2d]. Tracks position and velocity
+                                [b]Note:[/b] The Strings banks must be loaded
 			</description>
 		</method>
 		<method name="play_one_shot_rigid_body2d_attached_by_id">
@@ -124,8 +129,7 @@
 			<param index="0" name="guid" type="Vector4i" />
 			<param index="1" name="rigid_body2d" type="RigidBody2D" />
 			<description>
-				Plays one shot event (from guid) and attaches it to rigidbody. Tracks
-				position and velocity
+                                Plays one shot event (from [param guid]) and attaches it to [param rigid_body2d]. Tracks position and velocity
 			</description>
 		</method>
 		<method name="play_one_shot_rigid_body3d_attached_by_id">
@@ -133,8 +137,7 @@
 			<param index="0" name="guid" type="Vector4i" />
 			<param index="1" name="rigid_body3d" type="RigidBody3D" />
 			<description>
-				Plays one shot event (from guid) and attaches it to rigidbody. Tracks
-				position and velocity
+                                Plays one shot event (from [param guid]) and attaches it to [param rigid_body3d]. Tracks position and velocity
 			</description>
 		</method>
 		<method name="play_one_shot_rigid_body3d_attached_by_path">
@@ -142,8 +145,8 @@
 			<param index="0" name="path" type="String" />
 			<param index="1" name="rigid_body3d" type="RigidBody3D" />
 			<description>
-				Plays one shot event (from path) and attaches it to rigidbody. Tracks
-				position and velocity. Strings bank must be loaded.
+                                Plays one shot event (from [param path]) and attaches it to [param rigid_body3d]. Tracks position and velocity
+                                [b]Note:[/b] The Strings banks must be loaded
 			</description>
 		</method>
 		<method name="set_listener_2d_location">
@@ -152,8 +155,7 @@
 			<param index="1" name="node" type="Node2D" />
 			<param index="2" name="attenuation_object" type="Node2D" />
 			<description>
-				Sets the fmod listener to copy transform and velocity of node and position
-				of attenuation object
+				Copies [param attenuation_object]'s transform to listener's attributes
 			</description>
 		</method>
 		<method name="set_listener_2d_rigidbody_location">
@@ -162,8 +164,7 @@
 			<param index="1" name="rigidbody" type="RigidBody2D" />
 			<param index="2" name="attenuation_object" type="Node2D" />
 			<description>
-				Sets the fmod listener to copy transform and velocity of node and position
-				of attenuation object
+				Copies [param attenuation_object]'s transform and velocity to listener's attributes
 			</description>
 		</method>
 		<method name="set_listener_3d_location">
@@ -172,8 +173,7 @@
 			<param index="1" name="node" type="Node3D" />
 			<param index="2" name="attenuation_object" type="Node3D" />
 			<description>
-				Sets the fmod listener to copy transform and velocity of node and position
-				of attenuation object
+				Copies [param attenuation_object]'s transform to listener's attributes
 			</description>
 		</method>
 		<method name="set_listener_3d_rigidbody_location">
@@ -182,32 +182,53 @@
 			<param index="1" name="rigidbody" type="RigidBody3D" />
 			<param index="2" name="attenuation_object" type="Node3D" />
 			<description>
-				Sets the fmod listener to copy transform and velocity of node and position
-				of attenuation object
+				Copies [param attenuation_object]'s transform and velocity to listener's attributes
 			</description>
 		</method>
 		<method name="unload_banks">
 			<return type="void" />
 			<description>
-				Sets the fmod listener to copy transform and velocity of node and position
-				of attenuation object
+                                Unloads all banks.
+                                [b]Warning:[/b] This ignores the reference count of banks loaded as resources and can lead to audio bugs.
 			</description>
 		</method>
 	</methods>
 	<members>
-		<member name="muted" type="bool" setter="set_muted" getter="is_muted" default="true">
-			If [code]true[/code], All fmod sounds will be muted.
+		<member name="muted" type="bool" setter="set_muted" getter="is_muted" default="false">
+			If [code]true[/code], All fmod sounds are muted.
 		</member>
 	</members>
+	<signals>
+		<signal name="live_update_connected">
+			<description>
+                            Emitted after live update connects to FMOD Studio
+			</description>
+		</signal>
+		<signal name="live_update_disconnected">
+			<description>
+                            Emitted after live update disconnects from FMOD Studio
+			</description>
+		</signal>
+		<signal name="postupdate">
+			<description>
+                            Emitted at the end of the main Studio update. For async mode this will be on its own thread.
+			</description>
+		</signal>
+		<signal name="preupdate">
+			<description>
+                            Emitted at the start of the main Studio update. For async mode this will be on its own thread. 
+			</description>
+		</signal>
+	</signals>
 	<constants>
 		<constant name="DISABLED" value="0" enum="LiveUpdate">
-			LiveUpdate will never be enabled.
+			LiveUpdate is never enabled.
 		</constant>
 		<constant name="ENABLED" value="1" enum="LiveUpdate">
-			LiveUpdate will always be enabled.
+			LiveUpdate is always enabled.
 		</constant>
 		<constant name="DEV_ONLY" value="2" enum="LiveUpdate">
-			LiveUpdate will only be enabled in Editor and Debug builds.
+			LiveUpdate is only enabled in Editor and Debug builds.
 		</constant>
 	</constants>
 </class>

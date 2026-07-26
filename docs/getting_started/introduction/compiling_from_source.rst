@@ -3,28 +3,24 @@
 Compiling from Sources
 ===============================
 
-Before starting, you will need to add the FMOD headers and libraries to the appropriate
-location. To simplest way to compile this addon to your project is to run the export.py
-script example below. Libraries should be placed in libs/<platform>/<architecture>
-
-.. code-block::
-
-   python3 export.py -p <platform> -o /path/to/godot_project/addons
-
-
-Flags
+Setup
 -----
 
--o  Output
-    flag specifies where to copy the outputs of the command to notice how it should
-    be the path to the addons directory of your Godot project.
--p  Platform
-    flag is currently one of 3 options "windows" "linux" and "all"
--f
-    skips the prompt asking for your permission to override files in the output path.
--sc
-    skips the compilation steps and copies whatever is currently in the bin
-    directory to output path.
+FMOD is a commercial library so you will need to download the FMOD headers and libraries yourself. Libraries should be placed in 'libs/<platform>/<architecture>'.Headers should be placed in 'headers/' The fmod_installer.py script is also able to automatically install the headers for some platforms
+
+.. code-block::
+   # use --help for more options
+   python3 fmod_installer.py setup <Fmod Version Number>
+
+Build
+-----
+
+Use export.py to build the extension and add it to a project. Which manages copying over the necessary fmod dependencies
+
+.. code-block::
+   # use --help for more options
+   python3 export.py build -p <platform>
+   python3 export.py export <path/to/project>/addons
 
 Alternatively refer to `introduction to the buildsystem`_
 

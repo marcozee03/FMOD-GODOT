@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="FmodListener2D" inherits="Node2D" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+<class name="FmodListener2D" inherits="Node2D" api_type="extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
 		Overrides the location Fmod Events are heard from.
 	</brief_description>
@@ -15,7 +15,7 @@
 			If [code]true[/code] the listener will attenuate based on the parent transform.
 		</member>
 		<member name="listener_index" type="int" setter="set_listener_index" getter="get_listener_index" default="0">
-			The listener index of this node. Sets the number of listeners to at least it's listener index - 1.
+			The FMOD listener index. Sets the number of listeners to at least the listener index + 1.
 		</member>
 		<member name="listener_weight" type="float" setter="set_listener_weight" getter="get_listener_weight" default="1.0">
 			Listener weighting is a factor which determines how much the listener influences the mix. It is taken into account for 3D panning, doppler, and the automatic distance event parameter. A listener with a weight of 0 has no effect on the mix.
