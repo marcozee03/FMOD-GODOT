@@ -156,8 +156,8 @@ FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody2D *rigidbody)
     return attributes;
 }
 } // namespace FmodGodot
-Variant _GLOBAL_DEF(const String &p_var, const Variant &p_default, bool p_restart_if_changed,
-                    bool p_ignore_value_in_docs, bool p_basic, bool p_internal)
+Variant _GLOBAL_DEF(const String &p_var, const Variant &p_default, bool p_restart_if_changed, bool p_basic,
+                    bool p_internal)
 {
     Variant ret;
     if (!ProjectSettings::get_singleton()->has_setting(p_var))
