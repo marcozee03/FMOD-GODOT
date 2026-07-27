@@ -296,7 +296,7 @@ func install_cs() -> void:
 	install_message.text = "Extracting..."
 	progress_bar.indeterminate = true
 	var visible_dots = 3
-	var process = OS.execute_with_pipe(
+	var process = OS.create_process(
 		"tar",
 		[
 			"-xzf",
@@ -305,7 +305,7 @@ func install_cs() -> void:
 			ProjectSettings.globalize_path(temp.get_current_dir()),
 		],
 	)
-	while (OS.is_process_running(process["pid"])):
+	while (OS.is_process_running(process)):
 		install_message.visible_characters = install_message.text.length() - visible_dots
 		visible_dots += 1
 		visible_dots %= 4
