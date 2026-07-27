@@ -125,9 +125,6 @@ Alternatively refer to [Introduction to the buildsystem](https://docs.godotengin
 
 ##### Automatic Set-up
 
-> [!Note]
-> you must have python installed to run the installer and [requests](https://github.com/psf/requests)
-
 To run the install go to Project > Tools > Finish FMOD Godot setup  
 
 ![](images/run_installer.png)  
