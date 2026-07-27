@@ -68,7 +68,6 @@ def exportDependencies(platform, arch):
             os.path.join(script_dir,"libs", platform, arch, file),
             os.path.join(script_dir,"plugin_template","bin", platform, arch, file)
         )
-    shutil.copy(os.path.join(script_dir,"fmod_installer.py"),os.path.join(script_dir,"plugin_template"))
 
 def main():
     parser = argparse.ArgumentParser(
