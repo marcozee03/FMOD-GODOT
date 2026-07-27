@@ -5,8 +5,6 @@ C# installation guide
 Automatic Install
 -----------------
 
-Note: you must have python and python-requests installed to run the installer
-
 To run the install go to **Project > Tools > Finish FMOD Godot setup**
 
 .. image:: img/run_installer.png
