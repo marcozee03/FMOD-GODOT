@@ -17,6 +17,7 @@
 #include <godot_cpp/core/defs.hpp>
 // #include "resource_saver.hpp"
 #include "fmod_bank_format_loader.h"
+#include "fmod_installer.h"
 #include "fmod_listener_2d.h"
 #include "fmod_listener_3d.h"
 #include "fmod_project_explorer.h"
@@ -154,6 +155,7 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         GDREGISTER_INTERNAL_CLASS(FmodConsole);
         GDREGISTER_INTERNAL_CLASS(CommandInput);
         GDREGISTER_INTERNAL_CLASS(LiveUpdateIndicator);
+        GDREGISTER_CLASS(FmodInstaller);
         EditorPlugins::add_by_type<FmodEditorPlugin>();
 #endif // TOOLS_ENABLED
     }

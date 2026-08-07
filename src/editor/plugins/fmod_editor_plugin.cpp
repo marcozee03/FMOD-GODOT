@@ -1,6 +1,7 @@
 
+#include "variant/callable_method_pointer.hpp"
 #ifdef TOOLS_ENABLED
-#include "classes/popup.hpp"
+#include "editor/fmod_installer.h"
 #include "fmod_bank_importer.h"
 #include "fmod_editor_interface.h"
 #include "fmod_editor_plugin.h"
@@ -11,6 +12,20 @@
 using namespace godot;
 namespace FmodGodot
 {
+void FmodEditorPlugin::_open_installer()
+{
+    if (installer == nullptr || !UtilityFunctions::is_instance_id_valid(installer_id) ||
+        installer->is_queued_for_deletion())
+    {
+        installer = memnew(FmodInstaller);
+        installer_id = installer->get_instance_id();
+        get_editor_interface()->get_base_control()->add_child(installer);
+    }
+    else
+    {
+        installer->popup();
+    }
+}
 void FmodEditorPlugin::_bind_methods()
 {
 }
@@ -45,13 +60,9 @@ void FmodEditorPlugin::_enter_tree()
     browser = memnew(FmodEventBrowser());
     add_dock(log);
     add_dock(browser);
-    Ref<PackedScene> installer_scene =
-        ResourceLoader::get_singleton()->load("res://addons/FmodGodot/fmod_installer.tscn");
-    installer = (Popup *)installer_scene->instantiate();
 
     log->_set_fmod_script_client(FmodEditorInterface::get_singleton()->get_script_client());
-    get_editor_interface()->get_base_control()->add_child(installer);
-    add_tool_menu_item("Finish FMOD Godot setup", Callable(installer, "popup"));
+    add_tool_menu_item("Finish FMOD Godot setup", callable_mp(this, &FmodEditorPlugin::_open_installer));
 }
 void FmodEditorPlugin::_exit_tree()
 {
