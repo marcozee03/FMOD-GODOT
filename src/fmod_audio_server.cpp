@@ -529,8 +529,8 @@ void FmodAudioServer::load_start_up_banks()
         auto dir = DirAccess::open(ProjectSettings::get_singleton()->get_setting_with_override(BANK_DIRECTORY));
         if (DirAccess::get_open_error() != godot::OK)
         {
-            print_error(
-                vformat("Failed To Open Bank Directory: '%s' with error code: %s", dir, UtilityFunctions::error_string(DirAccess::get_open_error())));
+            print_error(vformat("Failed To Open Bank Directory: '%s' with error code: %s", dir,
+                                UtilityFunctions::error_string(DirAccess::get_open_error())));
             return;
         }
         for (auto file : dir->get_files())
@@ -1124,12 +1124,6 @@ godot::String FmodAudioServer::get_version_number()
     const unsigned int major = (FMOD_VERSION & 0xffff0000) >> 16;
     const unsigned int minor = (FMOD_VERSION & 0x0000ff00) >> 8;
     const unsigned int patch = (FMOD_VERSION & 0x000000ff);
-    // for some reason patch 13 is 0x13 instead of 0x0d so this fixes that
-    // I expect similar case for minor if that reaches a double digit. am Ignoring major for now
-    const unsigned int fixed_minor = minor - (6 * (minor / 16));
-    const unsigned int fixed_patch = patch - (6 * (patch / 16));
-    return String(".").join({UtilityFunctions::var_to_str(major),
-                             UtilityFunctions::var_to_str(fixed_minor).pad_zeros(2),
-                             UtilityFunctions::var_to_str(fixed_patch).pad_zeros(2)});
+    return vformat("%x.%02x.%02x", major, minor, patch);
 }
 } // namespace FmodGodot
