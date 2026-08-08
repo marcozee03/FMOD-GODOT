@@ -1,5 +1,5 @@
 @tool
-extends Window
+extends FmodInstaller
 
 var vector_cast_snippet: String = r"""	public static implicit operator Godot.Vector3(VECTOR v)
 	{
@@ -37,42 +37,6 @@ var fmodlink := "https://www.fmod.com"
 var fmodlogin := "https://www.fmod.com/api-login"
 var fmod_downloads_link = "https://www.fmod.com/api-downloads"
 var current_os = ""
-var http: HTTPRequest = HTTPRequest.new()
-
-
-func _theme_changed() -> void:
-	var ctrl: Control = get_node("BG")
-	ctrl.add_theme_stylebox_override("panel", get_theme_stylebox("PanelForeground", "EditorStyles"))
-
-
-func _init() -> void:
-	add_child(http)
-	theme_changed.connect(_theme_changed)
-
-
-func _button_down() -> void:
-	get_node("BG/Login/UserInputs/password/Show Password").icon = get_theme_icon(
-		"GuiVisibilityVisible",
-		"EditorIcons",
-	)
-
-
-func _button_up() -> void:
-	get_node("BG/Login/UserInputs/password/Show Password").icon = get_theme_icon(
-		"GuiVisibilityHidden",
-		"EditorIcons",
-	)
-
-
-func _ready():
-	get_node("BG/Login/UserInputs/password/Show Password").icon = get_theme_icon(
-		"GuiVisibilityHidden",
-		"EditorIcons",
-	)
-	_theme_changed()
-
-	get_node("BG/Login/UserInputs/password/Show Password").button_up.connect(_button_up)
-	get_node("BG/Login/UserInputs/password/Show Password").button_down.connect(_button_down)
 
 
 class Response:
@@ -91,9 +55,9 @@ func request(
 	# Some headers
 	headers.append("Accept: */*")
 
-	var err = http.request(url, headers, method, body)
+	var err = get_http().request(url, headers, method, body)
 	assert(err == OK) # Make sure all is OK.
-	var signal_args: Array = await http.request_completed
+	var signal_args: Array = await get_http().request_completed
 	var response: Response = Response.new()
 	response.result = signal_args[0]
 	response.code = signal_args[1]
@@ -196,48 +160,43 @@ func download_version(version: String, token: String, target_platform: String) -
 		return false
 	var url = JSON.parse_string(response.body.get_string_from_utf8())["url"]
 	# http.download_file = get_script_dir().path_join(filename);
-	progress_bar.indeterminate = true
-	install_message.text = "Finding Download Link"
-	http.download_file = get_script_dir().path_join("%s.tar.gz" % get_downloaded_filename())
-	var err = http.request(url)
+	indeterminate_progress_bar = true
+	install_message = "Finding Download Link"
+	get_http().download_file = get_script_dir().path_join("%s.tar.gz" % get_downloaded_filename())
+	var err = get_http().request(url)
 
 	var visible_dots := 3
-	var status = http.get_http_client_status()
+	var status = get_http().get_http_client_status()
 	while status != HTTPClient.STATUS_BODY and status != HTTPClient.STATUS_DISCONNECTED:
 		match status:
 			HTTPClient.STATUS_RESOLVING:
-				install_message.text = "Resolving..."
+				install_message = "Resolving..."
 			HTTPClient.STATUS_CONNECTING, HTTPClient.STATUS_CONNECTED:
-				install_message.text = "Connecting..."
+				install_message = "Connecting..."
 			HTTPClient.STATUS_REQUESTING:
-				install_message.text = "Requesting..."
+				install_message = "Requesting..."
 			HTTPClient.STATUS_CONNECTION_ERROR:
 				fail("Connection Error")
 				return false
-		install_message.visible_characters = install_message.text.length() - visible_dots
+		install_message_visible_characters = install_message.length() - visible_dots
 		visible_dots += 1
 		visible_dots %= 4
-		status = http.get_http_client_status()
+		status = get_http().get_http_client_status()
 		await get_tree().process_frame
 
-	progress_bar.indeterminate = false
-	install_message.text = "Downloading..."
-	while http.get_http_client_status() == HTTPClient.STATUS_BODY:
-		progress_bar.value = http.get_downloaded_bytes() / float(http.get_body_size())
-		install_message.visible_characters = 11 + visible_dots
+	indeterminate_progress_bar = false
+	install_message = "Downloading..."
+	while get_http().get_http_client_status() == HTTPClient.STATUS_BODY:
+		set_progress_bar_value(
+			get_http().get_downloaded_bytes() / float(get_http().get_body_size())
+		)
+		install_message_visible_characters = 11 + visible_dots
 		visible_dots += 1
 		visible_dots %= 4
 		await get_tree().process_frame
 	return true
 
 
-@export var username: LineEdit
-@export var password: LineEdit
-@export var login: Control
-@export var install: Control
-@export var error: Label
-@export var install_message: Label
-@export var progress_bar: ProgressBar
 enum State {
 	NONE,
 	BUSY,
@@ -245,47 +204,20 @@ enum State {
 var current_state: State = State.NONE
 
 
-func get_version_id() -> String:
-	return FmodAudioServer.get_version_number().replace(".", "")
-
-
 func get_downloaded_filename() -> String:
 	return "fmodstudioapi%slinux" % get_version_id()
 
 
-func on_hide():
-	if current_state == State.NONE:
-		hide()
-
-
-func fail(message: String):
-	show_login()
-	password.text = ""
-	error.text = message
-
-
 func download() -> bool:
-	var token = await get_token(username.text, password.text)
+	var token = await get_token(get_username(), get_password())
 	if (token == null):
 		return false
 	show_progress()
 	return await download_version(get_version_id(), token, "linux")
 
 
-func show_login():
-	login.show()
-	install.hide()
-	current_state = State.NONE
-
-
-func show_progress():
-	login.hide()
-	install.show()
-	current_state = State.BUSY
-
-
 func install_cs() -> void:
-	progress_bar.value = 1.0
+	set_progress_bar_value(1.0)
 	var file = "%s.tar.gz" % get_downloaded_filename()
 	var global_downloaded_file_path = ProjectSettings.globalize_path(
 		get_script_dir().path_join(file)
@@ -293,8 +225,8 @@ func install_cs() -> void:
 	var temp = DirAccess.create_temp("fmod")
 	temp.get_current_dir()
 	show_progress()
-	install_message.text = "Extracting..."
-	progress_bar.indeterminate = true
+	install_message = "Extracting..."
+	indeterminate_progress_bar = true
 	var visible_dots = 3
 	var process = OS.create_process(
 		"tar",
@@ -306,13 +238,13 @@ func install_cs() -> void:
 		],
 	)
 	while (OS.is_process_running(process)):
-		install_message.visible_characters = install_message.text.length() - visible_dots
+		install_message_visible_characters = install_message.length() - visible_dots
 		visible_dots += 1
 		visible_dots %= 4
 		await get_tree().process_frame
 
 	var so_number = get_so_number(temp)
-	install_message.text = "Installing Core API Files"
+	install_message = "Installing Core API Files"
 	await get_tree().process_frame
 	temp.change_dir(get_downloaded_filename().path_join("api/core/inc"))
 	for filename in temp.get_files():
@@ -323,7 +255,7 @@ func install_cs() -> void:
 				so_number,
 			)
 
-	install_message.text = "Installing Studio API Files"
+	install_message = "Installing Studio API Files"
 	await get_tree().process_frame
 	temp.change_dir("../../studio/inc")
 	for filename in temp.get_files():
@@ -334,6 +266,8 @@ func install_cs() -> void:
 				so_number,
 			)
 	DirAccess.remove_absolute(global_downloaded_file_path)
+	install_message = "Success"
+	await get_tree().create_timer(3).timeout
 	show_login()
 
 
@@ -376,14 +310,8 @@ func copy_cs_file(src_path: String, dst_path: String, so_number: int) -> void:
 			DirAccess.copy_absolute(src_path, dst_path)
 
 
-func submit() -> void:
+func _submit() -> void:
 	var success = await download()
 	if success:
 		await install_cs()
-		on_hide()
-
-
-# Called every frame. "delta" is the elapsed time since the previous frame.
-func _unhandled_input(event: InputEvent) -> void:
-	if (event.is_pressed() && event.is_action("ui_cancel")):
-		on_hide()
+	on_hide()
