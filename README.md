@@ -146,7 +146,7 @@ snippets below
 ``` C#
     public partial class VERSION
     {
-        public const int number = 0x00020313;
+        public const int number = 0x00020314;
 
 #if DEBUG || TOOLS
         public const string logging = "L";
