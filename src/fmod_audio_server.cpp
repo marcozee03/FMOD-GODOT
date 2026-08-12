@@ -6,12 +6,14 @@
 #include "core/error_macros.hpp"
 #include "core/object.hpp"
 #include "core/print_string.hpp"
+#include "fmod.h"
 #include "fmod_common.h"
 #include "fmod_globals.h"
 #include "fmod_string_names.h"
 #include "fmod_studio.h"
 #include "fmod_studio_common.h"
 #include "globals.h"
+#include "variant/dictionary.hpp"
 #include "variant/utility_functions.hpp"
 #include "variant/variant.hpp"
 #include <classes/dir_access.hpp>
@@ -248,6 +250,14 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
     FMOD_Studio_System_SetUserData(studio_system, this);
     FMOD_Studio_System_SetCallback(studio_system, fmod_studio_system_callback, FMOD_STUDIO_SYSTEM_CALLBACK_ALL);
     thread->start(callable_mp(this, &FmodAudioServer::thread_func), Thread::Priority::PRIORITY_NORMAL);
+    FMOD_System_SetPluginPath(core_system, String(GLOBAL_GET(PLUGIN_PATH)).utf8().ptr());
+    unsigned int handle;
+    Dictionary plugins = GLOBAL_GET(PLUGINS);
+    for (auto plugin_file : plugins.keys())
+    {
+        FMOD_System_LoadPlugin(core_system, String(plugin_file).utf8().ptr(), &handle,
+                               /*Priority*/ plugins[plugin_file]);
+    }
     return result;
 }
 
