@@ -1,8 +1,6 @@
 #pragma once
 #ifdef TOOLS_ENABLED
 #include <godot_cpp/classes/editor_inspector_plugin.hpp>
-#include "fmod_event_path_selector_property.h"
-#include "fmod_event_guid_selector_property.h"
 #include <godot_cpp/core/memory.hpp>
 using namespace godot;
 namespace FmodGodot{

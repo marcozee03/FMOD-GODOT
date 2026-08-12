@@ -1,9 +1,7 @@
 #include "fmod_event_emitter_2d.h"
 #include "classes/rigid_body2d.hpp"
-#include "core/class_db.hpp"
 #include "fmod_audio_server.h"
 #include "fmod_event_emitter.h"
-#include "globals.h"
 #include "variant/packed_string_array.hpp"
 #include <classes/node2d.hpp>
 using namespace godot;

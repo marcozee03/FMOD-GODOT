@@ -1,9 +1,6 @@
 #include "classes/global_constants.hpp"
-#include "classes/project_settings.hpp"
 #include "variant/packed_string_array.hpp"
 #include "variant/typed_array.hpp"
-#ifdef TOOLS_ENABLED
-#include "fmod_bank.h"
 #include "fmod_bank_importer.h"
 #include <godot_cpp/classes/dir_access.hpp>
 #include <godot_cpp/classes/file_access.hpp>
@@ -88,4 +85,3 @@ Error FmodGodot::FmodBankImporter::_import(const String &p_source_file, const St
     // }
     return godot::ERR_CANT_CREATE;
 }
-#endif

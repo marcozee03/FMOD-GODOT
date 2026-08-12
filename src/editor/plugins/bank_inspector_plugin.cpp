@@ -11,7 +11,6 @@ void FmodGodot::BankInspectorPlugin::_parse_begin(Object *p_object)
     details->set_v_size_flags(Control::SizeFlags::SIZE_EXPAND_FILL);
     details->display_fmod_object("bank:/" + obj->get_path().get_basename().get_file());
     add_custom_control(details);
-    // add_custom_control(memnew(BankInspector(cast_to<FmodBank>(p_object))));
 }
 
 bool FmodGodot::BankInspectorPlugin::_can_handle(Object *p_object) const
