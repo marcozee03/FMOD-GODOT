@@ -24,4 +24,6 @@ inline constexpr const char *BUFFER_COUNT = "Fmod/General/Dsp/buffer_count";
 inline constexpr const char *DOPPLER_SCALE = "Fmod/General/3D Settings/doppler_scale";
 inline constexpr const char *DISTANCE_FACTOR = "Fmod/General/3D Settings/distance_factor";
 inline constexpr const char *ROLLOFF_SCALE = "Fmod/General/3D Settings/rolloff_scale";
+inline constexpr const char *PLUGIN_PATH = "Fmod/plugins/path";
+inline constexpr const char *PLUGINS = "Fmod/plugins/plugins";
 } // namespace FmodGodot

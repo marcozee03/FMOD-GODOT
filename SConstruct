@@ -14,7 +14,7 @@ source_path = [
 # env.Append(CCFLAGS=["-Wall"])
 # env.Append(CCFLAGS=["-Werror"])
 logging = ""
-if env["target"] == "editor" or env["target"] == "template_debug":
+if env["target"] in ["editor", "template_debug"]:
     logging = "L"
 
 def linux_config():
@@ -79,21 +79,30 @@ env.Append(
         "src/scene/",
         "src/scene/2d/",
         "src/scene/3d",
-        "src/editor/",
-        "src/editor/plugins/",
-        "src/editor/nodes/",
         "headers/",
-    ]
-)
+    ])
 sources = [
     Glob("src/*.cpp"),
     Glob("src/scene/*.cpp"),
     Glob("src/scene/2d/*.cpp"),
     Glob("src/scene/3d/*.cpp"),
-    Glob("src/editor/*.cpp"),
-    Glob("src/editor/plugins/*.cpp"),
-    Glob("src/editor/nodes/*.cpp"),
 ]
+if env["target"] == "editor":
+    env.Append(
+    CPPPATH=[
+        "src/editor/",
+        "src/editor/plugins/",
+        "src/editor/nodes/",
+    ])
+    sources.append([
+        Glob("src/editor/*.cpp"),
+        Glob("src/editor/plugins/*.cpp"),
+        Glob("src/editor/nodes/*.cpp"),
+    ])
+ 
+
+
+
 verify_godot_cpp();
 linux_config();
 windows_config();
