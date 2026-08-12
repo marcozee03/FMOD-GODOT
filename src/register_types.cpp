@@ -100,7 +100,7 @@ void loadSettings()
                                   "TIMESTAMPS:65536,LINENUMBERS:131072,THREAD:262144"),
                      0);
 
-    GLOBAL_DEF_BASIC(PropertyInfo(Variant::STRING, PLUGIN_PATH, PROPERTY_HINT_DIR, ""), "res://");
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::STRING, PLUGIN_PATH, PROPERTY_HINT_DIR, ""), "");
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::DICTIONARY, PLUGINS, PROPERTY_HINT_TYPE_STRING,
                                   vformat("%d/%d:;%d/%d:0,100,or_greater,suffix:priority", Variant::STRING,
                                           PROPERTY_HINT_FILE, Variant::INT, PROPERTY_HINT_RANGE)),

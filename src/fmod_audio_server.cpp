@@ -250,7 +250,12 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
     FMOD_Studio_System_SetUserData(studio_system, this);
     FMOD_Studio_System_SetCallback(studio_system, fmod_studio_system_callback, FMOD_STUDIO_SYSTEM_CALLBACK_ALL);
     thread->start(callable_mp(this, &FmodAudioServer::thread_func), Thread::Priority::PRIORITY_NORMAL);
-    FMOD_System_SetPluginPath(core_system, String(GLOBAL_GET(PLUGIN_PATH)).utf8().ptr());
+    String plugin_path = GLOBAL_GET(PLUGIN_PATH);
+    ;
+    if (!plugin_path.is_empty())
+    {
+        FMOD_System_SetPluginPath(core_system, plugin_path.utf8().ptr());
+    }
     unsigned int handle;
     Dictionary plugins = GLOBAL_GET(PLUGINS);
     for (auto plugin_file : plugins.keys())
