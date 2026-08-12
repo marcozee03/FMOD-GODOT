@@ -14,6 +14,7 @@
 #include "fmod_studio_common.h"
 #include "globals.h"
 #include "variant/dictionary.hpp"
+#include "variant/typed_dictionary.hpp"
 #include "variant/utility_functions.hpp"
 #include "variant/variant.hpp"
 #include <classes/dir_access.hpp>
@@ -257,7 +258,7 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
         FMOD_System_SetPluginPath(core_system, plugin_path.utf8().ptr());
     }
     unsigned int handle;
-    Dictionary plugins = GLOBAL_GET(PLUGINS);
+    TypedDictionary<String, int> plugins = GLOBAL_GET(PLUGINS);
     for (auto plugin_file : plugins.keys())
     {
         FMOD_System_LoadPlugin(core_system, String(plugin_file).utf8().ptr(), &handle,

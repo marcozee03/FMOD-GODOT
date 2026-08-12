@@ -5,11 +5,8 @@
 #include "fmod_bank_loader.h"
 // #include "fmodeventemitter2d.h"
 #include "fmod_audio_server.h"
-#include "fmod_console.h"
 #include "fmod_event_emitter_2d.h"
 #include "fmod_event_emitter_3d.h"
-#include "fmod_event_previewer.h"
-#include "fmod_event_selector.h"
 #include <classes/engine.hpp>
 #include <gdextension_interface.h>
 #include <godot.hpp>
@@ -17,18 +14,18 @@
 #include <godot_cpp/core/defs.hpp>
 // #include "resource_saver.hpp"
 #include "fmod_bank_format_loader.h"
-#include "fmod_installer.h"
 #include "fmod_listener_2d.h"
 #include "fmod_listener_3d.h"
-#include "fmod_project_explorer.h"
 #include "fmod_string_names.h"
 #include "variant/array.hpp"
 #include "variant/variant.hpp"
 #include <classes/project_settings.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
+#include <godot_cpp/variant/typed_dictionary.hpp>
 #ifdef TOOLS_ENABLED
 #include "bank_inspector_plugin.h"
 #include "fmod_bank_importer.h"
+#include "fmod_console.h"
 #include "fmod_editor_interface.h"
 #include "fmod_editor_plugin.h"
 #include "fmod_event_browser.h"
@@ -36,7 +33,11 @@
 #include "fmod_event_inspector_plugin.h"
 #include "fmod_event_panner.h"
 #include "fmod_event_path_selector_property.h"
+#include "fmod_event_previewer.h"
+#include "fmod_event_selector.h"
+#include "fmod_installer.h"
 #include "fmod_object_details.h"
+#include "fmod_project_explorer.h"
 #include "fmod_script_client.h"
 #include "live_update_indicator.h"
 #include <classes/editor_interface.hpp>
@@ -104,7 +105,7 @@ void loadSettings()
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::DICTIONARY, PLUGINS, PROPERTY_HINT_TYPE_STRING,
                                   vformat("%d/%d:;%d/%d:0,100,or_greater,suffix:priority", Variant::STRING,
                                           PROPERTY_HINT_FILE, Variant::INT, PROPERTY_HINT_RANGE)),
-                     Dictionary());
+                     (TypedDictionary<String, int>()));
 }
 } // namespace FmodGodot
 void initialize_fmod_module(ModuleInitializationLevel p_level)
