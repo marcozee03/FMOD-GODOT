@@ -1,14 +1,13 @@
-
-#include "variant/callable_method_pointer.hpp"
-#ifdef TOOLS_ENABLED
+#include "fmod_editor_plugin.h"
 #include "editor/fmod_installer.h"
 #include "fmod_bank_importer.h"
 #include "fmod_editor_interface.h"
-#include "fmod_editor_plugin.h"
+#include "variant/callable_method_pointer.hpp"
 #include <classes/editor_interface.hpp>
 #include <classes/editor_settings.hpp>
 #include <classes/project_settings.hpp>
 #include <classes/resource_loader.hpp>
+#include <cmath>
 using namespace godot;
 namespace FmodGodot
 {
@@ -63,13 +62,29 @@ void FmodEditorPlugin::_enter_tree()
 
     log->_set_fmod_script_client(FmodEditorInterface::get_singleton()->get_script_client());
     add_tool_menu_item("Finish FMOD Godot setup", callable_mp(this, &FmodEditorPlugin::_open_installer));
+    export_plugin = memnew(FmodExportPlugin);
+    add_export_plugin(export_plugin);
 }
+#define memdelete_notnull(m_v)                                                                                         \
+    if (m_v)                                                                                                           \
+    {                                                                                                                  \
+        memdelete(m_v);                                                                                                \
+        m_v = nullptr;                                                                                                 \
+    }
+
 void FmodEditorPlugin::_exit_tree()
 {
+
     remove_inspector_plugin(eventInspector);
     remove_inspector_plugin(bankInspector);
+    remove_export_plugin(export_plugin);
     remove_import_plugin(bankImporter);
     remove_tool_menu_item("Finish FMOD Godot setup");
+    memdelete_notnull(eventInspector);
+    memdelete_notnull(bankInspector);
+    memdelete_notnull(export_plugin);
+    memdelete_notnull(bankImporter);
+    memdelete_notnull(log);
 }
+#undef memdelete_notnull
 } // namespace FmodGodot
-#endif

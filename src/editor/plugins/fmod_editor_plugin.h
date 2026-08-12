@@ -1,12 +1,12 @@
 #pragma once
 #include "classes/editor_interface.hpp"
-#include "variant/utility_functions.hpp"
 #ifdef TOOLS_ENABLED
 #include "bank_inspector_plugin.h"
 #include "fmod_bank_importer.h"
 #include "fmod_console.h"
 #include "fmod_event_browser.h"
 #include "fmod_event_inspector_plugin.h"
+#include "fmod_export_plugin.h"
 #include "fmod_installer.h"
 #include <classes/editor_plugin.hpp>
 using namespace godot;
@@ -23,6 +23,7 @@ class FmodEditorPlugin : public EditorPlugin
     FmodEventBrowser *browser = nullptr;
     FmodConsole *log = nullptr;
     FmodInstaller *installer = nullptr;
+    FmodExportPlugin *export_plugin = nullptr;
     uint64_t installer_id;
     void _open_installer();
 

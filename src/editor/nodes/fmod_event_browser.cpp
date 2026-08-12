@@ -2,7 +2,6 @@
 #include "classes/editor_dock.hpp"
 #include "classes/h_box_container.hpp"
 #include "classes/v_box_container.hpp"
-#include "core/print_string.hpp"
 #include "fmod_project_explorer.h"
 #include "variant/callable_method_pointer.hpp"
 #ifdef TOOLS_ENABLED

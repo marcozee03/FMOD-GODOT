@@ -3,7 +3,6 @@
 #include "core/class_db.hpp"
 #include "core/property_info.hpp"
 #include "fmod_bank_loader.h"
-// #include "fmodeventemitter2d.h"
 #include "fmod_audio_server.h"
 #include "fmod_event_emitter_2d.h"
 #include "fmod_event_emitter_3d.h"
@@ -12,7 +11,6 @@
 #include <godot.hpp>
 #include <godot_cpp/classes/resource_saver.hpp>
 #include <godot_cpp/core/defs.hpp>
-// #include "resource_saver.hpp"
 #include "fmod_bank_format_loader.h"
 #include "fmod_listener_2d.h"
 #include "fmod_listener_3d.h"
