@@ -1,5 +1,4 @@
 #pragma once
-#ifdef TOOLS_ENABLED
 #include <godot_cpp/classes/editor_import_plugin.hpp>
 #include <godot_cpp/variant/string.hpp>
 using namespace godot;
@@ -27,4 +26,3 @@ namespace FmodGodot
         Error _import(const String &p_source_file, const String &p_save_path, const Dictionary &p_options, const TypedArray<String> &p_platform_variants, const TypedArray<String> &p_gen_files) const override;
     };
 }
-#endif

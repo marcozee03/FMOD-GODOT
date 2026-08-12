@@ -1,8 +1,4 @@
 #include "fmod_listener_2d.h"
-#include "fmod_audio_server.h"
-#include "fmod_globals.h"
-#include "fmod_studio.h"
-#include "globals.h"
 #include <classes/rigid_body2d.hpp>
 using namespace godot;
 namespace FmodGodot
