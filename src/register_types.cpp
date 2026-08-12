@@ -93,11 +93,18 @@ void loadSettings()
 
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::INT, LOGGING_LEVEL, PROPERTY_HINT_ENUM, "NONE:0,ERROR:1,WARNING:2 ,LOG:4"),
                      1);
-    GLOBAL_DEF_BASIC(
-        PropertyInfo(Variant::INT, DEBUG_TYPE, PROPERTY_HINT_FLAGS, "MEMORY:256,FILE:512,CODEC:1024,TRACE:2048, VIRTUAL:4096"), 0);
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::INT, DEBUG_TYPE, PROPERTY_HINT_FLAGS,
+                                  "MEMORY:256,FILE:512,CODEC:1024,TRACE:2048, VIRTUAL:4096"),
+                     0);
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::INT, DEBUG_DISPLAY, PROPERTY_HINT_FLAGS,
                                   "TIMESTAMPS:65536,LINENUMBERS:131072,THREAD:262144"),
                      0);
+
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::STRING, PLUGIN_PATH, PROPERTY_HINT_DIR, ""), "res://");
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::DICTIONARY, PLUGINS, PROPERTY_HINT_TYPE_STRING,
+                                  vformat("%d/%d:;%d/%d:0,100,or_greater,suffix:priority", Variant::STRING,
+                                          PROPERTY_HINT_FILE, Variant::INT, PROPERTY_HINT_RANGE)),
+                     Dictionary());
 }
 } // namespace FmodGodot
 void initialize_fmod_module(ModuleInitializationLevel p_level)
