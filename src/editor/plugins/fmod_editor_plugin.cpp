@@ -80,11 +80,9 @@ void FmodEditorPlugin::_exit_tree()
     remove_export_plugin(export_plugin);
     remove_import_plugin(bankImporter);
     remove_tool_menu_item("Finish FMOD Godot setup");
-    memdelete_notnull(eventInspector);
-    memdelete_notnull(bankInspector);
-    memdelete_notnull(export_plugin);
-    memdelete_notnull(bankImporter);
     memdelete_notnull(log);
+    memdelete_notnull(browser);
+    memdelete_notnull(installer);
 }
 #undef memdelete_notnull
 } // namespace FmodGodot

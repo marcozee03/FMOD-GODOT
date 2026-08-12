@@ -17,13 +17,13 @@ class FmodEditorPlugin : public EditorPlugin
 {
     GDCLASS(FmodEditorPlugin, EditorPlugin)
   private:
-    EventInspector *eventInspector = nullptr;
-    FmodBankImporter *bankImporter = nullptr;
-    BankInspectorPlugin *bankInspector = nullptr;
+    Ref<EventInspector> eventInspector = nullptr;
+    Ref<FmodBankImporter> bankImporter = nullptr;
+    Ref<BankInspectorPlugin> bankInspector = nullptr;
     FmodEventBrowser *browser = nullptr;
     FmodConsole *log = nullptr;
     FmodInstaller *installer = nullptr;
-    FmodExportPlugin *export_plugin = nullptr;
+    Ref<FmodExportPlugin> export_plugin = nullptr;
     uint64_t installer_id;
     void _open_installer();
 
