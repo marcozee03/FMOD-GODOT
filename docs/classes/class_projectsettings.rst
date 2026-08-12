@@ -65,6 +65,10 @@ Properties
    +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
    | ``float``                                                  | :ref:`Fmod/General/3D Settings/rolloff_scale<class_ProjectSettings_property_Fmod/General/3D Settings/rolloff_scale>`     |
    +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | ``Dictionary``                                             | :ref:`Fmod/plugins/plugins<class_ProjectSettings_property_Fmod/plugins/plugins>`                                         |
+   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | ``String``                                                 | :ref:`Fmod/plugins/path<class_ProjectSettings_property_Fmod/plugins/path>`                                               |
+   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -509,6 +513,30 @@ A factor for converting game distance units to FMOD distance units.
 ``float`` **Fmod/General/3D Settings/rolloff_scale** :ref:`🔗<class_ProjectSettings_property_Fmod/General/3D Settings/rolloff_scale>`
 
 A scaling factor for distance attenuation. When a sound uses a roll-off mode other than FMOD_3D_CUSTOMROLLOFF and the distance is greater than the sound's minimum distance, the distance is scaled by the roll-off scale.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_ProjectSettings_property_Fmod/plugins/plugins:
+
+.. rst-class:: classref-property
+
+``Dictionary`` **Fmod/plugins/plugins** :ref:`🔗<class_ProjectSettings_property_Fmod/plugins/plugins>`
+
+List of dynamic plugins to load. (for example, "resonanceaudio.dll" contains the Windows versions of the ResonanceAudio plugins). Each platform requires its own version of the dynamic library;
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_ProjectSettings_property_Fmod/plugins/path:
+
+.. rst-class:: classref-property
+
+``String`` **Fmod/plugins/path** :ref:`🔗<class_ProjectSettings_property_Fmod/plugins/path>`
+
+base search path for plug-ins so they can be placed somewhere else than the directory of the main executable. If this is set, the filename parameter of System::loadPlugin is assumed to be relative to this path.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
