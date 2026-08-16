@@ -2,23 +2,23 @@
 #include "classes/global_constants.hpp"
 #include "core/class_db.hpp"
 #include "core/property_info.hpp"
-#include "fmod_bank_loader.h"
 #include "fmod_audio_server.h"
+#include "fmod_bank_format_loader.h"
+#include "fmod_bank_loader.h"
 #include "fmod_event_emitter_2d.h"
 #include "fmod_event_emitter_3d.h"
-#include <classes/engine.hpp>
-#include <gdextension_interface.h>
-#include <godot.hpp>
-#include <godot_cpp/classes/resource_saver.hpp>
-#include <godot_cpp/core/defs.hpp>
-#include "fmod_bank_format_loader.h"
 #include "fmod_listener_2d.h"
 #include "fmod_listener_3d.h"
 #include "fmod_string_names.h"
 #include "variant/array.hpp"
 #include "variant/variant.hpp"
+#include <classes/engine.hpp>
 #include <classes/project_settings.hpp>
+#include <gdextension_interface.h>
+#include <godot.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
+#include <godot_cpp/classes/resource_saver.hpp>
+#include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/variant/typed_dictionary.hpp>
 #ifdef TOOLS_ENABLED
 #include "bank_inspector_plugin.h"
@@ -129,7 +129,14 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         bank_format_loader.instantiate();
         ResourceLoader::get_singleton()->add_resource_format_loader(bank_format_loader);
         GDREGISTER_CLASS(FmodBankLoader);
+#ifdef TOOLS_ENABLED
+        if (!Engine::get_singleton()->is_editor_hint())
+        {
+            audio_server->load_start_up_banks();
+        }
+#else
         audio_server->load_start_up_banks();
+#endif
     }
 
     if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
@@ -144,7 +151,7 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         Engine::get_singleton()->register_singleton("FmodEditorInterface", editor_interface);
         if (Engine::get_singleton()->is_editor_hint())
         {
-            editor_interface->refresh();
+            editor_interface->refresh(true);
         }
 
         GDREGISTER_INTERNAL_CLASS(FmodEditorPlugin)
