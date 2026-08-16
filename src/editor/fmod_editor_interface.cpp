@@ -31,7 +31,6 @@ void FmodEditorInterface::restart_server()
 {
     FmodAudioServer::get_singleton()->finish();
     FmodAudioServer::get_singleton()->init_with_project_settings();
-    FmodAudioServer::get_singleton()->load_start_up_banks();
 }
 void FmodEditorInterface::build_banks()
 {
@@ -132,17 +131,26 @@ Event to_cacheable_event(FMOD_STUDIO_EVENTDESCRIPTION *description)
     return event;
 }
 } // namespace
-void FmodEditorInterface::refresh()
+void FmodEditorInterface::refresh(bool p_load_start_up_banks)
 {
     FMOD_STUDIO_SYSTEM *studio = FmodAudioServer::get_singleton()->get_studio();
     if (!studio)
     {
         return;
     }
+    if (p_load_start_up_banks)
+    {
+        FmodAudioServer::get_singleton()->load_start_up_banks();
+    }
+    else
+    {
+        FmodAudioServer::get_singleton()->reload_start_up_banks();
+    }
     int bank_count;
     FMOD_Studio_System_GetBankCount(studio, &bank_count);
     if (bank_count < 0)
     {
+        FmodAudioServer::get_singleton()->unload_start_up_banks();
         return;
     }
     FMOD_STUDIO_BANK **banks = memnew_arr(FMOD_STUDIO_BANK *, bank_count);
@@ -213,6 +221,8 @@ void FmodEditorInterface::refresh()
 
     memdelete_arr(banks);
     memdelete_arr(str);
+
+    FmodAudioServer::get_singleton()->unload_start_up_banks();
 }
 void FmodEditorInterface::show_event_in_fmod_studio(Vector4i guid)
 {

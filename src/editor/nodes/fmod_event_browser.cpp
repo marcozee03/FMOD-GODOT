@@ -80,12 +80,27 @@ void FmodEventBrowser::_update_layout(int p_layout)
 
 void FmodGodot::FmodEventBrowser::refresh()
 {
+    print_line("InterfaceRefresh");
     FmodEditorInterface::get_singleton()->refresh();
+    print_line("explorer");
     explorer->refresh();
+    print_line("vis");
+    _visibility_changed();
 }
 void FmodEventBrowser::_update_theme()
 {
     refresh_button->add_theme_icon_override("icon", get_theme_icon("Reload", "EditorIcons"));
+}
+void FmodEventBrowser::_visibility_changed()
+{
+    if (is_visible_in_tree())
+    {
+        FmodAudioServer::get_singleton()->load_start_up_banks();
+    }
+    else
+    {
+        FmodAudioServer::get_singleton()->unload_start_up_banks();
+    }
 }
 
 void FmodGodot::FmodEventBrowser::_bind_methods()
@@ -99,6 +114,10 @@ void FmodEventBrowser::_notification(int p_what)
     case NOTIFICATION_THEME_CHANGED:
         _update_theme();
         break;
+    case NOTIFICATION_VISIBILITY_CHANGED: {
+        _visibility_changed();
+    }
+    break;
     }
 }
 

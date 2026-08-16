@@ -20,6 +20,7 @@ class FmodEventBrowser : public EditorDock
     FmodProjectExplorer *explorer;
     void refresh();
     void _update_theme();
+    void _visibility_changed();
 
   protected:
     static void _bind_methods();

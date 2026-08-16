@@ -29,7 +29,7 @@ class FmodEditorInterface : public Object
     ~FmodEditorInterface();
     void restart_server();
     void build_banks();
-    void refresh();
+    void refresh(bool p_load_start_up_banks = false);
     const FmodEditorCache *get_cache() const;
     FmodScriptClient *get_script_client() const;
     void set_console(FmodConsole *p_console);
