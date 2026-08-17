@@ -1,7 +1,7 @@
 #pragma once
 #include <godot_cpp/variant/string_name.hpp>
 using namespace godot;
-namespace fmodGodot
+namespace FmodGodot
 {
 inline constexpr const char *LOGGING_LEVEL = "fmod/debug/logging_level";
 inline constexpr const char *DEBUG_TYPE = "fmod/debug/type";
