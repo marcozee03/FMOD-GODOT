@@ -10,45 +10,45 @@
 	<methods>
 	</methods>
         <members>
-            <member name="Fmod/Banks/Import/source_type" type="String" setter="" getter="">
+            <member name="fmod/banks/import/source_type" type="String" setter="" getter="">
                     Specifies the method FMOD Godot uses to access your source .bank files. 
 
                     [b]Single Platform Build[/b] - You have a directory containing .bank files for a single platform. You specify the location of the directory in the Build Path setting.
 
                     [b]Multiple Platform Build[/b] - You have a directory containing .bank files for multiple platforms, with each platform in its own subdirectory. You specify the location of the top-level directory in the Build Path setting
 		</member>
-                <member name="Fmod/Banks/Import/fmod_studio_path" type="String" setter="" getter="">
+                <member name="fmod/banks/import/fmod_studio_path" type="String" setter="" getter="">
                     Path to the FMOD Studio executable. Setting this is necessary for building banks from godot and the FMOD console.
 		</member>
-                <member name="Fmod/Banks/Import/fmod_project_path" type="String" setter="" getter="">
+                <member name="fmod/banks/import/fmod_project_path" type="String" setter="" getter="">
                     Path to the FMOD Studio Project
 		</member>
-                <member name="Fmod/Banks/Import/bank_directory" type="String" setter="" getter="">
+                <member name="fmod/banks/import/bank_directory" type="String" setter="" getter="">
                     Path to project folder to for bank files.
 		</member>
-                <member name="Fmod/Banks/Import/load_banks" type="int" enum="LoadBanks" setter="" getter="">
+                <member name="fmod/banks/initialization/load_banks" type="int" enum="Loadbanks" setter="" getter="">
                     Controls automatic .bank file loading at startup time.
 		</member>
-                <member name="Fmod/Banks/Import/specified_banks" type="PackedStringArray" setter="" getter="">
-                    A list of .bank files to load at startup time. This list is only used if Load Banks is set to Specified.
+                <member name="fmod/banks/initialization/specified_banks" type="PackedStringArray" setter="" getter="">
+                    A list of .bank files to load at startup time. This list is only used if Load banks is set to Specified.
 		</member>
-                <member name="Fmod/Banks/Import/load_sample_data" type="bool" setter="" getter="">
-                    Pre-load audio sample data when loading .bank files via the Load Banks setting. This will reduce latency whenever an event is played for the first time, at the cost of using more memory.
+                <member name="fmod/banks/initialization/load_sample_data" type="bool" setter="" getter="">
+                    Pre-load audio sample data when loading .bank files via the Load banks setting. This will reduce latency whenever an event is played for the first time, at the cost of using more memory.
 		</member>
-                <member name="Fmod/Banks/Import/encryption_key" type="String" setter="" getter="">
+                <member name="fmod/banks/initialization/encryption_key" type="String" setter="" getter="">
                     The key used in FMOD Studio to encrypt the .bank file sample data. Not compatible with loadBankMemory.
 		</member>
-                <member name="Fmod/Debug/logging_level" type="int" enum="LoggingLevel" setter="" getter="">
+                <member name="fmod/debug/logging_level" type="int" enum="LoggingLevel" setter="" getter="">
                     Controls the severity of log messages that FMOD produces. This only has an effect on development builds, as release builds don't use the logging version of FMOD.
 		</member>
-                <member name="Fmod/Debug/type" type="int" enum="LoggingType" setter="" getter="">
+                <member name="fmod/debug/type" type="int" enum="LoggingType" setter="" getter="">
                     Enables detailed statistics.
 		</member>
-                <member name="Fmod/Debug/display" type="int" enum="LoggingDisplay" setter="" getter="">
+                <member name="fmod/debug/display" type="int" enum="LoggingDisplay" setter="" getter="">
                     Enables display of additional information in logs.
 		</member>
 
-                <member name="Fmod/General/live_update" type="int" enum="FmodAudioServer.LiveUpdate" setter="" getter="">
+                <member name="fmod/general/live_update" type="int" enum="fmodAudioServer.LiveUpdate" setter="" getter="">
                     Specifies when to accept connections to the game from FMOD Studio. This should be Disabled when releasing builds.
 
                     Disabled - Never accept connections from FMOD Studio.
@@ -57,37 +57,37 @@
 
                     Development Build Only - Only accept connections from FMOD Studio when running a development build.
 		</member>
-                <member name="Fmod/General/live_update_port" type="int" setter="" getter="">
+                <member name="fmod/general/live_update_port" type="int" setter="" getter="">
                     The network port that FMOD will use to accept connections from FMOD Studio.
 		</member>
-                <member name="Fmod/General/sample_rate" type="int" setter="" getter="">
+                <member name="fmod/general/sample_rate" type="int" setter="" getter="">
                     The audio sample rate that FMOD's mixer should use. Lower sample rates reduce mixer CPU usage but also reduce audio quality.
 		</member>
-                <member name="Fmod/General/Channels/real_count" type="Dictionary" setter="" getter="">
+                <member name="fmod/general/channels/real_count" type="Dictionary" setter="" getter="">
                     The number of channels that will be audible. Lowering this count will reduce the FMOD mixer's CPU usage. See the virtual voice system document for more information.
 		</member>
-                <member name="Fmod/General/Channels/virtual_count" type="Dictionary" setter="" getter="">
+                <member name="fmod/general/channels/virtual_count" type="Dictionary" setter="" getter="">
                     The number of channels that can be played. Once the Real Channel Count is exceeded, the quietest channels will be virtualised, meaning they are not audible. See the virtual voice system document for more information.
 		</member>
-                <member name="Fmod/General/DSP/buffer_length" type="int" setter="" getter="">
+                <member name="fmod/general/dsp/buffer_length" type="int" setter="" getter="">
                     The length of each DSP buffer.
 		</member>
-                <member name="Fmod/General/DSP/buffer_count" type="int" setter="" getter="">
+                <member name="fmod/general/dsp/buffer_count" type="int" setter="" getter="">
                     The number of DSP buffers to use.
 		</member>
-                <member name="Fmod/General/3D Settings/doppler_scale" type="float" setter="" getter="">
+                <member name="fmod/general/3d_settings/doppler_scale" type="float" setter="" getter="">
                     A scaling factor for doppler shift.
 		</member>
-                <member name="Fmod/General/3D Settings/distance_factor" type="float" setter="" getter="">
+                <member name="fmod/general/3d_settings/distance_factor" type="float" setter="" getter="">
                     A factor for converting game distance units to FMOD distance units.
 		</member>
-                <member name="Fmod/General/3D Settings/rolloff_scale" type="float" setter="" getter="">
+                <member name="fmod/general/3d_settings/rolloff_scale" type="float" setter="" getter="">
                     A scaling factor for distance attenuation. When a sound uses a roll-off mode other than FMOD_3D_CUSTOMROLLOFF and the distance is greater than the sound's minimum distance, the distance is scaled by the roll-off scale.
 		</member>
-                <member name="Fmod/plugins/plugins" type="Dictionary" setter="" getter="">
+                <member name="fmod/plugins/plugins" type="Dictionary" setter="" getter="">
                     List of dynamic plugins to load. (for example, "resonanceaudio.dll" contains the Windows versions of the ResonanceAudio plugins). Each platform requires its own version of the dynamic library; 
 		</member>
-                <member name="Fmod/plugins/path" type="String" setter="" getter="">
+                <member name="fmod/plugins/path" type="String" setter="" getter="">
                     base search path for plug-ins so they can be placed somewhere else than the directory of the main executable. If this is set, the filename parameter of System::loadPlugin is assumed to be relative to this path.
 		</member>
 
@@ -131,13 +131,13 @@
                 <constant name="THREAD" value="262144" enum="LoggingDisplay">
                     Display the thread ID of the calling function that generated the message.
 		</constant>
-                <constant name="NONE" value="0" enum="LoadBanks">
+                <constant name="NONE" value="0" enum="Loadbanks">
                     No .bank files will be loaded at initialization - you must handle all bank loading from script or by using the Bank Loader Node.
 		</constant>
-                <constant name="SPECIFIED" value="1" enum="LoadBanks">
-                    The .bank files in the Specified Banks list will be loaded in order.
+                <constant name="SPECIFIED" value="1" enum="Loadbanks">
+                    The .bank files in the Specified banks list will be loaded in order.
 		</constant>
-                <constant name="ALL" value="2" enum="LoadBanks">
+                <constant name="ALL" value="2" enum="Loadbanks">
                     All .bank files will be loaded, in no particular order.
 		</constant>
 	</constants>
