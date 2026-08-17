@@ -22,53 +22,53 @@ Properties
 .. table::
    :widths: auto
 
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``String``                                                 | :ref:`Fmod/Banks/Import/source_type<class_ProjectSettings_property_Fmod/Banks/Import/source_type>`                       |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``String``                                                 | :ref:`Fmod/Banks/Import/fmod_studio_path<class_ProjectSettings_property_Fmod/Banks/Import/fmod_studio_path>`             |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``String``                                                 | :ref:`Fmod/Banks/Import/fmod_project_path<class_ProjectSettings_property_Fmod/Banks/Import/fmod_project_path>`           |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``String``                                                 | :ref:`Fmod/Banks/Import/bank_directory<class_ProjectSettings_property_Fmod/Banks/Import/bank_directory>`                 |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`LoadBanks<enum_ProjectSettings_LoadBanks>`           | :ref:`Fmod/Banks/Import/load_banks<class_ProjectSettings_property_Fmod/Banks/Import/load_banks>`                         |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``PackedStringArray``                                      | :ref:`Fmod/Banks/Import/specified_banks<class_ProjectSettings_property_Fmod/Banks/Import/specified_banks>`               |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``bool``                                                   | :ref:`Fmod/Banks/Import/load_sample_data<class_ProjectSettings_property_Fmod/Banks/Import/load_sample_data>`             |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``String``                                                 | :ref:`Fmod/Banks/Import/encryption_key<class_ProjectSettings_property_Fmod/Banks/Import/encryption_key>`                 |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`LoggingLevel<enum_ProjectSettings_LoggingLevel>`     | :ref:`Fmod/Debug/logging_level<class_ProjectSettings_property_Fmod/Debug/logging_level>`                                 |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`LoggingType<enum_ProjectSettings_LoggingType>`       | :ref:`Fmod/Debug/type<class_ProjectSettings_property_Fmod/Debug/type>`                                                   |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`LoggingDisplay<enum_ProjectSettings_LoggingDisplay>` | :ref:`Fmod/Debug/display<class_ProjectSettings_property_Fmod/Debug/display>`                                             |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`LiveUpdate<enum_FmodAudioServer_LiveUpdate>`         | :ref:`Fmod/General/live_update<class_ProjectSettings_property_Fmod/General/live_update>`                                 |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``int``                                                    | :ref:`Fmod/General/live_update_port<class_ProjectSettings_property_Fmod/General/live_update_port>`                       |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``int``                                                    | :ref:`Fmod/General/sample_rate<class_ProjectSettings_property_Fmod/General/sample_rate>`                                 |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``Dictionary``                                             | :ref:`Fmod/General/Channels/real_count<class_ProjectSettings_property_Fmod/General/Channels/real_count>`                 |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``Dictionary``                                             | :ref:`Fmod/General/Channels/virtual_count<class_ProjectSettings_property_Fmod/General/Channels/virtual_count>`           |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``int``                                                    | :ref:`Fmod/General/DSP/buffer_length<class_ProjectSettings_property_Fmod/General/DSP/buffer_length>`                     |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``int``                                                    | :ref:`Fmod/General/DSP/buffer_count<class_ProjectSettings_property_Fmod/General/DSP/buffer_count>`                       |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``float``                                                  | :ref:`Fmod/General/3D Settings/doppler_scale<class_ProjectSettings_property_Fmod/General/3D Settings/doppler_scale>`     |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``float``                                                  | :ref:`Fmod/General/3D Settings/distance_factor<class_ProjectSettings_property_Fmod/General/3D Settings/distance_factor>` |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``float``                                                  | :ref:`Fmod/General/3D Settings/rolloff_scale<class_ProjectSettings_property_Fmod/General/3D Settings/rolloff_scale>`     |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``Dictionary``                                             | :ref:`Fmod/plugins/plugins<class_ProjectSettings_property_Fmod/plugins/plugins>`                                         |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
-   | ``String``                                                 | :ref:`Fmod/plugins/path<class_ProjectSettings_property_Fmod/plugins/path>`                                               |
-   +------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``String``                                                 | :ref:`fmod/banks/import/source_type<class_ProjectSettings_property_fmod/banks/import/source_type>`                           |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``String``                                                 | :ref:`fmod/banks/import/fmod_studio_path<class_ProjectSettings_property_fmod/banks/import/fmod_studio_path>`                 |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``String``                                                 | :ref:`fmod/banks/import/fmod_project_path<class_ProjectSettings_property_fmod/banks/import/fmod_project_path>`               |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``String``                                                 | :ref:`fmod/banks/import/bank_directory<class_ProjectSettings_property_fmod/banks/import/bank_directory>`                     |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Loadbanks<enum_ProjectSettings_Loadbanks>`           | :ref:`fmod/banks/initialization/load_banks<class_ProjectSettings_property_fmod/banks/initialization/load_banks>`             |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``PackedStringArray``                                      | :ref:`fmod/banks/initialization/specified_banks<class_ProjectSettings_property_fmod/banks/initialization/specified_banks>`   |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``bool``                                                   | :ref:`fmod/banks/initialization/load_sample_data<class_ProjectSettings_property_fmod/banks/initialization/load_sample_data>` |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``String``                                                 | :ref:`fmod/banks/initialization/encryption_key<class_ProjectSettings_property_fmod/banks/initialization/encryption_key>`     |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`LoggingLevel<enum_ProjectSettings_LoggingLevel>`     | :ref:`fmod/debug/logging_level<class_ProjectSettings_property_fmod/debug/logging_level>`                                     |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`LoggingType<enum_ProjectSettings_LoggingType>`       | :ref:`fmod/debug/type<class_ProjectSettings_property_fmod/debug/type>`                                                       |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`LoggingDisplay<enum_ProjectSettings_LoggingDisplay>` | :ref:`fmod/debug/display<class_ProjectSettings_property_fmod/debug/display>`                                                 |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | fmodAudioServer.LiveUpdate                                 | :ref:`fmod/general/live_update<class_ProjectSettings_property_fmod/general/live_update>`                                     |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``int``                                                    | :ref:`fmod/general/live_update_port<class_ProjectSettings_property_fmod/general/live_update_port>`                           |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``int``                                                    | :ref:`fmod/general/sample_rate<class_ProjectSettings_property_fmod/general/sample_rate>`                                     |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``Dictionary``                                             | :ref:`fmod/general/channels/real_count<class_ProjectSettings_property_fmod/general/channels/real_count>`                     |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``Dictionary``                                             | :ref:`fmod/general/channels/virtual_count<class_ProjectSettings_property_fmod/general/channels/virtual_count>`               |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``int``                                                    | :ref:`fmod/general/dsp/buffer_length<class_ProjectSettings_property_fmod/general/dsp/buffer_length>`                         |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``int``                                                    | :ref:`fmod/general/dsp/buffer_count<class_ProjectSettings_property_fmod/general/dsp/buffer_count>`                           |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``float``                                                  | :ref:`fmod/general/3d_settings/doppler_scale<class_ProjectSettings_property_fmod/general/3d_settings/doppler_scale>`         |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``float``                                                  | :ref:`fmod/general/3d_settings/distance_factor<class_ProjectSettings_property_fmod/general/3d_settings/distance_factor>`     |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``float``                                                  | :ref:`fmod/general/3d_settings/rolloff_scale<class_ProjectSettings_property_fmod/general/3d_settings/rolloff_scale>`         |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``Dictionary``                                             | :ref:`fmod/plugins/plugins<class_ProjectSettings_property_fmod/plugins/plugins>`                                             |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
+   | ``String``                                                 | :ref:`fmod/plugins/path<class_ProjectSettings_property_fmod/plugins/path>`                                                   |
+   +------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -205,17 +205,17 @@ Display the thread ID of the calling function that generated the message.
 
 ----
 
-.. _enum_ProjectSettings_LoadBanks:
+.. _enum_ProjectSettings_Loadbanks:
 
 .. rst-class:: classref-enumeration
 
-enum **LoadBanks**: :ref:`🔗<enum_ProjectSettings_LoadBanks>`
+enum **Loadbanks**: :ref:`🔗<enum_ProjectSettings_Loadbanks>`
 
 .. _class_ProjectSettings_constant_NONE:
 
 .. rst-class:: classref-enumeration-constant
 
-:ref:`LoadBanks<enum_ProjectSettings_LoadBanks>` **NONE** = ``0``
+:ref:`Loadbanks<enum_ProjectSettings_Loadbanks>` **NONE** = ``0``
 
 No .bank files will be loaded at initialization - you must handle all bank loading from script or by using the Bank Loader Node.
 
@@ -223,15 +223,15 @@ No .bank files will be loaded at initialization - you must handle all bank loadi
 
 .. rst-class:: classref-enumeration-constant
 
-:ref:`LoadBanks<enum_ProjectSettings_LoadBanks>` **SPECIFIED** = ``1``
+:ref:`Loadbanks<enum_ProjectSettings_Loadbanks>` **SPECIFIED** = ``1``
 
-The .bank files in the Specified Banks list will be loaded in order.
+The .bank files in the Specified banks list will be loaded in order.
 
 .. _class_ProjectSettings_constant_ALL:
 
 .. rst-class:: classref-enumeration-constant
 
-:ref:`LoadBanks<enum_ProjectSettings_LoadBanks>` **ALL** = ``2``
+:ref:`Loadbanks<enum_ProjectSettings_Loadbanks>` **ALL** = ``2``
 
 All .bank files will be loaded, in no particular order.
 
@@ -244,11 +244,11 @@ All .bank files will be loaded, in no particular order.
 Property Descriptions
 ---------------------
 
-.. _class_ProjectSettings_property_Fmod/Banks/Import/source_type:
+.. _class_ProjectSettings_property_fmod/banks/import/source_type:
 
 .. rst-class:: classref-property
 
-``String`` **Fmod/Banks/Import/source_type** :ref:`🔗<class_ProjectSettings_property_Fmod/Banks/Import/source_type>`
+``String`` **fmod/banks/import/source_type** :ref:`🔗<class_ProjectSettings_property_fmod/banks/import/source_type>`
 
 Specifies the method FMOD Godot uses to access your source .bank files. 
 
@@ -264,11 +264,11 @@ Specifies the method FMOD Godot uses to access your source .bank files.
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/Banks/Import/fmod_studio_path:
+.. _class_ProjectSettings_property_fmod/banks/import/fmod_studio_path:
 
 .. rst-class:: classref-property
 
-``String`` **Fmod/Banks/Import/fmod_studio_path** :ref:`🔗<class_ProjectSettings_property_Fmod/Banks/Import/fmod_studio_path>`
+``String`` **fmod/banks/import/fmod_studio_path** :ref:`🔗<class_ProjectSettings_property_fmod/banks/import/fmod_studio_path>`
 
 Path to the FMOD Studio executable. Setting this is necessary for building banks from godot and the FMOD console.
 
@@ -276,11 +276,11 @@ Path to the FMOD Studio executable. Setting this is necessary for building banks
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/Banks/Import/fmod_project_path:
+.. _class_ProjectSettings_property_fmod/banks/import/fmod_project_path:
 
 .. rst-class:: classref-property
 
-``String`` **Fmod/Banks/Import/fmod_project_path** :ref:`🔗<class_ProjectSettings_property_Fmod/Banks/Import/fmod_project_path>`
+``String`` **fmod/banks/import/fmod_project_path** :ref:`🔗<class_ProjectSettings_property_fmod/banks/import/fmod_project_path>`
 
 Path to the FMOD Studio Project
 
@@ -288,11 +288,11 @@ Path to the FMOD Studio Project
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/Banks/Import/bank_directory:
+.. _class_ProjectSettings_property_fmod/banks/import/bank_directory:
 
 .. rst-class:: classref-property
 
-``String`` **Fmod/Banks/Import/bank_directory** :ref:`🔗<class_ProjectSettings_property_Fmod/Banks/Import/bank_directory>`
+``String`` **fmod/banks/import/bank_directory** :ref:`🔗<class_ProjectSettings_property_fmod/banks/import/bank_directory>`
 
 Path to project folder to for bank files.
 
@@ -300,11 +300,11 @@ Path to project folder to for bank files.
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/Banks/Import/load_banks:
+.. _class_ProjectSettings_property_fmod/banks/initialization/load_banks:
 
 .. rst-class:: classref-property
 
-:ref:`LoadBanks<enum_ProjectSettings_LoadBanks>` **Fmod/Banks/Import/load_banks** :ref:`🔗<class_ProjectSettings_property_Fmod/Banks/Import/load_banks>`
+:ref:`Loadbanks<enum_ProjectSettings_Loadbanks>` **fmod/banks/initialization/load_banks** :ref:`🔗<class_ProjectSettings_property_fmod/banks/initialization/load_banks>`
 
 Controls automatic .bank file loading at startup time.
 
@@ -312,13 +312,13 @@ Controls automatic .bank file loading at startup time.
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/Banks/Import/specified_banks:
+.. _class_ProjectSettings_property_fmod/banks/initialization/specified_banks:
 
 .. rst-class:: classref-property
 
-``PackedStringArray`` **Fmod/Banks/Import/specified_banks** :ref:`🔗<class_ProjectSettings_property_Fmod/Banks/Import/specified_banks>`
+``PackedStringArray`` **fmod/banks/initialization/specified_banks** :ref:`🔗<class_ProjectSettings_property_fmod/banks/initialization/specified_banks>`
 
-A list of .bank files to load at startup time. This list is only used if Load Banks is set to Specified.
+A list of .bank files to load at startup time. This list is only used if Load banks is set to Specified.
 
 **Note:** The returned array is *copied* and any changes to it will not update the original property value. See ``PackedStringArray`` for more details.
 
@@ -326,23 +326,23 @@ A list of .bank files to load at startup time. This list is only used if Load Ba
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/Banks/Import/load_sample_data:
+.. _class_ProjectSettings_property_fmod/banks/initialization/load_sample_data:
 
 .. rst-class:: classref-property
 
-``bool`` **Fmod/Banks/Import/load_sample_data** :ref:`🔗<class_ProjectSettings_property_Fmod/Banks/Import/load_sample_data>`
+``bool`` **fmod/banks/initialization/load_sample_data** :ref:`🔗<class_ProjectSettings_property_fmod/banks/initialization/load_sample_data>`
 
-Pre-load audio sample data when loading .bank files via the Load Banks setting. This will reduce latency whenever an event is played for the first time, at the cost of using more memory.
+Pre-load audio sample data when loading .bank files via the Load banks setting. This will reduce latency whenever an event is played for the first time, at the cost of using more memory.
 
 .. rst-class:: classref-item-separator
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/Banks/Import/encryption_key:
+.. _class_ProjectSettings_property_fmod/banks/initialization/encryption_key:
 
 .. rst-class:: classref-property
 
-``String`` **Fmod/Banks/Import/encryption_key** :ref:`🔗<class_ProjectSettings_property_Fmod/Banks/Import/encryption_key>`
+``String`` **fmod/banks/initialization/encryption_key** :ref:`🔗<class_ProjectSettings_property_fmod/banks/initialization/encryption_key>`
 
 The key used in FMOD Studio to encrypt the .bank file sample data. Not compatible with loadBankMemory.
 
@@ -350,11 +350,11 @@ The key used in FMOD Studio to encrypt the .bank file sample data. Not compatibl
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/Debug/logging_level:
+.. _class_ProjectSettings_property_fmod/debug/logging_level:
 
 .. rst-class:: classref-property
 
-:ref:`LoggingLevel<enum_ProjectSettings_LoggingLevel>` **Fmod/Debug/logging_level** :ref:`🔗<class_ProjectSettings_property_Fmod/Debug/logging_level>`
+:ref:`LoggingLevel<enum_ProjectSettings_LoggingLevel>` **fmod/debug/logging_level** :ref:`🔗<class_ProjectSettings_property_fmod/debug/logging_level>`
 
 Controls the severity of log messages that FMOD produces. This only has an effect on development builds, as release builds don't use the logging version of FMOD.
 
@@ -362,11 +362,11 @@ Controls the severity of log messages that FMOD produces. This only has an effec
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/Debug/type:
+.. _class_ProjectSettings_property_fmod/debug/type:
 
 .. rst-class:: classref-property
 
-:ref:`LoggingType<enum_ProjectSettings_LoggingType>` **Fmod/Debug/type** :ref:`🔗<class_ProjectSettings_property_Fmod/Debug/type>`
+:ref:`LoggingType<enum_ProjectSettings_LoggingType>` **fmod/debug/type** :ref:`🔗<class_ProjectSettings_property_fmod/debug/type>`
 
 Enables detailed statistics.
 
@@ -374,11 +374,11 @@ Enables detailed statistics.
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/Debug/display:
+.. _class_ProjectSettings_property_fmod/debug/display:
 
 .. rst-class:: classref-property
 
-:ref:`LoggingDisplay<enum_ProjectSettings_LoggingDisplay>` **Fmod/Debug/display** :ref:`🔗<class_ProjectSettings_property_Fmod/Debug/display>`
+:ref:`LoggingDisplay<enum_ProjectSettings_LoggingDisplay>` **fmod/debug/display** :ref:`🔗<class_ProjectSettings_property_fmod/debug/display>`
 
 Enables display of additional information in logs.
 
@@ -386,11 +386,11 @@ Enables display of additional information in logs.
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/General/live_update:
+.. _class_ProjectSettings_property_fmod/general/live_update:
 
 .. rst-class:: classref-property
 
-:ref:`LiveUpdate<enum_FmodAudioServer_LiveUpdate>` **Fmod/General/live_update** :ref:`🔗<class_ProjectSettings_property_Fmod/General/live_update>`
+fmodAudioServer.LiveUpdate **fmod/general/live_update** :ref:`🔗<class_ProjectSettings_property_fmod/general/live_update>`
 
 Specifies when to accept connections to the game from FMOD Studio. This should be Disabled when releasing builds.
 
@@ -410,11 +410,11 @@ Specifies when to accept connections to the game from FMOD Studio. This should b
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/General/live_update_port:
+.. _class_ProjectSettings_property_fmod/general/live_update_port:
 
 .. rst-class:: classref-property
 
-``int`` **Fmod/General/live_update_port** :ref:`🔗<class_ProjectSettings_property_Fmod/General/live_update_port>`
+``int`` **fmod/general/live_update_port** :ref:`🔗<class_ProjectSettings_property_fmod/general/live_update_port>`
 
 The network port that FMOD will use to accept connections from FMOD Studio.
 
@@ -422,11 +422,11 @@ The network port that FMOD will use to accept connections from FMOD Studio.
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/General/sample_rate:
+.. _class_ProjectSettings_property_fmod/general/sample_rate:
 
 .. rst-class:: classref-property
 
-``int`` **Fmod/General/sample_rate** :ref:`🔗<class_ProjectSettings_property_Fmod/General/sample_rate>`
+``int`` **fmod/general/sample_rate** :ref:`🔗<class_ProjectSettings_property_fmod/general/sample_rate>`
 
 The audio sample rate that FMOD's mixer should use. Lower sample rates reduce mixer CPU usage but also reduce audio quality.
 
@@ -434,11 +434,11 @@ The audio sample rate that FMOD's mixer should use. Lower sample rates reduce mi
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/General/Channels/real_count:
+.. _class_ProjectSettings_property_fmod/general/channels/real_count:
 
 .. rst-class:: classref-property
 
-``Dictionary`` **Fmod/General/Channels/real_count** :ref:`🔗<class_ProjectSettings_property_Fmod/General/Channels/real_count>`
+``Dictionary`` **fmod/general/channels/real_count** :ref:`🔗<class_ProjectSettings_property_fmod/general/channels/real_count>`
 
 The number of channels that will be audible. Lowering this count will reduce the FMOD mixer's CPU usage. See the virtual voice system document for more information.
 
@@ -446,11 +446,11 @@ The number of channels that will be audible. Lowering this count will reduce the
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/General/Channels/virtual_count:
+.. _class_ProjectSettings_property_fmod/general/channels/virtual_count:
 
 .. rst-class:: classref-property
 
-``Dictionary`` **Fmod/General/Channels/virtual_count** :ref:`🔗<class_ProjectSettings_property_Fmod/General/Channels/virtual_count>`
+``Dictionary`` **fmod/general/channels/virtual_count** :ref:`🔗<class_ProjectSettings_property_fmod/general/channels/virtual_count>`
 
 The number of channels that can be played. Once the Real Channel Count is exceeded, the quietest channels will be virtualised, meaning they are not audible. See the virtual voice system document for more information.
 
@@ -458,11 +458,11 @@ The number of channels that can be played. Once the Real Channel Count is exceed
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/General/DSP/buffer_length:
+.. _class_ProjectSettings_property_fmod/general/dsp/buffer_length:
 
 .. rst-class:: classref-property
 
-``int`` **Fmod/General/DSP/buffer_length** :ref:`🔗<class_ProjectSettings_property_Fmod/General/DSP/buffer_length>`
+``int`` **fmod/general/dsp/buffer_length** :ref:`🔗<class_ProjectSettings_property_fmod/general/dsp/buffer_length>`
 
 The length of each DSP buffer.
 
@@ -470,11 +470,11 @@ The length of each DSP buffer.
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/General/DSP/buffer_count:
+.. _class_ProjectSettings_property_fmod/general/dsp/buffer_count:
 
 .. rst-class:: classref-property
 
-``int`` **Fmod/General/DSP/buffer_count** :ref:`🔗<class_ProjectSettings_property_Fmod/General/DSP/buffer_count>`
+``int`` **fmod/general/dsp/buffer_count** :ref:`🔗<class_ProjectSettings_property_fmod/general/dsp/buffer_count>`
 
 The number of DSP buffers to use.
 
@@ -482,11 +482,11 @@ The number of DSP buffers to use.
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/General/3D Settings/doppler_scale:
+.. _class_ProjectSettings_property_fmod/general/3d_settings/doppler_scale:
 
 .. rst-class:: classref-property
 
-``float`` **Fmod/General/3D Settings/doppler_scale** :ref:`🔗<class_ProjectSettings_property_Fmod/General/3D Settings/doppler_scale>`
+``float`` **fmod/general/3d_settings/doppler_scale** :ref:`🔗<class_ProjectSettings_property_fmod/general/3d_settings/doppler_scale>`
 
 A scaling factor for doppler shift.
 
@@ -494,11 +494,11 @@ A scaling factor for doppler shift.
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/General/3D Settings/distance_factor:
+.. _class_ProjectSettings_property_fmod/general/3d_settings/distance_factor:
 
 .. rst-class:: classref-property
 
-``float`` **Fmod/General/3D Settings/distance_factor** :ref:`🔗<class_ProjectSettings_property_Fmod/General/3D Settings/distance_factor>`
+``float`` **fmod/general/3d_settings/distance_factor** :ref:`🔗<class_ProjectSettings_property_fmod/general/3d_settings/distance_factor>`
 
 A factor for converting game distance units to FMOD distance units.
 
@@ -506,11 +506,11 @@ A factor for converting game distance units to FMOD distance units.
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/General/3D Settings/rolloff_scale:
+.. _class_ProjectSettings_property_fmod/general/3d_settings/rolloff_scale:
 
 .. rst-class:: classref-property
 
-``float`` **Fmod/General/3D Settings/rolloff_scale** :ref:`🔗<class_ProjectSettings_property_Fmod/General/3D Settings/rolloff_scale>`
+``float`` **fmod/general/3d_settings/rolloff_scale** :ref:`🔗<class_ProjectSettings_property_fmod/general/3d_settings/rolloff_scale>`
 
 A scaling factor for distance attenuation. When a sound uses a roll-off mode other than FMOD_3D_CUSTOMROLLOFF and the distance is greater than the sound's minimum distance, the distance is scaled by the roll-off scale.
 
@@ -518,11 +518,11 @@ A scaling factor for distance attenuation. When a sound uses a roll-off mode oth
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/plugins/plugins:
+.. _class_ProjectSettings_property_fmod/plugins/plugins:
 
 .. rst-class:: classref-property
 
-``Dictionary`` **Fmod/plugins/plugins** :ref:`🔗<class_ProjectSettings_property_Fmod/plugins/plugins>`
+``Dictionary`` **fmod/plugins/plugins** :ref:`🔗<class_ProjectSettings_property_fmod/plugins/plugins>`
 
 List of dynamic plugins to load. (for example, "resonanceaudio.dll" contains the Windows versions of the ResonanceAudio plugins). Each platform requires its own version of the dynamic library;
 
@@ -530,11 +530,11 @@ List of dynamic plugins to load. (for example, "resonanceaudio.dll" contains the
 
 ----
 
-.. _class_ProjectSettings_property_Fmod/plugins/path:
+.. _class_ProjectSettings_property_fmod/plugins/path:
 
 .. rst-class:: classref-property
 
-``String`` **Fmod/plugins/path** :ref:`🔗<class_ProjectSettings_property_Fmod/plugins/path>`
+``String`` **fmod/plugins/path** :ref:`🔗<class_ProjectSettings_property_fmod/plugins/path>`
 
 base search path for plug-ins so they can be placed somewhere else than the directory of the main executable. If this is set, the filename parameter of System::loadPlugin is assumed to be relative to this path.
 
