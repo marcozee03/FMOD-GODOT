@@ -5,7 +5,7 @@ using namespace godot;
 namespace FmodGodot
 {
 
-FmodListener3D::FmodListener3D() : FmodListener<FmodListener3D, Node3D, RigidBody3D>()
+FmodListener3D::FmodListener3D()
 {
 }
 void FmodListener3D::_bind_methods()

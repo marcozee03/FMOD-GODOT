@@ -20,22 +20,22 @@ CommandInput::CommandInput()
     set_fit_content_height_enabled(true);
     history.reserve(history_length);
 }
-void CommandInput::history_push(const String &command)
+void CommandInput::history_push(const String &p_command)
 {
     if (history.size() == history.get_capacity())
     {
         history.remove_at(0);
     }
-    history.push_back(command);
+    history.push_back(p_command);
 }
 void FmodGodot::CommandInput::_enter_tree()
 {
     set_line_wrapping_mode(TextEdit::LINE_WRAPPING_BOUNDARY);
 }
 
-void CommandInput::_gui_input(const Ref<InputEvent> &event)
+void CommandInput::_gui_input(const Ref<InputEvent> &p_event)
 {
-    if (event->is_action_pressed("ui_up"))
+    if (p_event->is_action_pressed("ui_up"))
     {
         history_index = Math::clamp(history_index + 1, -1, (int)history.size() - 1);
         if (history_index == -1)
@@ -48,7 +48,7 @@ void CommandInput::_gui_input(const Ref<InputEvent> &event)
         }
         accept_event();
     }
-    else if (event->is_action_pressed("ui_down"))
+    else if (p_event->is_action_pressed("ui_down"))
     {
         history_index = Math::clamp(history_index - 1, -1, (int)history.size() - 1);
         if (history_index == -1)
@@ -61,7 +61,7 @@ void CommandInput::_gui_input(const Ref<InputEvent> &event)
         }
         accept_event();
     }
-    Ref<InputEventKey> key = event;
+    Ref<InputEventKey> key = p_event;
     if (key.is_valid() && key->is_pressed())
     {
         if (key->get_keycode_with_modifiers() == (Key)(KEY_ENTER | KEY_MASK_SHIFT))
@@ -97,13 +97,13 @@ godot::PackedStringArray FmodGodot::CommandInput::get_history() const
     }
     return arr;
 }
-void FmodGodot::CommandInput::load_history(const PackedStringArray &arr)
+void FmodGodot::CommandInput::load_history(const PackedStringArray &p_arr)
 {
     history.clear();
     history.reserve(history_length);
-    for (int i = 0; i < arr.size(); i++)
+    for (int i = 0; i < p_arr.size(); i++)
     {
-        history.push_back(arr[i]);
+        history.push_back(p_arr[i]);
     }
 };
 #endif

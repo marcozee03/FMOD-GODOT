@@ -84,9 +84,9 @@ class FmodAudioServer : public Object
     // core api
 
   public:
-    friend FMOD_RESULT F_CALL fmod_studio_system_callback(FMOD_STUDIO_SYSTEM *system,
-                                                          FMOD_STUDIO_SYSTEM_CALLBACK_TYPE type, void *commanddata,
-                                                          void *userdata);
+    friend FMOD_RESULT F_CALL fmod_studio_system_callback(FMOD_STUDIO_SYSTEM *p_system,
+                                                          FMOD_STUDIO_SYSTEM_CALLBACK_TYPE p_type, void *p_commanddata,
+                                                          void *p_userdata);
     FmodAudioServer();
     ~FmodAudioServer();
     static String get_version_number();
@@ -95,8 +95,8 @@ class FmodAudioServer : public Object
     const FMOD_SYSTEM *get_core() const;
     FMOD_STUDIO_SYSTEM *get_studio();
     const FMOD_STUDIO_SYSTEM *get_studio() const;
-    void get_core_ref(FMOD_SYSTEM **core);
-    void get_studio_ref(FMOD_STUDIO_SYSTEM **studio);
+    void get_core_ref(FMOD_SYSTEM **p_core);
+    void get_studio_ref(FMOD_STUDIO_SYSTEM **p_studio);
 
     bool is_live_update_connected() const;
 
@@ -136,26 +136,29 @@ class FmodAudioServer : public Object
 
     FMOD_STUDIO_BUS *get_bus(const String &p_path) const;
     FMOD_STUDIO_VCA *get_vca(const String &p_path) const;
+
     void unload_banks();
-    bool has_bank_loaded(const String &p_bankName) const;
+    bool has_bank_loaded(const String &p_bank_name) const;
 
     bool have_all_banks_loaded() const;
 
-    void set_listener_location(int p_listener_index, Node2D *p_node, Node2D *p_attenuationObject = nullptr);
-    void set_listener_location(Node2D *p_node, Node2D *p_attenuationObject = nullptr);
-    void set_listener_location(int p_listener_index, RigidBody2D *p_rigidBody2D, Node2D *p_attenuationObject = nullptr);
-    void set_listener_location(RigidBody2D *p_rigidBody2D, Node2D *p_attenuationObject = nullptr);
-    void set_listener_2d_rigidbody_location(int p_listenerIndex, RigidBody2D *p_rigidBody2D,
-                                            Node2D *p_attenuationObject = nullptr);
-    void set_listener_2d_location(int p_istenerIndex, Node2D *p_node, Node2D *p_attenuationObject = nullptr);
+    void set_listener_location(int p_listener_index, Node2D *p_node, Node2D *p_attenuation_object = nullptr);
+    void set_listener_location(Node2D *p_node, Node2D *p_attenuation_object = nullptr);
+    void set_listener_location(int p_listener_index, RigidBody2D *p_rigid_body2_d,
+                               Node2D *p_attenuation_object = nullptr);
+    void set_listener_location(RigidBody2D *p_rigid_body2_d, Node2D *p_attenuation_object = nullptr);
+    void set_listener_2d_rigidbody_location(int p_listener_index, RigidBody2D *p_rigid_body2_d,
+                                            Node2D *p_attenuation_object = nullptr);
+    void set_listener_2d_location(int p_istener_index, Node2D *p_node, Node2D *p_attenuation_object = nullptr);
 
-    void set_listener_location(Node3D *p_node, Node3D *attenuationObject = nullptr);
-    void set_listener_location(int p_listener_index, Node3D *p_node, Node3D *attenuationObject = nullptr);
-    void set_listener_location(RigidBody3D *rigidBody3D, Node3D *attenuationObject = nullptr);
-    void set_listener_location(int p_listener_index, RigidBody3D *rigidBody3D, Node3D *attenuationObject = nullptr);
-    void set_listener_3d_rigidbody_location(int listenerIndex, RigidBody3D *rigidBody,
-                                            Node3D *attenuationObject = nullptr);
-    void set_listener_3d_location(int listenerIndex, Node3D *p_node, Node3D *attenuationObject = nullptr);
+    void set_listener_location(Node3D *p_node, Node3D *p_attenuation_object = nullptr);
+    void set_listener_location(int p_listener_index, Node3D *p_node, Node3D *p_attenuation_object = nullptr);
+    void set_listener_location(RigidBody3D *p_rigid_body3_d, Node3D *p_attenuation_object = nullptr);
+    void set_listener_location(int p_listener_index, RigidBody3D *p_rigid_body3_d,
+                               Node3D *p_attenuation_object = nullptr);
+    void set_listener_3d_rigidbody_location(int p_listener_index, RigidBody3D *p_rigid_body,
+                                            Node3D *p_attenuation_object = nullptr);
+    void set_listener_3d_location(int p_listener_index, Node3D *p_node, Node3D *p_attenuation_object = nullptr);
     void load_start_up_banks();
     void reload_start_up_banks();
     void unload_start_up_banks();

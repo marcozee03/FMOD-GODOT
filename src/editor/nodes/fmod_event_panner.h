@@ -50,7 +50,7 @@ class FmodEventPanner : public Control
     FmodEventPanner();
     ~FmodEventPanner();
 
-    void set_view(View view);
+    void set_view(View p_view);
     View get_view() const;
     Vector3 get_play_position() const;
     float get_facing_angle() const;

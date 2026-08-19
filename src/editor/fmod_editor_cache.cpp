@@ -17,9 +17,9 @@ void FmodEditorCache::add(const Event &p_event)
     event_cache.add_data(p_event.full_path, p_event);
 }
 
-void FmodEditorCache::add(const Bank &p_Bank)
+void FmodEditorCache::add(const Bank &p_bank)
 {
-    bank_cache.add_data(p_Bank.full_path, p_Bank);
+    bank_cache.add_data(p_bank.full_path, p_bank);
 }
 
 void FmodEditorCache::add(const Parameter &p_parameter)
@@ -56,23 +56,23 @@ const PathTree<VCA> FmodEditorCache::get_vca_cache()
     return vca_cache;
 }
 
-Event FmodEditorCache::get_event(const String &path) const
+Event FmodEditorCache::get_event(const String &p_path) const
 {
-    return event_cache[path];
+    return event_cache[p_path];
 }
 
-Bank FmodEditorCache::get_bank(const String &path) const
+Bank FmodEditorCache::get_bank(const String &p_path) const
 {
-    return bank_cache[path];
+    return bank_cache[p_path];
 }
 
-Parameter FmodEditorCache::get_parameter(const String &path) const
+Parameter FmodEditorCache::get_parameter(const String &p_path) const
 {
-    return parameter_cache[path];
+    return parameter_cache[p_path];
 }
-VCA FmodEditorCache::get_vca(const String &path) const
+VCA FmodEditorCache::get_vca(const String &p_path) const
 {
-    return vca_cache[path];
+    return vca_cache[p_path];
 }
 
 PackedStringArray FmodEditorCache::get_contents(const String &p_path) const

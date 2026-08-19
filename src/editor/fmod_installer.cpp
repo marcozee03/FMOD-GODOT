@@ -33,9 +33,9 @@ bool FmodInstaller::get_indeterminate_progress_bar() const
     return progress_bar->is_indeterminate();
 }
 
-void FmodInstaller::set_install_message_visible_characters(int visible_characters)
+void FmodInstaller::set_install_message_visible_characters(int p_visible_characters)
 {
-    installInfo->set_visible_characters(visible_characters);
+    installInfo->set_visible_characters(p_visible_characters);
 }
 int FmodInstaller::get_install_message_visible_characters() const
 {
@@ -63,20 +63,20 @@ void FmodInstaller::show_progress()
     progress_bar->show();
     installInfo->show();
 }
-void FmodInstaller::fail(const String &message)
+void FmodInstaller::fail(const String &p_message)
 {
     show_login();
     clear_password();
-    error->set_text(message);
+    error->set_text(p_message);
 }
-void FmodInstaller::set_progress_bar_value(float value)
+void FmodInstaller::set_progress_bar_value(float p_value)
 {
-    progress_bar->set_value(value);
+    progress_bar->set_value(p_value);
 }
-void FmodInstaller::set_install_message(const String &message)
+void FmodInstaller::set_install_message(const String &p_message)
 {
-    installInfo->set_text(message);
-    set_install_message_visible_characters(message.length());
+    installInfo->set_text(p_message);
+    set_install_message_visible_characters(p_message.length());
 }
 godot::String FmodInstaller::get_install_message() const
 {

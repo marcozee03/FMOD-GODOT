@@ -18,7 +18,7 @@ namespace FmodGodot
         FmodBankLoader();
         ~FmodBankLoader();
         void _enter_tree() override;
-        void set_banks(TypedArray<FmodBank> banks);
+        void set_banks(TypedArray<FmodBank> p_banks);
         TypedArray<FmodBank> get_banks();
         void set_preload_sample_data(bool p_preload);
         bool is_preload_sample_data();

@@ -52,9 +52,9 @@ bool FmodScriptClient::is_connected_to_studio()
     return get_status() == STATUS_CONNECTED;
 }
 
-bool FmodScriptClient::send_script_command(const String &command)
+bool FmodScriptClient::send_script_command(const String &p_command)
 {
-    if (command.strip_edges().is_empty())
+    if (p_command.strip_edges().is_empty())
     {
         return "";
     }
@@ -62,7 +62,7 @@ bool FmodScriptClient::send_script_command(const String &command)
     {
         connect_to_fmod();
     }
-    put_data(command.to_utf8_buffer());
+    put_data(p_command.to_utf8_buffer());
     while (get_available_bytes() == 0)
     {
         poll();
@@ -81,9 +81,9 @@ bool FmodScriptClient::send_script_command(const String &command)
     return (result.contains("true"));
 }
 
-String FmodGodot::FmodScriptClient::get_script_output(const String &command)
+String FmodGodot::FmodScriptClient::get_script_output(const String &p_command)
 {
-    if (command.strip_edges().is_empty())
+    if (p_command.strip_edges().is_empty())
     {
         return "";
     }
@@ -91,7 +91,7 @@ String FmodGodot::FmodScriptClient::get_script_output(const String &command)
     {
         connect_to_fmod();
     }
-    put_data(command.to_utf8_buffer());
+    put_data(p_command.to_utf8_buffer());
     PackedByteArray buffer;
     while (get_available_bytes() == 0)
     {
