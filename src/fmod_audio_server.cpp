@@ -241,8 +241,8 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
     studio_settings.encryptionkey = p_settings.encryption_key.utf8();
     FMOD_Studio_System_SetAdvancedSettings(studio_system, &studio_settings);
 
-    result = FMOD_Studio_System_Initialize(studio_system, p_settings.virtual_channels, studio_init, FMOD_INIT_NORMAL,
-                                           nullptr);
+    result = FMOD_Studio_System_Initialize(studio_system, p_settings.virtual_channels, studio_init,
+                                           FMOD_INIT_NORMAL & FMOD_INIT_3D_RIGHTHANDED, nullptr);
     if (result != FMOD_OK)
     {
         UtilityFunctions::printerr("Init FmodAudioServer Error", FMOD_ErrorString(result));

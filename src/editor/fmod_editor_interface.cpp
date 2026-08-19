@@ -1,6 +1,10 @@
 
+#include "binding/conversions.h"
+#include "binding/studio/event_description.h"
+#include "binding/studio/parameter_cache.h"
+#include "binding/studio/vca.h"
 #include "core/memory.hpp"
-#include "fmod_globals.h"
+#include "fmod_bank.h"
 #include "fmod_script_client.h"
 #include "fmod_studio_common.h"
 #include "variant/utility_functions.hpp"
@@ -81,56 +85,7 @@ FmodEditorInterface *FmodEditorInterface::get_singleton()
 {
     return singleton;
 }
-namespace
-{
-Parameter to_cacheable_parameter(FMOD_STUDIO_PARAMETER_DESCRIPTION *p_description)
-{
-    Parameter parameter;
-    parameter.full_path = String("param:/") + p_description->name;
-    parameter.guid = cast_to_vector4i(p_description->guid);
-    parameter.default_value = p_description->defaultvalue;
-    parameter.discrete = p_description->flags & FMOD_STUDIO_PARAMETER_DISCRETE;
-    parameter.min_value = p_description->minimum;
-    parameter.max_value = p_description->maximum;
-    return parameter;
-}
-Event to_cacheable_event(FMOD_STUDIO_EVENTDESCRIPTION *p_description)
-{
-    int size = 64;
-    int retrieved = 0;
-    char *str = memnew_arr(char, size);
-
-    FMOD_GET_FULL_STRING(FMOD_Studio_EventDescription_GetPath, p_description, str, size, retrieved);
-    Event event;
-    event.full_path = str;
-    FMOD_GUID guid;
-    FMOD_Studio_EventDescription_GetID(p_description, &guid);
-    event.guid = cast_to_vector4i(guid);
-    FMOD_BOOL is3D, isDopplerEnabled, isStream, isOneShot;
-    FMOD_Studio_EventDescription_Is3D(p_description, &is3D);
-    FMOD_Studio_EventDescription_IsDopplerEnabled(p_description, &isDopplerEnabled);
-    FMOD_Studio_EventDescription_IsOneshot(p_description, &isOneShot);
-    FMOD_Studio_EventDescription_IsStream(p_description, &isStream);
-    FMOD_Studio_EventDescription_GetLength(p_description, &event.lengthMS);
-
-    FMOD_Studio_EventDescription_GetMinMaxDistance(p_description, &event.min, &event.max);
-    event.is3d = is3D;
-    event.doppler_enabled = isDopplerEnabled;
-    event.stream = isStream;
-    event.one_shot = isOneShot;
-    int parameter_count;
-    FMOD_Studio_EventDescription_GetParameterDescriptionCount(p_description, &parameter_count);
-    for (int k = 0; k < parameter_count; k++)
-    {
-        FMOD_STUDIO_PARAMETER_DESCRIPTION parameter_description;
-        FMOD_Studio_EventDescription_GetParameterDescriptionByIndex(p_description, k, &parameter_description);
-        Parameter parameter = to_cacheable_parameter(&parameter_description);
-        event.parameters.append(parameter);
-    }
-    memdelete_arr(str);
-    return event;
-}
-} // namespace
+// namespace
 void FmodEditorInterface::refresh(bool p_load_start_up_banks)
 {
     FMOD_STUDIO_SYSTEM *studio = FmodAudioServer::get_singleton()->get_studio();
@@ -161,12 +116,8 @@ void FmodEditorInterface::refresh(bool p_load_start_up_banks)
     for (int i = 0; i < bank_count; i++)
     {
 
-        FMOD_GET_FULL_STRING(FMOD_Studio_Bank_GetPath, banks[i], str, size, retrieved);
-        FMOD_GUID guid;
-        FMOD_Studio_Bank_GetID(banks[i], &guid);
-        Bank bank;
-        bank.full_path = str;
-        bank.guid = cast_to_vector4i(guid);
+        FmodBank::Cache bank(banks[i]);
+        cache.add(bank);
         {
             int event_count;
             FMOD_Studio_Bank_GetEventCount(banks[i], &event_count);
@@ -176,8 +127,7 @@ void FmodEditorInterface::refresh(bool p_load_start_up_banks)
                 FMOD_Studio_Bank_GetEventList(banks[i], descriptions, event_count, &event_count);
                 for (int j = 0; j < event_count; j++)
                 {
-                    Event event = to_cacheable_event(descriptions[j]);
-                    bank.children.push_back(event.full_path);
+                    FmodGodot::Studio::EventDescription::Cache event(descriptions[j]);
                     cache.add(event);
                 }
                 memdelete_arr(descriptions);
@@ -192,18 +142,12 @@ void FmodEditorInterface::refresh(bool p_load_start_up_banks)
                 FMOD_Studio_Bank_GetVCAList(banks[i], vcas, vca_count, &vca_count);
                 for (int j = 0; j < vca_count; j++)
                 {
-                    VCA vca;
-                    FMOD_GET_FULL_STRING(FMOD_Studio_VCA_GetPath, vcas[j], str, size, retrieved);
-                    bank.children.push_back(str);
-                    vca.full_path = str;
-                    FMOD_Studio_VCA_GetID(vcas[i], &guid);
-                    vca.guid = cast_to_vector4i(guid);
+                    FmodGodot::Studio::VCA::Cache vca(vcas[j]);
                     cache.add(vca);
                 }
                 memdelete_arr(vcas);
             }
         }
-        cache.add(bank);
     }
 
     int p_count;
@@ -214,7 +158,7 @@ void FmodEditorInterface::refresh(bool p_load_start_up_banks)
         FMOD_Studio_System_GetParameterDescriptionList(studio, params, p_count, &p_count);
         for (int i = 0; i < p_count; i++)
         {
-            cache.add(to_cacheable_parameter(&params[i]));
+            cache.add(ParameterCache(params[i]));
         }
         memdelete_arr(params);
     }

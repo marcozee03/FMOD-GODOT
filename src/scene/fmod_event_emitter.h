@@ -5,7 +5,6 @@
 #include "core/print_string.hpp"
 #include "fmod_audio_server.h"
 #include "fmod_common.h"
-#include "fmod_globals.h"
 #include "fmod_studio_common.h"
 #include "globals.h"
 #include "variant/packed_string_array.hpp"
@@ -21,7 +20,7 @@ template <class Derived, class NodeType, class RigidBody> class FmodEventEmitter
 #ifdef TOOLS_ENABLED
     friend class FmodEventPreviewer;
 #endif
-    struct parameter
+    struct Parameter
     {
         const char *name;
         Vector2i id;
@@ -45,7 +44,7 @@ template <class Derived, class NodeType, class RigidBody> class FmodEventEmitter
   protected:
     FMOD_STUDIO_EVENTDESCRIPTION *description;
     FMOD_STUDIO_EVENTINSTANCE *event_instance;
-    Vector<parameter> parameters;
+    Vector<Parameter> parameters;
     void refresh_parameters();
     void set_parameters();
     bool validate_event_description();
