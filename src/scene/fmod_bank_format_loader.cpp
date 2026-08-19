@@ -15,21 +15,21 @@ FmodGodot::FmodBankFormatLoader::FmodBankFormatLoader()
 FmodGodot::FmodBankFormatLoader::~FmodBankFormatLoader()
 {
 }
-bool FmodGodot::FmodBankFormatLoader::_exists(const String &path) const
+bool FmodGodot::FmodBankFormatLoader::_exists(const String &p_path) const
 {
-    return path.ends_with(".bank");
+    return p_path.ends_with(".bank");
 }
 PackedStringArray FmodGodot::FmodBankFormatLoader::_get_recognized_extensions() const
 {
     return {"bank"};
 }
-String FmodGodot::FmodBankFormatLoader::_get_resource_script_class(const String &path) const
+String FmodGodot::FmodBankFormatLoader::_get_resource_script_class(const String &p_path) const
 {
     return "";
 }
-String FmodGodot::FmodBankFormatLoader::_get_resource_type(const String &path) const
+String FmodGodot::FmodBankFormatLoader::_get_resource_type(const String &p_path) const
 {
-    if (path.get_extension() == "bank")
+    if (p_path.get_extension() == "bank")
     {
         return "FmodBank";
     }
@@ -45,13 +45,13 @@ bool FmodGodot::FmodBankFormatLoader::_handles_type(const StringName &p_type) co
 //     return ResourceFormatLoader::_recognize_path(p_path, p_type) &&
 //            p_path.begins_with(ProjectSettings::get_singleton()->get_setting_with_override(BANK_DIRECTORY));
 // }
-Variant FmodGodot::FmodBankFormatLoader::_load(const String &path, const String &original_path, bool use_sub_threads,
-                                               int32_t cache_mode) const
+Variant FmodGodot::FmodBankFormatLoader::_load(const String &p_path, const String &p_original_path,
+                                               bool p_use_sub_threads, int32_t p_cache_mode) const
 {
 
     Ref<FmodBank> bank = memnew(FmodBank);
     // bank->set_path(path);
-    auto err = FMOD_Studio_System_LoadBankFile(FmodAudioServer::get_singleton()->get_studio(), path.utf8(),
+    auto err = FMOD_Studio_System_LoadBankFile(FmodAudioServer::get_singleton()->get_studio(), p_path.utf8(),
                                                FMOD_STUDIO_LOAD_BANK_NORMAL, &(bank->bank));
 #ifndef TOOLS_ENABLED
     switch (cache_mode)
@@ -70,11 +70,11 @@ Variant FmodGodot::FmodBankFormatLoader::_load(const String &path, const String 
         // HACK: workaround to let a bank successfully load on import even if it's already loaded. result is not
         // typically used. unless a future addition use CACHE_MODE_IGNORE
 
-        if (Engine::get_singleton()->is_editor_hint() && cache_mode == CACHE_MODE_IGNORE)
+        if (Engine::get_singleton()->is_editor_hint() && p_cache_mode == CACHE_MODE_IGNORE)
         {
             return bank;
         }
-        print_error("CacheMode:", cache_mode, " Fmod Bank has already been loaded reload");
+        print_error("CacheMode:", p_cache_mode, " Fmod Bank has already been loaded reload");
         return ERR_CANT_CREATE;
     default:
         return ERR_BUG;

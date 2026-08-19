@@ -19,8 +19,8 @@ class FmodEventEmitter2D : public FmodEventEmitter<FmodEventEmitter2D, godot::No
   public:
     FmodEventEmitter2D() = default;
     ~FmodEventEmitter2D() override = default;
-    void attach_instance_to_rigid_body(RigidBody2D *body, FMOD_STUDIO_EVENTINSTANCE *event) ;
-    void attach_instance_to_node(Node2D *node, FMOD_STUDIO_EVENTINSTANCE *event, bool p_non_rigid_body_velocity) ;
+    void attach_instance_to_rigid_body(RigidBody2D *p_body, FMOD_STUDIO_EVENTINSTANCE *p_event);
+    void attach_instance_to_node(Node2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event, bool p_non_rigid_body_velocity);
     PackedStringArray _get_configuration_warnings() const override;
 };
 } // namespace FmodGodot

@@ -41,14 +41,14 @@ FmodGodot::FmodProjectExplorer::FmodProjectExplorer()
     vbox->add_child(previewer);
 }
 
-void FmodProjectExplorer::emit_object_selected(const String &fmod_object_path)
+void FmodProjectExplorer::emit_object_selected(const String &p_fmod_object_path)
 {
     details->show();
-    emit_signal("fmod_object_selected", fmod_object_path);
+    emit_signal("fmod_object_selected", p_fmod_object_path);
 }
-void FmodProjectExplorer::emit_object_activated(const String &fmod_object_path)
+void FmodProjectExplorer::emit_object_activated(const String &p_fmod_object_path)
 {
-    emit_signal("fmod_object_activated", fmod_object_path);
+    emit_signal("fmod_object_activated", p_fmod_object_path);
 }
 void FmodProjectExplorer::_update_theme()
 {
@@ -64,9 +64,9 @@ void FmodProjectExplorer::_update_theme()
     }
 }
 
-void FmodProjectExplorer::set_display_flags(EventTree::DisplayFlags flags)
+void FmodProjectExplorer::set_display_flags(EventTree::DisplayFlags p_flags)
 {
-    tree->set_display_flags(flags);
+    tree->set_display_flags(p_flags);
 }
 void FmodGodot::FmodProjectExplorer::refresh()
 {

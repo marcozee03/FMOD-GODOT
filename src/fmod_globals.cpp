@@ -15,9 +15,9 @@ using namespace godot;
 namespace FmodGodot
 {
 
-char *to_char_ptr(const String &str)
+char *to_char_ptr(const String &p_str)
 {
-    return str.utf8().ptrw();
+    return p_str.utf8().ptrw();
 }
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wclass-memaccess"
@@ -59,100 +59,100 @@ Vector2i cast_to_vector2i(const FMOD_STUDIO_PARAMETER_ID &p_id)
     return id;
 }
 #pragma GCC diagnostic pop
-FMOD_GUID string_to_fmod_guid(const char *guid)
+FMOD_GUID string_to_fmod_guid(const char *p_guid)
 {
     FMOD_GUID result;
-    sscanf(guid, "{%8x-%4hx-%4hx-%2hhx%2hhx-%2hhx%2hhx%2hhx%2hhx%2hhx%2hhx}", &result.Data1, &result.Data2,
+    sscanf(p_guid, "{%8x-%4hx-%4hx-%2hhx%2hhx-%2hhx%2hhx%2hhx%2hhx%2hhx%2hhx}", &result.Data1, &result.Data2,
            &result.Data3, &result.Data4[0], &result.Data4[1], &result.Data4[2], &result.Data4[3], &result.Data4[4],
            &result.Data4[5], &result.Data4[6], &result.Data4[7]);
     return result;
 }
-String fmod_guid_to_string(const FMOD_GUID &guid)
+String fmod_guid_to_string(const FMOD_GUID &p_guid)
 {
-    return vformat("{%08ux-%04ux-%04ux-%02ux%02ux-%02ux%02ux%02ux%02ux%02ux%02ux}", guid.Data1, guid.Data2, guid.Data3,
-                   guid.Data4[0], guid.Data4[1], guid.Data4[2], guid.Data4[3], guid.Data4[4], guid.Data4[5],
-                   guid.Data4[6], guid.Data4[7]);
+    return vformat("{%08ux-%04ux-%04ux-%02ux%02ux-%02ux%02ux%02ux%02ux%02ux%02ux}", p_guid.Data1, p_guid.Data2,
+                   p_guid.Data3, p_guid.Data4[0], p_guid.Data4[1], p_guid.Data4[2], p_guid.Data4[3], p_guid.Data4[4],
+                   p_guid.Data4[5], p_guid.Data4[6], p_guid.Data4[7]);
 }
-String fmod_guid_to_string(const Vector4i &guid)
+String fmod_guid_to_string(const Vector4i &p_guid)
 {
-    return fmod_guid_to_string(cast_to_fmod_guid(guid));
+    return fmod_guid_to_string(cast_to_fmod_guid(p_guid));
 }
 /// @brief converts the godot vector into an fmod vector.
 /// /// @param vec the godot vector to convert
 /// @return
-FMOD_VECTOR to_fmod_vector(godot::Vector3 vec)
+FMOD_VECTOR to_fmod_vector(godot::Vector3 p_vec)
 {
     FMOD_VECTOR temp;
-    temp.x = vec.x;
-    temp.y = vec.y;
-    temp.z = vec.z;
+    temp.x = p_vec.x;
+    temp.y = p_vec.y;
+    temp.z = p_vec.z;
 
     return temp;
 }
 /// @brief converts the godot vector into an fmod vector.// @param vec the godot vector to convert
 /// @return
-FMOD_VECTOR to_fmod_vector(godot::Vector2 vec)
+FMOD_VECTOR to_fmod_vector(godot::Vector2 p_vec)
 {
-    return {vec.x, vec.y, 0};
+    return {p_vec.x, p_vec.y, 0};
 }
 
 /// @brief converts the fmod vector into an godot vector.
 /// @param vec the fmod vector to convert
 /// @return
-godot::Vector3 to_godot_vector(FMOD_VECTOR vec)
+godot::Vector3 to_godot_vector(FMOD_VECTOR p_vec)
 {
-    return godot::Vector3(vec.x, vec.y, vec.z);
+    return godot::Vector3(p_vec.x, p_vec.y, p_vec.z);
 }
 
-FMOD_3D_ATTRIBUTES to_3d_attributes(godot::Vector3 pos)
+FMOD_3D_ATTRIBUTES to_3d_attributes(godot::Vector3 p_pos)
 {
     FMOD_3D_ATTRIBUTES attributes;
     attributes.forward = {0, 0, -1};
     attributes.up = {0, 1, 0};
-    attributes.position = to_fmod_vector(pos);
+    attributes.position = to_fmod_vector(p_pos);
 
     return attributes;
 }
-FMOD_3D_ATTRIBUTES to_3d_attributes(Node3D *node)
+FMOD_3D_ATTRIBUTES to_3d_attributes(Node3D *p_node)
 {
     FMOD_3D_ATTRIBUTES attributes;
-    attributes.position = to_fmod_vector(node->get_global_position());
-    attributes.forward = to_fmod_vector(-node->get_global_transform().get_basis().get_column(2));
-    attributes.up = to_fmod_vector(node->get_global_transform().get_basis().get_column(1));
+    attributes.position = to_fmod_vector(p_node->get_global_position());
+    attributes.forward = to_fmod_vector(-p_node->get_global_transform().get_basis().get_column(2));
+    attributes.up = to_fmod_vector(p_node->get_global_transform().get_basis().get_column(1));
     return attributes;
 }
-FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody3D *rigidbody)
+FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody3D *p_rigidbody)
 {
     FMOD_3D_ATTRIBUTES attributes;
-    attributes.position = to_fmod_vector(rigidbody->get_global_position());
-    attributes.forward = to_fmod_vector(-rigidbody->get_global_transform().get_basis().get_column(2));
-    attributes.up = to_fmod_vector(rigidbody->get_global_transform().get_basis().get_column(1));
-    attributes.velocity = to_fmod_vector(rigidbody->get_linear_velocity());
+    attributes.position = to_fmod_vector(p_rigidbody->get_global_position());
+    attributes.forward = to_fmod_vector(-p_rigidbody->get_global_transform().get_basis().get_column(2));
+    attributes.up = to_fmod_vector(p_rigidbody->get_global_transform().get_basis().get_column(1));
+    attributes.velocity = to_fmod_vector(p_rigidbody->get_linear_velocity());
     return attributes;
 }
-FMOD_3D_ATTRIBUTES to_3d_attributes(godot::Vector2 pos)
+FMOD_3D_ATTRIBUTES to_3d_attributes(godot::Vector2 p_pos)
 {
     FMOD_3D_ATTRIBUTES attributes;
     attributes.forward = {0, 0, -1};
     attributes.up = {0, 1, 0};
-    attributes.position = to_fmod_vector(pos);
+    attributes.position = to_fmod_vector(p_pos);
     return attributes;
 }
-FMOD_3D_ATTRIBUTES to_3d_attributes(Node2D *node)
+FMOD_3D_ATTRIBUTES to_3d_attributes(Node2D *p_node)
 {
     FMOD_3D_ATTRIBUTES attributes;
-    attributes.position = to_fmod_vector(node->get_global_position());
-    attributes.forward = to_fmod_vector(node->get_global_transform().columns[0]);
-    attributes.up = to_fmod_vector(node->get_global_transform().columns[1]);
+    attributes.position = to_fmod_vector(p_node->get_global_position());
+    attributes.forward = to_fmod_vector(p_node->get_global_transform().columns[0]);
+    attributes.up = to_fmod_vector(p_node->get_global_transform().columns[1]);
     return attributes;
 }
-FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody2D *rigidbody)
+FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody2D *p_rigidbody)
 {
     FMOD_3D_ATTRIBUTES attributes;
-    attributes.position = to_fmod_vector(rigidbody->get_global_position());
-    attributes.forward = to_fmod_vector(rigidbody->get_global_transform().columns[0]);
-    attributes.up = to_fmod_vector(rigidbody->get_global_transform().columns[1]);
-    attributes.velocity = to_fmod_vector(rigidbody->get_linear_velocity());
+    attributes.position = to_fmod_vector(p_rigidbody->get_global_position());
+    attributes.forward = to_fmod_vector(p_rigidbody->get_global_transform().columns[0]);
+    attributes.up = to_fmod_vector(p_rigidbody->get_global_transform().columns[1]);
+    attributes.velocity = to_fmod_vector(p_rigidbody->get_linear_velocity());
     return attributes;
 }
 } // namespace FmodGodot

@@ -18,21 +18,21 @@ Vector4i cast_to_vector4i(const FMOD_GUID &p_guid);
 FMOD_GUID cast_to_fmod_guid(const Vector4i &p_guid);
 FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(const Vector2i &p_id);
 Vector2i cast_to_vector2i(const FMOD_STUDIO_PARAMETER_ID &p_id);
-FMOD_GUID string_to_fmod_guid(const char *guid);
-String fmod_guid_to_string(const FMOD_GUID &guid);
-String fmod_guid_to_string(const Vector4i &guid);
-FMOD_VECTOR to_fmod_vector(godot::Vector3 vec);
+FMOD_GUID string_to_fmod_guid(const char *p_guid);
+String fmod_guid_to_string(const FMOD_GUID &p_guid);
+String fmod_guid_to_string(const Vector4i &p_guid);
+FMOD_VECTOR to_fmod_vector(godot::Vector3 p_vec);
 
-FMOD_VECTOR to_fmod_vector(godot::Vector2 vec);
-godot::Vector3 to_godot_vector(FMOD_VECTOR vec);
+FMOD_VECTOR to_fmod_vector(godot::Vector2 p_vec);
+godot::Vector3 to_godot_vector(FMOD_VECTOR p_vec);
 
-FMOD_3D_ATTRIBUTES to_3d_attributes(godot::Vector3 pos);
+FMOD_3D_ATTRIBUTES to_3d_attributes(godot::Vector3 p_pos);
 
-FMOD_3D_ATTRIBUTES to_3d_attributes(Node3D *node);
-FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody3D *rigidbody);
-FMOD_3D_ATTRIBUTES to_3d_attributes(godot::Vector2 pos);
-FMOD_3D_ATTRIBUTES to_3d_attributes(Node2D *node);
-FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody2D *rigidbody);
+FMOD_3D_ATTRIBUTES to_3d_attributes(Node3D *p_node);
+FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody3D *p_rigidbody);
+FMOD_3D_ATTRIBUTES to_3d_attributes(godot::Vector2 p_pos);
+FMOD_3D_ATTRIBUTES to_3d_attributes(Node2D *p_node);
+FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody2D *p_rigidbody);
 
 #define FMOD_GET_FULL_STRING(function, object, char_ptr, size, retrieved)                                              \
     if (function(object, char_ptr, size, &retrieved) == FMOD_ERR_TRUNCATED)                                            \

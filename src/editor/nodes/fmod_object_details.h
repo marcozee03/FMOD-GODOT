@@ -35,11 +35,11 @@ class FmodObjectDetails : public VBoxContainer
   public:
     FmodObjectDetails(/* args */);
     ~FmodObjectDetails();
-    void set_hide_event_parameter(bool hide);
+    void set_hide_event_parameter(bool p_hide);
 
     void display_fmod_object(const String &p_path);
 
-    Variant _get_drag_data(const Vector2 &at_position) override;
+    Variant _get_drag_data(const Vector2 &p_at_position) override;
 };
 } // namespace FmodGodot
 #endif
