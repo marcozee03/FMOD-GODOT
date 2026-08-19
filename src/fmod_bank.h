@@ -32,6 +32,7 @@ class FmodBank : public Resource
     // string getPath(char *path, int size, int *retrieved) const;
     // Loading control
     int unload();
+    int reload();
     int load_sample_data();
     int unload_sample_data();
 

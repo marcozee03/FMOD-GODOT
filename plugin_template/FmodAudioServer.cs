@@ -107,10 +107,6 @@ namespace FmodGodot
         [DllImport(Version.dll)]
         private static extern IntPtr get_vca([MarshalAs(UnmanagedType.LPUTF8Str)] string p_path);
         [DllImport(Version.dll)]
-        private static extern FMOD.RESULT load_bank([MarshalAs(UnmanagedType.LPUTF8Str)] string p_bankName, bool loadSamples = false);
-        [DllImport(Version.dll)]
-        private static extern FMOD.RESULT load_bank_by_file([MarshalAs(UnmanagedType.LPUTF8Str)] string p_path, bool loadSamples = false);
-        [DllImport(Version.dll)]
         private static extern void unload_banks();
         [DllImport(Version.dll)]
         private static extern bool has_bank_loaded([MarshalAs(UnmanagedType.LPUTF8Str)] string p_bankName);
@@ -274,14 +270,6 @@ namespace FmodGodot
             {
                 handle = get_vca(path)
             };
-        }
-        public static void LoadBank(string bankname, bool loadSamples = false)
-        {
-            load_bank(bankname, loadSamples);
-        }
-        public static void LoadBankByFile(string bankPath, bool loadSamples = false)
-        {
-            load_bank_by_file(bankPath, loadSamples);
         }
         public static void UnloadBanks()
         {
