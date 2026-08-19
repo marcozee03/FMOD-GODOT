@@ -7,7 +7,6 @@
 #ifdef TOOLS_ENABLED
 #include "fmod_event_selector.h"
 #include "fmod_event_tree.h"
-#include "fmod_globals.h"
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/core/memory.hpp>

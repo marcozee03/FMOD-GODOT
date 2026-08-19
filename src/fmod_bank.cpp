@@ -2,7 +2,6 @@
 #include "core/print_string.hpp"
 #include "fmod_audio_server.h"
 #include "fmod_common.h"
-#include "fmod_globals.h"
 #include "fmod_studio.h"
 #include "fmod_studio_common.h"
 #include "globals.h"

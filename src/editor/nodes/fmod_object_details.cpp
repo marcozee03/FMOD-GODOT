@@ -4,7 +4,6 @@
 #include "classes/node.hpp"
 #include "core/memory.hpp"
 #include "fmod_editor_interface.h"
-#include "fmod_globals.h"
 #include "fmod_object_details.h"
 #include "fmod_theme.h"
 #include "variant/callable_method_pointer.hpp"
@@ -155,7 +154,7 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
 
         header->set_text("Event");
         header->set_button_icon(theme->event_icon);
-        Event event = cache->get_event(p_path);
+        Studio::EventDescription::Cache event = cache->get_event(p_path);
         push_label_str_meta(text, "Full Path: ", event.full_path, "Copy event path");
         push_label_var_meta(text, "Guid: ", fmod_guid_to_string(event.guid), event.guid, "Drag Event");
         if (event.is3d)
@@ -206,7 +205,7 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
     {
         header->set_text("Bank:" + p_path.get_file().get_basename());
         header->set_button_icon(theme->bank_icon);
-        Bank bank = cache->get_bank(p_path);
+        FmodBank::Cache bank = cache->get_bank(p_path);
         push_label_str_meta(text, "Full Path: ", bank.full_path, "Copy bank path");
         push_label_var_meta(text, "Guid: ", fmod_guid_to_string(bank.guid), bank.guid, "Drag Event");
         text->push_indent(1);
@@ -227,7 +226,7 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
     {
         header->set_text("VCA:" + p_path.get_file().get_basename());
         header->set_button_icon(theme->vca_icon);
-        VCA vca = cache->get_vca(p_path);
+        Studio::VCA::Cache vca = cache->get_vca(p_path);
 
         push_label_str_meta(text, "Full Path: ", vca.full_path, "Copy vca path");
         push_label_var_meta(text, "Guid: ", fmod_guid_to_string(vca.guid), vca.guid, "Drag Event");
@@ -235,7 +234,7 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
     else if (p_path.begins_with("param:"))
     {
         header->set_text("Global Parameter:" + p_path.get_file().get_basename());
-        Parameter parameter = cache->get_parameter(p_path);
+        ParameterCache parameter = cache->get_parameter(p_path);
         if (parameter.discrete)
         {
             header->set_button_icon(theme->d_parameter_icon);
