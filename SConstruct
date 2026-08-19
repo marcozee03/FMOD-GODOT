@@ -79,6 +79,9 @@ env.Append(
         "src/scene/",
         "src/scene/2d/",
         "src/scene/3d",
+        # "src/binding/core",
+        "src/binding/studio",
+        "src/binding",
         "headers/",
     ])
 sources = [
@@ -86,6 +89,9 @@ sources = [
     Glob("src/scene/*.cpp"),
     Glob("src/scene/2d/*.cpp"),
     Glob("src/scene/3d/*.cpp"),
+    # Glob("src/binding/core/*.cpp"),
+    Glob("src/binding/*.cpp"),
+    Glob("src/binding/studio/*.cpp"),
 ]
 if env["target"] == "editor":
     env.Append(
