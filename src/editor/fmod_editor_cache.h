@@ -17,7 +17,7 @@ class FmodEditorCache
     FmodEditorCache(/* args */);
     ~FmodEditorCache();
     void add(const Event &p_event);
-    void add(const Bank &p_Bank);
+    void add(const Bank &p_bank);
     void add(const Parameter &p_parameter);
     void add(const VCA &p_vca);
     void clear();
@@ -26,10 +26,10 @@ class FmodEditorCache
     const PathTree<Bank> get_bank_cache() const;
     const PathTree<Parameter> get_parameter_cache() const;
     const PathTree<VCA> get_vca_cache();
-    Event get_event(const String &path) const;
-    Bank get_bank(const String &path) const;
-    Parameter get_parameter(const String &path) const;
-    VCA get_vca(const String &path) const;
+    Event get_event(const String &p_path) const;
+    Bank get_bank(const String &p_path) const;
+    Parameter get_parameter(const String &p_path) const;
+    VCA get_vca(const String &p_path) const;
     PackedStringArray get_contents(const String &p_path) const;
 };
 } // namespace FmodGodot

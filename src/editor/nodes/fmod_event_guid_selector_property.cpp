@@ -28,26 +28,27 @@ EventGUIDSelectorProperty::EventGUIDSelectorProperty()
 EventGUIDSelectorProperty::~EventGUIDSelectorProperty()
 {
 }
-void EventGUIDSelectorProperty::on_editing_toggled(bool toggled_on)
+void EventGUIDSelectorProperty::on_editing_toggled(bool p_toggled_on)
 {
-    if (!toggled_on)
+    if (!p_toggled_on)
     {
         on_text_changed(eventSelector->get_line_edit()->get_text());
     }
 }
 
-void EventGUIDSelectorProperty::on_text_changed(String newText)
+void EventGUIDSelectorProperty::on_text_changed(String p_new_text)
 {
     FMOD_STUDIO_SYSTEM *studio = FmodAudioServer::get_singleton()->get_studio();
     FMOD_GUID guid;
-    FMOD_Studio_System_LookupID(studio, newText.utf8(), &guid);
+    FMOD_Studio_System_LookupID(studio, p_new_text.utf8(), &guid);
     eventSelector->get_line_edit()->set_tooltip_text(fmod_guid_to_string(guid));
 
     Vector4i newValue = cast_to_vector4i(guid);
     if (newValue == Vector4i(0, 0, 0, 0))
     {
         _err_print_error("on_text_changed", __FILE__, __LINE__,
-                         "Could not find FMOD_GUID for [" + newText + "] setting will not persist only guid is stored",
+                         "Could not find FMOD_GUID for [" + p_new_text +
+                             "] setting will not persist only guid is stored",
                          true, true);
     }
     if (currentValue != newValue)

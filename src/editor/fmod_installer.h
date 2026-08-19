@@ -115,16 +115,16 @@ class FmodInstaller : public Window
     String get_password() const;
     void set_indeterminate_progress_bar(bool p_indeterminate);
     bool get_indeterminate_progress_bar() const;
-    void set_install_message_visible_characters(int visible_characters);
+    void set_install_message_visible_characters(int p_visible_characters);
 
     int get_install_message_visible_characters() const;
     void clear_username();
     void clear_password();
     void show_login();
     void show_progress();
-    void fail(const String &message);
-    void set_progress_bar_value(float value);
-    void set_install_message(const String &message);
+    void fail(const String &p_message);
+    void set_progress_bar_value(float p_value);
+    void set_install_message(const String &p_message);
     String get_install_message() const;
     HTTPRequest *get_http() const;
     FmodInstaller();

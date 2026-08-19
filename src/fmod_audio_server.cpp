@@ -57,30 +57,30 @@ FmodAudioServer::InitSettings FmodAudioServer::get_fmod_settings()
     return settings;
 }
 
-FMOD_RESULT fmod_debug_callback(FMOD_DEBUG_FLAGS flags, const char *file, int line, const char *func,
-                                const char *message)
+FMOD_RESULT fmod_debug_callback(FMOD_DEBUG_FLAGS p_flags, const char *p_file, int p_line, const char *p_func,
+                                const char *p_message)
 {
-    if (flags & FMOD_DEBUG_LEVEL_ERROR)
+    if (p_flags & FMOD_DEBUG_LEVEL_ERROR)
     {
-        _err_print_error(func, file, line, message, true, true);
+        _err_print_error(p_func, p_file, p_line, p_message, true, true);
     }
-    else if (flags & FMOD_DEBUG_LEVEL_WARNING)
+    else if (p_flags & FMOD_DEBUG_LEVEL_WARNING)
     {
-        _err_print_error(func, file, line, message, true, true);
+        _err_print_error(p_func, p_file, p_line, p_message, true, true);
     }
     else
     {
-        print_line(message);
+        print_line(p_message);
     }
     return FMOD_OK;
 }
-FMOD_RESULT F_CALL fmod_studio_system_callback(FMOD_STUDIO_SYSTEM *system, FMOD_STUDIO_SYSTEM_CALLBACK_TYPE type,
-                                               void *commanddata, void *userdata)
+FMOD_RESULT F_CALL fmod_studio_system_callback(FMOD_STUDIO_SYSTEM *p_system, FMOD_STUDIO_SYSTEM_CALLBACK_TYPE p_type,
+                                               void *p_commanddata, void *p_userdata)
 {
-    FmodAudioServer *as = (FmodAudioServer *)userdata;
+    FmodAudioServer *as = (FmodAudioServer *)p_userdata;
     if (as)
     {
-        switch (type)
+        switch (p_type)
         {
         case FMOD_STUDIO_SYSTEM_CALLBACK_LIVEUPDATE_CONNECTED: {
             as->emit_signal("live_update_connected");
@@ -110,9 +110,9 @@ FMOD_RESULT F_CALL fmod_studio_system_callback(FMOD_STUDIO_SYSTEM *system, FMOD_
     return FMOD_ERR_INVALID_HANDLE;
 }
 
-FMOD_RESULT godot_file_error_to_fmod_file_error(Error err)
+FMOD_RESULT godot_file_error_to_fmod_file_error(Error p_err)
 {
-    switch (err)
+    switch (p_err)
     {
     case OK:
         return FMOD_OK;
@@ -128,35 +128,36 @@ FMOD_RESULT godot_file_error_to_fmod_file_error(Error err)
         return FMOD_ERR_FILE_BAD;
     }
 }
-FMOD_RESULT open_callback(const char *name, unsigned int *filesize, void **handle, void *userdata)
+FMOD_RESULT open_callback(const char *p_name, unsigned int *p_filesize, void **p_handle, void *p_userdata)
 {
-    auto file = FileAccess::open(String(name), FileAccess::ModeFlags::READ);
+    auto file = FileAccess::open(String(p_name), FileAccess::ModeFlags::READ);
     if (FileAccess::get_open_error() != OK)
     {
         return godot_file_error_to_fmod_file_error(FileAccess::get_open_error());
     }
     file->reference();
-    *handle = file.ptr();
-    *filesize = file->get_length();
+    *p_handle = file.ptr();
+    *p_filesize = file->get_length();
     return godot_file_error_to_fmod_file_error(file->get_error());
 }
-FMOD_RESULT close_callback(void *handle, void *userdata)
+FMOD_RESULT close_callback(void *p_handle, void *p_userdata)
 {
-    ((FileAccess *)handle)->close();
-    ((FileAccess *)handle)->unreference();
-    FMOD_RESULT result = godot_file_error_to_fmod_file_error(((FileAccess *)handle)->get_error());
-    memdelete((FileAccess *)handle);
+    ((FileAccess *)p_handle)->close();
+    ((FileAccess *)p_handle)->unreference();
+    FMOD_RESULT result = godot_file_error_to_fmod_file_error(((FileAccess *)p_handle)->get_error());
+    memdelete((FileAccess *)p_handle);
     return result;
 }
-FMOD_RESULT seek_callback(void *handle, unsigned int pos, void *userdata)
+FMOD_RESULT seek_callback(void *p_handle, unsigned int p_pos, void *p_userdata)
 {
-    ((FileAccess *)handle)->seek(pos);
-    return godot_file_error_to_fmod_file_error(((FileAccess *)handle)->get_error());
+    ((FileAccess *)p_handle)->seek(p_pos);
+    return godot_file_error_to_fmod_file_error(((FileAccess *)p_handle)->get_error());
 }
-FMOD_RESULT read_callback(void *handle, void *buffer, unsigned int sizebytes, unsigned int *bytesread, void *userdata)
+FMOD_RESULT read_callback(void *p_handle, void *p_buffer, unsigned int p_sizebytes, unsigned int *p_bytesread,
+                          void *p_userdata)
 {
-    *bytesread = ((FileAccess *)handle)->get_buffer((uint8_t *)buffer, sizebytes);
-    return godot_file_error_to_fmod_file_error(((FileAccess *)handle)->get_error());
+    *p_bytesread = ((FileAccess *)p_handle)->get_buffer((uint8_t *)p_buffer, p_sizebytes);
+    return godot_file_error_to_fmod_file_error(((FileAccess *)p_handle)->get_error());
 }
 
 #pragma region Server Functionality
@@ -230,8 +231,8 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
     FMOD_System_SetSoftwareChannels(core_system, p_settings.software_channels);
     FMOD_System_Set3DSettings(core_system, p_settings.doppler_scale, p_settings.distance_factor,
                               p_settings.rolloff_scale);
-    FMOD_System_SetFileSystem(core_system, open_callback, close_callback, read_callback, seek_callback, NULL, NULL,
-                              2048);
+    FMOD_System_SetFileSystem(core_system, open_callback, close_callback, read_callback, seek_callback, nullptr,
+                              nullptr, 2048);
     // studio settings
     FMOD_STUDIO_ADVANCEDSETTINGS studio_settings;
     studio_settings.cbsize = sizeof(FMOD_STUDIO_ADVANCEDSETTINGS);
@@ -240,8 +241,8 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
     studio_settings.encryptionkey = p_settings.encryption_key.utf8();
     FMOD_Studio_System_SetAdvancedSettings(studio_system, &studio_settings);
 
-    result =
-        FMOD_Studio_System_Initialize(studio_system, p_settings.virtual_channels, studio_init, FMOD_INIT_NORMAL, 0);
+    result = FMOD_Studio_System_Initialize(studio_system, p_settings.virtual_channels, studio_init, FMOD_INIT_NORMAL,
+                                           nullptr);
     if (result != FMOD_OK)
     {
         UtilityFunctions::printerr("Init FmodAudioServer Error", FMOD_ErrorString(result));
@@ -569,31 +570,31 @@ void FmodAudioServer::load_start_up_banks()
 
 #pragma region server api
 
-int FmodAudioServer::load_bank_by_file(const String &path, bool loadSamples)
+int FmodAudioServer::load_bank_by_file(const String &p_path, bool p_load_samples)
 {
-    print_verbose("Loading Bank at ", path);
+    print_verbose("Loading Bank at ", p_path);
     FMOD_STUDIO_BANK *bank;
     FMOD_RESULT result =
-        FMOD_Studio_System_LoadBankFile(studio_system, path.utf8().ptr(), FMOD_STUDIO_LOAD_BANK_NORMAL, &bank);
+        FMOD_Studio_System_LoadBankFile(studio_system, p_path.utf8().ptr(), FMOD_STUDIO_LOAD_BANK_NORMAL, &bank);
     if (result == FMOD_OK)
     {
-        if (loadSamples)
+        if (p_load_samples)
         {
             FMOD_Studio_Bank_LoadSampleData(bank);
         }
     }
-    else if (result == FMOD_ERR_EVENT_ALREADY_LOADED && loadSamples)
+    else if (result == FMOD_ERR_EVENT_ALREADY_LOADED && p_load_samples)
     {
         FMOD_Studio_Bank_LoadSampleData(bank);
     }
     else
     {
-        print_error(vformat("Couldn't load bank at %s Error: %s", path, FMOD_ErrorString(result)));
+        print_error(vformat("Couldn't load bank at %s Error: %s", p_path, FMOD_ErrorString(result)));
     }
 
     return result;
 }
-int FmodAudioServer::load_bank(const String &p_name, bool loadSamples)
+int FmodAudioServer::load_bank(const String &p_name, bool p_load_samples)
 {
 
     if (p_name.begins_with("bank:/"))
@@ -604,7 +605,7 @@ int FmodAudioServer::load_bank(const String &p_name, bool loadSamples)
     }
     else if (p_name.ends_with(".bank"))
     {
-        return load_bank_by_file(p_name, loadSamples);
+        return load_bank_by_file(p_name, p_load_samples);
     }
     return FMOD_ERR_FILE_NOTFOUND;
 }
@@ -621,13 +622,13 @@ void FmodAudioServer::unload_banks()
     print_verbose("Unloading all banks");
     unlock();
 }
-void FmodAudioServer::get_core_ref(FMOD_SYSTEM **core)
+void FmodAudioServer::get_core_ref(FMOD_SYSTEM **p_core)
 {
-    *core = this->core_system;
+    *p_core = this->core_system;
 }
-void FmodAudioServer::get_studio_ref(FMOD_STUDIO_SYSTEM **studio)
+void FmodAudioServer::get_studio_ref(FMOD_STUDIO_SYSTEM **p_studio)
 {
-    *studio = this->studio_system;
+    *p_studio = this->studio_system;
 }
 bool FmodAudioServer::is_live_update_connected() const
 {
@@ -831,11 +832,11 @@ FMOD_STUDIO_VCA *FmodAudioServer::get_vca(const String &p_path) const
     FMOD_Studio_System_GetVCA(studio_system, p_path.utf8(), &vca);
     return vca;
 }
-bool FmodAudioServer::has_bank_loaded(const String &p_bankName) const
+bool FmodAudioServer::has_bank_loaded(const String &p_bank_name) const
 {
     FMOD_STUDIO_BANK *bank;
     // TODO Only works synchronously
-    return FMOD_Studio_System_GetBank(studio_system, p_bankName.utf8(), &bank) == FMOD_OK;
+    return FMOD_Studio_System_GetBank(studio_system, p_bank_name.utf8(), &bank) == FMOD_OK;
 }
 
 bool FmodAudioServer::have_all_banks_loaded() const
@@ -912,46 +913,46 @@ void FmodAudioServer::set_listener_location(int p_listener_index, RigidBody3D *p
 {
     set_listener_3d_rigidbody_location(p_listener_index, p_rigid_body3d, p_attenuation_object);
 }
-void FmodAudioServer::set_listener_3d_rigidbody_location(int listenerIndex, RigidBody3D *p_rigid_body3d,
-                                                         Node3D *attenuationObject)
+void FmodAudioServer::set_listener_3d_rigidbody_location(int p_listener_index, RigidBody3D *p_rigid_body3d,
+                                                         Node3D *p_attenuation_object)
 {
     FMOD_3D_ATTRIBUTES node_attr;
     FMOD_VECTOR attenuation_attr;
     node_attr = to_3d_attributes(p_rigid_body3d);
-    if (attenuationObject)
+    if (p_attenuation_object)
     {
-        attenuation_attr = to_fmod_vector(attenuationObject->get_global_position());
-        FMOD_Studio_System_SetListenerAttributes(studio_system, listenerIndex, &node_attr, &attenuation_attr);
+        attenuation_attr = to_fmod_vector(p_attenuation_object->get_global_position());
+        FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, &attenuation_attr);
     }
     else
     {
-        FMOD_Studio_System_SetListenerAttributes(studio_system, listenerIndex, &node_attr, nullptr);
+        FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, nullptr);
     }
 }
 
-void FmodAudioServer::set_listener_3d_location(int listenerIndex, Node3D *p_node, Node3D *attenuationObject)
+void FmodAudioServer::set_listener_3d_location(int p_listener_index, Node3D *p_node, Node3D *p_attenuation_object)
 {
     FMOD_3D_ATTRIBUTES node_attr;
     FMOD_VECTOR attenuation_attr;
     node_attr = to_3d_attributes(p_node);
-    if (attenuationObject)
+    if (p_attenuation_object)
     {
-        attenuation_attr = to_fmod_vector(attenuationObject->get_global_position());
-        FMOD_Studio_System_SetListenerAttributes(studio_system, listenerIndex, &node_attr, &attenuation_attr);
+        attenuation_attr = to_fmod_vector(p_attenuation_object->get_global_position());
+        FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, &attenuation_attr);
     }
     else
     {
-        FMOD_Studio_System_SetListenerAttributes(studio_system, listenerIndex, &node_attr, nullptr);
+        FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, nullptr);
     }
 }
 
 #pragma endregion
 extern "C"
 {
-    GDE_EXPORT int get_fmod_core(FMOD_SYSTEM **core)
+    GDE_EXPORT int get_fmod_core(FMOD_SYSTEM **p_core)
     {
-        FmodAudioServer::get_singleton()->get_core_ref(core);
-        if (core == NULL)
+        FmodAudioServer::get_singleton()->get_core_ref(p_core);
+        if (p_core == nullptr)
         {
             return 1;
         }
@@ -960,10 +961,10 @@ extern "C"
             return 0;
         }
     }
-    GDE_EXPORT int get_fmod_studio(FMOD_STUDIO_SYSTEM **studio)
+    GDE_EXPORT int get_fmod_studio(FMOD_STUDIO_SYSTEM **p_studio)
     {
-        FmodAudioServer::get_singleton()->get_studio_ref(studio);
-        if (studio == NULL)
+        FmodAudioServer::get_singleton()->get_studio_ref(p_studio);
+        if (p_studio == nullptr)
         {
             return 1;
         }
@@ -1086,22 +1087,22 @@ extern "C"
     {
         return FS->get_vca(p_path);
     }
-    GDE_EXPORT FMOD_RESULT load_bank(const char *p_bankName, bool loadSamples = false)
+    GDE_EXPORT FMOD_RESULT load_bank(const char *p_bank_name, bool p_load_samples = false)
     {
-        return (FMOD_RESULT)FS->load_bank(p_bankName, loadSamples);
+        return (FMOD_RESULT)FS->load_bank(p_bank_name, p_load_samples);
     }
 
-    GDE_EXPORT FMOD_RESULT load_bank_by_file(const char *p_path, bool loadSamples = false)
+    GDE_EXPORT FMOD_RESULT load_bank_by_file(const char *p_path, bool p_load_samples = false)
     {
-        return (FMOD_RESULT)FS->load_bank_by_file(p_path, loadSamples);
+        return (FMOD_RESULT)FS->load_bank_by_file(p_path, p_load_samples);
     }
     GDE_EXPORT void unload_banks()
     {
         FS->unload_banks();
     }
-    GDE_EXPORT bool has_bank_loaded(const char *&p_bankName)
+    GDE_EXPORT bool has_bank_loaded(const char *&p_bank_name)
     {
-        return FS->has_bank_loaded(p_bankName);
+        return FS->has_bank_loaded(p_bank_name);
     }
 
     GDE_EXPORT bool have_all_banks_loaded()
@@ -1109,30 +1110,30 @@ extern "C"
         return FS->have_all_banks_loaded();
     }
 
-    GDE_EXPORT void set_listener_2d_rigidbody_location(int p_listenerIndex, void *p_rigidBody2D,
-                                                       void *p_attenuationObject = nullptr)
+    GDE_EXPORT void set_listener_2d_rigidbody_location(int p_listener_index, void *p_rigid_body2_d,
+                                                       void *p_attenuation_object = nullptr)
     {
-        FS->set_listener_2d_rigidbody_location(p_listenerIndex,
-                                               (RigidBody2D *)internal::get_object_instance_binding(p_rigidBody2D),
-                                               (Node2D *)internal::get_object_instance_binding(p_attenuationObject));
+        FS->set_listener_2d_rigidbody_location(p_listener_index,
+                                               (RigidBody2D *)internal::get_object_instance_binding(p_rigid_body2_d),
+                                               (Node2D *)internal::get_object_instance_binding(p_attenuation_object));
     }
-    GDE_EXPORT void set_listener_2d_location(int p_listenerIndex, void *p_node, void *p_attenuationObject = nullptr)
+    GDE_EXPORT void set_listener_2d_location(int p_listener_index, void *p_node, void *p_attenuation_object = nullptr)
     {
-        FS->set_listener_2d_location(p_listenerIndex, (Node2D *)internal::get_object_instance_binding(p_node),
-                                     (Node2D *)internal::get_object_instance_binding(p_attenuationObject));
+        FS->set_listener_2d_location(p_listener_index, (Node2D *)internal::get_object_instance_binding(p_node),
+                                     (Node2D *)internal::get_object_instance_binding(p_attenuation_object));
     }
 
-    GDE_EXPORT void set_listener_3d_rigidbody_location(int listenerIndex, void *rigidBody,
-                                                       void *attenuationObject = nullptr)
+    GDE_EXPORT void set_listener_3d_rigidbody_location(int p_listener_index, void *p_rigid_body,
+                                                       void *p_attenuation_object = nullptr)
     {
-        FS->set_listener_3d_rigidbody_location(listenerIndex,
-                                               (RigidBody3D *)internal::get_object_instance_binding(rigidBody),
-                                               (Node3D *)internal::get_object_instance_binding(attenuationObject));
+        FS->set_listener_3d_rigidbody_location(p_listener_index,
+                                               (RigidBody3D *)internal::get_object_instance_binding(p_rigid_body),
+                                               (Node3D *)internal::get_object_instance_binding(p_attenuation_object));
     }
-    GDE_EXPORT void set_listener_3d_location(int listenerIndex, void *p_node, void *attenuationObject = nullptr)
+    GDE_EXPORT void set_listener_3d_location(int p_listener_index, void *p_node, void *p_attenuation_object = nullptr)
     {
-        FS->set_listener_3d_location(listenerIndex, (Node3D *)internal::get_object_instance_binding(p_node),
-                                     (Node3D *)internal::get_object_instance_binding(attenuationObject));
+        FS->set_listener_3d_location(p_listener_index, (Node3D *)internal::get_object_instance_binding(p_node),
+                                     (Node3D *)internal::get_object_instance_binding(p_attenuation_object));
     }
 }
 godot::String FmodAudioServer::get_version_number()

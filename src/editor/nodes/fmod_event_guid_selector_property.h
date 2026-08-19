@@ -17,8 +17,8 @@ class EventGUIDSelectorProperty : public EditorProperty
     FmodEventSelector *eventSelector;
     Vector4i currentValue;
     bool updating = false;
-    void on_text_changed(String newText);
-    void on_editing_toggled(bool toggle_on);
+    void on_text_changed(String p_new_text);
+    void on_editing_toggled(bool p_toggle_on);
 
   protected:
     static void _bind_methods();
