@@ -18,8 +18,8 @@ class FmodEventEmitter3D : public FmodEventEmitter<FmodEventEmitter3D, Node3D, R
   public:
     FmodEventEmitter3D() = default;
     ~FmodEventEmitter3D() override = default;
-    void attach_instance_to_rigid_body(RigidBody3D *body, FMOD_STUDIO_EVENTINSTANCE *event);
-    void attach_instance_to_node(Node3D *node, FMOD_STUDIO_EVENTINSTANCE *event, bool p_non_rigid_body_velocity);
+    void attach_instance_to_rigid_body(RigidBody3D *p_body, FMOD_STUDIO_EVENTINSTANCE *p_event);
+    void attach_instance_to_node(Node3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event, bool p_non_rigid_body_velocity);
     PackedStringArray _get_configuration_warnings() const override;
 };
 

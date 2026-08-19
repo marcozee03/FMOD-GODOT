@@ -22,11 +22,11 @@ class CommandInput : public TextEdit
 
   public:
     CommandInput();
-    void history_push(const String &command);
+    void history_push(const String &p_command);
     void _enter_tree() override;
-    void _gui_input(const Ref<InputEvent> &event) override;
+    void _gui_input(const Ref<InputEvent> &p_event) override;
     PackedStringArray get_history() const;
-    void load_history(const PackedStringArray &arr);
+    void load_history(const PackedStringArray &p_arr);
 };
 } // namespace FmodGodot
 #endif

@@ -18,8 +18,8 @@ class FmodScriptClient : public godot::StreamPeerTCP
   public:
     bool is_connected_to_studio();
     void connect_to_fmod();
-    bool send_script_command(const String &command);
-    String get_script_output(const String &command);
+    bool send_script_command(const String &p_command);
+    String get_script_output(const String &p_command);
 };
 } // namespace FmodGodot
 #endif

@@ -139,7 +139,7 @@ class FmodConsole : public EditorDock
     void _process_message(const String &p_msg, MessageType p_type, bool p_clear);
     void _reset_message_counts();
     void _set_dock_tab_icon(Ref<Texture2D> p_icon);
-    void _command_submitted(const String &command);
+    void _command_submitted(const String &p_command);
 
     void _update_theme();
     void _editor_settings_changed();

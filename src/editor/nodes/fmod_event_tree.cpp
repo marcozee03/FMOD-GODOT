@@ -62,36 +62,36 @@ EventTree::~EventTree()
 }
 namespace
 {
-void recurOverEvents(TreeItem *root, const FmodEditorCache *cache, const PackedStringArray &contents,
-                     const String &current_path)
+void recurOverEvents(TreeItem *p_root, const FmodEditorCache *p_cache, const PackedStringArray &p_contents,
+                     const String &p_current_path)
 {
-    for (auto str : contents)
+    for (auto str : p_contents)
     {
-        auto child = root->create_child();
+        auto child = p_root->create_child();
         child->set_text(0, str);
-        PackedStringArray subcontents = cache->get_contents(current_path + String("/") + str);
+        PackedStringArray subcontents = p_cache->get_contents(p_current_path + String("/") + str);
         if (!subcontents.is_empty())
         {
             child->set_icon(0, EditorInterface::get_singleton()->get_editor_theme()->get_icon("Folder", "EditorIcons"));
-            recurOverEvents(child, cache, subcontents, current_path + String("/") + str);
+            recurOverEvents(child, p_cache, subcontents, p_current_path + String("/") + str);
         }
     }
 }
-void initRecur(TreeItem *root, const FmodEditorCache *cache, const String &current_path)
+void initRecur(TreeItem *p_root, const FmodEditorCache *p_cache, const String &p_current_path)
 {
-    TreeItem *item = root->create_child(-1);
-    item->set_text(0, current_path);
+    TreeItem *item = p_root->create_child(-1);
+    item->set_text(0, p_current_path);
     item->set_icon(0, EditorInterface::get_singleton()->get_editor_theme()->get_icon("Folder", "EditorIcons"));
-    auto event_contents = cache->get_contents(current_path);
+    auto event_contents = p_cache->get_contents(p_current_path);
     for (const String &str : event_contents)
     {
         auto child = item->create_child();
         child->set_text(0, str);
-        PackedStringArray subcontents = cache->get_contents(current_path + String("/") + str);
+        PackedStringArray subcontents = p_cache->get_contents(p_current_path + String("/") + str);
         if (!subcontents.is_empty())
         {
             child->set_icon(0, EditorInterface::get_singleton()->get_editor_theme()->get_icon("Folder", "EditorIcons"));
-            recurOverEvents(child, cache, subcontents, current_path + String("/") + str);
+            recurOverEvents(child, p_cache, subcontents, p_current_path + String("/") + str);
         }
     }
 }
@@ -133,9 +133,9 @@ void EventTree::LoadEvents()
         initRecur(get_root(), cache, "param:");
     }
 }
-String EventTree::get_item_path(TreeItem *item)
+String EventTree::get_item_path(TreeItem *p_item)
 {
-    TreeItem *current = item;
+    TreeItem *current = p_item;
     if (!current)
     {
         return "";

@@ -58,21 +58,21 @@ void FmodEditorInterface::set_console(FmodConsole *p_console)
 {
     console = p_console;
 };
-void FmodEditorInterface::print(const String &message)
+void FmodEditorInterface::print(const String &p_message)
 {
-    console->add_message(message);
+    console->add_message(p_message);
 }
-void FmodEditorInterface::print_warning(const String &message)
+void FmodEditorInterface::print_warning(const String &p_message)
 {
-    console->add_message(message, FmodConsole::MSG_TYPE_WARNING);
+    console->add_message(p_message, FmodConsole::MSG_TYPE_WARNING);
 }
-void FmodEditorInterface::print_error(const String &message)
+void FmodEditorInterface::print_error(const String &p_message)
 {
-    console->add_message(message, FmodConsole::MSG_TYPE_ERROR);
+    console->add_message(p_message, FmodConsole::MSG_TYPE_ERROR);
 }
-void FmodEditorInterface::print_rich(const String &message)
+void FmodEditorInterface::print_rich(const String &p_message)
 {
-    console->add_message(message, FmodConsole::MSG_TYPE_STD_RICH);
+    console->add_message(p_message, FmodConsole::MSG_TYPE_STD_RICH);
 }
 const FmodTheme *FmodEditorInterface::get_theme() const
 {
@@ -84,47 +84,47 @@ FmodEditorInterface *FmodEditorInterface::get_singleton()
 }
 namespace
 {
-Parameter to_cacheable_parameter(FMOD_STUDIO_PARAMETER_DESCRIPTION *description)
+Parameter to_cacheable_parameter(FMOD_STUDIO_PARAMETER_DESCRIPTION *p_description)
 {
     Parameter parameter;
-    parameter.full_path = String("param:/") + description->name;
-    parameter.guid = cast_to_vector4i(description->guid);
-    parameter.default_value = description->defaultvalue;
-    parameter.discrete = description->flags & FMOD_STUDIO_PARAMETER_DISCRETE;
-    parameter.min_value = description->minimum;
-    parameter.max_value = description->maximum;
+    parameter.full_path = String("param:/") + p_description->name;
+    parameter.guid = cast_to_vector4i(p_description->guid);
+    parameter.default_value = p_description->defaultvalue;
+    parameter.discrete = p_description->flags & FMOD_STUDIO_PARAMETER_DISCRETE;
+    parameter.min_value = p_description->minimum;
+    parameter.max_value = p_description->maximum;
     return parameter;
 }
-Event to_cacheable_event(FMOD_STUDIO_EVENTDESCRIPTION *description)
+Event to_cacheable_event(FMOD_STUDIO_EVENTDESCRIPTION *p_description)
 {
     int size = 64;
     int retrieved = 0;
     char *str = memnew_arr(char, size);
 
-    FMOD_GET_FULL_STRING(FMOD_Studio_EventDescription_GetPath, description, str, size, retrieved);
+    FMOD_GET_FULL_STRING(FMOD_Studio_EventDescription_GetPath, p_description, str, size, retrieved);
     Event event;
     event.full_path = str;
     FMOD_GUID guid;
-    FMOD_Studio_EventDescription_GetID(description, &guid);
+    FMOD_Studio_EventDescription_GetID(p_description, &guid);
     event.guid = cast_to_vector4i(guid);
     FMOD_BOOL is3D, isDopplerEnabled, isStream, isOneShot;
-    FMOD_Studio_EventDescription_Is3D(description, &is3D);
-    FMOD_Studio_EventDescription_IsDopplerEnabled(description, &isDopplerEnabled);
-    FMOD_Studio_EventDescription_IsOneshot(description, &isOneShot);
-    FMOD_Studio_EventDescription_IsStream(description, &isStream);
-    FMOD_Studio_EventDescription_GetLength(description, &event.lengthMS);
+    FMOD_Studio_EventDescription_Is3D(p_description, &is3D);
+    FMOD_Studio_EventDescription_IsDopplerEnabled(p_description, &isDopplerEnabled);
+    FMOD_Studio_EventDescription_IsOneshot(p_description, &isOneShot);
+    FMOD_Studio_EventDescription_IsStream(p_description, &isStream);
+    FMOD_Studio_EventDescription_GetLength(p_description, &event.lengthMS);
 
-    FMOD_Studio_EventDescription_GetMinMaxDistance(description, &event.min, &event.max);
+    FMOD_Studio_EventDescription_GetMinMaxDistance(p_description, &event.min, &event.max);
     event.is3d = is3D;
     event.doppler_enabled = isDopplerEnabled;
     event.stream = isStream;
     event.one_shot = isOneShot;
     int parameter_count;
-    FMOD_Studio_EventDescription_GetParameterDescriptionCount(description, &parameter_count);
+    FMOD_Studio_EventDescription_GetParameterDescriptionCount(p_description, &parameter_count);
     for (int k = 0; k < parameter_count; k++)
     {
         FMOD_STUDIO_PARAMETER_DESCRIPTION parameter_description;
-        FMOD_Studio_EventDescription_GetParameterDescriptionByIndex(description, k, &parameter_description);
+        FMOD_Studio_EventDescription_GetParameterDescriptionByIndex(p_description, k, &parameter_description);
         Parameter parameter = to_cacheable_parameter(&parameter_description);
         event.parameters.append(parameter);
     }
@@ -214,9 +214,9 @@ void FmodEditorInterface::refresh()
     memdelete_arr(banks);
     memdelete_arr(str);
 }
-void FmodEditorInterface::show_event_in_fmod_studio(Vector4i guid)
+void FmodEditorInterface::show_event_in_fmod_studio(Vector4i p_guid)
 {
-    String cmd = "studio.window.navigateTo(studio.project.lookup(\"" + fmod_guid_to_string(guid) + "\"));";
+    String cmd = "studio.window.navigateTo(studio.project.lookup(\"" + fmod_guid_to_string(p_guid) + "\"));";
     if (!script->send_script_command(cmd))
     {
         UtilityFunctions::print_rich("[color=grey] Command: \"" + cmd + "\" failed[/color]");
