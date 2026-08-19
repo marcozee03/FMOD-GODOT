@@ -17,8 +17,8 @@ class FmodProjectExplorer : public BoxContainer
     FmodEventPreviewer *previewer;
     EventTree *tree;
     FmodObjectDetails *details;
-    void emit_object_selected(const String &name);
-    void emit_object_activated(const String &name);
+    void emit_object_selected(const String &p_name);
+    void emit_object_activated(const String &p_name);
     void _update_theme();
 
   protected:
@@ -28,7 +28,7 @@ class FmodProjectExplorer : public BoxContainer
   public:
     FmodProjectExplorer(/* args */);
     ~FmodProjectExplorer() = default;
-    void set_display_flags(EventTree::DisplayFlags flags);
+    void set_display_flags(EventTree::DisplayFlags p_flags);
     void refresh();
 };
 } // namespace FmodGodot

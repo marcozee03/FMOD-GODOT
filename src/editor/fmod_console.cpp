@@ -243,10 +243,10 @@ void FmodConsole::_set_dock_tab_icon(Ref<Texture2D> p_icon)
     set_dock_icon(p_icon);
     set_force_show_icon(p_icon.is_valid());
 }
-void FmodGodot::FmodConsole::_command_submitted(const String &command)
+void FmodGodot::FmodConsole::_command_submitted(const String &p_command)
 {
-    add_message(command, MessageType::MSG_TYPE_INPUT);
-    String text = client->get_script_output(command);
+    add_message(p_command, MessageType::MSG_TYPE_INPUT);
+    String text = client->get_script_output(p_command);
     if (text.begins_with("out():"))
     {
         add_message(text.substr(6), MessageType::MSG_TYPE_STD);

@@ -20,20 +20,20 @@ EventPathSelectorProperty::EventPathSelectorProperty()
 EventPathSelectorProperty::~EventPathSelectorProperty()
 {
 }
-void EventPathSelectorProperty::on_editing_toggled(bool toggled_on)
+void EventPathSelectorProperty::on_editing_toggled(bool p_toggled_on)
 {
-    if (!toggled_on)
+    if (!p_toggled_on)
     {
         on_text_changed(eventSelector->get_line_edit()->get_text());
     }
 }
-void EventPathSelectorProperty::on_text_changed(String newText)
+void EventPathSelectorProperty::on_text_changed(String p_new_text)
 {
-    if (currentValue == newText)
+    if (currentValue == p_new_text)
     {
         return;
     }
-    currentValue = newText;
+    currentValue = p_new_text;
     emit_changed(get_edited_property(), currentValue);
 }
 

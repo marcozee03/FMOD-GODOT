@@ -86,7 +86,7 @@ template <class Derived, class NodeType, class RigidBody> class FmodEventEmitter
     void set_override_attenuation(bool p_override_attenuation);
 
     float get_volume() const;
-    void set_volume(float volume);
+    void set_volume(float p_volume);
 
     float get_attenuation_min() const;
     void set_attenuation_min(float p_attenuation_min);
@@ -97,15 +97,15 @@ template <class Derived, class NodeType, class RigidBody> class FmodEventEmitter
     bool is_allow_fadeout() const;
     void set_allow_fadeout(bool p_allow_fadeout);
 
-    void set_parameter(const String &name, float value);
-    void set_parameter_by_id(const Vector2i &id, float value);
+    void set_parameter(const String &p_name, float p_value);
+    void set_parameter_by_id(const Vector2i &p_id, float p_value);
     float get_parameter(const String &p_name) const;
     float get_parameter_by_id(const Vector2i &p_id) const;
     void _notification(int p_what);
 
     bool is_playing() const;
     bool is_paused() const;
-    void set_paused(bool isPaused);
+    void set_paused(bool p_is_paused);
 
     static const StringName &get_class_static();
 };
@@ -123,9 +123,9 @@ bool FmodEventEmitter<Derived, NodeType, RigidBody>::is_paused() const
 }
 
 template <class Derived, class NodeType, class RigidBody>
-void FmodEventEmitter<Derived, NodeType, RigidBody>::set_paused(bool isPaused)
+void FmodEventEmitter<Derived, NodeType, RigidBody>::set_paused(bool p_is_paused)
 {
-    FMOD_Studio_EventInstance_SetPaused(event_instance, isPaused);
+    FMOD_Studio_EventInstance_SetPaused(event_instance, p_is_paused);
 }
 template <class Derived, class NodeType, class RigidBody>
 bool FmodEventEmitter<Derived, NodeType, RigidBody>::is_playing() const
@@ -551,39 +551,39 @@ void FmodEventEmitter<Derived, NodeType, RigidBody>::set_allow_fadeout(bool p_al
     allow_fadeout = p_allow_fadeout;
 }
 template <class Derived, class NodeType, class RigidBody>
-void FmodEventEmitter<Derived, NodeType, RigidBody>::set_parameter(const String &name, float value)
+void FmodEventEmitter<Derived, NodeType, RigidBody>::set_parameter(const String &p_name, float p_value)
 {
     for (int i = 0; i < parameters.size(); i++)
     {
-        if (name.casecmp_to(parameters[i].name) == 0)
+        if (p_name.casecmp_to(parameters[i].name) == 0)
         {
-            parameters.write[i].value = value;
+            parameters.write[i].value = p_value;
             if (FMOD_Studio_EventInstance_IsValid(event_instance))
             {
-                FMOD_Studio_EventInstance_SetParameterByName(event_instance, parameters[i].name, value, false);
+                FMOD_Studio_EventInstance_SetParameterByName(event_instance, parameters[i].name, p_value, false);
             }
             return;
         }
     }
 
-    print_error("No parameter of name: ", name, " in ", this->get_name());
+    print_error("No parameter of name: ", p_name, " in ", this->get_name());
 }
 template <class Derived, class NodeType, class RigidBody>
-void FmodEventEmitter<Derived, NodeType, RigidBody>::set_parameter_by_id(const Vector2i &id, float value)
+void FmodEventEmitter<Derived, NodeType, RigidBody>::set_parameter_by_id(const Vector2i &p_id, float p_value)
 {
     for (int i = 0; i < parameters.size(); i++)
     {
-        if (id == parameters[i].id)
+        if (p_id == parameters[i].id)
         {
-            parameters.write[i].value = value;
+            parameters.write[i].value = p_value;
             if (FMOD_Studio_EventInstance_IsValid(event_instance))
             {
-                FMOD_Studio_EventInstance_SetParameterByName(event_instance, parameters[i].name, value, false);
+                FMOD_Studio_EventInstance_SetParameterByName(event_instance, parameters[i].name, p_value, false);
             }
             return;
         }
     }
-    print_error("No parameter with id: ", id);
+    print_error("No parameter with id: ", p_id);
 }
 template <class Derived, class NodeType, class RigidBody>
 float FmodEventEmitter<Derived, NodeType, RigidBody>::get_parameter(const String &p_name) const

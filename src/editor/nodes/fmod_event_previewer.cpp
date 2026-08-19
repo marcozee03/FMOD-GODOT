@@ -84,7 +84,7 @@ Vector4i FmodEventPreviewer::get_event_guid() const
     return emitter->get_event();
 }
 
-void FmodEventPreviewer::_process(double delta)
+void FmodEventPreviewer::_process(double p_delta)
 {
     if (!scrub->is_visible())
     {
@@ -167,9 +167,9 @@ void FmodGodot::FmodEventPreviewer::start()
     }
     set_process(true);
 }
-void FmodGodot::FmodEventPreviewer::set_panner_size(float size)
+void FmodGodot::FmodEventPreviewer::set_panner_size(float p_size)
 {
-    panner->set_world_size(size);
+    panner->set_world_size(p_size);
 }
 void FmodGodot::FmodEventPreviewer::toggleFrontView()
 {
@@ -185,10 +185,10 @@ void FmodGodot::FmodEventPreviewer::toggleFrontView()
         break;
     }
 }
-void FmodGodot::FmodEventPreviewer::on_property_changed(const String &property, Variant value, const String &field,
-                                                        bool changing)
+void FmodGodot::FmodEventPreviewer::on_property_changed(const String &p_property, Variant p_value,
+                                                        const String &p_field, bool p_changing)
 {
-    emitter->set(property, value);
+    emitter->set(p_property, p_value);
 }
 void FmodGodot::FmodEventPreviewer::_bind_methods()
 {
@@ -198,9 +198,9 @@ void FmodEventPreviewer::on_start_drag()
     emitter->set_paused(true);
 }
 
-void FmodEventPreviewer::on_end_drag(bool value_changed)
+void FmodEventPreviewer::on_end_drag(bool p_value_changed)
 {
-    if (value_changed)
+    if (p_value_changed)
     {
         FMOD_Studio_EventInstance_SetTimelinePosition(emitter->event_instance, scrub->get_value());
     }
