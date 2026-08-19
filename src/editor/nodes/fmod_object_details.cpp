@@ -21,54 +21,56 @@ namespace FmodGodot
 {
 namespace
 {
-void push_icon(RichTextLabel *rich_text, Ref<Texture2D> icon)
+void push_icon(RichTextLabel *p_rich_text, Ref<Texture2D> p_icon)
 {
-    if (icon.is_valid())
+    if (p_icon.is_valid())
     {
-        int font_size = rich_text->get_theme_font_size("font_size");
-        rich_text->add_image(icon, font_size, font_size);
+        int font_size = p_rich_text->get_theme_font_size("font_size");
+        p_rich_text->add_image(p_icon, font_size, font_size);
     }
 }
-void push_labeln(RichTextLabel *rich_text, const String &label, const String &text, Ref<Texture2D> icon = nullptr)
+void push_labeln(RichTextLabel *p_rich_text, const String &p_label, const String &p_text,
+                 Ref<Texture2D> p_icon = nullptr)
 {
-    push_icon(rich_text, icon);
-    rich_text->push_bold();
-    rich_text->add_text(label);
-    rich_text->pop();
-    rich_text->add_text(text);
-    rich_text->newline();
+    push_icon(p_rich_text, p_icon);
+    p_rich_text->push_bold();
+    p_rich_text->add_text(p_label);
+    p_rich_text->pop();
+    p_rich_text->add_text(p_text);
+    p_rich_text->newline();
 }
-void push_label(RichTextLabel *rich_text, const String &label, const String &text, Ref<Texture2D> icon = nullptr)
+void push_label(RichTextLabel *p_rich_text, const String &p_label, const String &p_text,
+                Ref<Texture2D> p_icon = nullptr)
 {
-    push_icon(rich_text, icon);
-    rich_text->push_bold();
-    rich_text->add_text(label);
-    rich_text->pop();
-    rich_text->add_text(text);
+    push_icon(p_rich_text, p_icon);
+    p_rich_text->push_bold();
+    p_rich_text->add_text(p_label);
+    p_rich_text->pop();
+    p_rich_text->add_text(p_text);
 }
-void push_label_str_meta(RichTextLabel *rich_text, const String &label, const String &text,
-                         const String &tooltip = "Copy", Ref<Texture2D> icon = nullptr)
+void push_label_str_meta(RichTextLabel *p_rich_text, const String &p_label, const String &p_text,
+                         const String &p_tooltip = "Copy", Ref<Texture2D> p_icon = nullptr)
 {
-    push_icon(rich_text, icon);
-    rich_text->push_bold();
-    rich_text->add_text(label);
-    rich_text->pop();
-    rich_text->push_meta(text, RichTextLabel::META_UNDERLINE_ON_HOVER, tooltip);
-    rich_text->add_text(text);
-    rich_text->pop();
-    rich_text->newline();
+    push_icon(p_rich_text, p_icon);
+    p_rich_text->push_bold();
+    p_rich_text->add_text(p_label);
+    p_rich_text->pop();
+    p_rich_text->push_meta(p_text, RichTextLabel::META_UNDERLINE_ON_HOVER, p_tooltip);
+    p_rich_text->add_text(p_text);
+    p_rich_text->pop();
+    p_rich_text->newline();
 }
-void push_label_var_meta(RichTextLabel *rich_text, const String &label, const String &text, const Variant &meta,
-                         const String &tooltip = "", Ref<Texture2D> icon = nullptr)
+void push_label_var_meta(RichTextLabel *p_rich_text, const String &p_label, const String &p_text, const Variant &p_meta,
+                         const String &p_tooltip = "", Ref<Texture2D> p_icon = nullptr)
 {
-    push_icon(rich_text, icon);
-    rich_text->push_bold();
-    rich_text->add_text(label);
-    rich_text->pop();
-    rich_text->push_meta(meta, RichTextLabel::META_UNDERLINE_ON_HOVER, tooltip);
-    rich_text->add_text(text);
-    rich_text->pop();
-    rich_text->newline();
+    push_icon(p_rich_text, p_icon);
+    p_rich_text->push_bold();
+    p_rich_text->add_text(p_label);
+    p_rich_text->pop();
+    p_rich_text->push_meta(p_meta, RichTextLabel::META_UNDERLINE_ON_HOVER, p_tooltip);
+    p_rich_text->add_text(p_text);
+    p_rich_text->pop();
+    p_rich_text->newline();
 }
 
 } // namespace
@@ -138,9 +140,9 @@ FmodObjectDetails::FmodObjectDetails()
 FmodObjectDetails::~FmodObjectDetails()
 {
 }
-void FmodObjectDetails::set_hide_event_parameter(bool hide)
+void FmodObjectDetails::set_hide_event_parameter(bool p_hide)
 {
-    hide_event_parameters = hide;
+    hide_event_parameters = p_hide;
 }
 
 void FmodObjectDetails::display_fmod_object(const String &p_path)
@@ -247,7 +249,7 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
         push_label_var_meta(text, "Guid: ", fmod_guid_to_string(parameter.guid), parameter.guid, "Drag Event");
     }
 }
-Variant FmodObjectDetails::_get_drag_data(const Vector2 &at_position)
+Variant FmodObjectDetails::_get_drag_data(const Vector2 &p_at_position)
 {
     if (hovered_meta != Variant())
     {

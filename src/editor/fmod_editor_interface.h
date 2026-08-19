@@ -33,14 +33,14 @@ class FmodEditorInterface : public Object
     const FmodEditorCache *get_cache() const;
     FmodScriptClient *get_script_client() const;
     void set_console(FmodConsole *p_console);
-    void print(const String &message);
-    void print_warning(const String &message);
-    void print_error(const String &message);
-    void print_rich(const String &message);
+    void print(const String &p_message);
+    void print_warning(const String &p_message);
+    void print_error(const String &p_message);
+    void print_rich(const String &p_message);
     const FmodTheme *get_theme() const;
     static FmodEditorInterface *get_singleton();
 
-    void show_event_in_fmod_studio(Vector4i guid);
+    void show_event_in_fmod_studio(Vector4i p_guid);
 };
 } // namespace FmodGodot
 #endif

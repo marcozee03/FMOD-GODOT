@@ -43,7 +43,7 @@ template <class Derived, class NodeType, class RigidBody> class FmodListener : p
     int get_listener_index() const;
     void set_listener_index(int p_listener_index);
     float get_listener_weight() const;
-    void set_listener_weight(float weight);
+    void set_listener_weight(float p_weight);
     bool is_attached_to_parent() const;
     void set_attached_to_parent(bool p_attached_to_parent);
     static const StringName &get_class_static();

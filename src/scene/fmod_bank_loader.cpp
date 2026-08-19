@@ -50,10 +50,10 @@ bool FmodGodot::FmodBankLoader::is_preload_sample_data()
 {
     return preload_sample_data;
 }
-void FmodBankLoader::set_banks(TypedArray<FmodBank> banks)
+void FmodBankLoader::set_banks(TypedArray<FmodBank> p_banks)
 {
     this->banks.clear();
-    for (auto var : banks)
+    for (auto var : p_banks)
     {
         this->banks.push_back(var);
     }

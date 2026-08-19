@@ -3,7 +3,7 @@
 using namespace godot;
 namespace FmodGodot
 {
-FmodListener2D::FmodListener2D() : FmodListener()
+FmodListener2D::FmodListener2D()
 {
 }
 void FmodListener2D::_bind_methods()

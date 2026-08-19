@@ -15,14 +15,14 @@ template <typename Data> class PathTree
     struct Node
     {
       public:
-        virtual DataNode *add(const String &name, Data data) = 0;
-        virtual BranchNode *add(const String &name) = 0;
+        virtual DataNode *add(const String &p_name, Data p_data) = 0;
+        virtual BranchNode *add(const String &p_name) = 0;
 
-        Node(const String &name, bool p_has_children);
+        Node(const String &p_name, bool p_has_children);
         String name;
         const bool has_children;
-        virtual const Node *find(const String &name) const = 0;
-        virtual Node *find(const String &name) = 0;
+        virtual const Node *find(const String &p_name) const = 0;
+        virtual Node *find(const String &p_name) = 0;
         virtual PackedStringArray get_contents() const = 0;
         Node()
         {
@@ -35,15 +35,15 @@ template <typename Data> class PathTree
     struct BranchNode : Node
     {
       public:
-        BranchNode(const String &name) : Node(name, true)
+        BranchNode(const String &p_name) : Node(p_name, true)
         {
         }
         virtual ~BranchNode();
         Vector<Node *> children;
-        DataNode *add(const String &name, Data data) override;
-        BranchNode *add(const String &name) override;
-        const Node *find(const String &name) const override;
-        Node *find(const String &name) override;
+        DataNode *add(const String &p_name, Data p_data) override;
+        BranchNode *add(const String &p_name) override;
+        const Node *find(const String &p_name) const override;
+        Node *find(const String &p_name) override;
 
         PackedStringArray get_contents() const override;
     };
@@ -55,10 +55,10 @@ template <typename Data> class PathTree
             data = p_data;
         }
         Data data;
-        DataNode *add(const String &name, Data data) override;
-        BranchNode *add(const String &name) override;
-        const Node *find(const String &name) const override;
-        Node *find(const String &name) override;
+        DataNode *add(const String &p_name, Data p_data) override;
+        BranchNode *add(const String &p_name) override;
+        const Node *find(const String &p_name) const override;
+        Node *find(const String &p_name) override;
         PackedStringArray get_contents() const override;
     };
 
@@ -74,13 +74,13 @@ template <typename Data> class PathTree
         {
             return node->has_children;
         }
-        const TreeItem *find(const String &name) const
+        const TreeItem *find(const String &p_name) const
         {
-            return {node->find(name)};
+            return {node->find(p_name)};
         }
-        TreeItem *find(const String &name)
+        TreeItem *find(const String &p_name)
         {
-            return {node->find(name)};
+            return {node->find(p_name)};
         }
         Vector<TreeItem> get_contents()
         {
@@ -89,27 +89,28 @@ template <typename Data> class PathTree
     };
 
   private:
-    Node *find_node(const String &path, bool lastIsData = false);
-    const Node *find_node(const String &path) const;
+    Node *find_node(const String &p_path, bool p_last_is_data = false);
+    const Node *find_node(const String &p_path) const;
     BranchNode root;
 
   public:
     PathTree(/* args */);
     virtual ~PathTree();
 
-    Data &operator[](const String &path);
-    Data operator[](const String &path) const;
+    Data &operator[](const String &p_path);
+    Data operator[](const String &p_path) const;
 
-    void add_data(const String &path, Data data);
-    void add(const String &path);
+    void add_data(const String &p_path, Data p_data);
+    void add(const String &p_path);
     void clear();
-    PackedStringArray get_contents(const String &path) const;
+    PackedStringArray get_contents(const String &p_path) const;
     TreeItem get_root() const;
 };
-template <typename Data> typename PathTree<Data>::Node *PathTree<Data>::find_node(const String &path, bool last_is_data)
+template <typename Data>
+typename PathTree<Data>::Node *PathTree<Data>::find_node(const String &p_path, bool p_last_is_data)
 {
     Node *current_branch = &root;
-    PackedStringArray split = path.split("/", false);
+    PackedStringArray split = p_path.split("/", false);
     Node *next_branch;
     for (int i = 0; i < split.size(); i++)
     {
@@ -120,7 +121,7 @@ template <typename Data> typename PathTree<Data>::Node *PathTree<Data>::find_nod
         next_branch = current_branch->find(split[i]);
         if (!next_branch)
         {
-            if (i == split.size() - 1 && last_is_data)
+            if (i == split.size() - 1 && p_last_is_data)
             {
                 next_branch = current_branch->add(split[i], Data());
             }
@@ -134,10 +135,10 @@ template <typename Data> typename PathTree<Data>::Node *PathTree<Data>::find_nod
     return current_branch;
 }
 
-template <typename Data> const typename PathTree<Data>::Node *PathTree<Data>::find_node(const String &path) const
+template <typename Data> const typename PathTree<Data>::Node *PathTree<Data>::find_node(const String &p_path) const
 {
     const Node *current_branch = &root;
-    PackedStringArray split = path.split("/", false);
+    PackedStringArray split = p_path.split("/", false);
     const Node *next_branch;
     for (int i = 0; i < split.size(); i++)
     {
@@ -157,31 +158,31 @@ template <typename Data> PathTree<Data>::PathTree() : root("")
 template <typename Data> PathTree<Data>::~PathTree()
 {
 }
-template <typename Data> Data &PathTree<Data>::operator[](const String &path)
+template <typename Data> Data &PathTree<Data>::operator[](const String &p_path)
 {
-    return ((PathTree<Data>::DataNode *)find_node(path, true))->data;
+    return ((PathTree<Data>::DataNode *)find_node(p_path, true))->data;
 }
 
-template <typename Data> Data PathTree<Data>::operator[](const String &path) const
+template <typename Data> Data PathTree<Data>::operator[](const String &p_path) const
 {
-    const Node *node = find_node(path);
+    const Node *node = find_node(p_path);
     if (!node)
     {
-        print_error("no node at [", path, "]");
+        print_error("no node at [", p_path, "]");
         return Data();
     }
     return ((PathTree<Data>::DataNode *)node)->data;
 }
 
-template <typename Data> void PathTree<Data>::add_data(const String &path, Data data)
+template <typename Data> void PathTree<Data>::add_data(const String &p_path, Data p_data)
 {
-    DataNode *node = (DataNode *)find_node(path, true);
-    node->data = data;
+    DataNode *node = (DataNode *)find_node(p_path, true);
+    node->data = p_data;
 }
 
-template <typename Data> void PathTree<Data>::add(const String &path)
+template <typename Data> void PathTree<Data>::add(const String &p_path)
 {
-    find_node(path, false);
+    find_node(p_path, false);
 }
 
 template <typename Data> void PathTree<Data>::clear()
@@ -193,15 +194,15 @@ template <typename Data> void PathTree<Data>::clear()
     root.children.resize(0);
 }
 
-template <typename Data> PackedStringArray PathTree<Data>::get_contents(const String &path) const
+template <typename Data> PackedStringArray PathTree<Data>::get_contents(const String &p_path) const
 {
-    if (path.begins_with("/"))
+    if (p_path.begins_with("/"))
     {
         return root.get_contents();
     }
     else
     {
-        const Node *node = find_node(path);
+        const Node *node = find_node(p_path);
         if (node)
         {
             return node->get_contents();
@@ -217,24 +218,25 @@ template <typename Data> typename PathTree<Data>::TreeItem PathTree<Data>::get_r
     return {&root};
 }
 template <typename Data>
-PathTree<Data>::Node::Node(const String &name, bool p_has_children) : has_children(p_has_children)
+PathTree<Data>::Node::Node(const String &p_name, bool p_has_children) : has_children(p_has_children)
 {
-    this->name = name;
+    this->name = p_name;
 }
 
-template <typename Data> typename PathTree<Data>::DataNode *PathTree<Data>::DataNode::add(const String &name, Data data)
+template <typename Data>
+typename PathTree<Data>::DataNode *PathTree<Data>::DataNode::add(const String &p_name, Data p_data)
 {
     return nullptr;
 }
 
-template <typename Data> typename PathTree<Data>::BranchNode *PathTree<Data>::DataNode::add(const String &name)
+template <typename Data> typename PathTree<Data>::BranchNode *PathTree<Data>::DataNode::add(const String &p_name)
 {
     return nullptr;
 }
 
-template <typename Data> const typename PathTree<Data>::Node *PathTree<Data>::DataNode::find(const String &name) const
+template <typename Data> const typename PathTree<Data>::Node *PathTree<Data>::DataNode::find(const String &p_name) const
 {
-    if (name.casecmp_to(Node::name) == 0)
+    if (p_name.casecmp_to(Node::name) == 0)
     {
         return this;
     }
@@ -244,9 +246,9 @@ template <typename Data> const typename PathTree<Data>::Node *PathTree<Data>::Da
     }
 }
 
-template <typename Data> typename PathTree<Data>::Node *PathTree<Data>::DataNode::find(const String &name)
+template <typename Data> typename PathTree<Data>::Node *PathTree<Data>::DataNode::find(const String &p_name)
 {
-    if (name.casecmp_to(Node::name) == 0)
+    if (p_name.casecmp_to(Node::name) == 0)
     {
         return this;
     }
@@ -270,25 +272,26 @@ template <typename Data> PathTree<Data>::BranchNode::~BranchNode()
 }
 
 template <typename Data>
-typename PathTree<Data>::DataNode *PathTree<Data>::BranchNode::add(const String &name, Data data)
+typename PathTree<Data>::DataNode *PathTree<Data>::BranchNode::add(const String &p_name, Data p_data)
 {
-    DataNode *node = memnew(DataNode(name, data));
+    DataNode *node = memnew(DataNode(p_name, p_data));
     children.push_back(node);
     return node;
 }
 
-template <typename Data> typename PathTree<Data>::BranchNode *PathTree<Data>::BranchNode::add(const String &name)
+template <typename Data> typename PathTree<Data>::BranchNode *PathTree<Data>::BranchNode::add(const String &p_name)
 {
-    BranchNode *branch = memnew(BranchNode(name));
+    BranchNode *branch = memnew(BranchNode(p_name));
     children.push_back(branch);
     return branch;
 }
 
-template <typename Data> const typename PathTree<Data>::Node *PathTree<Data>::BranchNode::find(const String &name) const
+template <typename Data>
+const typename PathTree<Data>::Node *PathTree<Data>::BranchNode::find(const String &p_name) const
 {
     for (auto child : children)
     {
-        if (name.casecmp_to(child->name) == 0)
+        if (p_name.casecmp_to(child->name) == 0)
         {
             return child;
         }
@@ -296,11 +299,11 @@ template <typename Data> const typename PathTree<Data>::Node *PathTree<Data>::Br
     return nullptr;
 }
 
-template <typename Data> typename PathTree<Data>::Node *PathTree<Data>::BranchNode::find(const String &name)
+template <typename Data> typename PathTree<Data>::Node *PathTree<Data>::BranchNode::find(const String &p_name)
 {
     for (auto child : children)
     {
-        if (name.casecmp_to(child->name) == 0)
+        if (p_name.casecmp_to(child->name) == 0)
         {
             return child;
         }
