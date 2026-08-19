@@ -1,5 +1,6 @@
 #include "fmod_bank.h"
 #include "core/print_string.hpp"
+#include "fmod_audio_server.h"
 #include "fmod_common.h"
 #include "fmod_globals.h"
 #include "fmod_studio.h"
@@ -28,9 +29,25 @@ Vector4i FmodBank::get_id() const
 
 int FmodBank::unload()
 {
-    print_verbose("Unloading Bank", get_path());
-    return FMOD_Studio_Bank_Unload(bank);
+    if (get_loading_state() != FMOD_STUDIO_LOADING_STATE_UNLOADED ||
+        get_loading_state() != FMOD_STUDIO_LOADING_STATE_UNLOADING)
+    {
+        print_verbose("Unloading Bank", get_path());
+        return FMOD_Studio_Bank_Unload(bank);
+    }
+    return FMOD_ERR_STUDIO_NOT_LOADED;
 }
+int FmodBank::reload()
+{
+    if (get_loading_state() == FMOD_STUDIO_LOADING_STATE_LOADED ||
+        get_loading_state() == FMOD_STUDIO_LOADING_STATE_LOADING)
+    {
+        unload();
+    }
+    return FMOD_Studio_System_LoadBankFile(FmodAudioServer::get_singleton()->get_studio(), get_path().utf8().ptr(),
+                                           FMOD_STUDIO_LOAD_BANK_NORMAL, &bank);
+}
+
 int FmodBank::load_sample_data()
 {
     return FMOD_Studio_Bank_LoadSampleData(bank);

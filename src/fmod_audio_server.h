@@ -79,6 +79,7 @@ class FmodAudioServer : public Object
     bool muted;
     LocalVector<Ref<FmodBank>> start_up_banks;
     bool live_update_connected;
+    bool start_up_banks_loaded;
 
     // core api
 
@@ -135,8 +136,7 @@ class FmodAudioServer : public Object
 
     FMOD_STUDIO_BUS *get_bus(const String &p_path) const;
     FMOD_STUDIO_VCA *get_vca(const String &p_path) const;
-    int load_bank(const String &p_bank_name, bool p_load_samples = false);
-    int load_bank_by_file(const String &p_path, bool p_load_samples = false);
+
     void unload_banks();
     bool has_bank_loaded(const String &p_bank_name) const;
 
@@ -160,6 +160,8 @@ class FmodAudioServer : public Object
                                             Node3D *p_attenuation_object = nullptr);
     void set_listener_3d_location(int p_listener_index, Node3D *p_node, Node3D *p_attenuation_object = nullptr);
     void load_start_up_banks();
+    void reload_start_up_banks();
+    void unload_start_up_banks();
 
   private:
     LocalVector<AttachedInstance> instances;
