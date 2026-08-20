@@ -23,7 +23,7 @@ template <class Derived, class NodeType, class RigidBody> class FmodEventEmitter
     struct Parameter
     {
         const char *name;
-        Vector2i id;
+        uint64_t id;
         float value;
     };
 
@@ -97,9 +97,9 @@ template <class Derived, class NodeType, class RigidBody> class FmodEventEmitter
     void set_allow_fadeout(bool p_allow_fadeout);
 
     void set_parameter(const String &p_name, float p_value);
-    void set_parameter_by_id(const Vector2i &p_id, float p_value);
+    void set_parameter_by_id(const uint64_t &p_id, float p_value);
     float get_parameter(const String &p_name) const;
-    float get_parameter_by_id(const Vector2i &p_id) const;
+    float get_parameter_by_id(const uint64_t &p_id) const;
     void _notification(int p_what);
 
     bool is_playing() const;
@@ -175,7 +175,7 @@ void FmodEventEmitter<Derived, NodeType, RigidBody>::refresh_parameters()
     {
         FMOD_STUDIO_PARAMETER_DESCRIPTION param;
         FMOD_Studio_EventDescription_GetParameterDescriptionByIndex(description, i, &param);
-        parameters.write[i] = {param.name, cast_to_vector2i(param.id), param.defaultvalue};
+        parameters.write[i] = {param.name, cast_to_uint64(param.id), param.defaultvalue};
     }
 }
 
@@ -568,7 +568,7 @@ void FmodEventEmitter<Derived, NodeType, RigidBody>::set_parameter(const String 
     print_error("No parameter of name: ", p_name, " in ", this->get_name());
 }
 template <class Derived, class NodeType, class RigidBody>
-void FmodEventEmitter<Derived, NodeType, RigidBody>::set_parameter_by_id(const Vector2i &p_id, float p_value)
+void FmodEventEmitter<Derived, NodeType, RigidBody>::set_parameter_by_id(const uint64_t &p_id, float p_value)
 {
     for (int i = 0; i < parameters.size(); i++)
     {
@@ -598,7 +598,7 @@ float FmodEventEmitter<Derived, NodeType, RigidBody>::get_parameter(const String
     return NAN;
 }
 template <class Derived, class NodeType, class RigidBody>
-float FmodEventEmitter<Derived, NodeType, RigidBody>::get_parameter_by_id(const Vector2i &p_id) const
+float FmodEventEmitter<Derived, NodeType, RigidBody>::get_parameter_by_id(const uint64_t &p_id) const
 {
     for (int i = 0; i < parameters.size(); i++)
     {

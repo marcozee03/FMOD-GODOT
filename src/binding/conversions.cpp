@@ -3,6 +3,7 @@
 #include "fmod_studio.h"
 #include "variant/variant.hpp"
 #include "variant/vector2i.hpp"
+#include <cstdint>
 #include <cstring>
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/node3d.hpp>
@@ -15,6 +16,8 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wclass-memaccess"
 
+namespace FmodGodot
+{
 Vector4i cast_to_vector4i(const FMOD_GUID &p_guid)
 {
     static_assert(sizeof(Vector4i) == sizeof(FMOD_GUID),
@@ -33,22 +36,22 @@ FMOD_GUID cast_to_fmod_guid(const Vector4i &p_guid)
     return eventguid;
 }
 
-static_assert(sizeof(Vector2i) == sizeof(FMOD_STUDIO_PARAMETER_ID));
-FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(const Vector2i &p_id)
+static_assert(sizeof(uint64_t) == sizeof(FMOD_STUDIO_PARAMETER_ID));
+FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(uint64_t p_id)
 {
-    static_assert(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(Vector2i),
+    static_assert(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(uint64_t),
                   "Vector2i and FMOD_STUDIO_PARAMETER_ID must be the same size for type punning");
     FMOD_STUDIO_PARAMETER_ID id;
     memcpy(&id, &p_id, sizeof(FMOD_STUDIO_PARAMETER_ID));
     return id;
 }
 
-Vector2i cast_to_vector2i(const FMOD_STUDIO_PARAMETER_ID &p_id)
+uint64_t cast_to_uint64(const FMOD_STUDIO_PARAMETER_ID &p_id)
 {
-    static_assert(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(Vector2i),
+    static_assert(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(uint64_t),
                   "Vector2i and FMOD_STUDIO_PARAMETER_ID must be the same size for type punning");
-    Vector2i id;
-    memcpy(&id, &p_id, sizeof(Vector2i));
+    uint64_t id;
+    memcpy(&id, &p_id, sizeof(uint64_t));
     return id;
 }
 #pragma GCC diagnostic pop
@@ -172,3 +175,12 @@ Variant to_variant(FMOD_STUDIO_USER_PROPERTY p_property)
         break;
     }
 }
+
+godot::Transform3D to_transform3d(const FMOD_3D_ATTRIBUTES &p_attr)
+{
+    const Vector3 position = FmodGodot::to_godot_vector(p_attr.position);
+    const Vector3 up = FmodGodot::to_godot_vector(p_attr.up);
+    const Vector3 forward = FmodGodot::to_godot_vector(p_attr.forward);
+    return Transform3D(up.cross(forward), up, forward, position);
+}
+} // namespace FmodGodot
