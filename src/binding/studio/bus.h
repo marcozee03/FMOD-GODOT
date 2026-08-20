@@ -1,5 +1,6 @@
 #pragma once
 #include "classes/object.hpp"
+#include "classes/ref_counted.hpp"
 #include "classes/wrapped.hpp"
 #include "fmod_common.h"
 #include "fmod_studio_common.h"
@@ -11,52 +12,43 @@ namespace FmodGodot
 namespace Studio
 {
 
-class Bus : Object
+class Bus : public Object
 {
     GDCLASS(Bus, Object);
-
-  private:
-    FMOD_STUDIO_BUS *handle;
-    // Constructor made private so user cannot statically instance the class.
 
   protected:
     static void _bind_methods();
 
   public:
-    operator FMOD_STUDIO_BUS *() const
-    {
-        return handle;
-    }
     Bus() = default;
     ~Bus() = default;
-    Bus(FMOD_STUDIO_BUS *p_bus);
     // Handle validity
-    bool is_valid() const;
+    static bool is_valid(size_t p_handle);
 
     // Property access
-    godot::Vector4i get_id() const;
-    String get_path() const;
+    static Vector4i get_id(size_t p_handle);
+    static String get_path(size_t p_handle);
 
     // Playback control
-    float get_volume() const;
-    float get_final_volume() const;
-    FMOD_RESULT set_volume(float p_volume);
+    static float get_volume(size_t p_handle);
+    static float get_final_volume(size_t p_handle);
+    static FMOD_RESULT set_volume(size_t p_handle, float p_volume);
 
-    bool get_paused() const;
-    FMOD_RESULT set_paused(bool p_paused);
+    static bool get_paused(size_t p_handle);
+    static FMOD_RESULT set_paused(size_t p_handle, bool p_paused);
 
-    bool get_mute() const;
-    FMOD_RESULT set_mute(bool p_mute);
+    static bool get_mute(size_t p_handle);
+    static FMOD_RESULT set_mute(size_t p_handle, bool p_mute);
 
-    FMOD_RESULT stop_all_events(FMOD_STUDIO_STOP_MODE p_mode);
+    static FMOD_RESULT stop_all_events(size_t p_handle, FMOD_STUDIO_STOP_MODE p_mode);
 
     // Output port
-    uint64_t get_port_index() const;
-    FMOD_RESULT set_port_index(uint64_t p_index);
+    static uint64_t get_port_index(size_t p_handle);
+    static FMOD_RESULT set_port_index(size_t p_handle, uint64_t p_index);
 
     // Low-level API access
-    FMOD_RESULT lock_channel_group();
-    FMOD_RESULT unlock_channel_group();
+    static FMOD_RESULT lock_channel_group(size_t p_handle);
+    static FMOD_RESULT unlock_channel_group(size_t p_handle);
     // TODO:
     //  ChannelGroup *getChannelGroup() const
     //  {
@@ -66,8 +58,8 @@ class Bus : Object
     //  }
 
     // Monitoring
-    unsigned int getInclusiveCPUUsage() const;
-    unsigned int getExclusiveCPUUsage() const;
+    static unsigned int getInclusiveCPUUsage(size_t p_handle);
+    static unsigned int getExclusiveCPUUsage(size_t p_handle);
     // TODO:
     // FMOD_RESULT getMemoryUsage(FMOD_STUDIO_MEMORY_USAGE *memoryusage) const;
 };
