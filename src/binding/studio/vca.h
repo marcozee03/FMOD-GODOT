@@ -9,13 +9,9 @@ namespace FmodGodot
 {
 namespace Studio
 {
-class VCA : public RefCounted
+class VCA : public Object
 {
-    GDCLASS(VCA, RefCounted)
-  private:
-    // Constructor made private so user cannot statically instance the class.
-    FMOD_STUDIO_VCA *handle;
-
+    GDCLASS(VCA, Object)
   protected:
     static void _bind_methods();
 
@@ -31,22 +27,17 @@ class VCA : public RefCounted
 #endif
 
     VCA();
-    VCA(FMOD_STUDIO_VCA *p_handle);
-    operator FMOD_STUDIO_VCA *() const
-    {
-        return handle;
-    }
     // Handle validity
-    bool is_valid() const;
+    static bool is_valid(size_t p_handle);
 
     // Property access
-    Vector4i get_id() const;
-    String get_path() const;
+    static Vector4i get_id(size_t p_handle);
+    static String get_path(size_t p_handle);
 
     // Playback control
-    float get_volume() const;
-    float get_final_volume() const;
-    FMOD_RESULT set_volume(float p_volume);
+    static float get_volume(size_t p_handle);
+    static float get_final_volume(size_t p_handle);
+    static FMOD_RESULT set_volume(size_t p_handle, float p_volume);
 };
 } // namespace Studio
 } // namespace FmodGodot
