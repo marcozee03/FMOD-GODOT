@@ -1,6 +1,8 @@
 #include "register_types.h"
 #include "binding/studio/bus.h"
 #include "binding/studio/event_instance.h"
+#include "core/binder_common.hpp"
+#include <fmod_studio_common.h>
 
 #include "binding/studio/vca.h"
 #include "classes/global_constants.hpp"
@@ -110,14 +112,12 @@ void loadSettings()
                      (TypedDictionary<String, int>()));
 }
 } // namespace FmodGodot
+  //
 void initialize_fmod_module(ModuleInitializationLevel p_level)
 {
     if (p_level == MODULE_INITIALIZATION_LEVEL_SERVERS)
     {
-        // GDREGISTER_CLASS(FmodGodot::Studio::Bus)
-        GDREGISTER_CLASS(FmodGodot::Studio::EventInstance)
-        // GDREGISTER_CLASS(FmodGodot::Studio::EventDescription)
-        // GDREGISTER_CLASS(FmodGodot::Studio::StudioSystem)
+        loadSettings();
         GDREGISTER_CLASS(FmodAudioServer);
         audio_server = memnew(FmodAudioServer);
         FmodAudioServer::singleton = audio_server;

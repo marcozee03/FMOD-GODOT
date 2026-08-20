@@ -13,8 +13,8 @@ namespace FmodGodot
 {
 Vector4i cast_to_vector4i(const FMOD_GUID &p_guid);
 FMOD_GUID cast_to_fmod_guid(const Vector4i &p_guid);
-FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(const Vector2i &p_id);
-Vector2i cast_to_vector2i(const FMOD_STUDIO_PARAMETER_ID &p_id);
+FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(uint64_t p_id);
+uint64_t cast_to_uint64(const FMOD_STUDIO_PARAMETER_ID &p_id);
 FMOD_GUID string_to_fmod_guid(const char *p_guid);
 String fmod_guid_to_string(const FMOD_GUID &p_guid);
 String fmod_guid_to_string(const Vector4i &p_guid);
@@ -23,7 +23,7 @@ FMOD_VECTOR to_fmod_vector(godot::Vector3 p_vec);
 FMOD_VECTOR to_fmod_vector(godot::Vector2 p_vec);
 godot::Vector3 to_godot_vector(FMOD_VECTOR p_vec);
 Variant to_variant(FMOD_STUDIO_USER_PROPERTY p_property);
-    
+
 FMOD_3D_ATTRIBUTES to_3d_attributes(const Transform3D &p_transform);
 FMOD_3D_ATTRIBUTES to_3d_attributes(const Transform3D &p_transform, const Vector3 &p_velocity);
 FMOD_3D_ATTRIBUTES to_3d_attributes(godot::Vector3 p_pos);
@@ -33,5 +33,7 @@ FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody3D *p_rigidbody);
 FMOD_3D_ATTRIBUTES to_3d_attributes(godot::Vector2 p_pos);
 FMOD_3D_ATTRIBUTES to_3d_attributes(Node2D *p_node);
 FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody2D *p_rigidbody);
+
+Transform3D to_transform3d(const FMOD_3D_ATTRIBUTES &p_attr);
 
 } // namespace FmodGodot

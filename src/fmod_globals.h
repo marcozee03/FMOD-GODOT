@@ -16,7 +16,8 @@ namespace FmodGodot
 char *to_char_ptr(const String &p_str);
 #define FMOD_GET_OUT_CSTRING(function, object, variable_name)                                                          \
     int retrieved = 0;                                                                                                 \
-    if (function(object, nullptr, 0, &retrieved) == FMOD_ERR_TRUNCATED)                                                \
+    function(object, nullptr, 0, &retrieved);                                                                          \
+    if (retrieved > 0)                                                                                                 \
     {                                                                                                                  \
         int size = retrieved;                                                                                          \
         variable_name = memnew_arr(char, size);                                                                        \
@@ -24,14 +25,17 @@ char *to_char_ptr(const String &p_str);
     }
 
 #define FMOD_GET_CSTRING(function, object, variable_name)                                                              \
-    char *variable_name;                                                                                               \
+    char *variable_name = nullptr;                                                                                     \
     FMOD_GET_OUT_CSTRING(function, object, variable_name);
 
 #define FMOD_GET_OUT_STRING(function, object, variable_name)                                                           \
     {                                                                                                                  \
-        FMOD_GET_CSTRING(function, object, str##variable_name)                                                         \
+        FMOD_GET_CSTRING(function, object, str##variable_name);                                                        \
         variable_name = String::utf8(str##variable_name, retrieved);                                                   \
-        memdelete_arr(str##variable_name);                                                                             \
+        if (str##variable_name != nullptr)                                                                             \
+        {                                                                                                              \
+            memdelete_arr(str##variable_name);                                                                         \
+        }                                                                                                              \
     }
 
 #define FMOD_GET_STRING(function, object, variable_name)                                                               \
@@ -39,9 +43,10 @@ char *to_char_ptr(const String &p_str);
     FMOD_GET_OUT_STRING(function, object, variable_name)
 
 #define FMOD_LOOKUP_CSTRING(function, object, variable_name, ...)                                                      \
-    char *variable_name;                                                                                               \
+    char *variable_name = nullptr;                                                                                     \
     int retrieved = 0;                                                                                                 \
-    if (function(object __VA_OPT__(, ) __VA_ARGS__, nullptr, 0, &retrieved) == FMOD_ERR_TRUNCATED)                     \
+    function(object __VA_OPT__(, ) __VA_ARGS__, nullptr, 0, &retrieved);                                               \
+    if (retrieved > 0)                                                                                                 \
     {                                                                                                                  \
         int size = retrieved;                                                                                          \
         variable_name = memnew_arr(char, size);                                                                        \
@@ -51,18 +56,13 @@ char *to_char_ptr(const String &p_str);
     String variable_name = "";                                                                                         \
     {                                                                                                                  \
         FMOD_LOOKUP_CSTRING(function, object, str##variable_name __VA_OPT__(, ) __VA_ARGS__)                           \
-        variable_name = String::utf8(str##variable_name, retrieved);                                                   \
-        memdelete_arr(str##variable_name);                                                                             \
+        if (str##variable_name != nullptr)                                                                             \
+        {                                                                                                              \
+            variable_name = String::utf8(str##variable_name, retrieved);                                               \
+            memdelete_arr(str##variable_name);                                                                         \
+        }                                                                                                              \
     }
 
-#define FMOD_GET_FULL_STRING_FUNC_CALL(function_call, char_ptr, size, retrieved)                                       \
-    if (function_call == FMOD_ERR_TRUNCATED)                                                                           \
-    {                                                                                                                  \
-        memdelete_arr(char_ptr);                                                                                       \
-        size = retrieved;                                                                                              \
-        char_ptr = memnew_arr(char, size);                                                                             \
-        function_call;                                                                                                 \
-    }
 #define GLOBAL_GET(m_var) ProjectSettings::get_singleton()->get_setting_with_override(m_var)
 
 #define GLOBAL_DEF(m_var, m_value) _GLOBAL_DEF(m_var, m_value)
