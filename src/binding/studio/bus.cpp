@@ -13,7 +13,7 @@ void FmodGodot::Studio::Bus::_bind_methods()
     BIND_STATIC_METHOD(get_path, "handle");
     BIND_STATIC_METHOD(get_final_volume, "handle");
     BIND_STATIC_METHOD(get_volume, "handle");
-    BIND_STATIC_METHOD(set_volume, "handle");
+    BIND_STATIC_METHOD(set_volume, "handle", "volume");
     BIND_STATIC_METHOD(get_paused, "handle");
     BIND_STATIC_METHOD(set_paused, "handle", "paused");
     BIND_STATIC_METHOD(get_mute, "handle");
