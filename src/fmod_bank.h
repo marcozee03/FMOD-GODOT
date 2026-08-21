@@ -26,35 +26,7 @@ class FmodBank : public Resource
     static void _bind_methods();
 
   public:
-#ifdef TOOLS_ENABLED
-    struct Cache
-    {
-        Cache()
-        {
-        }
-        Cache(FMOD_STUDIO_BANK *p_bank)
-        {
-            const size_t handle = std::bit_cast<size_t>(p_bank);
-            full_path = Studio::Bank::get_path(handle);
-            guid = Studio::Bank::get_id(handle);
-            {
-                for (size_t description : Studio::Bank::get_event_list(handle))
-                {
-                    children.push_back(Studio::EventDescription::get_path(description));
-                }
-            }
-            {
-                for (size_t vca : Studio::Bank::get_vca_list(handle))
-                {
-                    children.push_back(Studio::VCA::get_path(vca));
-                }
-            }
-        }
-        String full_path;
-        Vector4i guid;
-        Vector<String> children;
-    };
-#endif
+
     FmodBank();
     ~FmodBank();
 

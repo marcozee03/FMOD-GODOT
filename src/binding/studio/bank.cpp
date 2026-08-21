@@ -1,6 +1,8 @@
 #include "bank.h"
+#include "event_description.h"
 #include "fmod_defs.h"
 #include "fmod_enums.h"
+#include "vca.h"
 using namespace FmodGodot;
 using namespace Studio;
 bool FmodGodot::Studio::Bank::is_valid(Handle p_handle)
@@ -119,3 +121,23 @@ FMOD_RESULT FmodGodot::Studio::Bank::set_user_data(Handle p_handle, void *p_user
 {
     return FMOD_Studio_Bank_SetUserData(std::bit_cast<FMOD_STUDIO_BANK *>(p_handle), p_userdata);
 }
+#ifdef TOOLS_ENABLED
+FmodGodot::Studio::Bank::Cache::Cache(FMOD_STUDIO_BANK *p_bank)
+{
+    const size_t handle = std::bit_cast<size_t>(p_bank);
+    full_path = Studio::Bank::get_path(handle);
+    guid = Studio::Bank::get_id(handle);
+    {
+        for (size_t description : Studio::Bank::get_event_list(handle))
+        {
+            children.push_back(Studio::EventDescription::get_path(description));
+        }
+    }
+    {
+        for (size_t vca : Studio::Bank::get_vca_list(handle))
+        {
+            children.push_back(Studio::VCA::get_path(vca));
+        }
+    }
+}
+#endif

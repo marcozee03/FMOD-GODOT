@@ -41,6 +41,16 @@ class Bank : public Object
     }
 
   public:
+#ifdef TOOLS_ENABLED
+    struct Cache
+    {
+        Cache() = default;
+        Cache(FMOD_STUDIO_BANK *p_bank);
+        String full_path;
+        Vector4i guid;
+        Vector<String> children;
+    };
+#endif
     Bank() = default;
     ~Bank() = default;
 
