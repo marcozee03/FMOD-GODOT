@@ -1,3 +1,4 @@
+#include "bank.h"
 #include "binding/studio/event_description.h"
 #include "binding/studio/vca.h"
 #ifdef TOOLS_ENABLED
@@ -18,7 +19,7 @@ void FmodEditorCache::add(const Studio::EventDescription::Cache &p_event)
     event_cache.add_data(p_event.full_path, p_event);
 }
 
-void FmodEditorCache::add(const FmodBank::Cache &p_bank)
+void FmodEditorCache::add(const Studio::Bank::Cache &p_bank)
 {
     bank_cache.add_data(p_bank.full_path, p_bank);
 }
@@ -44,7 +45,7 @@ const PathTree<Studio::EventDescription::Cache> FmodEditorCache::get_event_cache
 {
     return event_cache;
 }
-const PathTree<FmodBank::Cache> FmodEditorCache::get_bank_cache() const
+const PathTree<Studio::Bank::Cache> FmodEditorCache::get_bank_cache() const
 {
     return bank_cache;
 }
@@ -62,7 +63,7 @@ Studio::EventDescription::Cache FmodEditorCache::get_event(const String &p_path)
     return event_cache[p_path];
 }
 
-FmodBank::Cache FmodEditorCache::get_bank(const String &p_path) const
+Studio::Bank::Cache FmodEditorCache::get_bank(const String &p_path) const
 {
     return bank_cache[p_path];
 }
