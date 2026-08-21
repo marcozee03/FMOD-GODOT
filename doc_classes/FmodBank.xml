@@ -12,46 +12,46 @@
 		<method name="get_id" qualifiers="const">
 			<return type="Vector4i" />
 			<description>
-                            Returns the GUID of the bank
+				Returns the GUID of the bank
 			</description>
 		</method>
 		<method name="get_loading_state" qualifiers="const">
-			<return type="int" />
+			<return type="int" enum="FMOD_STUDIO_LOADING_STATE" />
 			<description>
-			    The banks current loading state.
-                            [b]Note:[/b] Refer to [url=https://www.fmod.com/docs/2.03/api/studio-api-common.html#fmod_studio_loading_state]FMOD_STUDIO_LOADING_STATE[/url]
+				The banks current loading state.
+				                                [b]Note:[/b] Refer to [url=https://www.fmod.com/docs/2.03/api/studio-api-common.html#fmod_studio_loading_state]FMOD_STUDIO_LOADING_STATE[/url]
 			</description>
 		</method>
 		<method name="get_sample_loading_state" qualifiers="const">
-			<return type="int" />
+			<return type="int" enum="FMOD_STUDIO_LOADING_STATE" />
 			<description>
-			    The audio sample's current loading state.
-                            [b]Note:[/b] Refer to [url=https://www.fmod.com/docs/2.03/api/studio-api-common.html#fmod_studio_loading_state]FMOD_STUDIO_LOADING_STATE[/url]
+				The audio sample's current loading state.
+				                                [b]Note:[/b] Refer to [url=https://www.fmod.com/docs/2.03/api/studio-api-common.html#fmod_studio_loading_state]FMOD_STUDIO_LOADING_STATE[/url]
 			</description>
 		</method>
 		<method name="is_bank_valid" qualifiers="const">
 			<return type="bool" />
 			<description>
-                            if [code]true[/code] bank reference is valid.
+				if [code]true[/code] bank reference is valid.
 			</description>
 		</method>
 		<method name="unload">
 			<return type="int" />
 			<description>
-                            Unloads the bank.
-                            [b]Warning:[/b] Ignores reference count can lead to bugs if bank is needed elsewhere.
+				Unloads the bank.
+				                            [b]Warning:[/b] Ignores reference count can lead to bugs if bank is needed elsewhere.
 			</description>
 		</method>
 		<method name="unload_sample_data">
 			<return type="int" />
 			<description>
-                            Unloads non-streaming sample data for all events in the bank.
+				Unloads non-streaming sample data for all events in the bank.
 			</description>
 		</method>
 	</methods>
 	<members>
 		<member name="bank" type="int" setter="set_bank" getter="get_bank">
-                    pointer to FMOD_STUDIO_BANK
+			pointer to FMOD_STUDIO_BANK
 		</member>
 	</members>
 </class>
