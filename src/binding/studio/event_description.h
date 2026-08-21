@@ -1,8 +1,8 @@
 #pragma once
 #include "binding/studio/parameter_cache.h"
 #include "classes/ref_counted.hpp"
-#include "fmod_defs.h"
 #include "classes/wrapped.hpp"
+#include "fmod_defs.h"
 #include "variant/variant.hpp"
 #include "variant/vector2i.hpp"
 namespace FmodGodot

@@ -1,12 +1,11 @@
-#include "classes/h_box_container.hpp"
-#include "classes/texture_rect.hpp"
-#ifdef TOOLS_ENABLED
+#include "fmod_event_tree.h"
 #include "classes/editor_interface.hpp"
+#include "classes/h_box_container.hpp"
 #include "classes/label.hpp"
+#include "classes/texture_rect.hpp"
 #include "classes/tree_item.hpp"
 #include "fmod_editor_cache.h"
 #include "fmod_editor_interface.h"
-#include "fmod_event_tree.h"
 #include "globals.h"
 #include <classes/project_settings.hpp>
 #include <classes/resource_loader.hpp>
@@ -180,4 +179,3 @@ Variant EventTree::_get_drag_data(const Vector2 &p_vec2)
     return Variant();
 }
 } // namespace FmodGodot
-#endif

@@ -65,7 +65,7 @@ bool StudioEventInstance::is_valid(Handle p_handle)
     return FMOD_Studio_EventInstance_IsValid(std::bit_cast<FMOD_STUDIO_EVENTINSTANCE *>(p_handle));
 }
 FMOD_RESULT FmodGodot::Studio::StudioEventInstance::set_3d_attributes(Handle p_handle, const Transform3D &p_transform,
-                                                                const Vector3 &p_velocity)
+                                                                      const Vector3 &p_velocity)
 {
     FMOD_3D_ATTRIBUTES attr = to_3d_attributes(p_transform);
     attr.velocity = to_fmod_vector(p_velocity);
@@ -249,21 +249,22 @@ float StudioEventInstance::get_final_parameter_by_id(Handle p_handle, GD_PARAMET
                                                FmodGodot::cast_to_parameter_id(p_id), nullptr, &value);
     return value;
 }
-FMOD_RESULT StudioEventInstance::set_parameter_by_id(Handle p_handle, GD_PARAMETER_ID p_id, float p_value, bool p_ignoreseekspeed)
+FMOD_RESULT StudioEventInstance::set_parameter_by_id(Handle p_handle, GD_PARAMETER_ID p_id, float p_value,
+                                                     bool p_ignoreseekspeed)
 {
     return FMOD_Studio_EventInstance_SetParameterByID(std::bit_cast<FMOD_STUDIO_EVENTINSTANCE *>(p_handle),
                                                       FmodGodot::cast_to_parameter_id(p_id), p_value,
                                                       p_ignoreseekspeed);
 }
-FMOD_RESULT StudioEventInstance::set_parameter_by_id_with_label(Handle p_handle, GD_PARAMETER_ID p_id, const String &p_label,
-                                                          bool p_ignoreseekspeed)
+FMOD_RESULT StudioEventInstance::set_parameter_by_id_with_label(Handle p_handle, GD_PARAMETER_ID p_id,
+                                                                const String &p_label, bool p_ignoreseekspeed)
 {
     return FMOD_Studio_EventInstance_SetParameterByIDWithLabel(std::bit_cast<FMOD_STUDIO_EVENTINSTANCE *>(p_handle),
                                                                FmodGodot::cast_to_parameter_id(p_id),
                                                                p_label.utf8().ptr(), p_ignoreseekspeed);
 }
 FMOD_RESULT StudioEventInstance::set_parameters_by_ids(Handle p_handle, const PackedInt64Array &p_ids,
-                                                 PackedFloat32Array &p_values, bool p_ignoreseekspeed)
+                                                       PackedFloat32Array &p_values, bool p_ignoreseekspeed)
 {
     return FMOD_Studio_EventInstance_SetParametersByIDs(std::bit_cast<FMOD_STUDIO_EVENTINSTANCE *>(p_handle),
                                                         (FMOD_STUDIO_PARAMETER_ID *)p_ids.ptr(), p_values.ptrw(),
@@ -284,13 +285,13 @@ float StudioEventInstance::get_final_parameter_by_name(Handle p_handle, const St
     return value;
 }
 FMOD_RESULT StudioEventInstance::set_parameter_by_name(Handle p_handle, const String &p_name, float p_value,
-                                                 bool p_ignoreseekspeed)
+                                                       bool p_ignoreseekspeed)
 {
     return FMOD_Studio_EventInstance_SetParameterByName(std::bit_cast<FMOD_STUDIO_EVENTINSTANCE *>(p_handle),
                                                         p_name.utf8().ptr(), p_value, p_ignoreseekspeed);
 }
 FMOD_RESULT StudioEventInstance::set_parameter_by_name_with_label(Handle p_handle, const String &p_name,
-                                                            const String &p_label, bool p_ignoreseekspeed)
+                                                                  const String &p_label, bool p_ignoreseekspeed)
 {
     return FMOD_Studio_EventInstance_SetParameterByNameWithLabel(std::bit_cast<FMOD_STUDIO_EVENTINSTANCE *>(p_handle),
                                                                  p_name.utf8().ptr(), p_label.utf8().ptr(),

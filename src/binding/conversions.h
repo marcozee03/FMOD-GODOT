@@ -1,3 +1,5 @@
+#pragma once
+
 #include "fmod_common.h"
 #include "fmod_defs.h"
 #include "fmod_studio_common.h"

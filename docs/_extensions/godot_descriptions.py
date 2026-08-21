@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-    godot_descriptions
-    ~~~~~~~~~~~~~~~~~~
+godot_descriptions
+~~~~~~~~~~~~~~~~~~
 
-    Sphinx extension to automatically generate HTML meta description tags
-    for all pages. Also comes with some special support for Godot class docs.
+Sphinx extension to automatically generate HTML meta description tags
+for all pages. Also comes with some special support for Godot class docs.
 
-    :copyright: Copyright 2021 by The Godot Engine Community
-    :license: MIT.
+:copyright: Copyright 2021 by The Godot Engine Community
+:license: MIT.
 
-    based on the work of Takayuki Shimizukawa on OpenGraph support for Sphinx,
-    see: https://github.com/sphinx-contrib/ogp
+based on the work of Takayuki Shimizukawa on OpenGraph support for Sphinx,
+see: https://github.com/sphinx-contrib/ogp
 """
 
 import re

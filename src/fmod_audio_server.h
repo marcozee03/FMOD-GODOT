@@ -1,20 +1,22 @@
-
 #pragma once
+#include "conversions.h"
+#include "fmod_bank.h"
+#include "fmod_defs.h"
 #include "variant/variant.hpp"
 #include <classes/node.hpp>
 #include <fmod.h>
 #include <fmod_studio.h>
 #include <fmod_studio_common.h>
-#include <godot_cpp/templates/hash_map.hpp>
-using namespace godot;
-#include "fmod_bank.h"
 #include <godot_cpp/classes/mutex.hpp>
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/rigid_body2d.hpp>
 #include <godot_cpp/classes/rigid_body3d.hpp>
 #include <godot_cpp/classes/thread.hpp>
+#include <godot_cpp/templates/hash_map.hpp>
 
+using namespace std;
+using namespace godot;
 namespace FmodGodot
 {
 

@@ -1,3 +1,4 @@
+#pragma once
 
 #include "core/binder_common.hpp"
 namespace FmodGodot

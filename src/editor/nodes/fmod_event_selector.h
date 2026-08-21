@@ -1,6 +1,5 @@
-#include "fmod_project_explorer.h"
-#ifdef TOOLS_ENABLED
 #pragma once
+#include "fmod_project_explorer.h"
 #include <classes/button.hpp>
 #include <classes/h_box_container.hpp>
 #include <classes/line_edit.hpp>
@@ -30,4 +29,3 @@ class FmodEventSelector : public Control
     LineEdit *get_line_edit();
 };
 } // namespace FmodGodot
-#endif

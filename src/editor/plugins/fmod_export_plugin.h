@@ -1,3 +1,5 @@
+#pragma once
+
 #include "classes/editor_export_plugin.hpp"
 using namespace godot;
 namespace FmodGodot

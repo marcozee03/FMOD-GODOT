@@ -1,5 +1,4 @@
 #pragma once
-#ifdef TOOLS_ENABLED
 #include "classes/button.hpp"
 #include "classes/rich_text_label.hpp"
 #include "variant/variant.hpp"
@@ -42,4 +41,3 @@ class FmodObjectDetails : public VBoxContainer
     Variant _get_drag_data(const Vector2 &p_at_position) override;
 };
 } // namespace FmodGodot
-#endif

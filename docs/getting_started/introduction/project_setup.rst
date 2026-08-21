@@ -20,4 +20,3 @@ Importing Banks
 ---------------
 
 Next you have to put the banks you created in the Bank Directory you defined in Project Settings. From there you are all set. See :ref:`class reference <doc_class_reference>` for all the tools available to you. and the :ref:`Introduction <introduction_to_fmod_godot>` for a summary.
-
