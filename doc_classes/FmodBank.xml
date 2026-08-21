@@ -39,7 +39,7 @@
 			<return type="int" />
 			<description>
                             Unloads the bank.
-                            [b]Warning:[/b] Ignores reference count can lead to bugs if bank is needed elsewhere. 
+                            [b]Warning:[/b] Ignores reference count can lead to bugs if bank is needed elsewhere.
 			</description>
 		</method>
 		<method name="unload_sample_data">

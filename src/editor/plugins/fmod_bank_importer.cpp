@@ -1,7 +1,7 @@
+#include "fmod_bank_importer.h"
 #include "classes/global_constants.hpp"
 #include "variant/packed_string_array.hpp"
 #include "variant/typed_array.hpp"
-#include "fmod_bank_importer.h"
 #include <godot_cpp/classes/dir_access.hpp>
 #include <godot_cpp/classes/file_access.hpp>
 #include <godot_cpp/classes/resource_saver.hpp>

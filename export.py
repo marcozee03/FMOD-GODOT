@@ -12,21 +12,24 @@ supported_platforms = ["linux", "windows"]
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
-def get_arch()->str:
+
+def get_arch() -> str:
     arch = platform.machine()
     if arch == "AMD64":
         arch = "x86_64"
     return arch
+
+
 def buildForPlatform(platform, arch):
     p1 = subprocess.run(
         [
-            "scons", 
+            "scons",
             "use_static_cpp=no",
             "debug_symbols=no",
             "lto=auto",
-            "target=template_release", 
-            "platform=%s" % platform, 
-            "arch=%s" % arch
+            "target=template_release",
+            "platform=%s" % platform,
+            "arch=%s" % arch,
         ]
     )
     if p1.returncode != 0:
@@ -61,33 +64,69 @@ def buildForPlatform(platform, arch):
         print("failed to build for editor")
         exit(1)
 
+
 def exportDependencies(platform, arch):
-    os.makedirs(os.path.join(script_dir, "plugin_template", "bin", platform, arch),exist_ok=True)
+    os.makedirs(
+        os.path.join(script_dir, "plugin_template", "bin", platform, arch),
+        exist_ok=True,
+    )
     for file in os.listdir(os.path.join(script_dir, "libs", platform, arch)):
         shutil.copy(
-            os.path.join(script_dir,"libs", platform, arch, file),
-            os.path.join(script_dir,"plugin_template","bin", platform, arch, file)
+            os.path.join(script_dir, "libs", platform, arch, file),
+            os.path.join(script_dir, "plugin_template", "bin", platform, arch, file),
         )
+
 
 def main():
     parser = argparse.ArgumentParser(
         prog="ExportFmodGodot",
         description="builds FmodGodot gdextension for platform and can export addon to a folder",
     )
-    subparsers = parser.add_subparsers(dest="command", help="Descriptions", required=True, description="Subcommand to run")
-    build = subparsers.add_parser(name= "build",help="Build Plugin", description="Builds the plugins and places it in plugin_templates")
-    export = subparsers.add_parser(name= "export",help="Export plugin", description="Copies the contents of plugin_template to destination. Likely <path>/<to>/<project>/addons")
-    push = subparsers.add_parser(name= "push",help="Push Dependencies", description="Copies necessary files ie the fmod libs to plugin_template/")
-    export.add_argument("destination", type=Path, help="the destination folder")
-    export.add_argument("-f", "--force", help="Overwrite files in destination", action="store_true")
-    build.add_argument("-p", "--platform", type=str, help="the platform to build for", default=get_os())
-    build.add_argument(
-        "-a", "--architecture", type=str, help="the cpu architecture to build for", default=get_arch()
+    subparsers = parser.add_subparsers(
+        dest="command",
+        help="Descriptions",
+        required=True,
+        description="Subcommand to run",
     )
-    
-    push.add_argument("-p", "--platform", type=str, help="the platform to build for", default=get_os())
+    build = subparsers.add_parser(
+        name="build",
+        help="Build Plugin",
+        description="Builds the plugins and places it in plugin_templates",
+    )
+    export = subparsers.add_parser(
+        name="export",
+        help="Export plugin",
+        description="Copies the contents of plugin_template to destination. Likely <path>/<to>/<project>/addons",
+    )
+    push = subparsers.add_parser(
+        name="push",
+        help="Push Dependencies",
+        description="Copies necessary files ie the fmod libs to plugin_template/",
+    )
+    export.add_argument("destination", type=Path, help="the destination folder")
+    export.add_argument(
+        "-f", "--force", help="Overwrite files in destination", action="store_true"
+    )
+    build.add_argument(
+        "-p", "--platform", type=str, help="the platform to build for", default=get_os()
+    )
+    build.add_argument(
+        "-a",
+        "--architecture",
+        type=str,
+        help="the cpu architecture to build for",
+        default=get_arch(),
+    )
+
     push.add_argument(
-        "-a", "--architecture", type=str, help="the cpu architecture to build for", default=get_arch()
+        "-p", "--platform", type=str, help="the platform to build for", default=get_os()
+    )
+    push.add_argument(
+        "-a",
+        "--architecture",
+        type=str,
+        help="the cpu architecture to build for",
+        default=get_arch(),
     )
     args = parser.parse_args()
 
@@ -102,8 +141,12 @@ def main():
                 exportDependencies(args.platform, args.architecture)
         case "export":
             if args.destination == None or not args.destination.is_dir():
-                print('"' + str(args.destination) + '" does not exist or is not a directory')
-                return;
+                print(
+                    '"'
+                    + str(args.destination)
+                    + '" does not exist or is not a directory'
+                )
+                return
             path = Path(args.destination)
             pathA = Path(str(path).removesuffix('"')).joinpath("FmodGodot")
             force = args.force

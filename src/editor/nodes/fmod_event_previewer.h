@@ -1,12 +1,11 @@
 #pragma once
-#ifdef TOOLS_ENABLED
-#include "classes/h_slider.hpp"
-#include "classes/spin_box.hpp"
-#include "classes/wrapped.hpp"
 #include "classes/button.hpp"
 #include "classes/editor_property.hpp"
 #include "classes/h_box_container.hpp"
+#include "classes/h_slider.hpp"
+#include "classes/spin_box.hpp"
 #include "classes/v_box_container.hpp"
+#include "classes/wrapped.hpp"
 #include "fmod_event_emitter_3d.h"
 #include "fmod_event_panner.h"
 #include "variant/string.hpp"
@@ -49,4 +48,3 @@ class FmodEventPreviewer : public VBoxContainer
     void set_panner_size(float p_size);
 };
 } // namespace FmodGodot
-#endif

@@ -1,5 +1,4 @@
 #pragma once
-#ifdef TOOLS_ENABLED
 #include "classes/box_container.hpp"
 #include "fmod_event_previewer.h"
 #include "fmod_event_tree.h"
@@ -32,5 +31,3 @@ class FmodProjectExplorer : public BoxContainer
     void refresh();
 };
 } // namespace FmodGodot
-#endif
-#

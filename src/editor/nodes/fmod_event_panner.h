@@ -1,10 +1,9 @@
 #pragma once
+#include "classes/control.hpp"
 #include "classes/input_event.hpp"
+#include "classes/wrapped.hpp"
 #include "variant/rect2.hpp"
 #include "variant/vector3.hpp"
-#ifdef TOOLS_ENABLED
-#include "classes/control.hpp"
-#include "classes/wrapped.hpp"
 #include "variant/vector4i.hpp"
 using namespace godot;
 class FmodEventPanner : public Control
@@ -66,4 +65,3 @@ class FmodEventPanner : public Control
 };
 
 VARIANT_ENUM_CAST(FmodEventPanner::View);
-#endif

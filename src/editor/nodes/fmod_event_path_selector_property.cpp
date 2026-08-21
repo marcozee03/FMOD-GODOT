@@ -1,4 +1,3 @@
-#ifdef TOOLS_ENABLED
 #include "fmod_event_path_selector_property.h"
 #include "fmod_event_selector.h"
 #include <godot_cpp/classes/editor_property.hpp>
@@ -55,4 +54,3 @@ void EventPathSelectorProperty::_update_property()
     updating = false;
 }
 } // namespace FmodGodot
-#endif

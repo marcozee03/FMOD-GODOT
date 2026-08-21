@@ -1,13 +1,12 @@
+#include "fmod_event_browser.h"
 #include "classes/control.hpp"
 #include "classes/editor_dock.hpp"
 #include "classes/h_box_container.hpp"
 #include "classes/v_box_container.hpp"
-#include "fmod_project_explorer.h"
-#include "variant/callable_method_pointer.hpp"
-#ifdef TOOLS_ENABLED
 #include "fmod_editor_interface.h"
-#include "fmod_event_browser.h"
+#include "fmod_project_explorer.h"
 #include "live_update_indicator.h"
+#include "variant/callable_method_pointer.hpp"
 #include <classes/button.hpp>
 #include <classes/label.hpp>
 #include <classes/project_settings.hpp>
@@ -122,4 +121,3 @@ void FmodEventBrowser::_notification(int p_what)
 }
 
 } // namespace FmodGodot
-#endif

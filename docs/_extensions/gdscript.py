@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-    pygments.lexers.gdscript
-    ~~~~~~~~~~~~~~~~~~~~~~
+pygments.lexers.gdscript
+~~~~~~~~~~~~~~~~~~~~~~
 
-    Lexer for GDScript.
+Lexer for GDScript.
 
-    :copyright: Copyright 2xxx by The Godot Engine Community
-    :license: MIT.
+:copyright: Copyright 2xxx by The Godot Engine Community
+:license: MIT.
 
-    modified by Daniel J. Ramirez <djrmuv@gmail.com> based on the original python.py pygment
-    further expanded and consolidated with the godot-docs lexer by Zackery R. Smith <zackery.smith82307@gmail.com> and Ste.
+modified by Daniel J. Ramirez <djrmuv@gmail.com> based on the original python.py pygment
+further expanded and consolidated with the godot-docs lexer by Zackery R. Smith <zackery.smith82307@gmail.com> and Ste.
 """
 
 from pygments.lexer import RegexLexer, include, bygroups, words, combined
@@ -95,8 +95,8 @@ class GDScriptLexer(RegexLexer):
                         "yield",  # Reserved for potential future use.
                         # Not really keywords, but used in property syntax.
                         # also colored like functions, not keywords
-                        #"set",
-                        #"get",
+                        # "set",
+                        # "get",
                     ),
                     suffix=r"\b",
                 ),
@@ -255,7 +255,6 @@ class GDScriptLexer(RegexLexer):
                         "wrap",
                         "wrapf",
                         "wrapi",
-
                         # modules/gdscript/doc_classes/@GDScript.xml
                         "Color8",
                         "assert",
@@ -1499,11 +1498,16 @@ class GDScriptLexer(RegexLexer):
             (r"\b([a-zA-Z_]\w*)\s*(?=\()", Name.Function),
             (
                 # colored like functions, even without braces
-                words(("set", "get",), suffix=r"\b", ),
+                words(
+                    (
+                        "set",
+                        "get",
+                    ),
+                    suffix=r"\b",
+                ),
                 Name.Function,
             ),
         ],
-
         #######################################################################
         # LEXER ENTRY POINT
         #######################################################################
@@ -1557,10 +1561,17 @@ class GDScriptLexer(RegexLexer):
                 combined("string_escape", "single_quotes"),
             ),
             # consider Name after a . as instance/members variables
-            (r"(?<!\.)(\.)([a-zA-Z_]\w*)\b(?!\s*\()", bygroups(Operator, Name.Variable.Instance)),
+            (
+                r"(?<!\.)(\.)([a-zA-Z_]\w*)\b(?!\s*\()",
+                bygroups(Operator, Name.Variable.Instance),
+            ),
             include("operator"),
             # Lookahead to not match the start of function_name to dodge errors on nameless lambdas
-            (r"(func)(\s+)(?=[a-zA-Z_])", bygroups(Keyword, Whitespace), "function_name"),
+            (
+                r"(func)(\s+)(?=[a-zA-Z_])",
+                bygroups(Keyword, Whitespace),
+                "function_name",
+            ),
             (r"(enum)(\s+)(?=[a-zA-Z_])", bygroups(Keyword, Whitespace), "enum_name"),
             include("keyword"),
             include("function"),
@@ -1568,7 +1579,7 @@ class GDScriptLexer(RegexLexer):
             #   This matches all PascalCase as a class. If this raises issues
             #   please report it.
             # see: https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_styleguide.html#naming-conventions
-            #(r"\s*([A-Z][a-zA-Z0-9_]*)", Name.Class),
+            # (r"\s*([A-Z][a-zA-Z0-9_]*)", Name.Class),
             # Only PascalCase, but exclude SCREAMING_SNAKE for constants
             (r"\b([A-Z][a-z0-9]+(?:[A-Z][a-z0-9]+)*)\b", Name.Class),
             include("name"),
