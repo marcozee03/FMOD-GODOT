@@ -9,19 +9,17 @@ namespace FmodGodot
 {
 namespace Studio
 {
-class StudioSystem;
-class EventDescription;
 
-class EventInstance : public Object
+class StudioEventInstance : public Object
 {
-    GDCLASS(EventInstance, Object)
+    GDCLASS(StudioEventInstance, Object)
   private:
   protected:
     static void _bind_methods();
 
   public:
-    EventInstance() = default;
-    ~EventInstance() = default;
+    StudioEventInstance() = default;
+    ~StudioEventInstance() = default;
     // Handle validity
     static bool is_valid(Handle p_handle);
 

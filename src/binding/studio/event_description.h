@@ -1,5 +1,4 @@
 #pragma once
-#include "binding/studio/event_instance.h"
 #include "binding/studio/parameter_cache.h"
 #include "classes/ref_counted.hpp"
 #include "fmod_defs.h"
@@ -10,9 +9,9 @@ namespace FmodGodot
 {
 namespace Studio
 {
-class EventDescription : public RefCounted
+class StudioEventDescription : public RefCounted
 {
-    GDCLASS(EventDescription, RefCounted)
+    GDCLASS(StudioEventDescription, RefCounted)
   protected:
     static void _bind_methods();
 
@@ -34,8 +33,8 @@ class EventDescription : public RefCounted
         Vector<FmodGodot::ParameterCache> parameters;
     };
 #endif
-    EventDescription() = default;
-    ~EventDescription() = default;
+    StudioEventDescription() = default;
+    ~StudioEventDescription() = default;
     // Handle validity
     static bool is_valid(Handle p_handle);
 
