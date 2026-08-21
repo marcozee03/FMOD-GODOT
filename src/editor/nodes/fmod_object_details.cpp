@@ -206,7 +206,7 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
     {
         header->set_text("Bank:" + p_path.get_file().get_basename());
         header->set_button_icon(theme->bank_icon);
-        Studio::Bank::Cache bank = cache->get_bank(p_path);
+        Studio::StudioBank::Cache bank = cache->get_bank(p_path);
         push_label_str_meta(text, "Full Path: ", bank.full_path, "Copy bank path");
         push_label_var_meta(text, "Guid: ", fmod_guid_to_string(bank.guid), bank.guid, "Drag Event");
         text->push_indent(1);

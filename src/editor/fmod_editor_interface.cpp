@@ -116,7 +116,7 @@ void FmodEditorInterface::refresh(bool p_load_start_up_banks)
     for (int i = 0; i < bank_count; i++)
     {
 
-        Studio::Bank::Cache bank(banks[i]);
+        Studio::StudioBank::Cache bank(banks[i]);
         cache.add(bank);
         {
             int event_count;
