@@ -99,7 +99,7 @@ if env["target"] == "editor":
         Glob("src/editor/plugins/*.cpp"),
         Glob("src/editor/nodes/*.cpp"),
     ])
- 
+
 
 
 
