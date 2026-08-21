@@ -62,6 +62,7 @@ namespace FmodGodot
         }                                                                                                              \
     }
 typedef size_t Handle;
+typedef uint64_t GD_PARAMETER_ID;
 #define GLOBAL_GET(m_var) ProjectSettings::get_singleton()->get_setting_with_override(m_var)
 
 #define GLOBAL_DEF(m_var, m_value) _GLOBAL_DEF(m_var, m_value)

@@ -74,13 +74,13 @@ class EventInstance : public Object
 
     static bool is_virtual(Handle p_handle);
 
-    static float get_parameter_by_id(Handle p_handle, uint64_t p_id);
-    static float get_final_parameter_by_id(Handle p_handle, uint64_t p_id);
-    static FMOD_RESULT set_parameter_by_id(Handle p_handle, uint64_t p_id, float p_value,
+    static float get_parameter_by_id(Handle p_handle, GD_PARAMETER_ID p_id);
+    static float get_final_parameter_by_id(Handle p_handle, GD_PARAMETER_ID p_id);
+    static FMOD_RESULT set_parameter_by_id(Handle p_handle, GD_PARAMETER_ID p_id, float p_value,
                                            bool p_ignoreseekspeed = false);
-    static FMOD_RESULT set_parameter_by_id_with_label(Handle p_handle, uint64_t p_id, const String &p_label,
+    static FMOD_RESULT set_parameter_by_id_with_label(Handle p_handle, GD_PARAMETER_ID p_id, const String &p_label,
                                                       bool p_ignoreseekspeed = false);
-    static FMOD_RESULT set_parameters_by_ids(Handle p_handle, const Vector<uint64_t> &p_ids,
+    static FMOD_RESULT set_parameters_by_ids(Handle p_handle, const PackedInt64Array &p_ids,
                                              PackedFloat32Array &p_values, bool p_ignoreseekspeed = false);
 
     static float get_parameter_by_name(Handle p_handle, const String &p_name);
