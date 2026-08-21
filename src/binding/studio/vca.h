@@ -9,9 +9,9 @@ namespace FmodGodot
 {
 namespace Studio
 {
-class VCA : public Object
+class StudioVCA : public Object
 {
-    GDCLASS(VCA, Object)
+    GDCLASS(StudioVCA, Object)
   protected:
     static void _bind_methods();
 
@@ -26,7 +26,7 @@ class VCA : public Object
     };
 #endif
 
-    VCA();
+    StudioVCA();
     // Handle validity
     static bool is_valid(Handle p_handle);
 

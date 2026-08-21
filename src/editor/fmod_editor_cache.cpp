@@ -29,7 +29,7 @@ void FmodEditorCache::add(const ParameterCache &p_parameter)
     parameter_cache.add_data(p_parameter.full_path, p_parameter);
 }
 
-void FmodEditorCache::add(const Studio::VCA::Cache &p_vca)
+void FmodEditorCache::add(const Studio::StudioVCA::Cache &p_vca)
 {
     vca_cache.add_data(p_vca.full_path, p_vca);
 }
@@ -53,7 +53,7 @@ const PathTree<ParameterCache> FmodEditorCache::get_parameter_cache() const
 {
     return parameter_cache;
 }
-const PathTree<Studio::VCA::Cache> FmodEditorCache::get_vca_cache()
+const PathTree<Studio::StudioVCA::Cache> FmodEditorCache::get_vca_cache()
 {
     return vca_cache;
 }
@@ -72,7 +72,7 @@ ParameterCache FmodEditorCache::get_parameter(const String &p_path) const
 {
     return parameter_cache[p_path];
 }
-Studio::VCA::Cache FmodEditorCache::get_vca(const String &p_path) const
+Studio::StudioVCA::Cache FmodEditorCache::get_vca(const String &p_path) const
 {
     return vca_cache[p_path];
 }

@@ -136,7 +136,7 @@ FmodGodot::Studio::StudioBank::Cache::Cache(FMOD_STUDIO_BANK *p_bank)
     {
         for (size_t vca : Studio::StudioBank::get_vca_list(handle))
         {
-            children.push_back(Studio::VCA::get_path(vca));
+            children.push_back(Studio::StudioVCA::get_path(vca));
         }
     }
 }
