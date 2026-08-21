@@ -1,4 +1,5 @@
 #include "fmod_common.h"
+#include "fmod_defs.h"
 #include "fmod_studio_common.h"
 #include "variant/vector4i.hpp"
 #include <godot_cpp/classes/node2d.hpp>
@@ -13,8 +14,8 @@ namespace FmodGodot
 {
 Vector4i cast_to_vector4i(const FMOD_GUID &p_guid);
 FMOD_GUID cast_to_fmod_guid(const Vector4i &p_guid);
-FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(uint64_t p_id);
-uint64_t cast_to_uint64(const FMOD_STUDIO_PARAMETER_ID &p_id);
+FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(GD_PARAMETER_ID p_id);
+GD_PARAMETER_ID cast_to_gd_parameter_id(const FMOD_STUDIO_PARAMETER_ID &p_id);
 FMOD_GUID string_to_fmod_guid(const char *p_guid);
 String fmod_guid_to_string(const FMOD_GUID &p_guid);
 String fmod_guid_to_string(const Vector4i &p_guid);

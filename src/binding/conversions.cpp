@@ -37,9 +37,9 @@ FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(uint64_t p_id)
     return std::bit_cast<FMOD_STUDIO_PARAMETER_ID>(p_id);
 }
 
-uint64_t cast_to_uint64(const FMOD_STUDIO_PARAMETER_ID &p_id)
+uint64_t cast_to_gd_parameter_id(const FMOD_STUDIO_PARAMETER_ID &p_id)
 {
-    static_assert(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(uint64_t),
+    static_assert(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(GD_PARAMETER_ID),
                   "Vector2i and FMOD_STUDIO_PARAMETER_ID must be the same size for type punning");
     return std::bit_cast<uint64_t>(p_id);
 }

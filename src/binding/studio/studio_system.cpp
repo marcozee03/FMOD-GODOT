@@ -1,10 +1,69 @@
 #include "studio_system.h"
+#include "fmod_defs.h"
 #include "fmod_enums.h"
+#include "globals.h"
+#include "variant/packed_float32_array.hpp"
 namespace FmodGodot
 {
 namespace Studio
 {
 
+void StudioSystem::_bind_methods()
+{
+    BIND_STATIC_METHOD(create, "header_version");
+    BIND_STATIC_METHOD(initialize, "handle", "max_channels", "studio_flags", "flags");
+    BIND_STATIC_METHOD(release, "handle");
+    BIND_STATIC_METHOD(is_valid, "handle");
+    BIND_STATIC_METHOD(update, "handle");
+    BIND_STATIC_METHOD(flush_commands, "handle");
+    BIND_STATIC_METHOD(flush_sample_loading, "handle");
+    BIND_STATIC_METHOD(get_event, "handle", "path");
+    BIND_STATIC_METHOD(get_bus, "handle", "path");
+    BIND_STATIC_METHOD(get_vca, "handle", "path");
+    BIND_STATIC_METHOD(get_bank, "handle", "path");
+    BIND_STATIC_METHOD(get_event_by_id, "handle", "id");
+    BIND_STATIC_METHOD(get_bus_by_id, "handle", "id");
+    BIND_STATIC_METHOD(get_vca_by_id, "handle", "id");
+    BIND_STATIC_METHOD(get_bank_by_id, "handle", "id");
+    BIND_STATIC_METHOD(get_parameter_label_by_name, "handle", "name", "label_index");
+    BIND_STATIC_METHOD(get_parameter_label_by_id, "handle", "id", "label_index");
+    //
+    BIND_STATIC_METHOD(get_parameter_by_id, "handle", "id");
+    BIND_STATIC_METHOD(get_final_parameter_by_id, "handle", "id");
+    ClassDB ::bind_static_method(get_class_static(),
+                                 D_METHOD("set_parameter_by_id", "handle", "id", "value", "ignore_seek_speed"),
+                                 &self_type ::set_parameter_by_id, DEFVAL(false));
+    ClassDB ::bind_static_method(
+        get_class_static(), D_METHOD("set_parameter_by_id_with_label", "handle", "id", "label", "ignore_seek_speed"),
+        &self_type ::set_parameter_by_id_with_label, DEFVAL(false));
+    BIND_STATIC_METHOD(set_parameters_by_ids);
+    // ClassDB ::bind_static_method(get_class_static(),
+    //                              D_METHOD("set_parameters_by_ids", "handle", "ids", "values", "ignore_seek_speed"),
+    //                              &self_type::set_parameters_by_ids, DEFVAL(false));
+    BIND_STATIC_METHOD(lookup_id, "handle", "path");
+    BIND_STATIC_METHOD(lookup_path, "handle", "id");
+    //
+    BIND_STATIC_METHOD(get_num_listeners, "handle");
+    BIND_STATIC_METHOD(set_num_listeners, "handle", "num_listeners");
+    BIND_STATIC_METHOD(get_listener_transform, "handle", "listener");
+    BIND_STATIC_METHOD(get_listener_velocity, "handle", "listener");
+    BIND_STATIC_METHOD(get_listener_attenuation_position, "handle", "listener");
+    //
+    BIND_STATIC_METHOD(set_listener_attributes, "handle", "listener", "transform", "velocity");
+    BIND_STATIC_METHOD(set_listener_attributes_with_attenuation, "handle", "listener", "transform", "velocity",
+                       "attenuation_position");
+    BIND_STATIC_METHOD(load_bank_file, "handle", "filename", "flags");
+    BIND_STATIC_METHOD(load_bank_memory, "handle", "buffer", "flags");
+    BIND_STATIC_METHOD(unload_all, "handle");
+    BIND_STATIC_METHOD(get_bank_count, "handle");
+    BIND_STATIC_METHOD(get_bank_list, "handle");
+    //
+    // // TODO: Param Description functions;
+    //
+    BIND_STATIC_METHOD(start_command_capture, "handle", "filename", "flags");
+    BIND_STATIC_METHOD(stop_command_capture, "handle");
+    BIND_STATIC_METHOD(load_command_replay, "handle", "filename", "flags");
+}
 Handle StudioSystem::create(unsigned int p_headerversion)
 {
 
@@ -92,42 +151,43 @@ godot::String StudioSystem::get_parameter_label_by_name(Handle p_handle, const S
                        p_name.utf8().ptr(), p_labelindex)
     return label;
 }
-godot::String StudioSystem::get_parameter_label_by_id(Handle p_handle, FMOD_STUDIO_PARAMETER_ID p_id, int p_labelindex)
+godot::String StudioSystem::get_parameter_label_by_id(Handle p_handle, GD_PARAMETER_ID p_id, int p_labelindex)
 {
 
-    FMOD_LOOKUP_STRING(FMOD_Studio_System_GetParameterLabelByID, (FMOD_STUDIO_SYSTEM *)p_handle, label, p_id,
-                       p_labelindex)
+    FMOD_LOOKUP_STRING(FMOD_Studio_System_GetParameterLabelByID, std::bit_cast<FMOD_STUDIO_SYSTEM *>(p_handle), label,
+                       std::bit_cast<FMOD_STUDIO_PARAMETER_ID>(p_id), p_labelindex)
     return label;
 }
-float StudioSystem::get_parameter_by_id(Handle p_handle, uint64_t p_id)
+float StudioSystem::get_parameter_by_id(Handle p_handle, GD_PARAMETER_ID p_id)
 {
     float value;
     FMOD_Studio_System_GetParameterByID((FMOD_STUDIO_SYSTEM *)p_handle, cast_to_parameter_id(p_id), &value, nullptr);
     return value;
 }
-float StudioSystem::get_final_parameter_by_id(Handle p_handle, uint64_t p_id)
+float StudioSystem::get_final_parameter_by_id(Handle p_handle, GD_PARAMETER_ID p_id)
 {
     float value;
     FMOD_Studio_System_GetParameterByID((FMOD_STUDIO_SYSTEM *)p_handle, cast_to_parameter_id(p_id), nullptr, &value);
     return value;
 }
-FMOD_RESULT StudioSystem::set_parameter_by_id(Handle p_handle, uint64_t p_id, float p_value, bool p_ignoreseekspeed)
+FMOD_RESULT StudioSystem::set_parameter_by_id(Handle p_handle, GD_PARAMETER_ID p_id, float p_value,
+                                              bool p_ignoreseekspeed)
 {
     return FMOD_Studio_System_SetParameterByID((FMOD_STUDIO_SYSTEM *)p_handle, cast_to_parameter_id(p_id), p_value,
                                                p_ignoreseekspeed);
 }
-FMOD_RESULT StudioSystem::set_parameter_by_id_with_label(Handle p_handle, uint64_t p_id, const String &p_label,
+FMOD_RESULT StudioSystem::set_parameter_by_id_with_label(Handle p_handle, GD_PARAMETER_ID p_id, const String &p_label,
                                                          bool p_ignoreseekspeed)
 {
     return FMOD_Studio_System_SetParameterByIDWithLabel((FMOD_STUDIO_SYSTEM *)p_handle, cast_to_parameter_id(p_id),
                                                         p_label.utf8().ptr(), p_ignoreseekspeed);
 }
 FMOD_RESULT StudioSystem::set_parameters_by_ids(Handle p_handle, const PackedInt64Array &p_ids,
-                                                PackedFloat32Array &p_values, bool p_ignoreseekspeed)
+                                                PackedFloat32Array p_values, bool p_ignoreseekspeed)
 {
-    return FMOD_Studio_System_SetParametersByIDs((FMOD_STUDIO_SYSTEM *)p_handle,
-                                                 (const FMOD_STUDIO_PARAMETER_ID *)p_ids.ptr(), p_values.ptrw(),
-                                                 Math::min(p_ids.size(), p_values.size()), p_ignoreseekspeed);
+    return FMOD_Studio_System_SetParametersByIDs(
+        std::bit_cast<FMOD_STUDIO_SYSTEM *>(p_handle), std::bit_cast<FMOD_STUDIO_PARAMETER_ID *>(p_ids.ptr()),
+        p_values.ptrw(), Math::min(p_ids.size(), p_values.size()), p_ignoreseekspeed);
 }
 float StudioSystem::get_parameter_by_name(Handle p_handle, const String &p_name)
 {
@@ -174,14 +234,13 @@ FMOD_RESULT StudioSystem::set_num_listeners(Handle p_handle, int p_numlisteners)
 {
     return FMOD_Studio_System_SetNumListeners((FMOD_STUDIO_SYSTEM *)p_handle, p_numlisteners);
 }
-godot::Transform3D StudioSystem::get_listener_transform(Handle p_handle, int p_listener,
-                                                        FMOD_VECTOR *p_attenuationposition)
+godot::Transform3D StudioSystem::get_listener_transform(Handle p_handle, int p_listener)
 {
     FMOD_3D_ATTRIBUTES attr;
     FMOD_Studio_System_GetListenerAttributes((FMOD_STUDIO_SYSTEM *)p_handle, p_listener, &attr, nullptr);
     return to_transform3d(attr);
 }
-godot::Vector3 StudioSystem::get_listener_velocity(Handle p_handle, int p_listener, FMOD_VECTOR *p_attenuationposition)
+godot::Vector3 StudioSystem::get_listener_velocity(Handle p_handle, int p_listener)
 {
     FMOD_3D_ATTRIBUTES attr;
     FMOD_Studio_System_GetListenerAttributes((FMOD_STUDIO_SYSTEM *)p_handle, p_listener, &attr, nullptr);
@@ -246,17 +305,13 @@ FMOD_RESULT StudioSystem::unload_all(Handle p_handle)
 {
     return FMOD_Studio_System_UnloadAll((FMOD_STUDIO_SYSTEM *)p_handle);
 }
-FMOD_RESULT StudioSystem::unregister_plugin(Handle p_handle, const String &p_name)
-{
-    return FMOD_Studio_System_UnregisterPlugin(std::bit_cast<FMOD_STUDIO_SYSTEM *>(p_handle), p_name.utf8().ptr());
-}
-int StudioSystem::get_bank_count(Handle p_handle) const
+int StudioSystem::get_bank_count(Handle p_handle)
 {
     int count;
     FMOD_Studio_System_GetBankCount(std::bit_cast<FMOD_STUDIO_SYSTEM *>(p_handle), &count);
     return count;
 }
-godot::PackedInt64Array StudioSystem::get_bank_list(Handle p_handle, Bank **p_array, int p_capacity, int *p_count) const
+godot::PackedInt64Array StudioSystem::get_bank_list(Handle p_handle)
 {
     PackedInt64Array banks;
     banks.resize(get_bank_count(p_handle));
@@ -274,15 +329,15 @@ int StudioSystem::get_parameter_description_count(Handle p_handle)
     FMOD_Studio_System_GetParameterDescriptionCount(std::bit_cast<FMOD_STUDIO_SYSTEM *>(p_handle), &count);
     return count;
 }
-godot::Vector<FMOD_STUDIO_PARAMETER_DESCRIPTION> StudioSystem::get_parameter_description_list(Handle p_handle)
+godot::LocalVector<FMOD_STUDIO_PARAMETER_DESCRIPTION> StudioSystem::get_parameter_description_list(Handle p_handle)
 {
-    Vector<FMOD_STUDIO_PARAMETER_DESCRIPTION> parameters;
+    LocalVector<FMOD_STUDIO_PARAMETER_DESCRIPTION> parameters;
     parameters.resize(get_parameter_description_count(p_handle));
     if (parameters.size() == 0)
     {
         return parameters;
     }
-    FMOD_Studio_System_GetParameterDescriptionList(std::bit_cast<FMOD_STUDIO_SYSTEM *>(p_handle), parameters.ptrw(),
+    FMOD_Studio_System_GetParameterDescriptionList(std::bit_cast<FMOD_STUDIO_SYSTEM *>(p_handle), parameters.ptr(),
                                                    parameters.size(), nullptr);
     return parameters;
 }
@@ -303,6 +358,16 @@ Handle StudioSystem::load_command_replay(Handle p_handle, const String &p_filena
     FMOD_Studio_System_LoadCommandReplay(std::bit_cast<FMOD_STUDIO_SYSTEM *>(p_handle), p_filename.utf8().ptr(),
                                          p_flags, &replay);
     return std::bit_cast<Handle>(replay);
+}
+void *StudioSystem::getUserData(Handle p_handle)
+{
+    void *userdata;
+    FMOD_Studio_System_GetUserData((FMOD_STUDIO_SYSTEM *)p_handle, &userdata);
+    return userdata;
+}
+FMOD_RESULT StudioSystem::setUserData(Handle p_handle, void *p_userdata)
+{
+    return FMOD_Studio_System_SetUserData(std::bit_cast<FMOD_STUDIO_SYSTEM *>(p_handle), p_userdata);
 }
 
 } // namespace Studio

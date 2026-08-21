@@ -77,7 +77,7 @@ void FmodGodot::Studio::EventDescription::_bind_methods()
     //  int get_parameter_description_count() const;
     //  FMOD_STUDIO_PARAMETER_DESCRIPTION getParameterDescriptionByIndex(int p_index) const;
     //  FMOD_STUDIO_PARAMETER_DESCRIPTION getParameterDescriptionByName(const String &p_name) const;
-    //  FMOD_STUDIO_PARAMETER_DESCRIPTION getParameterDescriptionByID(uint64_t p_id) const;
+    //  FMOD_STUDIO_PARAMETER_DESCRIPTION getParameterDescriptionByID(GD_PARAMETER_ID p_id) const;
     BIND_STATIC_METHOD(get_parameter_label_by_index, "handle", "index", "label_index");
     BIND_STATIC_METHOD(get_parameter_label_by_name, "handle", "name", "label_index");
     BIND_STATIC_METHOD(get_parameter_label_by_id, "handle", "id", "label_index");
@@ -146,7 +146,7 @@ FMOD_STUDIO_PARAMETER_DESCRIPTION FmodGodot::Studio::EventDescription::getParame
     return parameter;
 }
 FMOD_STUDIO_PARAMETER_DESCRIPTION FmodGodot::Studio::EventDescription::getParameterDescriptionByID(Handle p_handle,
-                                                                                                   uint64_t p_id)
+                                                                                                   GD_PARAMETER_ID p_id)
 {
     FMOD_STUDIO_PARAMETER_DESCRIPTION parameter;
     FMOD_Studio_EventDescription_GetParameterDescriptionByID((FMOD_STUDIO_EVENTDESCRIPTION *)p_handle,
@@ -167,7 +167,7 @@ godot::String FmodGodot::Studio::EventDescription::get_parameter_label_by_name(H
                        label, p_name.utf8().ptr(), p_labelindex);
     return label;
 }
-godot::String FmodGodot::Studio::EventDescription::get_parameter_label_by_id(Handle p_handle, uint64_t p_id,
+godot::String FmodGodot::Studio::EventDescription::get_parameter_label_by_id(Handle p_handle, GD_PARAMETER_ID p_id,
                                                                              int p_labelindex)
 {
 

@@ -1,16 +1,11 @@
 #pragma once
 #include "binding/conversions.h"
-#include "classes/ref_counted.hpp"
-#include "core/math.hpp"
-#include "fmod_bank.h"
 #include "fmod_common.h"
 #include "fmod_defs.h"
-#include "fmod_enums.h"
-#include "fmod_studio.h"
 #include "fmod_studio_common.h"
+#include "variant/packed_float32_array.hpp"
 #include "variant/transform2d.hpp"
 #include "variant/vector4i.hpp"
-#include <cstddef>
 namespace FmodGodot
 {
 namespace Studio
@@ -20,9 +15,7 @@ class StudioSystem : public Object
 {
     GDCLASS(StudioSystem, Object)
   protected:
-    static void _bind_methods()
-    {
-    }
+    static void _bind_methods();
 
   public:
     StudioSystem() = default;
@@ -66,17 +59,17 @@ class StudioSystem : public Object
     // TODO: FMOD_RESULT getParameterDescriptionByID(FMOD_STUDIO_PARAMETER_ID p_id, FMOD_STUDIO_PARAMETER_DESCRIPTION
     // *p_parameter) const;
     static String get_parameter_label_by_name(Handle p_handle, const String &p_name, int p_labelindex);
-    static String get_parameter_label_by_id(Handle p_handle, FMOD_STUDIO_PARAMETER_ID p_id, int p_labelindex);
+    static String get_parameter_label_by_id(Handle p_handle, GD_PARAMETER_ID p_id, int p_labelindex);
 
     // Global parameter control
-    static float get_parameter_by_id(Handle p_handle, uint64_t p_id);
-    static float get_final_parameter_by_id(Handle p_handle, uint64_t p_id);
-    static FMOD_RESULT set_parameter_by_id(Handle p_handle, uint64_t p_id, float p_value,
+    static float get_parameter_by_id(Handle p_handle, GD_PARAMETER_ID p_id);
+    static float get_final_parameter_by_id(Handle p_handle, GD_PARAMETER_ID p_id);
+    static FMOD_RESULT set_parameter_by_id(Handle p_handle, GD_PARAMETER_ID p_id, float p_value,
                                            bool p_ignoreseekspeed = false);
-    static FMOD_RESULT set_parameter_by_id_with_label(Handle p_handle, uint64_t p_id, const String &p_label,
+    static FMOD_RESULT set_parameter_by_id_with_label(Handle p_handle, GD_PARAMETER_ID p_id, const String &p_label,
                                                       bool p_ignoreseekspeed = false);
     static FMOD_RESULT set_parameters_by_ids(Handle p_handle, const PackedInt64Array &p_ids,
-                                             PackedFloat32Array &p_values, bool p_ignoreseekspeed = false);
+                                             PackedFloat32Array p_values, bool p_ignoreseekspeed = false);
     static float get_parameter_by_name(Handle p_handle, const String &p_name);
     static float get_final_parameter_by_name(Handle p_handle, const String &p_name);
     static FMOD_RESULT set_parameter_by_name(Handle p_handle, const String &p_name, float p_value,
@@ -91,9 +84,8 @@ class StudioSystem : public Object
     // Listener control
     static int get_num_listeners(Handle p_handle);
     static FMOD_RESULT set_num_listeners(Handle p_handle, int p_numlisteners);
-    static Transform3D get_listener_transform(Handle p_handle, int p_listener,
-                                              FMOD_VECTOR *p_attenuationposition = nullptr);
-    static Vector3 get_listener_velocity(Handle p_handle, int p_listener, FMOD_VECTOR *p_attenuationposition = nullptr);
+    static Transform3D get_listener_transform(Handle p_handle, int p_listener);
+    static Vector3 get_listener_velocity(Handle p_handle, int p_listener);
     static Vector3 get_listener_attenuation_position(Handle p_handle, int p_listener);
     static FMOD_RESULT set_listener_attributes(Handle p_handle, int p_listener, const Transform3D &p_transform,
                                                const Vector3 &p_velocity);
@@ -113,17 +105,17 @@ class StudioSystem : public Object
     //  **p_bank);
     static FMOD_RESULT unload_all(Handle p_handle);
 
-    // General functionality
-    FMOD_RESULT getBufferUsage(FMOD_STUDIO_BUFFER_USAGE *p_usage) const;
-    FMOD_RESULT resetBufferUsage();
-    FMOD_RESULT registerPlugin(const FMOD_DSP_DESCRIPTION *p_description);
-    FMOD_RESULT unregister_plugin(Handle p_handle, const String &p_name);
+    // TODO: will maybe add include in api
+    //  FMOD_RESULT getBufferUsage(FMOD_STUDIO_BUFFER_USAGE *p_usage) const;
+    //  FMOD_RESULT resetBufferUsage();
+    //  FMOD_RESULT registerPlugin(const FMOD_DSP_DESCRIPTION *p_description);
+    //  FMOD_RESULT unregister_plugin(Handle p_handle, const String &p_name);
 
     // Enumeration
-    int get_bank_count(Handle p_handle) const;
-    PackedInt64Array get_bank_list(Handle p_handle, Bank **p_array, int p_capacity, int *p_count) const;
+    static int get_bank_count(Handle p_handle);
+    static PackedInt64Array get_bank_list(Handle p_handle);
     static int get_parameter_description_count(Handle p_handle);
-    static Vector<FMOD_STUDIO_PARAMETER_DESCRIPTION> get_parameter_description_list(Handle p_handle);
+    static LocalVector<FMOD_STUDIO_PARAMETER_DESCRIPTION> get_parameter_description_list(Handle p_handle);
 
     // Command capture and replay
     static FMOD_RESULT start_command_capture(Handle p_handle, const String &p_filename,
@@ -135,16 +127,8 @@ class StudioSystem : public Object
     // Callbacks
     FMOD_RESULT setCallback(FMOD_STUDIO_SYSTEM_CALLBACK p_callback,
                             FMOD_STUDIO_SYSTEM_CALLBACK_TYPE p_callbackmask = FMOD_STUDIO_SYSTEM_CALLBACK_ALL);
-    static void *getUserData(Handle p_handle)
-    {
-        void *userdata;
-        FMOD_Studio_System_GetUserData((FMOD_STUDIO_SYSTEM *)p_handle, &userdata);
-        return userdata;
-    }
-    static FMOD_RESULT setUserData(Handle p_handle, void *p_userdata)
-    {
-        return FMOD_Studio_System_SetUserData(std::bit_cast<FMOD_STUDIO_SYSTEM *>(p_handle), p_userdata);
-    }
+    static void *getUserData(Handle p_handle);
+    static FMOD_RESULT setUserData(Handle p_handle, void *p_userdata);
 
     // Monitoring
     // TODO:
