@@ -3,6 +3,7 @@
 #include "fmod_enums.h"
 #include "globals.h"
 #include "variant/packed_float32_array.hpp"
+#include <bit>
 namespace FmodGodot
 {
 namespace Studio

@@ -3,6 +3,7 @@
 #include "fmod_defs.h"
 #include "fmod_enums.h"
 #include "vca.h"
+#include <bit>
 using namespace FmodGodot;
 using namespace Studio;
 bool FmodGodot::Studio::StudioBank::is_valid(Handle p_handle)
