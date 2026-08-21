@@ -1,9 +1,8 @@
 #pragma once
 #include "classes/editor_dock.hpp"
-#include "fmod_project_explorer.h"
-#ifdef TOOLS_ENABLED
 #include "classes/h_box_container.hpp"
 #include "classes/v_box_container.hpp"
+#include "fmod_project_explorer.h"
 #include <classes/button.hpp>
 #include <classes/spin_box.hpp>
 using namespace godot;
@@ -32,4 +31,3 @@ class FmodEventBrowser : public EditorDock
     void _update_layout(int p_layout) override;
 };
 } // namespace FmodGodot
-#endif

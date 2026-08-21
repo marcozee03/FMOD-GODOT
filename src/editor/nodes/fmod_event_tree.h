@@ -1,5 +1,4 @@
 #pragma once
-#ifdef TOOLS_ENABLED
 #include <classes/tree.hpp>
 using namespace godot;
 
@@ -38,4 +37,3 @@ class EventTree : public Tree
 
 } // namespace FmodGodot
 VARIANT_BITFIELD_CAST(FmodGodot::EventTree::DisplayFlags)
-#endif

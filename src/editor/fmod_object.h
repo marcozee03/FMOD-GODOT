@@ -1,6 +1,5 @@
 #pragma once
 #include "variant/vector2i.hpp"
-#ifdef TOOLS_ENABLED
 #include <fmod_studio.h>
 #include <godot_cpp/templates/vector.hpp>
 #include <variant/string.hpp>
@@ -47,4 +46,3 @@ struct VCA
 };
 
 } // namespace FmodGodot
-#endif

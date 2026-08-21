@@ -1,5 +1,4 @@
 #pragma once
-#ifdef TOOLS_ENABLED
 #include "fmod_script_client.h"
 
 #include "classes/wrapped.hpp"
@@ -161,4 +160,3 @@ class FmodConsole : public EditorDock
 };
 } // namespace FmodGodot
 VARIANT_ENUM_CAST(FmodGodot::FmodConsole::MessageType)
-#endif

@@ -1,3 +1,4 @@
+#pragma once
 
 // #pragma once
 // #include <classes/node.hpp>
@@ -28,10 +29,10 @@
 //   public:
 //     FmodAudioServer2D();
 //     ~FmodAudioServer2D();
-//     void play_one_shot_by_id(const Vector4i p_guid, const godot::Vector2 p_position = godot::Vector2(), float depth = 0) const;
-//     void play_one_shot_by_path(const String &p_path, const godot::Vector2 p_position = godot::Vector2(), float depth = 0) const;
-//     void play_one_shot_attached_by_id(const Vector4i p_guid, Node2D *p_node, bool p_non_rigid_body_velocity = false);
-//     void play_one_shot_attached_by_path(const String &p_path, Node2D *p_node,
+//     void play_one_shot_by_id(const Vector4i p_guid, const godot::Vector2 p_position = godot::Vector2(), float depth =
+//     0) const; void play_one_shot_by_path(const String &p_path, const godot::Vector2 p_position = godot::Vector2(),
+//     float depth = 0) const; void play_one_shot_attached_by_id(const Vector4i p_guid, Node2D *p_node, bool
+//     p_non_rigid_body_velocity = false); void play_one_shot_attached_by_path(const String &p_path, Node2D *p_node,
 //                                            bool p_non_rigid_body_velocity = false);
 //
 //     void play_one_shot_rigid_body_attached_by_id(const Vector4i p_guid, RigidBody2D *p_rigid_body2d);
@@ -46,9 +47,9 @@
 //
 //     void set_listener_location(int p_listener_index, Node2D *p_node, Node2D *p_attenuationObject = nullptr);
 //     void set_listener_location(Node2D *p_node, Node2D *p_attenuationObject = nullptr);
-//     void set_listener_location(int p_listener_index, RigidBody2D *p_rigidBody2D, Node2D *p_attenuationObject = nullptr);
-//     void set_listener_location(RigidBody2D *p_rigidBody2D, Node2D *p_attenuationObject = nullptr);
-//     void set_listener_rigidbody_location(int p_listenerIndex, RigidBody2D *p_rigidBody2D,
+//     void set_listener_location(int p_listener_index, RigidBody2D *p_rigidBody2D, Node2D *p_attenuationObject =
+//     nullptr); void set_listener_location(RigidBody2D *p_rigidBody2D, Node2D *p_attenuationObject = nullptr); void
+//     set_listener_rigidbody_location(int p_listenerIndex, RigidBody2D *p_rigidBody2D,
 //                                             Node2D *p_attenuationObject = nullptr);
 //
 //   protected:

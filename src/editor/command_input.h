@@ -1,9 +1,8 @@
 #pragma once
-#include "variant/packed_string_array.hpp"
-#ifdef TOOLS_ENABLED
 #include "classes/text_edit.hpp"
 #include "classes/wrapped.hpp"
 #include "templates/local_vector.hpp"
+#include "variant/packed_string_array.hpp"
 #include <classes/input_event.hpp>
 namespace FmodGodot
 {
@@ -29,4 +28,3 @@ class CommandInput : public TextEdit
     void load_history(const PackedStringArray &p_arr);
 };
 } // namespace FmodGodot
-#endif

@@ -1,5 +1,5 @@
+#pragma once
 
-#ifdef TOOLS_ENABLED
 #include <godot_cpp/core/print_string.hpp>
 #include <godot_cpp/templates/vector.hpp>
 #include <godot_cpp/variant/packed_string_array.hpp>
@@ -321,5 +321,3 @@ template <typename Data> PackedStringArray PathTree<Data>::BranchNode::get_conte
 
     return arr;
 }
-
-#endif

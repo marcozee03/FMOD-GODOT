@@ -1,4 +1,3 @@
-#ifdef TOOLS_ENABLED
 #include "fmod_event_guid_selector_property.h"
 #include "fmod_audio_server.h"
 #include "fmod_event_selector.h"
@@ -93,4 +92,3 @@ void EventGUIDSelectorProperty::_update_property()
     memdelete_arr(str);
 }
 } // namespace FmodGodot
-#endif
