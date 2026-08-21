@@ -1,5 +1,4 @@
 #pragma once
-#ifdef TOOLS_ENABLED
 #include "fmod_event_selector.h"
 #include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/classes/editor_property.hpp>
@@ -27,4 +26,3 @@ class EventPathSelectorProperty : public EditorProperty
     virtual void _update_property() override;
 };
 } // namespace FmodGodot
-#endif

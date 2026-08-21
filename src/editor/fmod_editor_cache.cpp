@@ -1,4 +1,3 @@
-#ifdef TOOLS_ENABLED
 #include "fmod_editor_cache.h"
 #include "fmod_object.h"
 #include <godot_cpp/variant/packed_string_array.hpp>
@@ -99,4 +98,3 @@ PackedStringArray FmodEditorCache::get_contents(const String &p_path) const
     }
 }
 } // namespace FmodGodot
-#endif

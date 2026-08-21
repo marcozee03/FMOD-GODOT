@@ -1,7 +1,6 @@
 #pragma once
-#include "classes/editor_interface.hpp"
-#ifdef TOOLS_ENABLED
 #include "bank_inspector_plugin.h"
+#include "classes/editor_interface.hpp"
 #include "fmod_bank_importer.h"
 #include "fmod_console.h"
 #include "fmod_event_browser.h"
@@ -39,4 +38,3 @@ class FmodEditorPlugin : public EditorPlugin
     Ref<Texture2D> _get_plugin_icon() const override;
 };
 } // namespace FmodGodot
-#endif

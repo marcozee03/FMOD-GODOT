@@ -1,4 +1,3 @@
-#ifdef TOOLS_ENABLED
 #include "fmod_script_client.h"
 #include "classes/global_constants.hpp"
 #include "core/error_macros.hpp"
@@ -113,4 +112,3 @@ void FmodScriptClient::_bind_methods()
 {
     // BIND_METHOD(get_script_output())
 }
-#endif

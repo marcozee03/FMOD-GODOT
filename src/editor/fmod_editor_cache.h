@@ -1,5 +1,4 @@
 #pragma once
-#ifdef TOOLS_ENABLED
 #include "fmod_object.h"
 #include "path_tree.h"
 namespace FmodGodot
@@ -33,4 +32,3 @@ class FmodEditorCache
     PackedStringArray get_contents(const String &p_path) const;
 };
 } // namespace FmodGodot
-#endif

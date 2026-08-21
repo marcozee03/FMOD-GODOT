@@ -1,13 +1,12 @@
+#include "fmod_event_selector.h"
 #include "classes/control.hpp"
 #include "classes/display_server.hpp"
 #include "classes/popup_panel.hpp"
 #include "fmod_editor_interface.h"
-#include "fmod_project_explorer.h"
-#include "variant/vector2i.hpp"
-#ifdef TOOLS_ENABLED
-#include "fmod_event_selector.h"
 #include "fmod_event_tree.h"
 #include "fmod_globals.h"
+#include "fmod_project_explorer.h"
+#include "variant/vector2i.hpp"
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/core/memory.hpp>
@@ -84,4 +83,3 @@ LineEdit *FmodEventSelector::get_line_edit()
     return lineEdit;
 }
 } // namespace FmodGodot
-#endif

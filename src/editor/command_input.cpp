@@ -1,6 +1,5 @@
-#ifdef TOOLS_ENABLED
-#include "classes/input_event_key.hpp"
 #include "command_input.h"
+#include "classes/input_event_key.hpp"
 #include "core/math.hpp"
 #include "core/object.hpp"
 #include "core/property_info.hpp"
@@ -106,4 +105,3 @@ void FmodGodot::CommandInput::load_history(const PackedStringArray &p_arr)
         history.push_back(p_arr[i]);
     }
 };
-#endif

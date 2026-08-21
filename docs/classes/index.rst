@@ -26,4 +26,3 @@ Variant types
     class_fmodlistener2d
     class_fmodlistener3d
     class_projectsettings
-

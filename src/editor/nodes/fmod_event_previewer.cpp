@@ -1,22 +1,21 @@
-#include "classes/spin_box.hpp"
-#include "fmod_studio.h"
-#include "variant/vector3.hpp"
-#ifdef TOOLS_ENABLED
+#include "fmod_event_previewer.h"
 #include "classes/button.hpp"
 #include "classes/control.hpp"
 #include "classes/editor_interface.hpp"
 #include "classes/global_constants.hpp"
 #include "classes/h_box_container.hpp"
+#include "classes/spin_box.hpp"
 #include "classes/theme.hpp"
 #include "core/memory.hpp"
 #include "fmod_editor_interface.h"
 #include "fmod_event_panner.h"
-#include "fmod_event_previewer.h"
+#include "fmod_studio.h"
 #include "variant/callable.hpp"
 #include "variant/callable_method_pointer.hpp"
 #include "variant/dictionary.hpp"
 #include "variant/string.hpp"
 #include "variant/variant.hpp"
+#include "variant/vector3.hpp"
 #include "variant/vector4i.hpp"
 #include <classes/editor_inspector.hpp>
 #include <classes/editor_property.hpp>
@@ -206,4 +205,3 @@ void FmodEventPreviewer::on_end_drag(bool p_value_changed)
     }
     emitter->set_paused(false);
 }
-#endif

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "classes/h_box_container.hpp"
 #include "classes/label.hpp"
 #include "classes/texture_rect.hpp"

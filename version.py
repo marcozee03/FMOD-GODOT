@@ -1,0 +1,9 @@
+short_name = "fmod-godot"
+name = "Fmod Godot"
+major = 0
+minor = 7
+patch = 0
+status = "dev"
+module_config = ""
+website = "https://fmod-godot.readthedocs.io"
+docs = "latest"

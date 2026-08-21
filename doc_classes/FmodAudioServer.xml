@@ -4,7 +4,7 @@
 		FmodAudioServer is a high level interface for interacting with the FMOD api. Integrated with godot;
 	</brief_description>
 	<description>
-                
+
 	</description>
 	<tutorials>
 	</tutorials>
@@ -109,7 +109,7 @@
 			<param index="0" name="path" type="String" />
 			<param index="1" name="position" type="Vector3" default="Vector3(0, 0, 0)" />
 			<description>
-                                
+
                                 Plays one shot event at [param position] in world space (from [param guid]). In 2D Z is normally zero
                                 [b]Note:[/b] In 2D if you want the sound to align with the XY plane Z should be zero
                                 [b]Note:[/b] The Strings banks must be loaded
@@ -216,7 +216,7 @@
 		</signal>
 		<signal name="preupdate">
 			<description>
-                            Emitted at the start of the main Studio update. For async mode this will be on its own thread. 
+                            Emitted at the start of the main Studio update. For async mode this will be on its own thread.
 			</description>
 		</signal>
 	</signals>
