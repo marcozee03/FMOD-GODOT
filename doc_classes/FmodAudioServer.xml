@@ -4,7 +4,6 @@
 		FmodAudioServer is a high level interface for interacting with the FMOD api. Integrated with godot;
 	</brief_description>
 	<description>
-
 	</description>
 	<tutorials>
 	</tutorials>
@@ -24,37 +23,28 @@
 		<method name="get_version_number" qualifiers="static">
 			<return type="String" />
 			<description>
-                                Returns the FMOD Version number.
+				Returns the FMOD Version number.
 			</description>
 		</method>
 		<method name="has_bank_loaded" qualifiers="const">
 			<return type="bool" />
 			<param index="0" name="bank_name" type="String" />
 			<description>
-                                if [code]true[/code] [param bank_name] is loaded. returns false if bank does not exist
+				if [code]true[/code] [param bank_name] is loaded. returns false if bank does not exist
 			</description>
 		</method>
 		<method name="have_all_banks_loaded" qualifiers="const">
 			<return type="bool" />
 			<description>
-                                if [code]true[/code] all banks have finished loading.
-			</description>
-		</method>
-		<method name="load_bank">
-			<return type="int" />
-			<param index="0" name="bank_name" type="String" />
-			<param index="1" name="load_samples" type="bool" default="false" />
-			<description>
-                                loads [param bank_name] into memory. [param bank_name] can be a file path or a "bank:/&lt;bank_name&gt;" path.
-                                [b]Note:[/b] For banks in the "bank:/" path to be found. Go to [b] Project > Project Settings > Fmod > Banks [/b] and set [code]Bank Directory[/code] to the directory where banks are a stored in your project.
+				if [code]true[/code] all banks have finished loading.
 			</description>
 		</method>
 		<method name="path_to_guid" qualifiers="const">
 			<return type="Vector4i" />
 			<param index="0" name="p_path" type="String" />
 			<description>
-                                Returns the guid of the [param path].
-                                [b]Note:[/b] The Strings banks must be loaded
+				Returns the guid of the [param path].
+				                                [b]Note:[/b] The Strings banks must be loaded
 			</description>
 		</method>
 		<method name="play_one_shot_2d_attached_by_id">
@@ -63,7 +53,7 @@
 			<param index="1" name="node" type="Node2D" />
 			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
 			<description>
-                                Plays and attaches fmod event (from [param guid]) to [param node]. Tracks position and optionally velocity.
+				Plays and attaches fmod event (from [param guid]) to [param node]. Tracks position and optionally velocity.
 			</description>
 		</method>
 		<method name="play_one_shot_2d_attached_by_path">
@@ -72,8 +62,8 @@
 			<param index="1" name="node" type="Node2D" />
 			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
 			<description>
-                                Plays and attaches fmod event (from [param path]) to [param node]. Tracks position and optionally velocity.
-                                [b]Note:[/b] The Strings banks must be loaded
+				Plays and attaches fmod event (from [param path]) to [param node]. Tracks position and optionally velocity.
+				                                [b]Note:[/b] The Strings banks must be loaded
 			</description>
 		</method>
 		<method name="play_one_shot_3d_attached_by_id">
@@ -82,7 +72,7 @@
 			<param index="1" name="node" type="Node3D" />
 			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
 			<description>
-                                Plays and attaches fmod event (from [param guid]) to [param node]. Tracks position and optionally velocity.
+				Plays and attaches fmod event (from [param guid]) to [param node]. Tracks position and optionally velocity.
 			</description>
 		</method>
 		<method name="play_one_shot_3d_attached_by_path">
@@ -91,8 +81,8 @@
 			<param index="1" name="node" type="Node3D" />
 			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
 			<description>
-                                Plays and attaches fmod event (from [param path]) to [param node]. Tracks position and optionally velocity.
-                                [b]Note:[/b] The Strings banks must be loaded
+				Plays and attaches fmod event (from [param path]) to [param node]. Tracks position and optionally velocity.
+				                                [b]Note:[/b] The Strings banks must be loaded
 			</description>
 		</method>
 		<method name="play_one_shot_by_id" qualifiers="const">
@@ -100,8 +90,8 @@
 			<param index="0" name="guid" type="Vector4i" />
 			<param index="1" name="position" type="Vector3" default="Vector3(0, 0, 0)" />
 			<description>
-                            Plays one shot event at [param position] in world space (from [param guid]). In 2D Z is normally zero
-                            [b]Note:[/b] In 2D if you want the sound to align with the XY plane Z should be zero
+				Plays one shot event at [param position] in world space (from [param guid]). In 2D Z is normally zero
+				                            [b]Note:[/b] In 2D if you want the sound to align with the XY plane Z should be zero
 			</description>
 		</method>
 		<method name="play_one_shot_by_path" qualifiers="const">
@@ -109,10 +99,9 @@
 			<param index="0" name="path" type="String" />
 			<param index="1" name="position" type="Vector3" default="Vector3(0, 0, 0)" />
 			<description>
-
-                                Plays one shot event at [param position] in world space (from [param guid]). In 2D Z is normally zero
-                                [b]Note:[/b] In 2D if you want the sound to align with the XY plane Z should be zero
-                                [b]Note:[/b] The Strings banks must be loaded
+				Plays one shot event at [param position] in world space (from [param guid]). In 2D Z is normally zero
+				                                [b]Note:[/b] In 2D if you want the sound to align with the XY plane Z should be zero
+				                                [b]Note:[/b] The Strings banks must be loaded
 			</description>
 		</method>
 		<method name="play_one_shot_rigid_2d_attached_by_path">
@@ -120,8 +109,8 @@
 			<param index="0" name="path" type="String" />
 			<param index="1" name="rigid_body2d" type="RigidBody2D" />
 			<description>
-                                Plays one shot event (from [param path]) and attaches it to [param rigid_body2d]. Tracks position and velocity
-                                [b]Note:[/b] The Strings banks must be loaded
+				Plays one shot event (from [param path]) and attaches it to [param rigid_body2d]. Tracks position and velocity
+				                                [b]Note:[/b] The Strings banks must be loaded
 			</description>
 		</method>
 		<method name="play_one_shot_rigid_body2d_attached_by_id">
@@ -129,7 +118,7 @@
 			<param index="0" name="guid" type="Vector4i" />
 			<param index="1" name="rigid_body2d" type="RigidBody2D" />
 			<description>
-                                Plays one shot event (from [param guid]) and attaches it to [param rigid_body2d]. Tracks position and velocity
+				Plays one shot event (from [param guid]) and attaches it to [param rigid_body2d]. Tracks position and velocity
 			</description>
 		</method>
 		<method name="play_one_shot_rigid_body3d_attached_by_id">
@@ -137,7 +126,7 @@
 			<param index="0" name="guid" type="Vector4i" />
 			<param index="1" name="rigid_body3d" type="RigidBody3D" />
 			<description>
-                                Plays one shot event (from [param guid]) and attaches it to [param rigid_body3d]. Tracks position and velocity
+				Plays one shot event (from [param guid]) and attaches it to [param rigid_body3d]. Tracks position and velocity
 			</description>
 		</method>
 		<method name="play_one_shot_rigid_body3d_attached_by_path">
@@ -145,8 +134,8 @@
 			<param index="0" name="path" type="String" />
 			<param index="1" name="rigid_body3d" type="RigidBody3D" />
 			<description>
-                                Plays one shot event (from [param path]) and attaches it to [param rigid_body3d]. Tracks position and velocity
-                                [b]Note:[/b] The Strings banks must be loaded
+				Plays one shot event (from [param path]) and attaches it to [param rigid_body3d]. Tracks position and velocity
+				                                [b]Note:[/b] The Strings banks must be loaded
 			</description>
 		</method>
 		<method name="set_listener_2d_location">
@@ -188,8 +177,8 @@
 		<method name="unload_banks">
 			<return type="void" />
 			<description>
-                                Unloads all banks.
-                                [b]Warning:[/b] This ignores the reference count of banks loaded as resources and can lead to audio bugs.
+				Unloads all banks.
+				                                [b]Warning:[/b] This ignores the reference count of banks loaded as resources and can lead to audio bugs.
 			</description>
 		</method>
 	</methods>
@@ -201,34 +190,27 @@
 	<signals>
 		<signal name="live_update_connected">
 			<description>
-                            Emitted after live update connects to FMOD Studio
 			</description>
 		</signal>
 		<signal name="live_update_disconnected">
 			<description>
-                            Emitted after live update disconnects from FMOD Studio
 			</description>
 		</signal>
 		<signal name="postupdate">
 			<description>
-                            Emitted at the end of the main Studio update. For async mode this will be on its own thread.
 			</description>
 		</signal>
 		<signal name="preupdate">
 			<description>
-                            Emitted at the start of the main Studio update. For async mode this will be on its own thread.
 			</description>
 		</signal>
 	</signals>
 	<constants>
-		<constant name="DISABLED" value="0" enum="LiveUpdate">
-			LiveUpdate is never enabled.
+		<constant name="LIVE_UPDATE_DISABLED" value="0" enum="LiveUpdate">
 		</constant>
-		<constant name="ENABLED" value="1" enum="LiveUpdate">
-			LiveUpdate is always enabled.
+		<constant name="LIVE_UPDATE_ENABLED" value="1" enum="LiveUpdate">
 		</constant>
-		<constant name="DEV_ONLY" value="2" enum="LiveUpdate">
-			LiveUpdate is only enabled in Editor and Debug builds.
+		<constant name="LIVE_UPDATE_DEV_ONLY" value="2" enum="LiveUpdate">
 		</constant>
 	</constants>
 </class>

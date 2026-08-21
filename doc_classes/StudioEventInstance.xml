@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="StudioEventInstance" inherits="Object" api_type="extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_description" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_exclusive_cpu_usage" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_final_parameter_by_id" qualifiers="static">
+			<return type="float" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="id" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_final_pitch" qualifiers="static">
+			<return type="float" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_final_volume" qualifiers="static">
+			<return type="float" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_inclusive_cpu_usage" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_listener_mask" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_max_distance" qualifiers="static">
+			<return type="float" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_min_distance" qualifiers="static">
+			<return type="float" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_parameter_by_id" qualifiers="static">
+			<return type="float" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="id" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_parameter_by_name" qualifiers="static">
+			<return type="float" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="name" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="get_paused" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_pitch" qualifiers="static">
+			<return type="float" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_playback_state" qualifiers="static">
+			<return type="int" enum="FMOD_STUDIO_PLAYBACK_STATE" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_property" qualifiers="static">
+			<return type="float" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="index" type="int" enum="FMOD_STUDIO_EVENT_PROPERTY" />
+			<description>
+			</description>
+		</method>
+		<method name="get_reverb_level" qualifiers="static">
+			<return type="float" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_system" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_timeline_position" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_transform" qualifiers="static">
+			<return type="Transform3D" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_velocity" qualifiers="static">
+			<return type="Vector3" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_volume" qualifiers="static">
+			<return type="float" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="is_valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="is_virtual" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="key_off" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="release" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="set_3d_attributes" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="transform" type="Transform3D" />
+			<param index="2" name="velocity" type="Vector3" />
+			<description>
+			</description>
+		</method>
+		<method name="set_listener_mask" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="listener_mask" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="set_parameter_by_id" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="id" type="int" />
+			<param index="2" name="value" type="float" />
+			<param index="3" name="_unnamed_arg3" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="set_parameter_by_id_with_label" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="id" type="int" />
+			<param index="2" name="label" type="String" />
+			<param index="3" name="ignoreseekspeed" type="bool" default="false" />
+			<description>
+			</description>
+		</method>
+		<method name="set_parameter_by_name" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="name" type="String" />
+			<param index="2" name="value" type="float" />
+			<param index="3" name="ignore_seek_speed" type="bool" default="false" />
+			<description>
+			</description>
+		</method>
+		<method name="set_parameter_by_name_with_label" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="name" type="String" />
+			<param index="2" name="label" type="String" />
+			<param index="3" name="ignore_seek_speed" type="bool" default="false" />
+			<description>
+			</description>
+		</method>
+		<method name="set_paused" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="paused" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="set_pitch" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="pitch" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="set_property" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="index" type="int" enum="FMOD_STUDIO_EVENT_PROPERTY" />
+			<param index="2" name="level" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="set_reverb_level" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="index" type="int" />
+			<param index="2" name="level" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="set_timeline_position" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="timeline_position" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="set_transform" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="transform" type="Transform3D" />
+			<description>
+			</description>
+		</method>
+		<method name="set_velocity" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="velocity" type="Vector3" />
+			<description>
+			</description>
+		</method>
+		<method name="set_volume" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="volume" type="float" />
+			<description>
+			</description>
+		</method>
+		<method name="start" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="stop" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="_unnamed_arg1" type="int" enum="FMOD_STUDIO_STOP_MODE" />
+			<description>
+			</description>
+		</method>
+	</methods>
+</class>

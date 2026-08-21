@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="StudioBank" inherits="Object" api_type="extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_bus_count" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_bus_list" qualifiers="static">
+			<return type="PackedInt64Array" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_event_count" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_event_list" qualifiers="static">
+			<return type="PackedInt64Array" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_id" qualifiers="static">
+			<return type="Vector4i" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_loading_state" qualifiers="static">
+			<return type="int" enum="FMOD_STUDIO_LOADING_STATE" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_path" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_sample_loading_state" qualifiers="static">
+			<return type="int" enum="FMOD_STUDIO_LOADING_STATE" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_string_count" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_string_info" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="index" type="int" />
+			<param index="2" name="id" type="Vector4i" />
+			<description>
+			</description>
+		</method>
+		<method name="get_vca_count" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_vca_list" qualifiers="static">
+			<return type="PackedInt64Array" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="is_valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="load_sample_data" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="unload" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="unload_sample_data" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+</class>

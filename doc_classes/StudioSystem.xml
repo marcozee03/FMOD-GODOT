@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="StudioSystem" inherits="Object" api_type="extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="create" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="header_version" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="flush_commands" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="flush_sample_loading" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_bank" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="path" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="get_bank_by_id" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="id" type="Vector4i" />
+			<description>
+			</description>
+		</method>
+		<method name="get_bank_count" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_bank_list" qualifiers="static">
+			<return type="PackedInt64Array" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_bus" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="path" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="get_bus_by_id" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="id" type="Vector4i" />
+			<description>
+			</description>
+		</method>
+		<method name="get_event" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="path" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="get_event_by_id" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="id" type="Vector4i" />
+			<description>
+			</description>
+		</method>
+		<method name="get_final_parameter_by_id" qualifiers="static">
+			<return type="float" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="id" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_listener_attenuation_position" qualifiers="static">
+			<return type="Vector3" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="listener" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_listener_transform" qualifiers="static">
+			<return type="Transform3D" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="listener" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_listener_velocity" qualifiers="static">
+			<return type="Vector3" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="listener" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_num_listeners" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_parameter_by_id" qualifiers="static">
+			<return type="float" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="id" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_parameter_label_by_id" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="id" type="int" />
+			<param index="2" name="label_index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_parameter_label_by_name" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="name" type="String" />
+			<param index="2" name="label_index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_vca" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="path" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="get_vca_by_id" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="id" type="Vector4i" />
+			<description>
+			</description>
+		</method>
+		<method name="initialize" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="max_channels" type="int" />
+			<param index="2" name="studio_flags" type="int" />
+			<param index="3" name="flags" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="is_valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="load_bank_file" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="filename" type="String" />
+			<param index="2" name="flags" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="load_bank_memory" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="buffer" type="PackedByteArray" />
+			<param index="2" name="flags" type="int" enum="FMOD_STUDIO_LOAD_MEMORY_MODE" />
+			<param index="3" name="_unnamed_arg3" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="load_command_replay" qualifiers="static">
+			<return type="int" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="filename" type="String" />
+			<param index="2" name="flags" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="lookup_id" qualifiers="static">
+			<return type="Vector4i" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="path" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="lookup_path" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="id" type="Vector4i" />
+			<description>
+			</description>
+		</method>
+		<method name="release" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="set_listener_attributes" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="listener" type="int" />
+			<param index="2" name="transform" type="Transform3D" />
+			<param index="3" name="velocity" type="Vector3" />
+			<description>
+			</description>
+		</method>
+		<method name="set_listener_attributes_with_attenuation" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="listener" type="int" />
+			<param index="2" name="transform" type="Transform3D" />
+			<param index="3" name="velocity" type="Vector3" />
+			<param index="4" name="attenuation_position" type="Vector3" />
+			<description>
+			</description>
+		</method>
+		<method name="set_num_listeners" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="num_listeners" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="set_parameter_by_id" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="id" type="int" />
+			<param index="2" name="value" type="float" />
+			<param index="3" name="ignore_seek_speed" type="bool" default="false" />
+			<description>
+			</description>
+		</method>
+		<method name="set_parameter_by_id_with_label" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="id" type="int" />
+			<param index="2" name="label" type="String" />
+			<param index="3" name="ignore_seek_speed" type="bool" default="false" />
+			<description>
+			</description>
+		</method>
+		<method name="set_parameters_by_ids" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="_unnamed_arg0" type="int" />
+			<param index="1" name="_unnamed_arg1" type="PackedInt64Array" />
+			<param index="2" name="_unnamed_arg2" type="PackedFloat32Array" />
+			<param index="3" name="_unnamed_arg3" type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="start_command_capture" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="filename" type="String" />
+			<param index="2" name="flags" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="stop_command_capture" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="unload_all" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="update" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+</class>
