@@ -12,16 +12,16 @@ namespace FmodGodot
 namespace Studio
 {
 
-class Bus : public Object
+class StudioBus : public Object
 {
-    GDCLASS(Bus, Object);
+    GDCLASS(StudioBus, Object);
 
   protected:
     static void _bind_methods();
 
   public:
-    Bus() = default;
-    ~Bus() = default;
+    StudioBus() = default;
+    ~StudioBus() = default;
     // Handle validity
     static bool is_valid(Handle p_handle);
 
