@@ -6,6 +6,7 @@
 #include "fmod_studio.h"
 #include "fmod_studio_common.h"
 #include "globals.h"
+#include <bit>
 
 using namespace FmodGodot::Studio;
 StudioVCA::StudioVCA()

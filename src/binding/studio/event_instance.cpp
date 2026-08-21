@@ -1,10 +1,10 @@
 #include "event_instance.h"
 #include "../conversions.h"
-#include "binding/studio/studio_system.h"
 #include "core/class_db.hpp"
 #include "fmod_enums.h"
 #include "fmod_studio.h"
 #include "globals.h"
+#include <bit>
 using namespace FmodGodot;
 using namespace FmodGodot::Studio;
 using namespace godot;
