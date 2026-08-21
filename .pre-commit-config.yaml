@@ -73,13 +73,13 @@ repos:
       - id: header-guards
         name: header-guards
         language: python
-        entry: python misc/scripts/header_guards.py
+        entry: python godot-cpp/misc/scripts/header_guards.py
         files: \.(h|hpp|hh|hxx)$
 
       - id: file-format
         name: file-format
         language: python
-        entry: python misc/scripts/file_format.py
+        entry: python godot-cpp/misc/scripts/file_format.py
         types_or: [text]
         exclude: |
           (?x)^(
