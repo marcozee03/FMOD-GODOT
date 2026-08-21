@@ -1,11 +1,10 @@
-#include "command_input.h"
-#ifdef TOOLS_ENABLED
+#include "fmod_console.h"
 #include "classes/config_file.hpp"
 #include "classes/h_flow_container.hpp"
 #include "classes/line_edit.hpp"
 #include "classes/script_editor.hpp"
 #include "classes/v_box_container.hpp"
-#include "fmod_console.h"
+#include "command_input.h"
 #include "fmod_script_client.h"
 #include "variant/callable_method_pointer.hpp"
 #include "variant/packed_string_array.hpp"
@@ -520,4 +519,3 @@ FmodConsole::~FmodConsole()
 #undef EDITOR_GET
 #undef ED_IS_SHORTCUT
 #undef get_editor_theme_icon
-#endif

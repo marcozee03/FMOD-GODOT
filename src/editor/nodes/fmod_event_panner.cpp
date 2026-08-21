@@ -1,15 +1,14 @@
-#include "classes/rendering_server.hpp"
-#include "core/math.hpp"
-#include "core/math_defs.hpp"
-#ifdef TOOLS_ENABLED
+#include "fmod_event_panner.h"
 #include "classes/control.hpp"
 #include "classes/global_constants.hpp"
 #include "classes/input_event_mouse_button.hpp"
 #include "classes/input_event_mouse_motion.hpp"
 #include "classes/ref.hpp"
+#include "classes/rendering_server.hpp"
 #include "core/class_db.hpp"
+#include "core/math.hpp"
+#include "core/math_defs.hpp"
 #include "core/object.hpp"
-#include "fmod_event_panner.h"
 #include "fmod_string_names.h"
 #include "globals.h"
 #include "variant/variant.hpp"
@@ -300,4 +299,3 @@ void FmodEventPanner::_gui_input(const Ref<InputEvent> &p_event)
         }
     }
 }
-#endif

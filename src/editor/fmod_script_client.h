@@ -1,4 +1,3 @@
-#ifdef TOOLS_ENABLED
 #pragma once
 
 #include "classes/stream_peer_tcp.hpp"
@@ -22,4 +21,3 @@ class FmodScriptClient : public godot::StreamPeerTCP
     String get_script_output(const String &p_command);
 };
 } // namespace FmodGodot
-#endif

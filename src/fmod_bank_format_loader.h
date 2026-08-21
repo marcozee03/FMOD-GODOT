@@ -1,3 +1,5 @@
+#pragma once
+
 #include "fmod_bank.h"
 #include <godot_cpp/classes/resource_format_loader.hpp>
 using namespace godot;

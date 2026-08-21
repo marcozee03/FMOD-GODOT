@@ -250,7 +250,7 @@ Property Descriptions
 
 ``String`` **fmod/banks/import/source_type** :ref:`🔗<class_ProjectSettings_property_fmod/banks/import/source_type>`
 
-Specifies the method FMOD Godot uses to access your source .bank files. 
+Specifies the method FMOD Godot uses to access your source .bank files.
 
 
 
