@@ -1,8 +1,7 @@
+#include "fmod_editor_cache.h"
 #include "bank.h"
 #include "binding/studio/event_description.h"
 #include "binding/studio/vca.h"
-#ifdef TOOLS_ENABLED
-#include "fmod_editor_cache.h"
 #include <godot_cpp/variant/packed_string_array.hpp>
 #include <variant/utility_functions.hpp>
 namespace FmodGodot
@@ -101,4 +100,3 @@ PackedStringArray FmodEditorCache::get_contents(const String &p_path) const
     }
 }
 } // namespace FmodGodot
-#endif

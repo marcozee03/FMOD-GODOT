@@ -1,11 +1,12 @@
-
 #pragma once
+
 #include "binding/conversions.h"
 #include "variant/vector2i.hpp"
 #include <fmod_studio.h>
 #include <godot_cpp/templates/vector.hpp>
 #include <variant/string.hpp>
 #include <variant/vector4i.hpp>
+
 using namespace godot;
 namespace FmodGodot
 {

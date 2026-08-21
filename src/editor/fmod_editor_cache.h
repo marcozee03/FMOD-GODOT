@@ -1,6 +1,5 @@
 #pragma once
 #include "bank.h"
-#ifdef TOOLS_ENABLED
 #include "binding/studio/event_description.h"
 #include "binding/studio/parameter_cache.h"
 #include "binding/studio/vca.h"
@@ -37,4 +36,3 @@ class FmodEditorCache
     PackedStringArray get_contents(const String &p_path) const;
 };
 } // namespace FmodGodot
-#endif

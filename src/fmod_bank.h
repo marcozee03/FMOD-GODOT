@@ -1,11 +1,6 @@
 #pragma once
-#include "binding/conversions.h"
-#include "binding/studio/bank.h"
-#include "binding/studio/event_description.h"
 #include "fmod_enums.h"
-#include "fmod_defs.h"
 #include "fmod_studio_common.h"
-#include "vca.h"
 #include <fmod_studio.h>
 #include <godot_cpp/classes/resource.hpp>
 using namespace godot;
@@ -26,7 +21,6 @@ class FmodBank : public Resource
     static void _bind_methods();
 
   public:
-
     FmodBank();
     ~FmodBank();
 
@@ -42,8 +36,8 @@ class FmodBank : public Resource
     int load_sample_data();
     int unload_sample_data();
 
-    int get_loading_state() const;
-    int get_sample_loading_state() const;
+    FMOD_STUDIO_LOADING_STATE get_loading_state() const;
+    FMOD_STUDIO_LOADING_STATE get_sample_loading_state() const;
 
     // Enumeration
     // int getStringCount() const;

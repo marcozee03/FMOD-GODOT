@@ -1,11 +1,10 @@
+#include "fmod_project_explorer.h"
 #include "classes/control.hpp"
 #include "classes/v_box_container.hpp"
 #include "fmod_event_previewer.h"
+#include "fmod_event_tree.h"
 #include "variant/callable_method_pointer.hpp"
 #include "variant/packed_string_array.hpp"
-#ifdef TOOLS_ENABLED
-#include "fmod_event_tree.h"
-#include "fmod_project_explorer.h"
 #include <classes/button.hpp>
 #include <classes/label.hpp>
 #include <classes/project_settings.hpp>
@@ -89,4 +88,3 @@ void FmodProjectExplorer::_notification(int p_what)
 }
 
 } // namespace FmodGodot
-#endif

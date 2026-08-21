@@ -1,5 +1,5 @@
-#ifdef TOOLS_ENABLED
 #include "fmod_event_guid_selector_property.h"
+#include "conversions.h"
 #include "fmod_audio_server.h"
 #include "fmod_event_selector.h"
 #include <classes/project_settings.hpp>
@@ -89,4 +89,3 @@ void EventGUIDSelectorProperty::_update_property()
     updating = false;
 }
 } // namespace FmodGodot
-#endif

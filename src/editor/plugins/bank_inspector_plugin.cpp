@@ -1,8 +1,9 @@
-#ifdef TOOLS_ENABLED
 #include "bank_inspector_plugin.h"
-#include "fmod_object_details.h"
 #include "fmod_bank.h"
-void FmodGodot::BankInspectorPlugin::_bind_methods() {}
+#include "fmod_object_details.h"
+void FmodGodot::BankInspectorPlugin::_bind_methods()
+{
+}
 void FmodGodot::BankInspectorPlugin::_parse_begin(Object *p_object)
 {
     Ref<FmodBank> obj = cast_to<FmodBank>(p_object);
@@ -17,4 +18,3 @@ bool FmodGodot::BankInspectorPlugin::_can_handle(Object *p_object) const
 {
     return cast_to<FmodBank>(p_object) != nullptr;
 }
-#endif

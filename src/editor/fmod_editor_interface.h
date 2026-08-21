@@ -1,6 +1,5 @@
 #pragma once
 #include "fmod_console.h"
-#ifdef TOOLS_ENABLED
 #include "fmod_editor_cache.h"
 #include "fmod_script_client.h"
 #include "fmod_theme.h"
@@ -43,4 +42,3 @@ class FmodEditorInterface : public Object
     void show_event_in_fmod_studio(Vector4i p_guid);
 };
 } // namespace FmodGodot
-#endif

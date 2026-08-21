@@ -1,14 +1,13 @@
+#include "fmod_object_details.h"
 #include "bank.h"
-#include "variant/vector2.hpp"
-#ifdef TOOLS_ENABLED
 #include "classes/control.hpp"
 #include "classes/node.hpp"
 #include "core/memory.hpp"
 #include "fmod_editor_interface.h"
-#include "fmod_object_details.h"
 #include "fmod_theme.h"
 #include "variant/callable_method_pointer.hpp"
 #include "variant/variant.hpp"
+#include "variant/vector2.hpp"
 #include <classes/button.hpp>
 #include <classes/display_server.hpp>
 #include <classes/editor_interface.hpp>
@@ -276,4 +275,3 @@ Variant FmodObjectDetails::_get_drag_data(const Vector2 &p_at_position)
 }
 
 } // namespace FmodGodot
-#endif

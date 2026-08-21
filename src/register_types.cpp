@@ -1,5 +1,6 @@
 #include "register_types.h"
 #include "binding/studio/bus.h"
+#include "binding/studio/event_description.h"
 #include "binding/studio/event_instance.h"
 #include "binding/studio/studio_system.h"
 #include "core/binder_common.hpp"
@@ -134,7 +135,7 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         GDREGISTER_CLASS(FmodListener3D);
         GDREGISTER_ABSTRACT_CLASS(FmodBank);
         GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::StudioBank)
-        // GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::StudioSystem)
+        GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::StudioSystem)
         GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::StudioVCA)
         GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::StudioBus)
         GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::StudioEventInstance)

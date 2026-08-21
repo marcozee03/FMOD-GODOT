@@ -44,9 +44,19 @@ class ANSI(Enum):
 
 def print_warning(*values: object) -> None:
     """Prints a warning message with formatting."""
-    print(f"{ANSI.YELLOW}{ANSI.BOLD}WARNING:{ANSI.REGULAR}", *values, ANSI.RESET, file=sys.stderr)
+    print(
+        f"{ANSI.YELLOW}{ANSI.BOLD}WARNING:{ANSI.REGULAR}",
+        *values,
+        ANSI.RESET,
+        file=sys.stderr,
+    )
 
 
 def print_error(*values: object) -> None:
     """Prints an error message with formatting."""
-    print(f"{ANSI.RED}{ANSI.BOLD}ERROR:{ANSI.REGULAR}", *values, ANSI.RESET, file=sys.stderr)
+    print(
+        f"{ANSI.RED}{ANSI.BOLD}ERROR:{ANSI.REGULAR}",
+        *values,
+        ANSI.RESET,
+        file=sys.stderr,
+    )

@@ -1,16 +1,15 @@
 
+#include "fmod_editor_interface.h"
 #include "binding/conversions.h"
 #include "binding/studio/event_description.h"
 #include "binding/studio/parameter_cache.h"
 #include "binding/studio/vca.h"
 #include "core/memory.hpp"
+#include "fmod_audio_server.h"
 #include "fmod_bank.h"
 #include "fmod_script_client.h"
 #include "fmod_studio_common.h"
 #include "variant/utility_functions.hpp"
-#ifdef TOOLS_ENABLED
-#include "fmod_audio_server.h"
-#include "fmod_editor_interface.h"
 #include <classes/os.hpp>
 #include <classes/project_settings.hpp>
 namespace FmodGodot
@@ -177,4 +176,3 @@ void FmodEditorInterface::show_event_in_fmod_studio(Vector4i p_guid)
     }
 }
 } // namespace FmodGodot
-#endif
