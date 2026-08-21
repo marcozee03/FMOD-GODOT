@@ -3,8 +3,8 @@
 #include "fmod_audio_server.h"
 #include "fmod_event_selector.h"
 #include <classes/project_settings.hpp>
+#include <fmod_defs.h>
 #include <fmod_errors.h>
-#include <fmod_globals.h>
 #include <fmod_studio.h>
 #include <godot_cpp/classes/editor_property.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>

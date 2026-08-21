@@ -2,6 +2,7 @@
 #include "binding/studio/event_instance.h"
 #include "binding/studio/parameter_cache.h"
 #include "classes/ref_counted.hpp"
+#include "fmod_defs.h"
 #include "classes/wrapped.hpp"
 #include "variant/variant.hpp"
 #include "variant/vector2i.hpp"
@@ -36,52 +37,52 @@ class EventDescription : public RefCounted
     EventDescription() = default;
     ~EventDescription() = default;
     // Handle validity
-    static bool is_valid(size_t p_handle);
+    static bool is_valid(Handle p_handle);
 
     // Property access
-    static Vector4i get_id(size_t p_handle);
-    static String get_path(size_t p_handle);
-    static int get_parameter_description_count(size_t p_handle);
-    static FMOD_STUDIO_PARAMETER_DESCRIPTION getParameterDescriptionByIndex(size_t p_handle, int p_index);
-    static FMOD_STUDIO_PARAMETER_DESCRIPTION getParameterDescriptionByName(size_t p_handle, const String &p_name);
-    static FMOD_STUDIO_PARAMETER_DESCRIPTION getParameterDescriptionByID(size_t p_handle, uint64_t p_id);
-    static String get_parameter_label_by_index(size_t p_handle, int p_index, int p_labelindex);
-    static String get_parameter_label_by_name(size_t p_handle, const String &p_name, int p_labelindex);
-    static String get_parameter_label_by_id(size_t p_handle, uint64_t p_id, int p_labelindex);
-    static int get_user_property_count(size_t p_handle);
+    static Vector4i get_id(Handle p_handle);
+    static String get_path(Handle p_handle);
+    static int get_parameter_description_count(Handle p_handle);
+    static FMOD_STUDIO_PARAMETER_DESCRIPTION getParameterDescriptionByIndex(Handle p_handle, int p_index);
+    static FMOD_STUDIO_PARAMETER_DESCRIPTION getParameterDescriptionByName(Handle p_handle, const String &p_name);
+    static FMOD_STUDIO_PARAMETER_DESCRIPTION getParameterDescriptionByID(Handle p_handle, uint64_t p_id);
+    static String get_parameter_label_by_index(Handle p_handle, int p_index, int p_labelindex);
+    static String get_parameter_label_by_name(Handle p_handle, const String &p_name, int p_labelindex);
+    static String get_parameter_label_by_id(Handle p_handle, uint64_t p_id, int p_labelindex);
+    static int get_user_property_count(Handle p_handle);
 
-    static Variant get_user_property_by_index(size_t p_handle, int p_index);
-    static Variant get_user_property(size_t p_handle, const String &p_name);
-    static int get_length(size_t p_handle);
-    static float get_min_distance(size_t p_handle);
-    static float get_max_distance(size_t p_handle);
-    static float get_sound_size(size_t p_handle);
+    static Variant get_user_property_by_index(Handle p_handle, int p_index);
+    static Variant get_user_property(Handle p_handle, const String &p_name);
+    static int get_length(Handle p_handle);
+    static float get_min_distance(Handle p_handle);
+    static float get_max_distance(Handle p_handle);
+    static float get_sound_size(Handle p_handle);
 
-    static bool is_snapshot(size_t p_handle);
-    static bool is_oneshot(size_t p_handle);
-    static bool is_stream(size_t p_handle);
-    static bool is3D(size_t p_handle);
-    static bool is_doppler_enabled(size_t p_handle);
-    static bool has_sustain_point(size_t p_handle);
+    static bool is_snapshot(Handle p_handle);
+    static bool is_oneshot(Handle p_handle);
+    static bool is_stream(Handle p_handle);
+    static bool is3D(Handle p_handle);
+    static bool is_doppler_enabled(Handle p_handle);
+    static bool has_sustain_point(Handle p_handle);
 
-    static size_t create_instance(size_t p_handle);
-    static int get_instance_count(size_t p_handle);
-    static PackedInt64Array get_instance_list(size_t p_handle);
+    static Handle create_instance(Handle p_handle);
+    static int get_instance_count(Handle p_handle);
+    static PackedInt64Array get_instance_list(Handle p_handle);
 
     // Sample data loading control
-    static FMOD_RESULT load_sample_data(size_t p_handle);
-    static FMOD_RESULT unload_sample_data(size_t p_handle);
-    static FMOD_STUDIO_LOADING_STATE get_sample_loading_state(size_t p_handle);
+    static FMOD_RESULT load_sample_data(Handle p_handle);
+    static FMOD_RESULT unload_sample_data(Handle p_handle);
+    static FMOD_STUDIO_LOADING_STATE get_sample_loading_state(Handle p_handle);
 
     // Convenience functions
-    static FMOD_RESULT release_all_instances(size_t p_handle);
+    static FMOD_RESULT release_all_instances(Handle p_handle);
 
     // TODO: bind to signals
     //  Callbacks
     //  FMOD_RESULT setCallback(FMOD_STUDIO_EVENT_CALLBACK callback,
     //                          FMOD_STUDIO_EVENT_CALLBACK_TYPE callbackmask = FMOD_STUDIO_EVENT_CALLBACK_ALL);
-    static void *get_user_data(size_t p_handle);
-    static FMOD_RESULT set_user_data(size_t p_handle, void *p_userdata);
+    static void *get_user_data(Handle p_handle);
+    static FMOD_RESULT set_user_data(Handle p_handle, void *p_userdata);
 };
 } // namespace Studio
 } // namespace FmodGodot

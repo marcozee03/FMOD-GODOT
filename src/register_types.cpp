@@ -1,9 +1,11 @@
 #include "register_types.h"
 #include "binding/studio/bus.h"
 #include "binding/studio/event_instance.h"
+#include "binding/studio/studio_system.h"
 #include "core/binder_common.hpp"
 #include <fmod_studio_common.h>
 
+#include "binding/studio/bank.h"
 #include "binding/studio/vca.h"
 #include "classes/global_constants.hpp"
 #include "core/class_db.hpp"
@@ -61,6 +63,7 @@ FmodEditorInterface *editor_interface;
 
 namespace FmodGodot
 {
+static_assert(sizeof(RID) == sizeof(size_t));
 void loadSettings()
 {
     GLOBAL_DEF_RST_BASIC(PropertyInfo(Variant::Type::INT, LIVE_UPDATE, godot::PROPERTY_HINT_ENUM,
@@ -130,9 +133,12 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         GDREGISTER_CLASS(FmodListener2D);
         GDREGISTER_CLASS(FmodListener3D);
         GDREGISTER_ABSTRACT_CLASS(FmodBank);
+        GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::Bank)
+        // GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::StudioSystem)
         GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::VCA)
         GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::Bus)
         GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::EventInstance)
+        GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::EventDescription)
         GDREGISTER_INTERNAL_CLASS(FmodBankFormatLoader);
         GDREGISTER_CLASS(FmodEventEmitter2D);
         GDREGISTER_CLASS(FmodEventEmitter3D);

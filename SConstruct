@@ -16,6 +16,11 @@ source_path = [
 logging = ""
 if env["target"] in ["editor", "template_debug"]:
     logging = "L"
+# Require C++20
+if env.get("is_msvc", False):
+    env.Append(CXXFLAGS=["/std:c++20"])
+else:
+    env.Append(CXXFLAGS=["-std=c++20"])
 
 def linux_config():
     suffix = env['target']

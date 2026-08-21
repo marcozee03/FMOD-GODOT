@@ -1,6 +1,6 @@
 #pragma once
-#include "classes/ref_counted.hpp"
 #include "fmod_common.h"
+#include "fmod_defs.h"
 #include "fmod_studio_common.h"
 #include <godot_cpp/variant/vector4i.hpp>
 
@@ -28,16 +28,16 @@ class VCA : public Object
 
     VCA();
     // Handle validity
-    static bool is_valid(size_t p_handle);
+    static bool is_valid(Handle p_handle);
 
     // Property access
-    static Vector4i get_id(size_t p_handle);
-    static String get_path(size_t p_handle);
+    static Vector4i get_id(Handle p_handle);
+    static String get_path(Handle p_handle);
 
     // Playback control
-    static float get_volume(size_t p_handle);
-    static float get_final_volume(size_t p_handle);
-    static FMOD_RESULT set_volume(size_t p_handle, float p_volume);
+    static float get_volume(Handle p_handle);
+    static float get_final_volume(Handle p_handle);
+    static FMOD_RESULT set_volume(Handle p_handle, float p_volume);
 };
 } // namespace Studio
 } // namespace FmodGodot

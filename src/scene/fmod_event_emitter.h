@@ -5,6 +5,7 @@
 #include "core/print_string.hpp"
 #include "fmod_audio_server.h"
 #include "fmod_common.h"
+#include "fmod_enums.h"
 #include "fmod_studio_common.h"
 #include "globals.h"
 #include "variant/packed_string_array.hpp"

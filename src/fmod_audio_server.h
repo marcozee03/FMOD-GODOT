@@ -6,7 +6,6 @@
 #include <fmod_studio.h>
 #include <fmod_studio_common.h>
 #include <godot_cpp/templates/hash_map.hpp>
-using namespace std;
 using namespace godot;
 #include "fmod_bank.h"
 #include <godot_cpp/classes/mutex.hpp>
@@ -48,9 +47,9 @@ class FmodAudioServer : public Object
   public:
     enum LiveUpdate : unsigned int
     {
-        DISABLED = 0,
-        ENABLED = 1,
-        DEV_ONLY = 2
+        LIVE_UPDATE_DISABLED = 0,
+        LIVE_UPDATE_ENABLED = 1,
+        LIVE_UPDATE_DEV_ONLY = 2
     };
     struct InitSettings
     {
@@ -62,7 +61,7 @@ class FmodAudioServer : public Object
         int dspbuffer_count = 5;
         int software_channels = 64;
         int virtual_channels = 1024;
-        LiveUpdate live_update = DISABLED;
+        LiveUpdate live_update = LIVE_UPDATE_DISABLED;
         int live_update_port = 9264;
         String encryption_key = "";
         String bank_directory = "res://";
