@@ -130,7 +130,7 @@ FmodGodot::Studio::StudioBank::Cache::Cache(FMOD_STUDIO_BANK *p_bank)
     {
         for (size_t description : Studio::StudioBank::get_event_list(handle))
         {
-            children.push_back(Studio::EventDescription::get_path(description));
+            children.push_back(Studio::StudioEventDescription::get_path(description));
         }
     }
     {

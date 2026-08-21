@@ -127,7 +127,7 @@ void FmodEditorInterface::refresh(bool p_load_start_up_banks)
                 FMOD_Studio_Bank_GetEventList(banks[i], descriptions, event_count, &event_count);
                 for (int j = 0; j < event_count; j++)
                 {
-                    FmodGodot::Studio::EventDescription::Cache event(descriptions[j]);
+                    FmodGodot::Studio::StudioEventDescription::Cache event(descriptions[j]);
                     cache.add(event);
                 }
                 memdelete_arr(descriptions);

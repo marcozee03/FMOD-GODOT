@@ -155,7 +155,7 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
 
         header->set_text("Event");
         header->set_button_icon(theme->event_icon);
-        Studio::EventDescription::Cache event = cache->get_event(p_path);
+        Studio::StudioEventDescription::Cache event = cache->get_event(p_path);
         push_label_str_meta(text, "Full Path: ", event.full_path, "Copy event path");
         push_label_var_meta(text, "Guid: ", fmod_guid_to_string(event.guid), event.guid, "Drag Event");
         if (event.is3d)

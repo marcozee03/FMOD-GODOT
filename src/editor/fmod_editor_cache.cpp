@@ -14,7 +14,7 @@ FmodEditorCache::~FmodEditorCache()
 {
 }
 
-void FmodEditorCache::add(const Studio::EventDescription::Cache &p_event)
+void FmodEditorCache::add(const Studio::StudioEventDescription::Cache &p_event)
 {
     event_cache.add_data(p_event.full_path, p_event);
 }
@@ -41,7 +41,7 @@ void FmodEditorCache::clear()
     vca_cache.clear();
     parameter_cache.clear();
 }
-const PathTree<Studio::EventDescription::Cache> FmodEditorCache::get_event_cache() const
+const PathTree<Studio::StudioEventDescription::Cache> FmodEditorCache::get_event_cache() const
 {
     return event_cache;
 }
@@ -58,7 +58,7 @@ const PathTree<Studio::StudioVCA::Cache> FmodEditorCache::get_vca_cache()
     return vca_cache;
 }
 
-Studio::EventDescription::Cache FmodEditorCache::get_event(const String &p_path) const
+Studio::StudioEventDescription::Cache FmodEditorCache::get_event(const String &p_path) const
 {
     return event_cache[p_path];
 }
