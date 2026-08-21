@@ -1,4 +1,4 @@
-# FMOD Godot  
+# FMOD Godot
 
 [Documentation](https://fmod-godot.readthedocs.io/)
 
@@ -14,7 +14,7 @@
 Fmod-Godot is a GDExtension library that integrates the Fmod API with the Godot
 Engine. The library provides a way for C# to interact directly with the same FMOD
 Studio/Core system instances the FmodAudioServer uses. So, it is not limited to
-what the integration handles explicitly.  
+what the integration handles explicitly.
 
 Unlike [FMOD GDExtension](https://github.com/utopia-rise/fmod-gdextension)
 This extension doesn't expose the low-level FMOD and FMOD Studio APIs to GDScript.
@@ -22,13 +22,13 @@ The initial design Goal/Motivation of this was to add a high-level integration
 with the Godot Engine while allowing C# to use the official FMOD C# wrapper. GDScript
 can only directly interact with the newly added nodes
 
-## Features  
+## Features
 
-### Event tags  
+### Event tags
 
 Add a FmodEvent tag to strings or Vector4Is to choose an FMOD_Event from the
 inspector to be passed to FMOD API Functions <sub>*Convert will Vector4i to an
-    FMOD::GUID with an implicit cast and vice versa</sub>  
+    FMOD::GUID with an implicit cast and vice versa</sub>
 
 ``` C#
 [Export(PropertyHint.None,"FmodEvent")]
@@ -51,12 +51,12 @@ var soundfx2 : Vector4I
 The editor will load all of the banks in the banks folder. and cache them at
 startup. to be referenced by inspectors. You can drag and drop events from the browser
 
-![](images/event_browser.png)  
+![](images/event_browser.png)
 
 ### Fmod Console
 
 The FMOD console allows you to interact with FMOD Studio's javascript api.
-![](images/fmod_console.png)  
+![](images/fmod_console.png)
 
 ### Class Overview
 
@@ -71,7 +71,7 @@ The FMOD console allows you to interact with FMOD Studio's javascript api.
 
 - ![](plugin_template/icons/bank_icon.svg)**FmodBank**: Fmod Bank files are imported
 into Godot and exported automatically. Banks can be opened in the inspector to view
-what events they contain and their GUID.  
+what events they contain and their GUID.
   ![](images/bank_inspector_example.png)
 
 - ![](plugin_template/icons/FmodEventEmitter2D.svg) **FmodEventEmitter2D/3D**:
@@ -125,9 +125,9 @@ Alternatively refer to [Introduction to the buildsystem](https://docs.godotengin
 
 ##### Automatic Set-up
 
-To run the install go to Project > Tools > Finish FMOD Godot setup  
+To run the install go to Project > Tools > Finish FMOD Godot setup
 
-![](images/run_installer.png)  
+![](images/run_installer.png)
 
 ![](images/installer.png)
 
@@ -137,7 +137,7 @@ Enter your fmod account info and the installer will close once complete
 
 You must download the FMOD files from FMOD's website and place the *.cs files
 somewhere in your project directory.
-  
+
 It is necessary to replace FMOD.VERSION.dll and FMOD.Studio.STUDIO_VERSION.dll
 constants to use the proper fmod library version. Which will be found in fmod.cs
 and fmod_studio.cs. .so.14 will change depending on what so file you are using.
