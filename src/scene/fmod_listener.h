@@ -4,6 +4,7 @@
 #include "core/math.hpp"
 #include "fmod_audio_server.h"
 #include "fmod_common.h"
+#include "fmod_enums.h"
 #include "fmod_studio.h"
 #include "globals.h"
 #include "variant/string_name.hpp"

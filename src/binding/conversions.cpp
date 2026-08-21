@@ -3,8 +3,8 @@
 #include "fmod_studio.h"
 #include "variant/variant.hpp"
 #include "variant/vector2i.hpp"
+#include <bit>
 #include <cstdint>
-#include <cstring>
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/rigid_body2d.hpp>
@@ -13,27 +13,20 @@
 #include <godot_cpp/variant/vector3.hpp>
 #include <godot_cpp/variant/vector4i.hpp>
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wclass-memaccess"
-
 namespace FmodGodot
 {
 Vector4i cast_to_vector4i(const FMOD_GUID &p_guid)
 {
     static_assert(sizeof(Vector4i) == sizeof(FMOD_GUID),
                   "Vector4i and FMOD_GUID must be the same size for type punning");
-    Vector4i v;
-    memcpy(&v, &p_guid, sizeof(Vector4i));
-    return v;
+    return std::bit_cast<Vector4i>(p_guid);
 }
 
 FMOD_GUID cast_to_fmod_guid(const Vector4i &p_guid)
 {
     static_assert(sizeof(Vector4i) == sizeof(FMOD_GUID),
                   "Vector4i and FMOD_GUID must be the same size for type punning");
-    FMOD_GUID eventguid;
-    memcpy(&eventguid, &p_guid, sizeof(Vector4i));
-    return eventguid;
+    return std::bit_cast<FMOD_GUID>(p_guid);
 }
 
 static_assert(sizeof(uint64_t) == sizeof(FMOD_STUDIO_PARAMETER_ID));
@@ -41,21 +34,15 @@ FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(uint64_t p_id)
 {
     static_assert(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(uint64_t),
                   "Vector2i and FMOD_STUDIO_PARAMETER_ID must be the same size for type punning");
-    FMOD_STUDIO_PARAMETER_ID id;
-    memcpy(&id, &p_id, sizeof(FMOD_STUDIO_PARAMETER_ID));
-    return id;
+    return std::bit_cast<FMOD_STUDIO_PARAMETER_ID>(p_id);
 }
 
 uint64_t cast_to_uint64(const FMOD_STUDIO_PARAMETER_ID &p_id)
 {
     static_assert(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(uint64_t),
                   "Vector2i and FMOD_STUDIO_PARAMETER_ID must be the same size for type punning");
-    uint64_t id;
-    memcpy(&id, &p_id, sizeof(uint64_t));
-    return id;
+    return std::bit_cast<uint64_t>(p_id);
 }
-#pragma GCC diagnostic pop
-//
 
 Vector4i parse_guid(const String &p_id)
 {

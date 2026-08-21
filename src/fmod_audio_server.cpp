@@ -8,7 +8,8 @@
 #include "core/print_string.hpp"
 #include "fmod.h"
 #include "fmod_common.h"
-#include "fmod_globals.h"
+#include "fmod_enums.h"
+#include "fmod_defs.h"
 #include "fmod_string_names.h"
 #include "fmod_studio.h"
 #include "fmod_studio_common.h"
@@ -187,14 +188,14 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
     FMOD_STUDIO_INITFLAGS studio_init = FMOD_STUDIO_INIT_NORMAL;
     switch (p_settings.live_update)
     {
-    case DISABLED: // disabled
+    case LIVE_UPDATE_DISABLED: // disabled
         studio_init = FMOD_STUDIO_INIT_NORMAL;
         break;
-    case ENABLED:
+    case LIVE_UPDATE_ENABLED:
         studio_init = FMOD_STUDIO_INIT_LIVEUPDATE;
         print_line("Live Update");
         print_line(p_settings.live_update_port);
-    case DEV_ONLY: // dev
+    case LIVE_UPDATE_DEV_ONLY: // dev
 #if defined(TOOLS_ENABLED) || defined(DEBUG)
         studio_init = FMOD_STUDIO_INIT_LIVEUPDATE;
 #else
@@ -447,9 +448,9 @@ void FmodAudioServer::finish()
 #pragma endregion
 void FmodAudioServer::_bind_methods()
 {
-    BIND_ENUM_CONSTANT(DISABLED);
-    BIND_ENUM_CONSTANT(ENABLED);
-    BIND_ENUM_CONSTANT(DEV_ONLY);
+    BIND_ENUM_CONSTANT(LIVE_UPDATE_DISABLED);
+    BIND_ENUM_CONSTANT(LIVE_UPDATE_ENABLED);
+    BIND_ENUM_CONSTANT(LIVE_UPDATE_DEV_ONLY);
     ClassDB::bind_static_method(get_class_static(), D_METHOD("get_version_number"),
                                 &FmodAudioServer::get_version_number);
     ClassDB::bind_method(D_METHOD("unload_banks"), &FmodAudioServer::unload_banks);

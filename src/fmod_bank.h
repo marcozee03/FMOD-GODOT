@@ -1,7 +1,11 @@
 #pragma once
 #include "binding/conversions.h"
-#include "fmod_globals.h"
+#include "binding/studio/bank.h"
+#include "binding/studio/event_description.h"
+#include "fmod_enums.h"
+#include "fmod_defs.h"
 #include "fmod_studio_common.h"
+#include "vca.h"
 #include <fmod_studio.h>
 #include <godot_cpp/classes/resource.hpp>
 using namespace godot;
@@ -10,7 +14,6 @@ namespace FmodGodot
 class FmodBankFormatLoader;
 class FmodBank : public Resource
 {
-
     friend class FmodBankFormatLoader;
     friend class FmodBankLoader;
     friend class FmodAudioServer;
@@ -23,6 +26,7 @@ class FmodBank : public Resource
     static void _bind_methods();
 
   public:
+#ifdef TOOLS_ENABLED
     struct Cache
     {
         Cache()
@@ -30,39 +34,19 @@ class FmodBank : public Resource
         }
         Cache(FMOD_STUDIO_BANK *p_bank)
         {
-            FMOD_GET_OUT_STRING(FMOD_Studio_Bank_GetPath, p_bank, full_path);
-            FMOD_GUID fguid;
-            FMOD_Studio_Bank_GetID(p_bank, &fguid);
-            guid = cast_to_vector4i(fguid);
+            const size_t handle = std::bit_cast<size_t>(p_bank);
+            full_path = Studio::Bank::get_path(handle);
+            guid = Studio::Bank::get_id(handle);
             {
-                int event_count;
-                FMOD_Studio_Bank_GetEventCount(p_bank, &event_count);
-                if (event_count > 0)
+                for (size_t description : Studio::Bank::get_event_list(handle))
                 {
-                    FMOD_STUDIO_EVENTDESCRIPTION **descriptions =
-                        memnew_arr(FMOD_STUDIO_EVENTDESCRIPTION *, event_count);
-                    FMOD_Studio_Bank_GetEventList(p_bank, descriptions, event_count, &event_count);
-                    for (int j = 0; j < event_count; j++)
-                    {
-                        FMOD_GET_STRING(FMOD_Studio_EventDescription_GetPath, descriptions[j], event_path);
-                        children.push_back(event_path);
-                    }
-                    memdelete_arr(descriptions);
+                    children.push_back(Studio::EventDescription::get_path(description));
                 }
             }
             {
-                int vca_count;
-                FMOD_Studio_Bank_GetVCACount(p_bank, &vca_count);
-                if (vca_count > 0)
+                for (size_t vca : Studio::Bank::get_vca_list(handle))
                 {
-                    FMOD_STUDIO_VCA **vcas = memnew_arr(FMOD_STUDIO_VCA *, vca_count);
-                    FMOD_Studio_Bank_GetVCAList(p_bank, vcas, vca_count, &vca_count);
-                    for (int j = 0; j < vca_count; j++)
-                    {
-                        FMOD_GET_STRING(FMOD_Studio_VCA_GetPath, vcas[j], vca_path);
-                        children.push_back(vca_path);
-                    }
-                    memdelete_arr(vcas);
+                    children.push_back(Studio::VCA::get_path(vca));
                 }
             }
         }
@@ -70,6 +54,7 @@ class FmodBank : public Resource
         Vector4i guid;
         Vector<String> children;
     };
+#endif
     FmodBank();
     ~FmodBank();
 
