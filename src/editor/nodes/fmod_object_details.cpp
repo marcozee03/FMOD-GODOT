@@ -227,7 +227,7 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
     {
         header->set_text("VCA:" + p_path.get_file().get_basename());
         header->set_button_icon(theme->vca_icon);
-        Studio::VCA::Cache vca = cache->get_vca(p_path);
+        Studio::StudioVCA::Cache vca = cache->get_vca(p_path);
 
         push_label_str_meta(text, "Full Path: ", vca.full_path, "Copy vca path");
         push_label_var_meta(text, "Guid: ", fmod_guid_to_string(vca.guid), vca.guid, "Drag Event");

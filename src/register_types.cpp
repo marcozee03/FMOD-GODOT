@@ -135,7 +135,7 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         GDREGISTER_ABSTRACT_CLASS(FmodBank);
         GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::StudioBank)
         // GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::StudioSystem)
-        GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::VCA)
+        GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::StudioVCA)
         GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::Bus)
         GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::EventInstance)
         GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::EventDescription)

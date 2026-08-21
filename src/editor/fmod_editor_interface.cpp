@@ -142,7 +142,7 @@ void FmodEditorInterface::refresh(bool p_load_start_up_banks)
                 FMOD_Studio_Bank_GetVCAList(banks[i], vcas, vca_count, &vca_count);
                 for (int j = 0; j < vca_count; j++)
                 {
-                    FmodGodot::Studio::VCA::Cache vca(vcas[j]);
+                    FmodGodot::Studio::StudioVCA::Cache vca(vcas[j]);
                     cache.add(vca);
                 }
                 memdelete_arr(vcas);
