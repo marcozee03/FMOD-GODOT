@@ -13,10 +13,10 @@ namespace FmodGodot
 namespace Studio
 {
 class FmodBankFormatLoader;
-class Bank : public Object
+class StudioBank : public Object
 {
 
-    GDCLASS(Bank, Object);
+    GDCLASS(StudioBank, Object);
 
   private:
   protected:
@@ -51,8 +51,8 @@ class Bank : public Object
         Vector<String> children;
     };
 #endif
-    Bank() = default;
-    ~Bank() = default;
+    StudioBank() = default;
+    ~StudioBank() = default;
 
     static bool is_valid(Handle p_handle);
 
