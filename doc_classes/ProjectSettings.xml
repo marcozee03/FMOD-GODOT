@@ -48,7 +48,7 @@
                     Enables display of additional information in logs.
 		</member>
 
-                <member name="fmod/general/live_update" type="int" enum="fmodAudioServer.LiveUpdate" setter="" getter="">
+                <member name="fmod/general/live_update" type="int" enum="FmodAudioServer.LiveUpdate" setter="" getter="">
                     Specifies when to accept connections to the game from FMOD Studio. This should be Disabled when releasing builds.
 
                     Disabled - Never accept connections from FMOD Studio.
