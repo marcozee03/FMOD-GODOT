@@ -14,3 +14,7 @@ git-filter-repo
 *.lib
 *.exp
 *.idx
+*.so*
+*.dll
+src/gen/
+compile_commands.json
