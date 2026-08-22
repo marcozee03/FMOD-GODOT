@@ -623,8 +623,6 @@ class ClassDef(DefinitionBase):
 
     def update_class_group(self, state: State) -> None:
         group_name = "variant"
-
-        print("Update Class Group: ", self.name)
         if self.name.startswith("@"):
             group_name = "global"
         elif self.inherits:
@@ -1537,7 +1535,7 @@ def make_type(klass: str, state: State) -> str:
         if link_type in state.classes:
             return f":ref:`{link_type}<class_{sanitize_class_name(link_type)}>`"
         if link_type in GODOT_VARIANT_TYPES:
-            return f"|{link_type}|"
+            return f"{link_type}"
         else:
             print_error(f'{state.current_class}.xml: Unresolved type "{link_type}".', state)
             return f"``{link_type}``"

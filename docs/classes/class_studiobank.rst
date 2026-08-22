@@ -10,7 +10,7 @@
 StudioBank
 ==========
 
-**Inherits:** |Object|
+**Inherits:** Object
 
 .. container:: contribute
 
@@ -24,39 +24,39 @@ Methods
 .. table::
    :widths: auto
 
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-   | |int|                     | :ref:`get_bus_count<class_StudioBank_method_get_bus_count>`\ (\ handle\: |int|\ ) |static|                                     |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-   | ``PackedInt64Array``      | :ref:`get_bus_list<class_StudioBank_method_get_bus_list>`\ (\ handle\: |int|\ ) |static|                                       |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-   | |int|                     | :ref:`get_event_count<class_StudioBank_method_get_event_count>`\ (\ handle\: |int|\ ) |static|                                 |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-   | ``PackedInt64Array``      | :ref:`get_event_list<class_StudioBank_method_get_event_list>`\ (\ handle\: |int|\ ) |static|                                   |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-   | |Vector4i|                | :ref:`get_id<class_StudioBank_method_get_id>`\ (\ handle\: |int|\ ) |static|                                                   |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_STUDIO_LOADING_STATE | :ref:`get_loading_state<class_StudioBank_method_get_loading_state>`\ (\ handle\: |int|\ ) |static|                             |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-   | |String|                  | :ref:`get_path<class_StudioBank_method_get_path>`\ (\ handle\: |int|\ ) |static|                                               |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_STUDIO_LOADING_STATE | :ref:`get_sample_loading_state<class_StudioBank_method_get_sample_loading_state>`\ (\ handle\: |int|\ ) |static|               |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-   | |int|                     | :ref:`get_string_count<class_StudioBank_method_get_string_count>`\ (\ handle\: |int|\ ) |static|                               |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-   | |String|                  | :ref:`get_string_info<class_StudioBank_method_get_string_info>`\ (\ handle\: |int|, index\: |int|, id\: |Vector4i|\ ) |static| |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-   | |int|                     | :ref:`get_vca_count<class_StudioBank_method_get_vca_count>`\ (\ handle\: |int|\ ) |static|                                     |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-   | ``PackedInt64Array``      | :ref:`get_vca_list<class_StudioBank_method_get_vca_list>`\ (\ handle\: |int|\ ) |static|                                       |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-   | |bool|                    | :ref:`is_valid<class_StudioBank_method_is_valid>`\ (\ handle\: |int|\ ) |static|                                               |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_RESULT               | :ref:`load_sample_data<class_StudioBank_method_load_sample_data>`\ (\ handle\: |int|\ ) |static|                               |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_RESULT               | :ref:`unload<class_StudioBank_method_unload>`\ (\ handle\: |int|\ ) |static|                                                   |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_RESULT               | :ref:`unload_sample_data<class_StudioBank_method_unload_sample_data>`\ (\ handle\: |int|\ ) |static|                           |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------+
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | int                       | :ref:`get_bus_count<class_StudioBank_method_get_bus_count>`\ (\ handle\: int\ ) |static|                                 |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | ``PackedInt64Array``      | :ref:`get_bus_list<class_StudioBank_method_get_bus_list>`\ (\ handle\: int\ ) |static|                                   |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | int                       | :ref:`get_event_count<class_StudioBank_method_get_event_count>`\ (\ handle\: int\ ) |static|                             |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | ``PackedInt64Array``      | :ref:`get_event_list<class_StudioBank_method_get_event_list>`\ (\ handle\: int\ ) |static|                               |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | Vector4i                  | :ref:`get_id<class_StudioBank_method_get_id>`\ (\ handle\: int\ ) |static|                                               |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | FMOD_STUDIO_LOADING_STATE | :ref:`get_loading_state<class_StudioBank_method_get_loading_state>`\ (\ handle\: int\ ) |static|                         |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | String                    | :ref:`get_path<class_StudioBank_method_get_path>`\ (\ handle\: int\ ) |static|                                           |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | FMOD_STUDIO_LOADING_STATE | :ref:`get_sample_loading_state<class_StudioBank_method_get_sample_loading_state>`\ (\ handle\: int\ ) |static|           |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | int                       | :ref:`get_string_count<class_StudioBank_method_get_string_count>`\ (\ handle\: int\ ) |static|                           |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | String                    | :ref:`get_string_info<class_StudioBank_method_get_string_info>`\ (\ handle\: int, index\: int, id\: Vector4i\ ) |static| |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | int                       | :ref:`get_vca_count<class_StudioBank_method_get_vca_count>`\ (\ handle\: int\ ) |static|                                 |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | ``PackedInt64Array``      | :ref:`get_vca_list<class_StudioBank_method_get_vca_list>`\ (\ handle\: int\ ) |static|                                   |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | bool                      | :ref:`is_valid<class_StudioBank_method_is_valid>`\ (\ handle\: int\ ) |static|                                           |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | FMOD_RESULT               | :ref:`load_sample_data<class_StudioBank_method_load_sample_data>`\ (\ handle\: int\ ) |static|                           |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | FMOD_RESULT               | :ref:`unload<class_StudioBank_method_unload>`\ (\ handle\: int\ ) |static|                                               |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------+
+   | FMOD_RESULT               | :ref:`unload_sample_data<class_StudioBank_method_unload_sample_data>`\ (\ handle\: int\ ) |static|                       |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -71,7 +71,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|int| **get_bus_count**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBank_method_get_bus_count>`
+int **get_bus_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_bus_count>`
 
 .. container:: contribute
 
@@ -85,7 +85,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-``PackedInt64Array`` **get_bus_list**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBank_method_get_bus_list>`
+``PackedInt64Array`` **get_bus_list**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_bus_list>`
 
 .. container:: contribute
 
@@ -99,7 +99,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|int| **get_event_count**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBank_method_get_event_count>`
+int **get_event_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_event_count>`
 
 .. container:: contribute
 
@@ -113,7 +113,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-``PackedInt64Array`` **get_event_list**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBank_method_get_event_list>`
+``PackedInt64Array`` **get_event_list**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_event_list>`
 
 .. container:: contribute
 
@@ -127,7 +127,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|Vector4i| **get_id**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBank_method_get_id>`
+Vector4i **get_id**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_id>`
 
 .. container:: contribute
 
@@ -141,7 +141,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-FMOD_STUDIO_LOADING_STATE **get_loading_state**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBank_method_get_loading_state>`
+FMOD_STUDIO_LOADING_STATE **get_loading_state**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_loading_state>`
 
 .. container:: contribute
 
@@ -155,7 +155,7 @@ FMOD_STUDIO_LOADING_STATE **get_loading_state**\ (\ handle\: |int|\ ) |static| :
 
 .. rst-class:: classref-method
 
-|String| **get_path**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBank_method_get_path>`
+String **get_path**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_path>`
 
 .. container:: contribute
 
@@ -169,7 +169,7 @@ FMOD_STUDIO_LOADING_STATE **get_loading_state**\ (\ handle\: |int|\ ) |static| :
 
 .. rst-class:: classref-method
 
-FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBank_method_get_sample_loading_state>`
+FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_sample_loading_state>`
 
 .. container:: contribute
 
@@ -183,7 +183,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-|int| **get_string_count**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBank_method_get_string_count>`
+int **get_string_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_string_count>`
 
 .. container:: contribute
 
@@ -197,7 +197,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-|String| **get_string_info**\ (\ handle\: |int|, index\: |int|, id\: |Vector4i|\ ) |static| :ref:`🔗<class_StudioBank_method_get_string_info>`
+String **get_string_info**\ (\ handle\: int, index\: int, id\: Vector4i\ ) |static| :ref:`🔗<class_StudioBank_method_get_string_info>`
 
 .. container:: contribute
 
@@ -211,7 +211,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-|int| **get_vca_count**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBank_method_get_vca_count>`
+int **get_vca_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_vca_count>`
 
 .. container:: contribute
 
@@ -225,7 +225,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-``PackedInt64Array`` **get_vca_list**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBank_method_get_vca_list>`
+``PackedInt64Array`` **get_vca_list**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_vca_list>`
 
 .. container:: contribute
 
@@ -239,7 +239,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-|bool| **is_valid**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBank_method_is_valid>`
+bool **is_valid**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_is_valid>`
 
 .. container:: contribute
 
@@ -253,7 +253,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-FMOD_RESULT **load_sample_data**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBank_method_load_sample_data>`
+FMOD_RESULT **load_sample_data**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_load_sample_data>`
 
 .. container:: contribute
 
@@ -267,7 +267,7 @@ FMOD_RESULT **load_sample_data**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class
 
 .. rst-class:: classref-method
 
-FMOD_RESULT **unload**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBank_method_unload>`
+FMOD_RESULT **unload**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_unload>`
 
 .. container:: contribute
 
@@ -281,7 +281,7 @@ FMOD_RESULT **unload**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBan
 
 .. rst-class:: classref-method
 
-FMOD_RESULT **unload_sample_data**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBank_method_unload_sample_data>`
+FMOD_RESULT **unload_sample_data**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_unload_sample_data>`
 
 .. container:: contribute
 

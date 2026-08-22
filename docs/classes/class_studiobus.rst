@@ -10,7 +10,7 @@
 StudioBus
 =========
 
-**Inherits:** |Object|
+**Inherits:** Object
 
 .. container:: contribute
 
@@ -24,39 +24,39 @@ Methods
 .. table::
    :widths: auto
 
-   +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-   | |int|       | :ref:`get_channel_group<class_StudioBus_method_get_channel_group>`\ (\ handle\: |int|\ ) |static|                                    |
-   +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-   | |float|     | :ref:`get_final_volume<class_StudioBus_method_get_final_volume>`\ (\ handle\: |int|\ ) |static|                                      |
-   +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-   | |Vector4i|  | :ref:`get_id<class_StudioBus_method_get_id>`\ (\ handle\: |int|\ ) |static|                                                          |
-   +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-   | |bool|      | :ref:`get_mute<class_StudioBus_method_get_mute>`\ (\ handle\: |int|\ ) |static|                                                      |
-   +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-   | |String|    | :ref:`get_path<class_StudioBus_method_get_path>`\ (\ handle\: |int|\ ) |static|                                                      |
-   +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-   | |bool|      | :ref:`get_paused<class_StudioBus_method_get_paused>`\ (\ handle\: |int|\ ) |static|                                                  |
-   +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-   | |int|       | :ref:`get_port_index<class_StudioBus_method_get_port_index>`\ (\ handle\: |int|\ ) |static|                                          |
-   +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-   | |float|     | :ref:`get_volume<class_StudioBus_method_get_volume>`\ (\ handle\: |int|\ ) |static|                                                  |
-   +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-   | |bool|      | :ref:`is_valid<class_StudioBus_method_is_valid>`\ (\ handle\: |int|\ ) |static|                                                      |
-   +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_RESULT | :ref:`lock_channel_group<class_StudioBus_method_lock_channel_group>`\ (\ handle\: |int|\ ) |static|                                  |
-   +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_RESULT | :ref:`set_mute<class_StudioBus_method_set_mute>`\ (\ handle\: |int|, mute\: |bool|\ ) |static|                                       |
-   +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_RESULT | :ref:`set_paused<class_StudioBus_method_set_paused>`\ (\ handle\: |int|, paused\: |bool|\ ) |static|                                 |
-   +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_RESULT | :ref:`set_port_index<class_StudioBus_method_set_port_index>`\ (\ handle\: |int|, port_index\: |int|\ ) |static|                      |
-   +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_RESULT | :ref:`set_volume<class_StudioBus_method_set_volume>`\ (\ handle\: |int|, volume\: |float|\ ) |static|                                |
-   +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_RESULT | :ref:`stop_all_events<class_StudioBus_method_stop_all_events>`\ (\ handle\: |int|, _unnamed_arg1\: FMOD_STUDIO_STOP_MODE\ ) |static| |
-   +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_RESULT | :ref:`unlock_channel_group<class_StudioBus_method_unlock_channel_group>`\ (\ handle\: |int|\ ) |static|                              |
-   +-------------+--------------------------------------------------------------------------------------------------------------------------------------+
+   +-------------+------------------------------------------------------------------------------------------------------------------------------------+
+   | int         | :ref:`get_channel_group<class_StudioBus_method_get_channel_group>`\ (\ handle\: int\ ) |static|                                    |
+   +-------------+------------------------------------------------------------------------------------------------------------------------------------+
+   | float       | :ref:`get_final_volume<class_StudioBus_method_get_final_volume>`\ (\ handle\: int\ ) |static|                                      |
+   +-------------+------------------------------------------------------------------------------------------------------------------------------------+
+   | Vector4i    | :ref:`get_id<class_StudioBus_method_get_id>`\ (\ handle\: int\ ) |static|                                                          |
+   +-------------+------------------------------------------------------------------------------------------------------------------------------------+
+   | bool        | :ref:`get_mute<class_StudioBus_method_get_mute>`\ (\ handle\: int\ ) |static|                                                      |
+   +-------------+------------------------------------------------------------------------------------------------------------------------------------+
+   | String      | :ref:`get_path<class_StudioBus_method_get_path>`\ (\ handle\: int\ ) |static|                                                      |
+   +-------------+------------------------------------------------------------------------------------------------------------------------------------+
+   | bool        | :ref:`get_paused<class_StudioBus_method_get_paused>`\ (\ handle\: int\ ) |static|                                                  |
+   +-------------+------------------------------------------------------------------------------------------------------------------------------------+
+   | int         | :ref:`get_port_index<class_StudioBus_method_get_port_index>`\ (\ handle\: int\ ) |static|                                          |
+   +-------------+------------------------------------------------------------------------------------------------------------------------------------+
+   | float       | :ref:`get_volume<class_StudioBus_method_get_volume>`\ (\ handle\: int\ ) |static|                                                  |
+   +-------------+------------------------------------------------------------------------------------------------------------------------------------+
+   | bool        | :ref:`is_valid<class_StudioBus_method_is_valid>`\ (\ handle\: int\ ) |static|                                                      |
+   +-------------+------------------------------------------------------------------------------------------------------------------------------------+
+   | FMOD_RESULT | :ref:`lock_channel_group<class_StudioBus_method_lock_channel_group>`\ (\ handle\: int\ ) |static|                                  |
+   +-------------+------------------------------------------------------------------------------------------------------------------------------------+
+   | FMOD_RESULT | :ref:`set_mute<class_StudioBus_method_set_mute>`\ (\ handle\: int, mute\: bool\ ) |static|                                         |
+   +-------------+------------------------------------------------------------------------------------------------------------------------------------+
+   | FMOD_RESULT | :ref:`set_paused<class_StudioBus_method_set_paused>`\ (\ handle\: int, paused\: bool\ ) |static|                                   |
+   +-------------+------------------------------------------------------------------------------------------------------------------------------------+
+   | FMOD_RESULT | :ref:`set_port_index<class_StudioBus_method_set_port_index>`\ (\ handle\: int, port_index\: int\ ) |static|                        |
+   +-------------+------------------------------------------------------------------------------------------------------------------------------------+
+   | FMOD_RESULT | :ref:`set_volume<class_StudioBus_method_set_volume>`\ (\ handle\: int, volume\: float\ ) |static|                                  |
+   +-------------+------------------------------------------------------------------------------------------------------------------------------------+
+   | FMOD_RESULT | :ref:`stop_all_events<class_StudioBus_method_stop_all_events>`\ (\ handle\: int, _unnamed_arg1\: FMOD_STUDIO_STOP_MODE\ ) |static| |
+   +-------------+------------------------------------------------------------------------------------------------------------------------------------+
+   | FMOD_RESULT | :ref:`unlock_channel_group<class_StudioBus_method_unlock_channel_group>`\ (\ handle\: int\ ) |static|                              |
+   +-------------+------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -71,7 +71,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|int| **get_channel_group**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBus_method_get_channel_group>`
+int **get_channel_group**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_get_channel_group>`
 
 .. container:: contribute
 
@@ -85,7 +85,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|float| **get_final_volume**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBus_method_get_final_volume>`
+float **get_final_volume**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_get_final_volume>`
 
 .. container:: contribute
 
@@ -99,7 +99,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|Vector4i| **get_id**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBus_method_get_id>`
+Vector4i **get_id**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_get_id>`
 
 .. container:: contribute
 
@@ -113,7 +113,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|bool| **get_mute**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBus_method_get_mute>`
+bool **get_mute**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_get_mute>`
 
 .. container:: contribute
 
@@ -127,7 +127,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|String| **get_path**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBus_method_get_path>`
+String **get_path**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_get_path>`
 
 .. container:: contribute
 
@@ -141,7 +141,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|bool| **get_paused**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBus_method_get_paused>`
+bool **get_paused**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_get_paused>`
 
 .. container:: contribute
 
@@ -155,7 +155,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|int| **get_port_index**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBus_method_get_port_index>`
+int **get_port_index**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_get_port_index>`
 
 .. container:: contribute
 
@@ -169,7 +169,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|float| **get_volume**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBus_method_get_volume>`
+float **get_volume**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_get_volume>`
 
 .. container:: contribute
 
@@ -183,7 +183,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|bool| **is_valid**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBus_method_is_valid>`
+bool **is_valid**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_is_valid>`
 
 .. container:: contribute
 
@@ -197,7 +197,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-FMOD_RESULT **lock_channel_group**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBus_method_lock_channel_group>`
+FMOD_RESULT **lock_channel_group**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_lock_channel_group>`
 
 .. container:: contribute
 
@@ -211,7 +211,7 @@ FMOD_RESULT **lock_channel_group**\ (\ handle\: |int|\ ) |static| :ref:`🔗<cla
 
 .. rst-class:: classref-method
 
-FMOD_RESULT **set_mute**\ (\ handle\: |int|, mute\: |bool|\ ) |static| :ref:`🔗<class_StudioBus_method_set_mute>`
+FMOD_RESULT **set_mute**\ (\ handle\: int, mute\: bool\ ) |static| :ref:`🔗<class_StudioBus_method_set_mute>`
 
 .. container:: contribute
 
@@ -225,7 +225,7 @@ FMOD_RESULT **set_mute**\ (\ handle\: |int|, mute\: |bool|\ ) |static| :ref:`�
 
 .. rst-class:: classref-method
 
-FMOD_RESULT **set_paused**\ (\ handle\: |int|, paused\: |bool|\ ) |static| :ref:`🔗<class_StudioBus_method_set_paused>`
+FMOD_RESULT **set_paused**\ (\ handle\: int, paused\: bool\ ) |static| :ref:`🔗<class_StudioBus_method_set_paused>`
 
 .. container:: contribute
 
@@ -239,7 +239,7 @@ FMOD_RESULT **set_paused**\ (\ handle\: |int|, paused\: |bool|\ ) |static| :ref:
 
 .. rst-class:: classref-method
 
-FMOD_RESULT **set_port_index**\ (\ handle\: |int|, port_index\: |int|\ ) |static| :ref:`🔗<class_StudioBus_method_set_port_index>`
+FMOD_RESULT **set_port_index**\ (\ handle\: int, port_index\: int\ ) |static| :ref:`🔗<class_StudioBus_method_set_port_index>`
 
 .. container:: contribute
 
@@ -253,7 +253,7 @@ FMOD_RESULT **set_port_index**\ (\ handle\: |int|, port_index\: |int|\ ) |static
 
 .. rst-class:: classref-method
 
-FMOD_RESULT **set_volume**\ (\ handle\: |int|, volume\: |float|\ ) |static| :ref:`🔗<class_StudioBus_method_set_volume>`
+FMOD_RESULT **set_volume**\ (\ handle\: int, volume\: float\ ) |static| :ref:`🔗<class_StudioBus_method_set_volume>`
 
 .. container:: contribute
 
@@ -267,7 +267,7 @@ FMOD_RESULT **set_volume**\ (\ handle\: |int|, volume\: |float|\ ) |static| :ref
 
 .. rst-class:: classref-method
 
-FMOD_RESULT **stop_all_events**\ (\ handle\: |int|, _unnamed_arg1\: FMOD_STUDIO_STOP_MODE\ ) |static| :ref:`🔗<class_StudioBus_method_stop_all_events>`
+FMOD_RESULT **stop_all_events**\ (\ handle\: int, _unnamed_arg1\: FMOD_STUDIO_STOP_MODE\ ) |static| :ref:`🔗<class_StudioBus_method_stop_all_events>`
 
 .. container:: contribute
 
@@ -281,7 +281,7 @@ FMOD_RESULT **stop_all_events**\ (\ handle\: |int|, _unnamed_arg1\: FMOD_STUDIO_
 
 .. rst-class:: classref-method
 
-FMOD_RESULT **unlock_channel_group**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioBus_method_unlock_channel_group>`
+FMOD_RESULT **unlock_channel_group**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_unlock_channel_group>`
 
 .. container:: contribute
 

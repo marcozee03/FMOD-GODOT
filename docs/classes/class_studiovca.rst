@@ -10,7 +10,7 @@
 StudioVCA
 =========
 
-**Inherits:** |Object|
+**Inherits:** Object
 
 .. container:: contribute
 
@@ -24,19 +24,19 @@ Methods
 .. table::
    :widths: auto
 
-   +-------------+-------------------------------------------------------------------------------------------------------+
-   | |float|     | :ref:`get_final_volume<class_StudioVCA_method_get_final_volume>`\ (\ handle\: |int|\ ) |static|       |
-   +-------------+-------------------------------------------------------------------------------------------------------+
-   | |Vector4i|  | :ref:`get_id<class_StudioVCA_method_get_id>`\ (\ handle\: |int|\ ) |static|                           |
-   +-------------+-------------------------------------------------------------------------------------------------------+
-   | |String|    | :ref:`get_path<class_StudioVCA_method_get_path>`\ (\ handle\: |int|\ ) |static|                       |
-   +-------------+-------------------------------------------------------------------------------------------------------+
-   | |float|     | :ref:`get_volume<class_StudioVCA_method_get_volume>`\ (\ handle\: |int|\ ) |static|                   |
-   +-------------+-------------------------------------------------------------------------------------------------------+
-   | |bool|      | :ref:`is_valid<class_StudioVCA_method_is_valid>`\ (\ handle\: |int|\ ) |static|                       |
-   +-------------+-------------------------------------------------------------------------------------------------------+
-   | FMOD_RESULT | :ref:`set_volume<class_StudioVCA_method_set_volume>`\ (\ handle\: |int|, volume\: |float|\ ) |static| |
-   +-------------+-------------------------------------------------------------------------------------------------------+
+   +-------------+---------------------------------------------------------------------------------------------------+
+   | float       | :ref:`get_final_volume<class_StudioVCA_method_get_final_volume>`\ (\ handle\: int\ ) |static|     |
+   +-------------+---------------------------------------------------------------------------------------------------+
+   | Vector4i    | :ref:`get_id<class_StudioVCA_method_get_id>`\ (\ handle\: int\ ) |static|                         |
+   +-------------+---------------------------------------------------------------------------------------------------+
+   | String      | :ref:`get_path<class_StudioVCA_method_get_path>`\ (\ handle\: int\ ) |static|                     |
+   +-------------+---------------------------------------------------------------------------------------------------+
+   | float       | :ref:`get_volume<class_StudioVCA_method_get_volume>`\ (\ handle\: int\ ) |static|                 |
+   +-------------+---------------------------------------------------------------------------------------------------+
+   | bool        | :ref:`is_valid<class_StudioVCA_method_is_valid>`\ (\ handle\: int\ ) |static|                     |
+   +-------------+---------------------------------------------------------------------------------------------------+
+   | FMOD_RESULT | :ref:`set_volume<class_StudioVCA_method_set_volume>`\ (\ handle\: int, volume\: float\ ) |static| |
+   +-------------+---------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -51,7 +51,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|float| **get_final_volume**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioVCA_method_get_final_volume>`
+float **get_final_volume**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioVCA_method_get_final_volume>`
 
 .. container:: contribute
 
@@ -65,7 +65,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|Vector4i| **get_id**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioVCA_method_get_id>`
+Vector4i **get_id**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioVCA_method_get_id>`
 
 .. container:: contribute
 
@@ -79,7 +79,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|String| **get_path**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioVCA_method_get_path>`
+String **get_path**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioVCA_method_get_path>`
 
 .. container:: contribute
 
@@ -93,7 +93,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|float| **get_volume**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioVCA_method_get_volume>`
+float **get_volume**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioVCA_method_get_volume>`
 
 .. container:: contribute
 
@@ -107,7 +107,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|bool| **is_valid**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioVCA_method_is_valid>`
+bool **is_valid**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioVCA_method_is_valid>`
 
 .. container:: contribute
 
@@ -121,7 +121,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-FMOD_RESULT **set_volume**\ (\ handle\: |int|, volume\: |float|\ ) |static| :ref:`🔗<class_StudioVCA_method_set_volume>`
+FMOD_RESULT **set_volume**\ (\ handle\: int, volume\: float\ ) |static| :ref:`🔗<class_StudioVCA_method_set_volume>`
 
 .. container:: contribute
 
