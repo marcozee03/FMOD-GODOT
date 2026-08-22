@@ -12,9 +12,7 @@
 > This is beta software. While it should be mostly stable. You may encounter bugs. So please take the time to submit a bug report.
 
 Fmod-Godot is a GDExtension library that integrates the Fmod API with the Godot
-Engine. The library provides a way for C# to interact directly with the same FMOD
-Studio/Core system instances the FmodAudioServer uses. So, it is not limited to
-what the integration handles explicitly.
+Engine. Adding several features explained below and enables use of the Official FMOD C# Wrapper.
 
 ## Features
 
