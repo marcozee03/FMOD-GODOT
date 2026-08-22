@@ -20,49 +20,53 @@ def get_arch() -> str:
     return arch
 
 
-def buildForPlatform(platform, arch):
-    p1 = subprocess.run(
-        [
-            "scons",
-            "use_static_cpp=no",
-            "debug_symbols=no",
-            "lto=auto",
-            "target=template_release",
-            "platform=%s" % platform,
-            "arch=%s" % arch,
-        ]
-    )
-    if p1.returncode != 0:
-        print("failed to build for release")
-        exit(1)
-    p2 = subprocess.run(
-        [
-            "scons",
-            "use_static_cpp=no",
-            "debug_symbols=no",
-            "lto=auto",
-            "target=template_debug",
-            "platform=%s" % platform,
-            "arch=%s" % arch,
-        ]
-    )
-    if p2.returncode != 0:
-        print("failed to build for debug")
-        exit(1)
-    p3 = subprocess.run(
-        [
-            "scons",
-            "use_static_cpp=no",
-            "debug_symbols=no",
-            "lto=auto",
-            "target=editor",
-            "platform=%s" % platform,
-            "arch=%s" % arch,
-        ]
-    )
-    if p3.returncode != 0:
-        print("failed to build for editor")
-        exit(1)
+def buildForPlatform(platform, arch, target:str):
+    if(target.lower() in ["release", "all"]):
+        p1 = subprocess.run(
+            [
+                "scons",
+                "use_static_cpp=no",
+                "debug_symbols=no",
+                "lto=auto",
+                "target=template_release",
+                "platform=%s" % platform,
+                "arch=%s" % arch,
+            ]
+        )
+        if p1.returncode != 0:
+            print("failed to build for release")
+            exit(1)
+    if(target.lower() in ["debug", "all"]):
+        p2 = subprocess.run(
+            [
+                "scons",
+                "use_static_cpp=no",
+                "debug_symbols=no",
+                "lto=auto",
+                "target=template_debug",
+                "platform=%s" % platform,
+                "arch=%s" % arch,
+            ]
+        )
+        if p2.returncode != 0:
+            print("failed to build for debug")
+            exit(1)
+
+    if(target.lower() in ["editor", "all"]):
+        p3 = subprocess.run(
+            [
+                "scons",
+                "use_static_cpp=no",
+                "debug_symbols=no",
+                "lto=auto",
+                "target=editor",
+                "platform=%s" % platform,
+                "arch=%s" % arch,
+            ]
+        )
+        if p3.returncode != 0:
+            print("failed to build for editor")
+            exit(1)
 
 
 def exportDependencies(platform, arch):
@@ -111,6 +115,9 @@ def main():
         "-p", "--platform", type=str, help="the platform to build for", default=get_os()
     )
     build.add_argument(
+        "-t", "--target", type=str, help="The target template to build", default="all"
+    )
+    build.add_argument(
         "-a",
         "--architecture",
         type=str,
@@ -134,10 +141,10 @@ def main():
         case "build":
             if args.platform == "all":
                 for os_platform in supported_platforms:
-                    buildForPlatform(os_platform, args.architecture)
+                    buildForPlatform(os_platform, args.architecture,args.target)
                     exportDependencies(os_platform, args.architecture)
             else:
-                buildForPlatform(args.platform, args.architecture)
+                buildForPlatform(args.platform, args.architecture,args.target)
                 exportDependencies(args.platform, args.architecture)
         case "export":
             if args.destination == None or not args.destination.is_dir():
@@ -166,7 +173,7 @@ def main():
         case "push":
             if args.platform == "all":
                 for os_platform in supported_platforms:
-                    buildForPlatform(os_platform, args.architecture)
+                    buildForPlatform(os_platform, args.architecture, args.target)
                     exportDependencies(os_platform, args.architecture)
             else:
                 exportDependencies(args.platform, args.architecture)

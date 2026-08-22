@@ -105,9 +105,6 @@ void FmodEditorInterface::refresh(bool p_load_start_up_banks)
     }
     FMOD_STUDIO_BANK **banks = memnew_arr(FMOD_STUDIO_BANK *, bank_count);
     FMOD_Studio_System_GetBankList(studio, banks, bank_count, &bank_count);
-    int size = 64;
-    int retrieved = 0;
-    char *str = memnew_arr(char, size);
     for (int i = 0; i < bank_count; i++)
     {
 
@@ -159,7 +156,6 @@ void FmodEditorInterface::refresh(bool p_load_start_up_banks)
     }
 
     memdelete_arr(banks);
-    memdelete_arr(str);
 
     FmodAudioServer::get_singleton()->unload_start_up_banks();
 }
