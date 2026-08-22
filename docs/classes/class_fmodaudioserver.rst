@@ -10,7 +10,7 @@
 FmodAudioServer
 ===============
 
-**Inherits:** Object
+**Inherits:** |Object|
 
 FmodAudioServer is a high level interface for interacting with the FMOD api. Integrated with godot;
 
@@ -22,9 +22,9 @@ Properties
 .. table::
    :widths: auto
 
-   +------+----------------------------------------------------+-----------+
-   | bool | :ref:`muted<class_FmodAudioServer_property_muted>` | ``false`` |
-   +------+----------------------------------------------------+-----------+
+   +--------+----------------------------------------------------+-----------+
+   | |bool| | :ref:`muted<class_FmodAudioServer_property_muted>` | ``false`` |
+   +--------+----------------------------------------------------+-----------+
 
 .. rst-class:: classref-reftable-group
 
@@ -34,51 +34,49 @@ Methods
 .. table::
    :widths: auto
 
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | bool                                          | :ref:`any_sample_data_loading<class_FmodAudioServer_method_any_sample_data_loading>`\ (\ )                                                                                                           |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | :ref:`FmodAudioServer<class_FmodAudioServer>` | :ref:`get_singleton<class_FmodAudioServer_method_get_singleton>`\ (\ ) |static|                                                                                                                      |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | String                                        | :ref:`get_version_number<class_FmodAudioServer_method_get_version_number>`\ (\ ) |static|                                                                                                            |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | bool                                          | :ref:`has_bank_loaded<class_FmodAudioServer_method_has_bank_loaded>`\ (\ bank_name\: String\ ) |const|                                                                                               |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | bool                                          | :ref:`have_all_banks_loaded<class_FmodAudioServer_method_have_all_banks_loaded>`\ (\ ) |const|                                                                                                       |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | int                                           | :ref:`load_bank<class_FmodAudioServer_method_load_bank>`\ (\ bank_name\: String, load_samples\: bool = false\ )                                                                                      |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | Vector4i                                      | :ref:`path_to_guid<class_FmodAudioServer_method_path_to_guid>`\ (\ p_path\: String\ ) |const|                                                                                                        |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                        | :ref:`play_one_shot_2d_attached_by_id<class_FmodAudioServer_method_play_one_shot_2d_attached_by_id>`\ (\ guid\: Vector4i, node\: ``Node2D``, non_rigid_body_velocity\: bool = false\ )               |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                        | :ref:`play_one_shot_2d_attached_by_path<class_FmodAudioServer_method_play_one_shot_2d_attached_by_path>`\ (\ path\: String, node\: ``Node2D``, non_rigid_body_velocity\: bool = false\ )             |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                        | :ref:`play_one_shot_3d_attached_by_id<class_FmodAudioServer_method_play_one_shot_3d_attached_by_id>`\ (\ guid\: Vector4i, node\: ``Node3D``, non_rigid_body_velocity\: bool = false\ )               |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                        | :ref:`play_one_shot_3d_attached_by_path<class_FmodAudioServer_method_play_one_shot_3d_attached_by_path>`\ (\ path\: String, node\: ``Node3D``, non_rigid_body_velocity\: bool = false\ )             |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                        | :ref:`play_one_shot_by_id<class_FmodAudioServer_method_play_one_shot_by_id>`\ (\ guid\: Vector4i, position\: ``Vector3`` = Vector3(0, 0, 0)\ ) |const|                                               |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                        | :ref:`play_one_shot_by_path<class_FmodAudioServer_method_play_one_shot_by_path>`\ (\ path\: String, position\: ``Vector3`` = Vector3(0, 0, 0)\ ) |const|                                             |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                        | :ref:`play_one_shot_rigid_2d_attached_by_path<class_FmodAudioServer_method_play_one_shot_rigid_2d_attached_by_path>`\ (\ path\: String, rigid_body2d\: ``RigidBody2D``\ )                            |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                        | :ref:`play_one_shot_rigid_body2d_attached_by_id<class_FmodAudioServer_method_play_one_shot_rigid_body2d_attached_by_id>`\ (\ guid\: Vector4i, rigid_body2d\: ``RigidBody2D``\ )                      |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                        | :ref:`play_one_shot_rigid_body3d_attached_by_id<class_FmodAudioServer_method_play_one_shot_rigid_body3d_attached_by_id>`\ (\ guid\: Vector4i, rigid_body3d\: ``RigidBody3D``\ )                      |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                        | :ref:`play_one_shot_rigid_body3d_attached_by_path<class_FmodAudioServer_method_play_one_shot_rigid_body3d_attached_by_path>`\ (\ path\: String, rigid_body3d\: ``RigidBody3D``\ )                    |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                        | :ref:`set_listener_2d_location<class_FmodAudioServer_method_set_listener_2d_location>`\ (\ listener_index\: int, node\: ``Node2D``, attenuation_object\: ``Node2D``\ )                               |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                        | :ref:`set_listener_2d_rigidbody_location<class_FmodAudioServer_method_set_listener_2d_rigidbody_location>`\ (\ listener_index\: int, rigidbody\: ``RigidBody2D``, attenuation_object\: ``Node2D``\ ) |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                        | :ref:`set_listener_3d_location<class_FmodAudioServer_method_set_listener_3d_location>`\ (\ listener_index\: int, node\: ``Node3D``, attenuation_object\: ``Node3D``\ )                               |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                        | :ref:`set_listener_3d_rigidbody_location<class_FmodAudioServer_method_set_listener_3d_rigidbody_location>`\ (\ listener_index\: int, rigidbody\: ``RigidBody3D``, attenuation_object\: ``Node3D``\ ) |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |void|                                        | :ref:`unload_banks<class_FmodAudioServer_method_unload_banks>`\ (\ )                                                                                                                                 |
-   +-----------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |bool|                                        | :ref:`any_sample_data_loading<class_FmodAudioServer_method_any_sample_data_loading>`\ (\ )                                                                                                             |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`FmodAudioServer<class_FmodAudioServer>` | :ref:`get_singleton<class_FmodAudioServer_method_get_singleton>`\ (\ ) |static|                                                                                                                        |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |String|                                      | :ref:`get_version_number<class_FmodAudioServer_method_get_version_number>`\ (\ ) |static|                                                                                                              |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |bool|                                        | :ref:`has_bank_loaded<class_FmodAudioServer_method_has_bank_loaded>`\ (\ bank_name\: |String|\ ) |const|                                                                                               |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |bool|                                        | :ref:`have_all_banks_loaded<class_FmodAudioServer_method_have_all_banks_loaded>`\ (\ ) |const|                                                                                                         |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |Vector4i|                                    | :ref:`path_to_guid<class_FmodAudioServer_method_path_to_guid>`\ (\ p_path\: |String|\ ) |const|                                                                                                        |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                        | :ref:`play_one_shot_2d_attached_by_id<class_FmodAudioServer_method_play_one_shot_2d_attached_by_id>`\ (\ guid\: |Vector4i|, node\: ``Node2D``, non_rigid_body_velocity\: |bool| = false\ )             |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                        | :ref:`play_one_shot_2d_attached_by_path<class_FmodAudioServer_method_play_one_shot_2d_attached_by_path>`\ (\ path\: |String|, node\: ``Node2D``, non_rigid_body_velocity\: |bool| = false\ )           |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                        | :ref:`play_one_shot_3d_attached_by_id<class_FmodAudioServer_method_play_one_shot_3d_attached_by_id>`\ (\ guid\: |Vector4i|, node\: ``Node3D``, non_rigid_body_velocity\: |bool| = false\ )             |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                        | :ref:`play_one_shot_3d_attached_by_path<class_FmodAudioServer_method_play_one_shot_3d_attached_by_path>`\ (\ path\: |String|, node\: ``Node3D``, non_rigid_body_velocity\: |bool| = false\ )           |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                        | :ref:`play_one_shot_by_id<class_FmodAudioServer_method_play_one_shot_by_id>`\ (\ guid\: |Vector4i|, position\: ``Vector3`` = Vector3(0, 0, 0)\ ) |const|                                               |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                        | :ref:`play_one_shot_by_path<class_FmodAudioServer_method_play_one_shot_by_path>`\ (\ path\: |String|, position\: ``Vector3`` = Vector3(0, 0, 0)\ ) |const|                                             |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                        | :ref:`play_one_shot_rigid_2d_attached_by_path<class_FmodAudioServer_method_play_one_shot_rigid_2d_attached_by_path>`\ (\ path\: |String|, rigid_body2d\: ``RigidBody2D``\ )                            |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                        | :ref:`play_one_shot_rigid_body2d_attached_by_id<class_FmodAudioServer_method_play_one_shot_rigid_body2d_attached_by_id>`\ (\ guid\: |Vector4i|, rigid_body2d\: ``RigidBody2D``\ )                      |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                        | :ref:`play_one_shot_rigid_body3d_attached_by_id<class_FmodAudioServer_method_play_one_shot_rigid_body3d_attached_by_id>`\ (\ guid\: |Vector4i|, rigid_body3d\: ``RigidBody3D``\ )                      |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                        | :ref:`play_one_shot_rigid_body3d_attached_by_path<class_FmodAudioServer_method_play_one_shot_rigid_body3d_attached_by_path>`\ (\ path\: |String|, rigid_body3d\: ``RigidBody3D``\ )                    |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                        | :ref:`set_listener_2d_location<class_FmodAudioServer_method_set_listener_2d_location>`\ (\ listener_index\: |int|, node\: ``Node2D``, attenuation_object\: ``Node2D``\ )                               |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                        | :ref:`set_listener_2d_rigidbody_location<class_FmodAudioServer_method_set_listener_2d_rigidbody_location>`\ (\ listener_index\: |int|, rigidbody\: ``RigidBody2D``, attenuation_object\: ``Node2D``\ ) |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                        | :ref:`set_listener_3d_location<class_FmodAudioServer_method_set_listener_3d_location>`\ (\ listener_index\: |int|, node\: ``Node3D``, attenuation_object\: ``Node3D``\ )                               |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                        | :ref:`set_listener_3d_rigidbody_location<class_FmodAudioServer_method_set_listener_3d_rigidbody_location>`\ (\ listener_index\: |int|, rigidbody\: ``RigidBody3D``, attenuation_object\: ``Node3D``\ ) |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                        | :ref:`unload_banks<class_FmodAudioServer_method_unload_banks>`\ (\ )                                                                                                                                   |
+   +-----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -95,7 +93,9 @@ Signals
 
 **live_update_connected**\ (\ ) :ref:`🔗<class_FmodAudioServer_signal_live_update_connected>`
 
-Emitted after live update connects to FMOD Studio
+.. container:: contribute
+
+	There is currently no description for this signal. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-item-separator
 
@@ -107,7 +107,9 @@ Emitted after live update connects to FMOD Studio
 
 **live_update_disconnected**\ (\ ) :ref:`🔗<class_FmodAudioServer_signal_live_update_disconnected>`
 
-Emitted after live update disconnects from FMOD Studio
+.. container:: contribute
+
+	There is currently no description for this signal. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-item-separator
 
@@ -119,7 +121,9 @@ Emitted after live update disconnects from FMOD Studio
 
 **postupdate**\ (\ ) :ref:`🔗<class_FmodAudioServer_signal_postupdate>`
 
-Emitted at the end of the main Studio update. For async mode this will be on its own thread.
+.. container:: contribute
+
+	There is currently no description for this signal. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-item-separator
 
@@ -131,7 +135,9 @@ Emitted at the end of the main Studio update. For async mode this will be on its
 
 **preupdate**\ (\ ) :ref:`🔗<class_FmodAudioServer_signal_preupdate>`
 
-Emitted at the start of the main Studio update. For async mode this will be on its own thread.
+.. container:: contribute
+
+	There is currently no description for this signal. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-section-separator
 
@@ -148,29 +154,41 @@ Enumerations
 
 enum **LiveUpdate**: :ref:`🔗<enum_FmodAudioServer_LiveUpdate>`
 
-.. _class_FmodAudioServer_constant_DISABLED:
+.. _class_FmodAudioServer_constant_LIVE_UPDATE_DISABLED:
 
 .. rst-class:: classref-enumeration-constant
 
-:ref:`LiveUpdate<enum_FmodAudioServer_LiveUpdate>` **DISABLED** = ``0``
+:ref:`LiveUpdate<enum_FmodAudioServer_LiveUpdate>` **LIVE_UPDATE_DISABLED** = ``0``
 
-LiveUpdate is never enabled.
+.. container:: contribute
 
-.. _class_FmodAudioServer_constant_ENABLED:
+	There is currently no description for this enum. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
-.. rst-class:: classref-enumeration-constant
 
-:ref:`LiveUpdate<enum_FmodAudioServer_LiveUpdate>` **ENABLED** = ``1``
 
-LiveUpdate is always enabled.
-
-.. _class_FmodAudioServer_constant_DEV_ONLY:
+.. _class_FmodAudioServer_constant_LIVE_UPDATE_ENABLED:
 
 .. rst-class:: classref-enumeration-constant
 
-:ref:`LiveUpdate<enum_FmodAudioServer_LiveUpdate>` **DEV_ONLY** = ``2``
+:ref:`LiveUpdate<enum_FmodAudioServer_LiveUpdate>` **LIVE_UPDATE_ENABLED** = ``1``
 
-LiveUpdate is only enabled in Editor and Debug builds.
+.. container:: contribute
+
+	There is currently no description for this enum. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+
+
+
+.. _class_FmodAudioServer_constant_LIVE_UPDATE_DEV_ONLY:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`LiveUpdate<enum_FmodAudioServer_LiveUpdate>` **LIVE_UPDATE_DEV_ONLY** = ``2``
+
+.. container:: contribute
+
+	There is currently no description for this enum. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+
+
 
 .. rst-class:: classref-section-separator
 
@@ -185,12 +203,12 @@ Property Descriptions
 
 .. rst-class:: classref-property
 
-bool **muted** = ``false`` :ref:`🔗<class_FmodAudioServer_property_muted>`
+|bool| **muted** = ``false`` :ref:`🔗<class_FmodAudioServer_property_muted>`
 
 .. rst-class:: classref-property-setget
 
-- |void| **set_muted**\ (\ value\: bool\ )
-- bool **is_muted**\ (\ )
+- |void| **set_muted**\ (\ value\: |bool|\ )
+- |bool| **is_muted**\ (\ )
 
 If ``true``, All fmod sounds are muted.
 
@@ -207,7 +225,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-bool **any_sample_data_loading**\ (\ ) :ref:`🔗<class_FmodAudioServer_method_any_sample_data_loading>`
+|bool| **any_sample_data_loading**\ (\ ) :ref:`🔗<class_FmodAudioServer_method_any_sample_data_loading>`
 
 if ``true`` sample data in a bank or event is currently loading.
 
@@ -231,7 +249,7 @@ Returns the FmodAudioServer instance.
 
 .. rst-class:: classref-method
 
-String **get_version_number**\ (\ ) |static| :ref:`🔗<class_FmodAudioServer_method_get_version_number>`
+|String| **get_version_number**\ (\ ) |static| :ref:`🔗<class_FmodAudioServer_method_get_version_number>`
 
 Returns the FMOD Version number.
 
@@ -243,7 +261,7 @@ Returns the FMOD Version number.
 
 .. rst-class:: classref-method
 
-bool **has_bank_loaded**\ (\ bank_name\: String\ ) |const| :ref:`🔗<class_FmodAudioServer_method_has_bank_loaded>`
+|bool| **has_bank_loaded**\ (\ bank_name\: |String|\ ) |const| :ref:`🔗<class_FmodAudioServer_method_has_bank_loaded>`
 
 if ``true`` ``bank_name`` is loaded. returns false if bank does not exist
 
@@ -255,23 +273,9 @@ if ``true`` ``bank_name`` is loaded. returns false if bank does not exist
 
 .. rst-class:: classref-method
 
-bool **have_all_banks_loaded**\ (\ ) |const| :ref:`🔗<class_FmodAudioServer_method_have_all_banks_loaded>`
+|bool| **have_all_banks_loaded**\ (\ ) |const| :ref:`🔗<class_FmodAudioServer_method_have_all_banks_loaded>`
 
 if ``true`` all banks have finished loading.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_FmodAudioServer_method_load_bank:
-
-.. rst-class:: classref-method
-
-int **load_bank**\ (\ bank_name\: String, load_samples\: bool = false\ ) :ref:`🔗<class_FmodAudioServer_method_load_bank>`
-
-loads ``bank_name`` into memory. ``bank_name`` can be a file path or a "bank:/<bank_name>" path.
-
-                                **Note:** For banks in the "bank:/" path to be found. Go to ** Project > Project Settings > Fmod > Banks ** and set ``Bank Directory`` to the directory where banks are a stored in your project.
 
 .. rst-class:: classref-item-separator
 
@@ -281,7 +285,7 @@ loads ``bank_name`` into memory. ``bank_name`` can be a file path or a "bank:/<b
 
 .. rst-class:: classref-method
 
-Vector4i **path_to_guid**\ (\ p_path\: String\ ) |const| :ref:`🔗<class_FmodAudioServer_method_path_to_guid>`
+|Vector4i| **path_to_guid**\ (\ p_path\: |String|\ ) |const| :ref:`🔗<class_FmodAudioServer_method_path_to_guid>`
 
 Returns the guid of the ``path``.
 
@@ -295,7 +299,7 @@ Returns the guid of the ``path``.
 
 .. rst-class:: classref-method
 
-|void| **play_one_shot_2d_attached_by_id**\ (\ guid\: Vector4i, node\: ``Node2D``, non_rigid_body_velocity\: bool = false\ ) :ref:`🔗<class_FmodAudioServer_method_play_one_shot_2d_attached_by_id>`
+|void| **play_one_shot_2d_attached_by_id**\ (\ guid\: |Vector4i|, node\: ``Node2D``, non_rigid_body_velocity\: |bool| = false\ ) :ref:`🔗<class_FmodAudioServer_method_play_one_shot_2d_attached_by_id>`
 
 Plays and attaches fmod event (from ``guid``) to ``node``. Tracks position and optionally velocity.
 
@@ -307,7 +311,7 @@ Plays and attaches fmod event (from ``guid``) to ``node``. Tracks position and o
 
 .. rst-class:: classref-method
 
-|void| **play_one_shot_2d_attached_by_path**\ (\ path\: String, node\: ``Node2D``, non_rigid_body_velocity\: bool = false\ ) :ref:`🔗<class_FmodAudioServer_method_play_one_shot_2d_attached_by_path>`
+|void| **play_one_shot_2d_attached_by_path**\ (\ path\: |String|, node\: ``Node2D``, non_rigid_body_velocity\: |bool| = false\ ) :ref:`🔗<class_FmodAudioServer_method_play_one_shot_2d_attached_by_path>`
 
 Plays and attaches fmod event (from ``path``) to ``node``. Tracks position and optionally velocity.
 
@@ -321,7 +325,7 @@ Plays and attaches fmod event (from ``path``) to ``node``. Tracks position and o
 
 .. rst-class:: classref-method
 
-|void| **play_one_shot_3d_attached_by_id**\ (\ guid\: Vector4i, node\: ``Node3D``, non_rigid_body_velocity\: bool = false\ ) :ref:`🔗<class_FmodAudioServer_method_play_one_shot_3d_attached_by_id>`
+|void| **play_one_shot_3d_attached_by_id**\ (\ guid\: |Vector4i|, node\: ``Node3D``, non_rigid_body_velocity\: |bool| = false\ ) :ref:`🔗<class_FmodAudioServer_method_play_one_shot_3d_attached_by_id>`
 
 Plays and attaches fmod event (from ``guid``) to ``node``. Tracks position and optionally velocity.
 
@@ -333,7 +337,7 @@ Plays and attaches fmod event (from ``guid``) to ``node``. Tracks position and o
 
 .. rst-class:: classref-method
 
-|void| **play_one_shot_3d_attached_by_path**\ (\ path\: String, node\: ``Node3D``, non_rigid_body_velocity\: bool = false\ ) :ref:`🔗<class_FmodAudioServer_method_play_one_shot_3d_attached_by_path>`
+|void| **play_one_shot_3d_attached_by_path**\ (\ path\: |String|, node\: ``Node3D``, non_rigid_body_velocity\: |bool| = false\ ) :ref:`🔗<class_FmodAudioServer_method_play_one_shot_3d_attached_by_path>`
 
 Plays and attaches fmod event (from ``path``) to ``node``. Tracks position and optionally velocity.
 
@@ -347,7 +351,7 @@ Plays and attaches fmod event (from ``path``) to ``node``. Tracks position and o
 
 .. rst-class:: classref-method
 
-|void| **play_one_shot_by_id**\ (\ guid\: Vector4i, position\: ``Vector3`` = Vector3(0, 0, 0)\ ) |const| :ref:`🔗<class_FmodAudioServer_method_play_one_shot_by_id>`
+|void| **play_one_shot_by_id**\ (\ guid\: |Vector4i|, position\: ``Vector3`` = Vector3(0, 0, 0)\ ) |const| :ref:`🔗<class_FmodAudioServer_method_play_one_shot_by_id>`
 
 Plays one shot event at ``position`` in world space (from ``guid``). In 2D Z is normally zero
 
@@ -361,7 +365,7 @@ Plays one shot event at ``position`` in world space (from ``guid``). In 2D Z is 
 
 .. rst-class:: classref-method
 
-|void| **play_one_shot_by_path**\ (\ path\: String, position\: ``Vector3`` = Vector3(0, 0, 0)\ ) |const| :ref:`🔗<class_FmodAudioServer_method_play_one_shot_by_path>`
+|void| **play_one_shot_by_path**\ (\ path\: |String|, position\: ``Vector3`` = Vector3(0, 0, 0)\ ) |const| :ref:`🔗<class_FmodAudioServer_method_play_one_shot_by_path>`
 
 Plays one shot event at ``position`` in world space (from ``guid``). In 2D Z is normally zero
 
@@ -377,7 +381,7 @@ Plays one shot event at ``position`` in world space (from ``guid``). In 2D Z is 
 
 .. rst-class:: classref-method
 
-|void| **play_one_shot_rigid_2d_attached_by_path**\ (\ path\: String, rigid_body2d\: ``RigidBody2D``\ ) :ref:`🔗<class_FmodAudioServer_method_play_one_shot_rigid_2d_attached_by_path>`
+|void| **play_one_shot_rigid_2d_attached_by_path**\ (\ path\: |String|, rigid_body2d\: ``RigidBody2D``\ ) :ref:`🔗<class_FmodAudioServer_method_play_one_shot_rigid_2d_attached_by_path>`
 
 Plays one shot event (from ``path``) and attaches it to ``rigid_body2d``. Tracks position and velocity
 
@@ -391,7 +395,7 @@ Plays one shot event (from ``path``) and attaches it to ``rigid_body2d``. Tracks
 
 .. rst-class:: classref-method
 
-|void| **play_one_shot_rigid_body2d_attached_by_id**\ (\ guid\: Vector4i, rigid_body2d\: ``RigidBody2D``\ ) :ref:`🔗<class_FmodAudioServer_method_play_one_shot_rigid_body2d_attached_by_id>`
+|void| **play_one_shot_rigid_body2d_attached_by_id**\ (\ guid\: |Vector4i|, rigid_body2d\: ``RigidBody2D``\ ) :ref:`🔗<class_FmodAudioServer_method_play_one_shot_rigid_body2d_attached_by_id>`
 
 Plays one shot event (from ``guid``) and attaches it to ``rigid_body2d``. Tracks position and velocity
 
@@ -403,7 +407,7 @@ Plays one shot event (from ``guid``) and attaches it to ``rigid_body2d``. Tracks
 
 .. rst-class:: classref-method
 
-|void| **play_one_shot_rigid_body3d_attached_by_id**\ (\ guid\: Vector4i, rigid_body3d\: ``RigidBody3D``\ ) :ref:`🔗<class_FmodAudioServer_method_play_one_shot_rigid_body3d_attached_by_id>`
+|void| **play_one_shot_rigid_body3d_attached_by_id**\ (\ guid\: |Vector4i|, rigid_body3d\: ``RigidBody3D``\ ) :ref:`🔗<class_FmodAudioServer_method_play_one_shot_rigid_body3d_attached_by_id>`
 
 Plays one shot event (from ``guid``) and attaches it to ``rigid_body3d``. Tracks position and velocity
 
@@ -415,7 +419,7 @@ Plays one shot event (from ``guid``) and attaches it to ``rigid_body3d``. Tracks
 
 .. rst-class:: classref-method
 
-|void| **play_one_shot_rigid_body3d_attached_by_path**\ (\ path\: String, rigid_body3d\: ``RigidBody3D``\ ) :ref:`🔗<class_FmodAudioServer_method_play_one_shot_rigid_body3d_attached_by_path>`
+|void| **play_one_shot_rigid_body3d_attached_by_path**\ (\ path\: |String|, rigid_body3d\: ``RigidBody3D``\ ) :ref:`🔗<class_FmodAudioServer_method_play_one_shot_rigid_body3d_attached_by_path>`
 
 Plays one shot event (from ``path``) and attaches it to ``rigid_body3d``. Tracks position and velocity
 
@@ -429,7 +433,7 @@ Plays one shot event (from ``path``) and attaches it to ``rigid_body3d``. Tracks
 
 .. rst-class:: classref-method
 
-|void| **set_listener_2d_location**\ (\ listener_index\: int, node\: ``Node2D``, attenuation_object\: ``Node2D``\ ) :ref:`🔗<class_FmodAudioServer_method_set_listener_2d_location>`
+|void| **set_listener_2d_location**\ (\ listener_index\: |int|, node\: ``Node2D``, attenuation_object\: ``Node2D``\ ) :ref:`🔗<class_FmodAudioServer_method_set_listener_2d_location>`
 
 Copies ``attenuation_object``'s transform to listener's attributes
 
@@ -441,7 +445,7 @@ Copies ``attenuation_object``'s transform to listener's attributes
 
 .. rst-class:: classref-method
 
-|void| **set_listener_2d_rigidbody_location**\ (\ listener_index\: int, rigidbody\: ``RigidBody2D``, attenuation_object\: ``Node2D``\ ) :ref:`🔗<class_FmodAudioServer_method_set_listener_2d_rigidbody_location>`
+|void| **set_listener_2d_rigidbody_location**\ (\ listener_index\: |int|, rigidbody\: ``RigidBody2D``, attenuation_object\: ``Node2D``\ ) :ref:`🔗<class_FmodAudioServer_method_set_listener_2d_rigidbody_location>`
 
 Copies ``attenuation_object``'s transform and velocity to listener's attributes
 
@@ -453,7 +457,7 @@ Copies ``attenuation_object``'s transform and velocity to listener's attributes
 
 .. rst-class:: classref-method
 
-|void| **set_listener_3d_location**\ (\ listener_index\: int, node\: ``Node3D``, attenuation_object\: ``Node3D``\ ) :ref:`🔗<class_FmodAudioServer_method_set_listener_3d_location>`
+|void| **set_listener_3d_location**\ (\ listener_index\: |int|, node\: ``Node3D``, attenuation_object\: ``Node3D``\ ) :ref:`🔗<class_FmodAudioServer_method_set_listener_3d_location>`
 
 Copies ``attenuation_object``'s transform to listener's attributes
 
@@ -465,7 +469,7 @@ Copies ``attenuation_object``'s transform to listener's attributes
 
 .. rst-class:: classref-method
 
-|void| **set_listener_3d_rigidbody_location**\ (\ listener_index\: int, rigidbody\: ``RigidBody3D``, attenuation_object\: ``Node3D``\ ) :ref:`🔗<class_FmodAudioServer_method_set_listener_3d_rigidbody_location>`
+|void| **set_listener_3d_rigidbody_location**\ (\ listener_index\: |int|, rigidbody\: ``RigidBody3D``, attenuation_object\: ``Node3D``\ ) :ref:`🔗<class_FmodAudioServer_method_set_listener_3d_rigidbody_location>`
 
 Copies ``attenuation_object``'s transform and velocity to listener's attributes
 

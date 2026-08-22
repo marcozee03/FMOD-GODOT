@@ -1537,7 +1537,7 @@ def make_type(klass: str, state: State) -> str:
         if link_type in state.classes:
             return f":ref:`{link_type}<class_{sanitize_class_name(link_type)}>`"
         if link_type in GODOT_VARIANT_TYPES:
-            return f"{link_type}"
+            return f"|{link_type}|"
         else:
             print_error(f'{state.current_class}.xml: Unresolved type "{link_type}".', state)
             return f"``{link_type}``"
