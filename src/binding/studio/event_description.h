@@ -1,6 +1,6 @@
 #pragma once
 #include "binding/studio/parameter_cache.h"
-#include "classes/ref_counted.hpp"
+#include "classes/object.hpp"
 #include "classes/wrapped.hpp"
 #include "fmod_defs.h"
 #include "variant/variant.hpp"
@@ -9,9 +9,9 @@ namespace FmodGodot
 {
 namespace Studio
 {
-class StudioEventDescription : public RefCounted
+class StudioEventDescription : public Object
 {
-    GDCLASS(StudioEventDescription, RefCounted)
+    GDCLASS(StudioEventDescription, Object)
   protected:
     static void _bind_methods();
 
