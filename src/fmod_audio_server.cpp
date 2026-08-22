@@ -539,8 +539,12 @@ void FmodAudioServer::load_start_up_banks()
             Array arr = ProjectSettings::get_singleton()->get_setting_with_override(SPECIFIED_BANKS);
             for (auto bank : arr)
             {
-                start_up_banks.push_back(
-                    ResourceLoader::get_singleton()->load(bank, "FmodBank", ResourceLoader::CACHE_MODE_REUSE));
+                Ref<FmodBank> loaded_bank =
+                    ResourceLoader::get_singleton()->load(bank, "FmodBank", ResourceLoader::CACHE_MODE_REUSE);
+                if (loaded_bank.is_valid())
+                {
+                    start_up_banks.push_back(loaded_bank);
+                }
             }
         }
         break;
@@ -560,9 +564,14 @@ void FmodAudioServer::load_start_up_banks()
                     continue;
                 }
                 ProjectSettings *ps = ProjectSettings::get_singleton();
-                start_up_banks.push_back(ResourceLoader::get_singleton()->load(
+
+                Ref<FmodBank> loaded_bank = ResourceLoader::get_singleton()->load(
                     ps->get_setting_with_override(BANK_DIRECTORY).stringify() + "/" + file, String(),
-                    godot::ResourceLoader::CACHE_MODE_REUSE));
+                    godot::ResourceLoader::CACHE_MODE_REUSE);
+                if (loaded_bank.is_valid())
+                {
+                    start_up_banks.push_back(loaded_bank);
+                }
             }
             break;
         }

@@ -176,6 +176,11 @@ template <typename Data> Data PathTree<Data>::operator[](const String &p_path) c
 
 template <typename Data> void PathTree<Data>::add_data(const String &p_path, Data p_data)
 {
+    if (p_path == "")
+    {
+        print_error(vformat("Cannot cache data at empty path"));
+        return;
+    }
     DataNode *node = (DataNode *)find_node(p_path, true);
     node->data = p_data;
 }

@@ -21,20 +21,34 @@ namespace FmodGodot
         int size = retrieved;                                                                                          \
         variable_name = memnew_arr(char, size);                                                                        \
         function(object, variable_name, size, &retrieved);                                                             \
+    }                                                                                                                  \
+    else                                                                                                               \
+    {                                                                                                                  \
+        variable_name = nullptr;                                                                                       \
     }
 
 #define FMOD_GET_CSTRING(function, object, variable_name)                                                              \
     char *variable_name = nullptr;                                                                                     \
     FMOD_GET_OUT_CSTRING(function, object, variable_name);
 
+#define FMOD_GET_OUT_CHARSTRING(function, object, variable_name)                                                       \
+    int retrieved = 0;                                                                                                 \
+    function(object, nullptr, 0, &retrieved);                                                                          \
+    if (retrieved > 0)                                                                                                 \
+    {                                                                                                                  \
+        int size = retrieved;                                                                                          \
+        variable_name.resize(size);                                                                                    \
+        function(object, variable_name.ptrw(), size, &retrieved);                                                      \
+    }
+
+#define FMOD_GET_CHARSTRING(function, object, variable_name)                                                           \
+    CharString variable_name;                                                                                          \
+    FMOD_GET_OUT_CHARSTRING(function, object, variable_name);
+
 #define FMOD_GET_OUT_STRING(function, object, variable_name)                                                           \
     {                                                                                                                  \
-        FMOD_GET_CSTRING(function, object, str##variable_name);                                                        \
-        variable_name = String::utf8(str##variable_name, retrieved);                                                   \
-        if (str##variable_name != nullptr)                                                                             \
-        {                                                                                                              \
-            memdelete_arr(str##variable_name);                                                                         \
-        }                                                                                                              \
+        FMOD_GET_CHARSTRING(function, object, str##variable_name);                                                     \
+        variable_name = String(str##variable_name);                                                                    \
     }
 
 #define FMOD_GET_STRING(function, object, variable_name)                                                               \
