@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Godot Engine documentation build configuration file
+# Fmod Godot documentation build configuration file
 
 import os
 import sys
@@ -59,7 +59,7 @@ source_encoding = "utf-8-sig"
 master_doc = "index"
 
 # General information about the project
-project = "Godot Engine"
+project = "Fmod Godot"
 copyright = "2025-Present Marco Zepeda (MIT License)"
 author = "Marco Zepeda"
 
@@ -156,7 +156,7 @@ html_context = {
     # Set this to `True` when in the `latest` branch to clearly indicate to the reader
     # that they are not reading the `stable` documentation.
     "godot_is_latest": False,
-    "godot_version": "0.5.0",
+    "godot_version": "0.6.0",
     # Enables a banner that displays the up-to-date status of each article.
     "godot_show_article_status": True,
     # Display user-contributed notes at the bottom of pages that don't have `:allow_comments: False` at the top.
