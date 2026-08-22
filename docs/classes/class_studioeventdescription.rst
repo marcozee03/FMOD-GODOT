@@ -10,7 +10,7 @@
 StudioEventDescription
 ======================
 
-**Inherits:** |Object|
+**Inherits:** Object
 
 .. container:: contribute
 
@@ -24,61 +24,61 @@ Methods
 .. table::
    :widths: auto
 
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |int|                     | :ref:`create_instance<class_StudioEventDescription_method_create_instance>`\ (\ handle\: |int|\ ) |static|                                                               |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |Vector4i|                | :ref:`get_id<class_StudioEventDescription_method_get_id>`\ (\ handle\: |int|\ ) |static|                                                                                 |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |int|                     | :ref:`get_instance_count<class_StudioEventDescription_method_get_instance_count>`\ (\ handle\: |int|\ ) |static|                                                         |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | ``PackedInt64Array``      | :ref:`get_instance_list<class_StudioEventDescription_method_get_instance_list>`\ (\ handle\: |int|\ ) |static|                                                           |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |int|                     | :ref:`get_length<class_StudioEventDescription_method_get_length>`\ (\ handle\: |int|\ ) |static|                                                                         |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |float|                   | :ref:`get_max_distance<class_StudioEventDescription_method_get_max_distance>`\ (\ handle\: |int|\ ) |static|                                                             |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |float|                   | :ref:`get_min_distance<class_StudioEventDescription_method_get_min_distance>`\ (\ handle\: |int|\ ) |static|                                                             |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |int|                     | :ref:`get_parameter_description_count<class_StudioEventDescription_method_get_parameter_description_count>`\ (\ handle\: |int|\ ) |static|                               |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |String|                  | :ref:`get_parameter_label_by_id<class_StudioEventDescription_method_get_parameter_label_by_id>`\ (\ handle\: |int|, id\: |int|, label_index\: |int|\ ) |static|          |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |String|                  | :ref:`get_parameter_label_by_index<class_StudioEventDescription_method_get_parameter_label_by_index>`\ (\ handle\: |int|, index\: |int|, label_index\: |int|\ ) |static| |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |String|                  | :ref:`get_parameter_label_by_name<class_StudioEventDescription_method_get_parameter_label_by_name>`\ (\ handle\: |int|, name\: |String|, label_index\: |int|\ ) |static| |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |String|                  | :ref:`get_path<class_StudioEventDescription_method_get_path>`\ (\ handle\: |int|\ ) |static|                                                                             |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_STUDIO_LOADING_STATE | :ref:`get_sample_loading_state<class_StudioEventDescription_method_get_sample_loading_state>`\ (\ handle\: |int|\ ) |static|                                             |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |float|                   | :ref:`get_sound_size<class_StudioEventDescription_method_get_sound_size>`\ (\ handle\: |int|\ ) |static|                                                                 |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | ``Variant``               | :ref:`get_user_property<class_StudioEventDescription_method_get_user_property>`\ (\ handle\: |int|, name\: |String|\ ) |static|                                          |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | ``Variant``               | :ref:`get_user_property_by_index<class_StudioEventDescription_method_get_user_property_by_index>`\ (\ handle\: |int|, index\: |int|\ ) |static|                          |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |int|                     | :ref:`get_user_property_count<class_StudioEventDescription_method_get_user_property_count>`\ (\ handle\: |int|\ ) |static|                                               |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |bool|                    | :ref:`has_sustain_point<class_StudioEventDescription_method_has_sustain_point>`\ (\ handle\: |int|\ ) |static|                                                           |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |bool|                    | :ref:`is3D<class_StudioEventDescription_method_is3D>`\ (\ handle\: |int|\ ) |static|                                                                                     |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |bool|                    | :ref:`is_doppler_enabled<class_StudioEventDescription_method_is_doppler_enabled>`\ (\ handle\: |int|\ ) |static|                                                         |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |bool|                    | :ref:`is_oneshot<class_StudioEventDescription_method_is_oneshot>`\ (\ handle\: |int|\ ) |static|                                                                         |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |bool|                    | :ref:`is_snapshot<class_StudioEventDescription_method_is_snapshot>`\ (\ handle\: |int|\ ) |static|                                                                       |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |bool|                    | :ref:`is_stream<class_StudioEventDescription_method_is_stream>`\ (\ handle\: |int|\ ) |static|                                                                           |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | |bool|                    | :ref:`is_valid<class_StudioEventDescription_method_is_valid>`\ (\ handle\: |int|\ ) |static|                                                                             |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_RESULT               | :ref:`load_sample_data<class_StudioEventDescription_method_load_sample_data>`\ (\ handle\: |int|\ ) |static|                                                             |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_RESULT               | :ref:`release_all_instances<class_StudioEventDescription_method_release_all_instances>`\ (\ handle\: |int|\ ) |static|                                                   |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_RESULT               | :ref:`unload_sample_data<class_StudioEventDescription_method_unload_sample_data>`\ (\ handle\: |int|\ ) |static|                                                         |
-   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | int                       | :ref:`create_instance<class_StudioEventDescription_method_create_instance>`\ (\ handle\: int\ ) |static|                                                           |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | Vector4i                  | :ref:`get_id<class_StudioEventDescription_method_get_id>`\ (\ handle\: int\ ) |static|                                                                             |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | int                       | :ref:`get_instance_count<class_StudioEventDescription_method_get_instance_count>`\ (\ handle\: int\ ) |static|                                                     |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | ``PackedInt64Array``      | :ref:`get_instance_list<class_StudioEventDescription_method_get_instance_list>`\ (\ handle\: int\ ) |static|                                                       |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | int                       | :ref:`get_length<class_StudioEventDescription_method_get_length>`\ (\ handle\: int\ ) |static|                                                                     |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | float                     | :ref:`get_max_distance<class_StudioEventDescription_method_get_max_distance>`\ (\ handle\: int\ ) |static|                                                         |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | float                     | :ref:`get_min_distance<class_StudioEventDescription_method_get_min_distance>`\ (\ handle\: int\ ) |static|                                                         |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | int                       | :ref:`get_parameter_description_count<class_StudioEventDescription_method_get_parameter_description_count>`\ (\ handle\: int\ ) |static|                           |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | String                    | :ref:`get_parameter_label_by_id<class_StudioEventDescription_method_get_parameter_label_by_id>`\ (\ handle\: int, id\: int, label_index\: int\ ) |static|          |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | String                    | :ref:`get_parameter_label_by_index<class_StudioEventDescription_method_get_parameter_label_by_index>`\ (\ handle\: int, index\: int, label_index\: int\ ) |static| |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | String                    | :ref:`get_parameter_label_by_name<class_StudioEventDescription_method_get_parameter_label_by_name>`\ (\ handle\: int, name\: String, label_index\: int\ ) |static| |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | String                    | :ref:`get_path<class_StudioEventDescription_method_get_path>`\ (\ handle\: int\ ) |static|                                                                         |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | FMOD_STUDIO_LOADING_STATE | :ref:`get_sample_loading_state<class_StudioEventDescription_method_get_sample_loading_state>`\ (\ handle\: int\ ) |static|                                         |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | float                     | :ref:`get_sound_size<class_StudioEventDescription_method_get_sound_size>`\ (\ handle\: int\ ) |static|                                                             |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | ``Variant``               | :ref:`get_user_property<class_StudioEventDescription_method_get_user_property>`\ (\ handle\: int, name\: String\ ) |static|                                        |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | ``Variant``               | :ref:`get_user_property_by_index<class_StudioEventDescription_method_get_user_property_by_index>`\ (\ handle\: int, index\: int\ ) |static|                        |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | int                       | :ref:`get_user_property_count<class_StudioEventDescription_method_get_user_property_count>`\ (\ handle\: int\ ) |static|                                           |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | bool                      | :ref:`has_sustain_point<class_StudioEventDescription_method_has_sustain_point>`\ (\ handle\: int\ ) |static|                                                       |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | bool                      | :ref:`is3D<class_StudioEventDescription_method_is3D>`\ (\ handle\: int\ ) |static|                                                                                 |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | bool                      | :ref:`is_doppler_enabled<class_StudioEventDescription_method_is_doppler_enabled>`\ (\ handle\: int\ ) |static|                                                     |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | bool                      | :ref:`is_oneshot<class_StudioEventDescription_method_is_oneshot>`\ (\ handle\: int\ ) |static|                                                                     |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | bool                      | :ref:`is_snapshot<class_StudioEventDescription_method_is_snapshot>`\ (\ handle\: int\ ) |static|                                                                   |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | bool                      | :ref:`is_stream<class_StudioEventDescription_method_is_stream>`\ (\ handle\: int\ ) |static|                                                                       |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | bool                      | :ref:`is_valid<class_StudioEventDescription_method_is_valid>`\ (\ handle\: int\ ) |static|                                                                         |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | FMOD_RESULT               | :ref:`load_sample_data<class_StudioEventDescription_method_load_sample_data>`\ (\ handle\: int\ ) |static|                                                         |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | FMOD_RESULT               | :ref:`release_all_instances<class_StudioEventDescription_method_release_all_instances>`\ (\ handle\: int\ ) |static|                                               |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | FMOD_RESULT               | :ref:`unload_sample_data<class_StudioEventDescription_method_unload_sample_data>`\ (\ handle\: int\ ) |static|                                                     |
+   +---------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -93,7 +93,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|int| **create_instance**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_create_instance>`
+int **create_instance**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_create_instance>`
 
 .. container:: contribute
 
@@ -107,7 +107,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|Vector4i| **get_id**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_id>`
+Vector4i **get_id**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_id>`
 
 .. container:: contribute
 
@@ -121,7 +121,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|int| **get_instance_count**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_instance_count>`
+int **get_instance_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_instance_count>`
 
 .. container:: contribute
 
@@ -135,7 +135,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-``PackedInt64Array`` **get_instance_list**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_instance_list>`
+``PackedInt64Array`` **get_instance_list**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_instance_list>`
 
 .. container:: contribute
 
@@ -149,7 +149,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|int| **get_length**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_length>`
+int **get_length**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_length>`
 
 .. container:: contribute
 
@@ -163,7 +163,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|float| **get_max_distance**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_max_distance>`
+float **get_max_distance**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_max_distance>`
 
 .. container:: contribute
 
@@ -177,7 +177,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|float| **get_min_distance**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_min_distance>`
+float **get_min_distance**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_min_distance>`
 
 .. container:: contribute
 
@@ -191,7 +191,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|int| **get_parameter_description_count**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_parameter_description_count>`
+int **get_parameter_description_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_parameter_description_count>`
 
 .. container:: contribute
 
@@ -205,7 +205,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|String| **get_parameter_label_by_id**\ (\ handle\: |int|, id\: |int|, label_index\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_parameter_label_by_id>`
+String **get_parameter_label_by_id**\ (\ handle\: int, id\: int, label_index\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_parameter_label_by_id>`
 
 .. container:: contribute
 
@@ -219,7 +219,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|String| **get_parameter_label_by_index**\ (\ handle\: |int|, index\: |int|, label_index\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_parameter_label_by_index>`
+String **get_parameter_label_by_index**\ (\ handle\: int, index\: int, label_index\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_parameter_label_by_index>`
 
 .. container:: contribute
 
@@ -233,7 +233,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|String| **get_parameter_label_by_name**\ (\ handle\: |int|, name\: |String|, label_index\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_parameter_label_by_name>`
+String **get_parameter_label_by_name**\ (\ handle\: int, name\: String, label_index\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_parameter_label_by_name>`
 
 .. container:: contribute
 
@@ -247,7 +247,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|String| **get_path**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_path>`
+String **get_path**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_path>`
 
 .. container:: contribute
 
@@ -261,7 +261,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_sample_loading_state>`
+FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_sample_loading_state>`
 
 .. container:: contribute
 
@@ -275,7 +275,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-|float| **get_sound_size**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_sound_size>`
+float **get_sound_size**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_sound_size>`
 
 .. container:: contribute
 
@@ -289,7 +289,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-``Variant`` **get_user_property**\ (\ handle\: |int|, name\: |String|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_user_property>`
+``Variant`` **get_user_property**\ (\ handle\: int, name\: String\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_user_property>`
 
 .. container:: contribute
 
@@ -303,7 +303,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-``Variant`` **get_user_property_by_index**\ (\ handle\: |int|, index\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_user_property_by_index>`
+``Variant`` **get_user_property_by_index**\ (\ handle\: int, index\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_user_property_by_index>`
 
 .. container:: contribute
 
@@ -317,7 +317,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-|int| **get_user_property_count**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_user_property_count>`
+int **get_user_property_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_user_property_count>`
 
 .. container:: contribute
 
@@ -331,7 +331,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-|bool| **has_sustain_point**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_has_sustain_point>`
+bool **has_sustain_point**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_has_sustain_point>`
 
 .. container:: contribute
 
@@ -345,7 +345,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-|bool| **is3D**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is3D>`
+bool **is3D**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is3D>`
 
 .. container:: contribute
 
@@ -359,7 +359,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-|bool| **is_doppler_enabled**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is_doppler_enabled>`
+bool **is_doppler_enabled**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is_doppler_enabled>`
 
 .. container:: contribute
 
@@ -373,7 +373,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-|bool| **is_oneshot**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is_oneshot>`
+bool **is_oneshot**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is_oneshot>`
 
 .. container:: contribute
 
@@ -387,7 +387,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-|bool| **is_snapshot**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is_snapshot>`
+bool **is_snapshot**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is_snapshot>`
 
 .. container:: contribute
 
@@ -401,7 +401,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-|bool| **is_stream**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is_stream>`
+bool **is_stream**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is_stream>`
 
 .. container:: contribute
 
@@ -415,7 +415,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-|bool| **is_valid**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is_valid>`
+bool **is_valid**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is_valid>`
 
 .. container:: contribute
 
@@ -429,7 +429,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: |int|\ ) |st
 
 .. rst-class:: classref-method
 
-FMOD_RESULT **load_sample_data**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_load_sample_data>`
+FMOD_RESULT **load_sample_data**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_load_sample_data>`
 
 .. container:: contribute
 
@@ -443,7 +443,7 @@ FMOD_RESULT **load_sample_data**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class
 
 .. rst-class:: classref-method
 
-FMOD_RESULT **release_all_instances**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_release_all_instances>`
+FMOD_RESULT **release_all_instances**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_release_all_instances>`
 
 .. container:: contribute
 
@@ -457,7 +457,7 @@ FMOD_RESULT **release_all_instances**\ (\ handle\: |int|\ ) |static| :ref:`🔗<
 
 .. rst-class:: classref-method
 
-FMOD_RESULT **unload_sample_data**\ (\ handle\: |int|\ ) |static| :ref:`🔗<class_StudioEventDescription_method_unload_sample_data>`
+FMOD_RESULT **unload_sample_data**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_unload_sample_data>`
 
 .. container:: contribute
 

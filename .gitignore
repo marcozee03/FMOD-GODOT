@@ -18,3 +18,4 @@ git-filter-repo
 *.dll
 src/gen/
 compile_commands.json
+**/__pycache__/
