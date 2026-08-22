@@ -183,7 +183,7 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
             for (auto param : event.parameters)
             {
                 text->newline();
-                if (param.discrete)
+                if (param.is_discrete())
                 {
                     push_label_var_meta(text, param.full_path, "", param.full_path, "Copy parameter path",
                                         theme->d_parameter_icon);
@@ -235,7 +235,7 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
     {
         header->set_text("Global Parameter:" + p_path.get_file().get_basename());
         ParameterCache parameter = cache->get_parameter(p_path);
-        if (parameter.discrete)
+        if (parameter.is_discrete())
         {
             header->set_button_icon(theme->d_parameter_icon);
         }

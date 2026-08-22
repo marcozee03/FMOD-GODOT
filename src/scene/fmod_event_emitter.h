@@ -3,12 +3,14 @@
 #include "core/error_macros.hpp"
 #include "core/math.hpp"
 #include "core/print_string.hpp"
+#include "event_description.h"
 #include "fmod_audio_server.h"
 #include "fmod_common.h"
 #include "fmod_defs.h"
 #include "fmod_enums.h"
 #include "fmod_studio_common.h"
 #include "globals.h"
+#include "variant/char_string.hpp"
 #include "variant/packed_string_array.hpp"
 #include "variant/string.hpp"
 #include "variant/string_name.hpp"
@@ -279,26 +281,55 @@ void FmodEventEmitter<Derived, NodeType, RigidBody>::_get_property_list(List<Pro
     p_list->push_back(
         PropertyInfo(Variant::Type::STRING, "Parameters", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_SUBGROUP));
     FMOD_Studio_EventDescription_GetParameterDescriptionCount(description, &count);
-    for (int i = 0; i < count; i++)
+    for (int parameter_index = 0; parameter_index < count; parameter_index++)
     {
         FMOD_STUDIO_PARAMETER_DESCRIPTION param;
-        FMOD_Studio_EventDescription_GetParameterDescriptionByIndex(description, i, &param);
+        FMOD_Studio_EventDescription_GetParameterDescriptionByIndex(description, parameter_index, &param);
         if (param.type != FMOD_STUDIO_PARAMETER_GAME_CONTROLLED)
         {
             continue;
         }
         PropertyInfo info;
         info.name = "param:" + String(param.name);
-        info.hint = PROPERTY_HINT_RANGE;
-        info.type = Variant::FLOAT;
         info.usage = PropertyUsageFlags::PROPERTY_USAGE_DEFAULT;
-        if (param.flags & FMOD_STUDIO_PARAMETER_DISCRETE)
+        if (param.flags & (FMOD_STUDIO_PARAMETER_LABELED | FMOD_STUDIO_PARAMETER_DISCRETE))
         {
-            info.hint_string = String(",").join({Variant(param.minimum), Variant(param.maximum), Variant(1)});
+            info.hint = PROPERTY_HINT_ENUM;
+            info.type = Variant::INT;
+            PackedStringArray labels;
+            labels.resize(param.maximum + 1);
+            for (int label_index = 0; label_index <= param.maximum; label_index++)
+            {
+                int retrieved = 0;
+                FMOD_Studio_EventDescription_GetParameterLabelByIndex(description, parameter_index, label_index,
+                                                                      nullptr, 0, &retrieved);
+
+                CharString label;
+                label.resize(retrieved + 1);
+                if (retrieved > 0)
+                {
+                    int size = retrieved;
+                    FMOD_Studio_EventDescription_GetParameterLabelByIndex(description, parameter_index, label_index,
+                                                                          label.ptrw(), size, &retrieved);
+                    label[size - 1] = ':';
+                    label[size] = '\0';
+                }
+                labels.set(label_index, label + itos(label_index));
+            }
+            info.hint_string = String(",").join(labels);
         }
         else
         {
-            info.hint_string = String(",").join({Variant(param.minimum), Variant(param.maximum)});
+            info.hint = PROPERTY_HINT_RANGE;
+            info.type = Variant::FLOAT;
+            if (param.flags & FMOD_STUDIO_PARAMETER_DISCRETE)
+            {
+                info.hint_string = vformat("%f,%f,%f", param.minimum, param.maximum, 1);
+            }
+            else
+            {
+                info.hint_string = vformat("%f,%f", param.minimum, param.maximum);
+            }
         }
         p_list->push_back(info);
     }
