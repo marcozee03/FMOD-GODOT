@@ -12,15 +12,7 @@
 > This is beta software. While it should be mostly stable. You may encounter bugs. So please take the time to submit a bug report.
 
 Fmod-Godot is a GDExtension library that integrates the Fmod API with the Godot
-Engine. The library provides a way for C# to interact directly with the same FMOD
-Studio/Core system instances the FmodAudioServer uses. So, it is not limited to
-what the integration handles explicitly.
-
-Unlike [FMOD GDExtension](https://github.com/utopia-rise/fmod-gdextension)
-This extension doesn't expose the low-level FMOD and FMOD Studio APIs to GDScript.
-The initial design Goal/Motivation of this was to add a high-level integration
-with the Godot Engine while allowing C# to use the official FMOD C# wrapper. GDScript
-can only directly interact with the newly added nodes
+Engine. Adding several features explained below and enables use of the Official FMOD C# Wrapper.
 
 ## Features
 
@@ -71,7 +63,7 @@ The FMOD console allows you to interact with FMOD Studio's javascript api.
 
 - ![](plugin_template/icons/bank_icon.svg)**FmodBank**: Fmod Bank files are imported
 into Godot and exported automatically. Banks can be opened in the inspector to view
-what events they contain and their GUID.
+what events they contain and their GUID.  
   ![](images/bank_inspector_example.png)
 
 - ![](plugin_template/icons/FmodEventEmitter2D.svg) **FmodEventEmitter2D/3D**:
@@ -79,6 +71,27 @@ what events they contain and their GUID.
 
 - ![](plugin_template/icons/FmodListener2D.svg) **FmodListener2D/3D**: place
 listeners into the scene that automatically update their position.
+
+## C#
+
+The FmodAudioServer api is exposed C#. This allows C# to gain direct access to the FMOD System Handles. Allowing you to access the underlying FMOD API exposed through the official C# wrapper. With full access to the rest of the Node/Resource library planned.
+
+### Set-Up
+
+To run the install go to Project > Tools > Finish FMOD Godot setup
+
+![](images/run_installer.png)
+
+![](images/installer.png)
+
+Enter your fmod account info and the installer will close once complete
+
+## GDScript
+A large subset of the FMOD Studio API is exposed to GDScript. The bindings closely mirrors FMOD's C API. 
+
+Also Checkout [FMOD GDExtension](https://github.com/utopia-rise/fmod-gdextension) if you want a higher layer of abstraction over the FMOD API and aren't using C#.
+
+
 
 ## Supported Platforms
 
@@ -121,67 +134,10 @@ python3 export.py export /path/to/godot_project/addons
 
 Alternatively refer to [Introduction to the buildsystem](https://docs.godotengine.org/en/stable/contributing/development/compiling/introduction_to_the_buildsystem.html)
 
-#### C\# Set-Up
 
-##### Automatic Set-up
 
-To run the install go to Project > Tools > Finish FMOD Godot setup
 
-![](images/run_installer.png)
-
-![](images/installer.png)
-
-Enter your fmod account info and the installer will close once complete
-
-##### Manual Set-Up
-
-You must download the FMOD files from FMOD's website and place the *.cs files
-somewhere in your project directory.
-
-It is necessary to replace FMOD.VERSION.dll and FMOD.Studio.STUDIO_VERSION.dll
-constants to use the proper fmod library version. Which will be found in fmod.cs
-and fmod_studio.cs. .so.14 will change depending on what so file you are using.
-snippets below
-
-``` C#
-    public partial class VERSION
-    {
-        public const int number = 0x00020314;
-
-#if DEBUG || TOOLS
-        public const string logging = "L";
-#else
-        public const string logging = "";
-#endif
-#if GODOT_LINUXBSD
-        public const string dll = $"fmod{logging}.so.14";
-#else
-        public const string dll = "fmod{logging}";
-#endif
-    }
-```
-
-``` C#
-    public partial class STUDIO_VERSION
-    {
-#if DEBUG || TOOLS
-        public const string logging = "L";
-#else
-        public const string logging = "";
-#endif
-#if GODOT_LINUXBSD
-        public const string dll = $"fmodstudio{logging}.so.14";
-#else
-        public const string dll = $"fmodstudio{logging};
-#endif
-    }
-```
 
 ### Pre-built packages
 
 [Releases](https://github.com/marcozee03/FMOD-GODOT/releases)
-
-## C# API/Plans
-
-C# is currently able to interact with the FmodAudioServer and from there interact interact with FMOD_Studio_System and FMOD_Core_System objects.
-A module version of this extension is in consideration for more natural C# support
