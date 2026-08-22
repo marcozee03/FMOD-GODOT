@@ -11,17 +11,14 @@ All classes
 ===========
 
 Nodes
-=============
+=====
 
 .. toctree::
     :maxdepth: 1
     :name: toc-class-ref-nodes
 
+    class_node
     class_fmodbankloader
-    class_fmodeventemitter2d
-    class_fmodeventemitter3d
-    class_fmodlistener2d
-    class_fmodlistener3d
 
 Resources
 =========
@@ -30,7 +27,9 @@ Resources
     :maxdepth: 1
     :name: toc-class-ref-resources
 
+    class_resource
     class_fmodbank
+    class_projectsettings
 
 Other objects
 =============
@@ -39,5 +38,18 @@ Other objects
     :maxdepth: 1
     :name: toc-class-ref-objects
 
+    class_object
     class_fmodaudioserver
-    class_projectsettings
+
+Variant types
+=============
+
+.. toctree::
+    :maxdepth: 1
+    :name: toc-class-ref-variants
+
+    class_variant
+    class_fmodeventemitter2d
+    class_fmodeventemitter3d
+    class_fmodlistener2d
+    class_fmodlistener3d
