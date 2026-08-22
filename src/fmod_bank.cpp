@@ -2,7 +2,7 @@
 #include "core/print_string.hpp"
 #include "fmod_audio_server.h"
 #include "fmod_common.h"
-#include "fmod_globals.h"
+#include "fmod_enums.h"
 #include "fmod_studio.h"
 #include "fmod_studio_common.h"
 #include "globals.h"
@@ -56,13 +56,13 @@ int FmodBank::unload_sample_data()
 {
     return FMOD_Studio_Bank_UnloadSampleData(bank);
 }
-int FmodBank::get_loading_state() const
+FMOD_STUDIO_LOADING_STATE FmodBank::get_loading_state() const
 {
     FMOD_STUDIO_LOADING_STATE state;
     FMOD_Studio_Bank_GetLoadingState(bank, &state);
     return state;
 }
-int FmodBank::get_sample_loading_state() const
+FMOD_STUDIO_LOADING_STATE FmodBank::get_sample_loading_state() const
 {
     FMOD_STUDIO_LOADING_STATE state;
     FMOD_Studio_Bank_GetSampleLoadingState(bank, &state);

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="StudioVCA" inherits="Object" api_type="extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_final_volume" qualifiers="static">
+			<return type="float" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_id" qualifiers="static">
+			<return type="Vector4i" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_path" qualifiers="static">
+			<return type="String" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_volume" qualifiers="static">
+			<return type="float" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="is_valid" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="handle" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="set_volume" qualifiers="static">
+			<return type="int" enum="FMOD_RESULT" />
+			<param index="0" name="handle" type="int" />
+			<param index="1" name="volume" type="float" />
+			<description>
+			</description>
+		</method>
+	</methods>
+</class>

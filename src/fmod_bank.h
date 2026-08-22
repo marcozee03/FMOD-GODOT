@@ -1,4 +1,5 @@
 #pragma once
+#include "fmod_enums.h"
 #include "fmod_studio_common.h"
 #include <fmod_studio.h>
 #include <godot_cpp/classes/resource.hpp>
@@ -8,7 +9,6 @@ namespace FmodGodot
 class FmodBankFormatLoader;
 class FmodBank : public Resource
 {
-
     friend class FmodBankFormatLoader;
     friend class FmodBankLoader;
     friend class FmodAudioServer;
@@ -36,8 +36,8 @@ class FmodBank : public Resource
     int load_sample_data();
     int unload_sample_data();
 
-    int get_loading_state() const;
-    int get_sample_loading_state() const;
+    FMOD_STUDIO_LOADING_STATE get_loading_state() const;
+    FMOD_STUDIO_LOADING_STATE get_sample_loading_state() const;
 
     // Enumeration
     // int getStringCount() const;

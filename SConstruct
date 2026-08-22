@@ -17,6 +17,11 @@ logging = ""
 if env["target"] in ["editor", "template_debug"]:
     logging = "L"
 
+# Require C++17
+if env.get("is_msvc", False):
+    env.Append(CXXFLAGS=["/std:c++20"])
+else:
+    env.Append(CXXFLAGS=["-std=c++20"])
 def linux_config():
     suffix = env['target']
     lib_filename = "{}{}.{}{}".format("lib", libname, suffix, env.subst('$SHLIBSUFFIX'))
@@ -79,6 +84,8 @@ env.Append(
         "src/scene/",
         "src/scene/2d/",
         "src/scene/3d",
+        "src/binding/studio",
+        "src/binding/",
         "headers/",
     ])
 sources = [
@@ -86,6 +93,8 @@ sources = [
     Glob("src/scene/*.cpp"),
     Glob("src/scene/2d/*.cpp"),
     Glob("src/scene/3d/*.cpp"),
+    Glob("src/binding/*.cpp"),
+    Glob("src/binding/studio/*.cpp"),
 ]
 if env["target"] == "editor":
     env.Append(
