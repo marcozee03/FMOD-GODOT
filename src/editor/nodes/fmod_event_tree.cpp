@@ -155,7 +155,7 @@ String EventTree::get_item_path(TreeItem *p_item)
 Variant EventTree::_get_drag_data(const Vector2 &p_vec2)
 {
     TreeItem *item = get_item_at_position(p_vec2);
-    auto et = FmodEditorInterface::get_singleton()->get_theme();
+    Ref<Texture2D> event_icon = get_theme_icon("FmodEvent", "EditorIcons");
     if (item)
     {
         HBoxContainer *box = memnew(HBoxContainer);
@@ -163,11 +163,11 @@ Variant EventTree::_get_drag_data(const Vector2 &p_vec2)
         text->set_stretch_mode(godot::TextureRect::STRETCH_KEEP_ASPECT_CENTERED);
         if (get_item_path(item).begins_with("event:/"))
         {
-            text->set_texture(et->event_icon);
+            text->set_texture(get_theme_icon("FmodEvent", "EditorIcons"));
         }
         else if (get_item_path(item).begins_with("bank:/"))
         {
-            text->set_texture(et->bank_icon);
+            text->set_texture(get_theme_icon("FmodBank", "EditorIcons"));
         }
         Label *label = memnew(Label());
         label->set_text(get_item_path(item).substr(get_item_path(item).find(":/")));

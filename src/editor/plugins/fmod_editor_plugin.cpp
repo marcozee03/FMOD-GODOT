@@ -1,4 +1,5 @@
 #include "fmod_editor_plugin.h"
+#include "classes/theme.hpp"
 #include "editor/fmod_installer.h"
 #include "fmod_bank_importer.h"
 #include "fmod_editor_interface.h"
@@ -35,7 +36,7 @@ String FmodEditorPlugin::_get_plugin_name() const
 
 Ref<Texture2D> FmodEditorPlugin::_get_plugin_icon() const
 {
-    return FmodEditorInterface::get_singleton()->get_theme()->fmod_icon;
+    return ResourceLoader::get_singleton()->load("res://addons/FmodGodot/icons/fmod_icon.svg");
 }
 
 FmodEditorPlugin::FmodEditorPlugin()
@@ -47,6 +48,23 @@ FmodEditorPlugin::~FmodEditorPlugin()
 
 void FmodEditorPlugin::_enter_tree()
 {
+    Ref<Theme> editor_theme = get_editor_interface()->get_editor_theme();
+    editor_theme->set_icon("FmodBank", "EditorIcons",
+                           ResourceLoader::get_singleton()->load("res://addons/FmodGodot/icons/bank_icon.svg"));
+    editor_theme->set_icon("FmodEvent", "EditorIcons",
+                           ResourceLoader::get_singleton()->load("res://addons/FmodGodot/icons/event_icon.svg"));
+    editor_theme->set_icon("FmodContinuousParameter", "EditorIcons",
+                           ResourceLoader::get_singleton()->load("res://addons/FmodGodot/icons/c_parameter_icon.svg"));
+    editor_theme->set_icon("FmodDiscreteParameter", "EditorIcons",
+                           ResourceLoader::get_singleton()->load("res://addons/FmodGodot/icons/d_parameter_icon.svg"));
+    editor_theme->set_icon("FmodBankLoaderIcon", "EditorIcons",
+                           ResourceLoader::get_singleton()->load("res://addons/FmodGodot/icons/bank_loader_icon.svg"));
+    editor_theme->set_icon("FmodSnapshot", "EditorIcons",
+                           ResourceLoader::get_singleton()->load("res://addons/FmodGodot/icons/snapshot_icon.svg"));
+    editor_theme->set_icon("FmodVCA", "EditorIcons",
+                           ResourceLoader::get_singleton()->load("res://addons/FmodGodot/icons/vca_icon.svg"));
+    editor_theme->set_icon("Fmod", "EditorIcons",
+                           ResourceLoader::get_singleton()->load("res://addons/FmodGodot/icons/fmod_icon.svg"));
     log = memnew(FmodConsole);
     FmodEditorInterface::get_singleton()->set_console(log);
     eventInspector = memnew(EventInspector);

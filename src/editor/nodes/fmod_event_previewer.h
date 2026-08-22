@@ -28,6 +28,7 @@ class FmodEventPreviewer : public VBoxContainer
 
   protected:
     static void _bind_methods();
+    void _notification(int p_what);
 
   public:
     FmodEventEmitter3D *emitter;

@@ -76,10 +76,6 @@ void FmodEditorInterface::print_rich(const String &p_message)
 {
     console->add_message(p_message, FmodConsole::MSG_TYPE_STD_RICH);
 }
-const FmodTheme *FmodEditorInterface::get_theme() const
-{
-    return &theme;
-}
 FmodEditorInterface *FmodEditorInterface::get_singleton()
 {
     return singleton;
