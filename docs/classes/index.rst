@@ -19,6 +19,10 @@ Nodes
 
     class_node
     class_fmodbankloader
+    class_fmodeventemitter2d
+    class_fmodeventemitter3d
+    class_fmodlistener2d
+    class_fmodlistener3d
 
 Resources
 =========
@@ -40,16 +44,3 @@ Other objects
 
     class_object
     class_fmodaudioserver
-
-Variant types
-=============
-
-.. toctree::
-    :maxdepth: 1
-    :name: toc-class-ref-variants
-
-    class_variant
-    class_fmodeventemitter2d
-    class_fmodeventemitter3d
-    class_fmodlistener2d
-    class_fmodlistener3d

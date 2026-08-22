@@ -588,7 +588,7 @@ class ThemeItemDef(DefinitionBase):
 
 def find_immediate_group_or_none(klass:str)->str | None:
     group_name = None
-    if klass in ["Node","RigidBody2D","RigidBody3D"]:
+    if klass in ["Node","RigidBody2D","RigidBody3D","Node2D","Node3D"]:
         group_name = "node"
     if klass in ["Resource"]:
         group_name = "resource"
