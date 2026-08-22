@@ -33,13 +33,13 @@ Properties
 .. table::
    :widths: auto
 
-   +-------+-----------------------------------------------------------------------------+-----------+
-   | bool  | :ref:`attached_to_parent<class_FmodListener3D_property_attached_to_parent>` | ``false`` |
-   +-------+-----------------------------------------------------------------------------+-----------+
-   | int   | :ref:`listener_index<class_FmodListener3D_property_listener_index>`         | ``0``     |
-   +-------+-----------------------------------------------------------------------------+-----------+
-   | float | :ref:`listener_weight<class_FmodListener3D_property_listener_weight>`       | ``1.0``   |
-   +-------+-----------------------------------------------------------------------------+-----------+
+   +---------+-----------------------------------------------------------------------------+-----------+
+   | |bool|  | :ref:`attached_to_parent<class_FmodListener3D_property_attached_to_parent>` | ``false`` |
+   +---------+-----------------------------------------------------------------------------+-----------+
+   | |int|   | :ref:`listener_index<class_FmodListener3D_property_listener_index>`         | ``0``     |
+   +---------+-----------------------------------------------------------------------------+-----------+
+   | |float| | :ref:`listener_weight<class_FmodListener3D_property_listener_weight>`       | ``1.0``   |
+   +---------+-----------------------------------------------------------------------------+-----------+
 
 .. rst-class:: classref-section-separator
 
@@ -54,12 +54,12 @@ Property Descriptions
 
 .. rst-class:: classref-property
 
-bool **attached_to_parent** = ``false`` :ref:`🔗<class_FmodListener3D_property_attached_to_parent>`
+|bool| **attached_to_parent** = ``false`` :ref:`🔗<class_FmodListener3D_property_attached_to_parent>`
 
 .. rst-class:: classref-property-setget
 
-- |void| **set_attached_to_parent**\ (\ value\: bool\ )
-- bool **is_attached_to_parent**\ (\ )
+- |void| **set_attached_to_parent**\ (\ value\: |bool|\ )
+- |bool| **is_attached_to_parent**\ (\ )
 
 If ``true`` the listener will attenuate based on the parent transform.
 
@@ -71,12 +71,12 @@ If ``true`` the listener will attenuate based on the parent transform.
 
 .. rst-class:: classref-property
 
-int **listener_index** = ``0`` :ref:`🔗<class_FmodListener3D_property_listener_index>`
+|int| **listener_index** = ``0`` :ref:`🔗<class_FmodListener3D_property_listener_index>`
 
 .. rst-class:: classref-property-setget
 
-- |void| **set_listener_index**\ (\ value\: int\ )
-- int **get_listener_index**\ (\ )
+- |void| **set_listener_index**\ (\ value\: |int|\ )
+- |int| **get_listener_index**\ (\ )
 
 The FMOD listener index. Sets the number of listeners to at least the listener index + 1.
 
@@ -88,12 +88,12 @@ The FMOD listener index. Sets the number of listeners to at least the listener i
 
 .. rst-class:: classref-property
 
-float **listener_weight** = ``1.0`` :ref:`🔗<class_FmodListener3D_property_listener_weight>`
+|float| **listener_weight** = ``1.0`` :ref:`🔗<class_FmodListener3D_property_listener_weight>`
 
 .. rst-class:: classref-property-setget
 
-- |void| **set_listener_weight**\ (\ value\: float\ )
-- float **get_listener_weight**\ (\ )
+- |void| **set_listener_weight**\ (\ value\: |float|\ )
+- |float| **get_listener_weight**\ (\ )
 
 Listener weighting is a factor which determines how much the listener influences the mix. It is taken into account for 3D panning, doppler, and the automatic distance event parameter. A listener with a weight of 0 has no effect on the mix.
 

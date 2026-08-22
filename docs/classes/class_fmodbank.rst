@@ -29,9 +29,9 @@ Properties
 .. table::
    :widths: auto
 
-   +-----+-------------------------------------------+
-   | int | :ref:`bank<class_FmodBank_property_bank>` |
-   +-----+-------------------------------------------+
+   +-------+-------------------------------------------+
+   | |int| | :ref:`bank<class_FmodBank_property_bank>` |
+   +-------+-------------------------------------------+
 
 .. rst-class:: classref-reftable-group
 
@@ -41,19 +41,19 @@ Methods
 .. table::
    :widths: auto
 
-   +----------+-----------------------------------------------------------------------------------------------+
-   | Vector4i | :ref:`get_id<class_FmodBank_method_get_id>`\ (\ ) |const|                                     |
-   +----------+-----------------------------------------------------------------------------------------------+
-   | int      | :ref:`get_loading_state<class_FmodBank_method_get_loading_state>`\ (\ ) |const|               |
-   +----------+-----------------------------------------------------------------------------------------------+
-   | int      | :ref:`get_sample_loading_state<class_FmodBank_method_get_sample_loading_state>`\ (\ ) |const| |
-   +----------+-----------------------------------------------------------------------------------------------+
-   | bool     | :ref:`is_bank_valid<class_FmodBank_method_is_bank_valid>`\ (\ ) |const|                       |
-   +----------+-----------------------------------------------------------------------------------------------+
-   | int      | :ref:`unload<class_FmodBank_method_unload>`\ (\ )                                             |
-   +----------+-----------------------------------------------------------------------------------------------+
-   | int      | :ref:`unload_sample_data<class_FmodBank_method_unload_sample_data>`\ (\ )                     |
-   +----------+-----------------------------------------------------------------------------------------------+
+   +---------------------------+-----------------------------------------------------------------------------------------------+
+   | |Vector4i|                | :ref:`get_id<class_FmodBank_method_get_id>`\ (\ ) |const|                                     |
+   +---------------------------+-----------------------------------------------------------------------------------------------+
+   | FMOD_STUDIO_LOADING_STATE | :ref:`get_loading_state<class_FmodBank_method_get_loading_state>`\ (\ ) |const|               |
+   +---------------------------+-----------------------------------------------------------------------------------------------+
+   | FMOD_STUDIO_LOADING_STATE | :ref:`get_sample_loading_state<class_FmodBank_method_get_sample_loading_state>`\ (\ ) |const| |
+   +---------------------------+-----------------------------------------------------------------------------------------------+
+   | |bool|                    | :ref:`is_bank_valid<class_FmodBank_method_is_bank_valid>`\ (\ ) |const|                       |
+   +---------------------------+-----------------------------------------------------------------------------------------------+
+   | |int|                     | :ref:`unload<class_FmodBank_method_unload>`\ (\ )                                             |
+   +---------------------------+-----------------------------------------------------------------------------------------------+
+   | |int|                     | :ref:`unload_sample_data<class_FmodBank_method_unload_sample_data>`\ (\ )                     |
+   +---------------------------+-----------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -68,12 +68,12 @@ Property Descriptions
 
 .. rst-class:: classref-property
 
-int **bank** :ref:`🔗<class_FmodBank_property_bank>`
+|int| **bank** :ref:`🔗<class_FmodBank_property_bank>`
 
 .. rst-class:: classref-property-setget
 
-- |void| **set_bank**\ (\ value\: int\ )
-- int **get_bank**\ (\ )
+- |void| **set_bank**\ (\ value\: |int|\ )
+- |int| **get_bank**\ (\ )
 
 pointer to FMOD_STUDIO_BANK
 
@@ -90,7 +90,7 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-Vector4i **get_id**\ (\ ) |const| :ref:`🔗<class_FmodBank_method_get_id>`
+|Vector4i| **get_id**\ (\ ) |const| :ref:`🔗<class_FmodBank_method_get_id>`
 
 Returns the GUID of the bank
 
@@ -102,11 +102,11 @@ Returns the GUID of the bank
 
 .. rst-class:: classref-method
 
-int **get_loading_state**\ (\ ) |const| :ref:`🔗<class_FmodBank_method_get_loading_state>`
+FMOD_STUDIO_LOADING_STATE **get_loading_state**\ (\ ) |const| :ref:`🔗<class_FmodBank_method_get_loading_state>`
 
 The banks current loading state.
 
-                            **Note:** Refer to `FMOD_STUDIO_LOADING_STATE <https://www.fmod.com/docs/2.03/api/studio-api-common.html#fmod_studio_loading_state>`__
+                                **Note:** Refer to `FMOD_STUDIO_LOADING_STATE <https://www.fmod.com/docs/2.03/api/studio-api-common.html#fmod_studio_loading_state>`__
 
 .. rst-class:: classref-item-separator
 
@@ -116,11 +116,11 @@ The banks current loading state.
 
 .. rst-class:: classref-method
 
-int **get_sample_loading_state**\ (\ ) |const| :ref:`🔗<class_FmodBank_method_get_sample_loading_state>`
+FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ ) |const| :ref:`🔗<class_FmodBank_method_get_sample_loading_state>`
 
 The audio sample's current loading state.
 
-                            **Note:** Refer to `FMOD_STUDIO_LOADING_STATE <https://www.fmod.com/docs/2.03/api/studio-api-common.html#fmod_studio_loading_state>`__
+                                **Note:** Refer to `FMOD_STUDIO_LOADING_STATE <https://www.fmod.com/docs/2.03/api/studio-api-common.html#fmod_studio_loading_state>`__
 
 .. rst-class:: classref-item-separator
 
@@ -130,7 +130,7 @@ The audio sample's current loading state.
 
 .. rst-class:: classref-method
 
-bool **is_bank_valid**\ (\ ) |const| :ref:`🔗<class_FmodBank_method_is_bank_valid>`
+|bool| **is_bank_valid**\ (\ ) |const| :ref:`🔗<class_FmodBank_method_is_bank_valid>`
 
 if ``true`` bank reference is valid.
 
@@ -142,7 +142,7 @@ if ``true`` bank reference is valid.
 
 .. rst-class:: classref-method
 
-int **unload**\ (\ ) :ref:`🔗<class_FmodBank_method_unload>`
+|int| **unload**\ (\ ) :ref:`🔗<class_FmodBank_method_unload>`
 
 Unloads the bank.
 
@@ -156,7 +156,7 @@ Unloads the bank.
 
 .. rst-class:: classref-method
 
-int **unload_sample_data**\ (\ ) :ref:`🔗<class_FmodBank_method_unload_sample_data>`
+|int| **unload_sample_data**\ (\ ) :ref:`🔗<class_FmodBank_method_unload_sample_data>`
 
 Unloads non-streaming sample data for all events in the bank.
 

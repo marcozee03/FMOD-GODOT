@@ -44,3 +44,9 @@ Other objects
 
     class_object
     class_fmodaudioserver
+    class_studiobank
+    class_studiobus
+    class_studioeventdescription
+    class_studioeventinstance
+    class_studiosystem
+    class_studiovca
