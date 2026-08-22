@@ -110,38 +110,6 @@ CLASS_GROUPS_BASE: dict[str, str] = {
     "variant": "Variant",
 }
 
-# Sync with the types mentioned in https://docs.godotengine.org/en/stable/tutorials/scripting/c_sharp/c_sharp_differences.html
-CLASSES_WITH_CSHARP_DIFFERENCES: list[str] = [
-    "@GlobalScope",
-    "String",
-    "StringName",
-    "NodePath",
-    "Signal",
-    "Callable",
-    "RID",
-    "Basis",
-    "Transform2D",
-    "Transform3D",
-    "Rect2",
-    "Rect2i",
-    "AABB",
-    "Quaternion",
-    "Projection",
-    "Color",
-    "Array",
-    "Dictionary",
-    "PackedByteArray",
-    "PackedColorArray",
-    "PackedFloat32Array",
-    "PackedFloat64Array",
-    "PackedInt32Array",
-    "PackedInt64Array",
-    "PackedStringArray",
-    "PackedVector2Array",
-    "PackedVector3Array",
-    "PackedVector4Array",
-    "Variant",
-]
 
 PACKED_ARRAY_TYPES: list[str] = [
     "PackedByteArray",
@@ -154,6 +122,36 @@ PACKED_ARRAY_TYPES: list[str] = [
     "PackedVector2Array",
     "PackedVector3Array",
     "PackedVector4Array",
+]
+GODOT_VARIANT_TYPES: list[str]= [
+    "bool",
+    "int",
+    "float",
+    "String",
+    "Vector2",
+    "Vector2i",
+    "Rect2",
+    "Rect2i",
+    "Vector3"
+    "Vector3i",
+    "Transform2D",
+    "Vector4",
+    "Vector4i",
+    "Plane",
+    "Quaternion",
+    "AABB",
+    "Basis",
+    "Transform3D",
+    "Projection",
+    "Color",
+    "StringName",
+    "NodePath",
+    "RID",
+    "Object",
+    "Callable",
+    "Signal",
+    "Dictionary",
+    "Array"
 ]
 
 
@@ -588,6 +586,15 @@ class ThemeItemDef(DefinitionBase):
         self.text = text
         self.default_value = default_value
 
+def find_immediate_group_or_none(klass:str)->str | None:
+    group_name = None
+    if klass in ["Node","RigidBody2D","RigidBody3D"]:
+        group_name = "node"
+    if klass in ["Resource"]:
+        group_name = "resource"
+    if klass in ["Object"]:
+        group_name = "object"
+    return group_name;
 
 class ClassDef(DefinitionBase):
     def __init__(self, name: str) -> None:
@@ -617,22 +624,20 @@ class ClassDef(DefinitionBase):
     def update_class_group(self, state: State) -> None:
         group_name = "variant"
 
+        print("Update Class Group: ", self.name)
         if self.name.startswith("@"):
             group_name = "global"
         elif self.inherits:
             inherits = self.inherits.strip()
+            group = find_immediate_group_or_none(inherits)
+            if(group is not None):
+                self.class_group = group
+                return
 
             while inherits in state.classes:
-                if inherits == "Node":
-                    group_name = "node"
-                    break
-                if inherits == "Resource":
-                    group_name = "resource"
-                    break
-                if inherits == "Object":
-                    group_name = "object"
-                    break
-
+                group = find_immediate_group_or_none(inherits)
+                if(group is not None):
+                    group_name = group
                 inode = state.classes[inherits].inherits
                 if inode:
                     inherits = inode.strip()
@@ -1025,15 +1030,6 @@ def make_rst_class(class_def: ClassDef, state: State, dry_run: bool, output_dir:
             f.write(
                 translate(
                     "There is currently no description for this class. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!"
-                )
-                + "\n\n"
-            )
-
-        if class_def.name in CLASSES_WITH_CSHARP_DIFFERENCES:
-            f.write(".. note::\n\n\t")
-            f.write(
-                translate(
-                    "There are notable differences when using this API with C#. See :ref:`doc_c_sharp_differences` for more information."
                 )
                 + "\n\n"
             )
@@ -1540,6 +1536,8 @@ def make_type(klass: str, state: State) -> str:
     def resolve_type(link_type: str) -> str:
         if link_type in state.classes:
             return f":ref:`{link_type}<class_{sanitize_class_name(link_type)}>`"
+        if link_type in GODOT_VARIANT_TYPES:
+            return f"{link_type}"
         else:
             print_error(f'{state.current_class}.xml: Unresolved type "{link_type}".', state)
             return f"``{link_type}``"
