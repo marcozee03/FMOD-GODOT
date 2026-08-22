@@ -18,6 +18,7 @@ FmodGodot::FmodEventBrowser::FmodEventBrowser()
 {
     set_name("FMOD Event Browser");
     set_title("FMOD Event Browser");
+    set_icon_name("Fmod");
     // set_dock_shortcut()
     set_default_slot(EditorDock::DOCK_SLOT_LEFT_BR);
     set_available_layouts(EditorDock::DOCK_LAYOUT_ALL);

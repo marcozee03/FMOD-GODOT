@@ -4,7 +4,6 @@
 #include "classes/node.hpp"
 #include "core/memory.hpp"
 #include "fmod_editor_interface.h"
-#include "fmod_theme.h"
 #include "variant/callable_method_pointer.hpp"
 #include "variant/variant.hpp"
 #include "variant/vector2.hpp"
@@ -147,13 +146,19 @@ void FmodObjectDetails::set_hide_event_parameter(bool p_hide)
 void FmodObjectDetails::display_fmod_object(const String &p_path)
 {
     text->clear();
-    const FmodTheme *theme = FmodEditorInterface::get_singleton()->get_theme();
     const FmodEditorCache *cache = FmodEditorInterface::get_singleton()->get_cache();
+    Ref<Texture2D> event_icon = get_theme_icon("FmodEvent", "EditorIcons");
+    Ref<Texture2D> c_parameter_icon = get_theme_icon("FmodContinuousParameter", "EditorIcons");
+    Ref<Texture2D> d_parameter_icon = get_theme_icon("FmodDiscreteParameter", "EditorIcons");
+    Ref<Texture2D> bank_icon = get_theme_icon("FmodBank", "EditorIcons");
+    Ref<Texture2D> snapshot_icon = get_theme_icon("FmodSnapshot", "EditorIcons");
+    Ref<Texture2D> vca_icon = get_theme_icon("FmodVCA", "EditorIcons");
+    // editor_theme->set_icon("FmodBankLoaderIcon", "EditorIcons",
+    // editor_theme->set_icon("Fmod", "EditorIcons",
     if (p_path.begins_with("event"))
     {
-
         header->set_text("Event");
-        header->set_button_icon(theme->event_icon);
+        header->set_button_icon(event_icon);
         Studio::StudioEventDescription::Cache event = cache->get_event(p_path);
         push_label_str_meta(text, "Full Path: ", event.full_path, "Copy event path");
         push_label_var_meta(text, "Guid: ", fmod_guid_to_string(event.guid), event.guid, "Drag Event");
@@ -186,12 +191,12 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
                 if (param.discrete)
                 {
                     push_label_var_meta(text, param.full_path, "", param.full_path, "Copy parameter path",
-                                        theme->d_parameter_icon);
+                                        d_parameter_icon);
                 }
                 else
                 {
                     push_label_var_meta(text, param.full_path, "", param.full_path, "Copy parameter path",
-                                        theme->c_parameter_icon);
+                                        c_parameter_icon);
                 }
                 push_label_var_meta(text, "Guid: ", fmod_guid_to_string(param.guid), param.guid, "Drag parameter");
                 push_label(text, "Initial Value: ", itos(param.default_value));
@@ -204,7 +209,7 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
     else if (p_path.begins_with("bank"))
     {
         header->set_text("Bank:" + p_path.get_file().get_basename());
-        header->set_button_icon(theme->bank_icon);
+        header->set_button_icon(bank_icon);
         Studio::StudioBank::Cache bank = cache->get_bank(p_path);
         push_label_str_meta(text, "Full Path: ", bank.full_path, "Copy bank path");
         push_label_var_meta(text, "Guid: ", fmod_guid_to_string(bank.guid), bank.guid, "Drag Event");
@@ -213,11 +218,11 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
         {
             if (event.begins_with("event:/"))
             {
-                push_labeln(text, "", event, theme->event_icon);
+                push_labeln(text, "", event, event_icon);
             }
             else
             {
-                push_labeln(text, "", event, theme->vca_icon);
+                push_labeln(text, "", event, vca_icon);
             }
         }
         text->pop();
@@ -225,7 +230,7 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
     else if (p_path.begins_with("vca"))
     {
         header->set_text("VCA:" + p_path.get_file().get_basename());
-        header->set_button_icon(theme->vca_icon);
+        header->set_button_icon(vca_icon);
         Studio::StudioVCA::Cache vca = cache->get_vca(p_path);
 
         push_label_str_meta(text, "Full Path: ", vca.full_path, "Copy vca path");
@@ -237,11 +242,11 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
         ParameterCache parameter = cache->get_parameter(p_path);
         if (parameter.discrete)
         {
-            header->set_button_icon(theme->d_parameter_icon);
+            header->set_button_icon(d_parameter_icon);
         }
         else
         {
-            header->set_button_icon(theme->c_parameter_icon);
+            header->set_button_icon(c_parameter_icon);
         }
         push_label_str_meta(text, "Full Path: ", parameter.full_path, "Copy vca path");
         push_labeln(text, "Name: ", parameter.full_path.get_file());

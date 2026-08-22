@@ -54,7 +54,6 @@ FmodEventPreviewer::FmodEventPreviewer()
     stop->connect("pressed", Callable(this, "set_process").bind(false));
     stop->set_button_icon(et->get_icon("Stop", "EditorIcons"));
     mediaControls->add_child(goToEvent);
-    goToEvent->set_button_icon(FmodEditorInterface::get_singleton()->get_theme()->fmod_icon);
     frontview->set_text("Top");
     mediaControls->add_child(frontview);
     add_child(panner);
@@ -192,6 +191,16 @@ void FmodGodot::FmodEventPreviewer::on_property_changed(const String &p_property
 void FmodGodot::FmodEventPreviewer::_bind_methods()
 {
 }
+void FmodGodot::FmodEventPreviewer::_notification(int p_what)
+{
+    switch (p_what)
+    {
+    case NOTIFICATION_THEME_CHANGED:
+    case NOTIFICATION_ENTER_TREE:
+        goToEvent->add_theme_icon_override("icon", get_theme_icon("Fmod", "EditorIcons"));
+    }
+}
+
 void FmodEventPreviewer::on_start_drag()
 {
     emitter->set_paused(true);
