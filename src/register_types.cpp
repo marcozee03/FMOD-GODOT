@@ -85,7 +85,7 @@ void loadSettings()
 
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::INT, SOURCE_TYPE, PROPERTY_HINT_ENUM,
                                   "Single Platform Build:0, "
-                                  "Multiple Platform Build(WIP):1"),
+                                  "Multiple Platform Build(Experimental):1"),
                      0);
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::STRING, FMOD_STUDIO_PATH, PROPERTY_HINT_GLOBAL_FILE, ""), "");
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::STRING, FMOD_PROJECT_PATH, PROPERTY_HINT_GLOBAL_FILE, ""), "");
