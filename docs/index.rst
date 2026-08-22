@@ -8,9 +8,7 @@ Fmod Godot Docs – *master* branch
 
 Welcome to the official documentation of `Fmod Godot <https://github.com/marcozee03/FMOD-GODOT/tree/master>`__,
 
-Fmod-Godot is a GDExtension library that integrates the Fmod API with the Godot Engine. The library provides a way for C# to interact directly with the same FMOD Studio/Core system instances the FmodAudioServer uses. So, it is not limited to what the integration handles explicitly.
-
-Unlike `FMOD GDExtension`_ this The extension doesn't expose the low-level FMOD and FMOD Studio APIs to GDScript. The initial design Goal/Motivation of this was to add a high-level integration with the Godot Engine while allowing C# to use the official FMOD C# wrapper.
+Fmod-Godot is a GDExtension library that integrates the Fmod API with the Godot Engine. Adding several features explained below and enables use of the Official FMOD C# Wrapper. C# is prioritized as wonderful extensions like `FMOD GDExtension`_ already exist. So the GDScript bindings have a lower level of abstraction compared to `FMOD_GDExtension`_ similar to FMOD's C API. GDScript currently only features a large subset of the FMOD Studio API
 
 .. _FMOD GDExtension: https://github.com/utopia-rise/fmod-gdextension>
 
