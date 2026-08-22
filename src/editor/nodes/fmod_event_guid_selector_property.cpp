@@ -1,9 +1,10 @@
 #include "fmod_event_guid_selector_property.h"
+#include "conversions.h"
 #include "fmod_audio_server.h"
 #include "fmod_event_selector.h"
 #include <classes/project_settings.hpp>
+#include <fmod_defs.h>
 #include <fmod_errors.h>
-#include <fmod_globals.h>
 #include <fmod_studio.h>
 #include <godot_cpp/classes/editor_property.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
@@ -74,9 +75,6 @@ void EventGUIDSelectorProperty::_update_property()
     // Update the control with the new value.
     updating = true;
     currentValue = newValue;
-    int size = 128;
-    int retrieved = 0;
-    char *str = memnew_arr(char, size);
     FMOD_STUDIO_SYSTEM *studio = FmodAudioServer::get_singleton()->get_studio();
     if (!FMOD_Studio_System_IsValid(studio))
     {
@@ -85,10 +83,9 @@ void EventGUIDSelectorProperty::_update_property()
         return;
     }
     FMOD_GUID guid = cast_to_fmod_guid(currentValue);
-    FMOD_LOOKUP_FULL_STRING(FMOD_Studio_System_LookupPath, studio, &guid, str, size, retrieved)
-    eventSelector->get_line_edit()->set_text(str);
+    FMOD_LOOKUP_STRING(FMOD_Studio_System_LookupPath, studio, event_path, &guid)
+    eventSelector->get_line_edit()->set_text(event_path);
     eventSelector->get_line_edit()->set_tooltip_text(fmod_guid_to_string(guid));
     updating = false;
-    memdelete_arr(str);
 }
 } // namespace FmodGodot

@@ -1,6 +1,7 @@
 #pragma once
+#include "conversions.h"
 #include "fmod_bank.h"
-#include "fmod_globals.h"
+#include "fmod_defs.h"
 #include "variant/variant.hpp"
 #include <classes/node.hpp>
 #include <fmod.h>
@@ -48,9 +49,9 @@ class FmodAudioServer : public Object
   public:
     enum LiveUpdate : unsigned int
     {
-        DISABLED = 0,
-        ENABLED = 1,
-        DEV_ONLY = 2
+        LIVE_UPDATE_DISABLED = 0,
+        LIVE_UPDATE_ENABLED = 1,
+        LIVE_UPDATE_DEV_ONLY = 2
     };
     struct InitSettings
     {
@@ -62,7 +63,7 @@ class FmodAudioServer : public Object
         int dspbuffer_count = 5;
         int software_channels = 64;
         int virtual_channels = 1024;
-        LiveUpdate live_update = DISABLED;
+        LiveUpdate live_update = LIVE_UPDATE_DISABLED;
         int live_update_port = 9264;
         String encryption_key = "";
         String bank_directory = "res://";

@@ -7,7 +7,6 @@
 #include <classes/editor_settings.hpp>
 #include <classes/project_settings.hpp>
 #include <classes/resource_loader.hpp>
-#include <cmath>
 using namespace godot;
 namespace FmodGodot
 {

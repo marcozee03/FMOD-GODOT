@@ -1,9 +1,10 @@
-#include "fmod_globals.h"
-#include "classes/project_settings.hpp"
+#include "conversions.h"
 #include "fmod_common.h"
-#include "variant/dictionary.hpp"
+#include "fmod_studio.h"
+#include "variant/variant.hpp"
 #include "variant/vector2i.hpp"
-#include <cstdio>
+#include <bit>
+#include <cstdint>
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/rigid_body2d.hpp>
@@ -11,61 +12,43 @@
 #include <godot_cpp/variant/string.hpp>
 #include <godot_cpp/variant/vector3.hpp>
 #include <godot_cpp/variant/vector4i.hpp>
-using namespace godot;
+
 namespace FmodGodot
 {
-
-char *to_char_ptr(const String &p_str)
-{
-    return p_str.utf8().ptrw();
-}
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wclass-memaccess"
-
 Vector4i cast_to_vector4i(const FMOD_GUID &p_guid)
 {
     static_assert(sizeof(Vector4i) == sizeof(FMOD_GUID),
                   "Vector4i and FMOD_GUID must be the same size for type punning");
-    Vector4i v;
-    memcpy(&v, &p_guid, sizeof(Vector4i));
-    return v;
+    return std::bit_cast<Vector4i>(p_guid);
 }
 
 FMOD_GUID cast_to_fmod_guid(const Vector4i &p_guid)
 {
     static_assert(sizeof(Vector4i) == sizeof(FMOD_GUID),
                   "Vector4i and FMOD_GUID must be the same size for type punning");
-    FMOD_GUID eventguid;
-    memcpy(&eventguid, &p_guid, sizeof(Vector4i));
-    return eventguid;
+    return std::bit_cast<FMOD_GUID>(p_guid);
 }
 
-static_assert(sizeof(Vector2i) == sizeof(FMOD_STUDIO_PARAMETER_ID));
-FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(const Vector2i &p_id)
+static_assert(sizeof(uint64_t) == sizeof(FMOD_STUDIO_PARAMETER_ID));
+FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(uint64_t p_id)
 {
-    static_assert(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(Vector2i),
+    static_assert(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(uint64_t),
                   "Vector2i and FMOD_STUDIO_PARAMETER_ID must be the same size for type punning");
-    FMOD_STUDIO_PARAMETER_ID id;
-    memcpy(&id, &p_id, sizeof(FMOD_STUDIO_PARAMETER_ID));
-    return id;
+    return std::bit_cast<FMOD_STUDIO_PARAMETER_ID>(p_id);
 }
 
-Vector2i cast_to_vector2i(const FMOD_STUDIO_PARAMETER_ID &p_id)
+uint64_t cast_to_gd_parameter_id(const FMOD_STUDIO_PARAMETER_ID &p_id)
 {
-    static_assert(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(Vector2i),
+    static_assert(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(GD_PARAMETER_ID),
                   "Vector2i and FMOD_STUDIO_PARAMETER_ID must be the same size for type punning");
-    Vector2i id;
-    memcpy(&id, &p_id, sizeof(Vector2i));
-    return id;
+    return std::bit_cast<uint64_t>(p_id);
 }
-#pragma GCC diagnostic pop
-FMOD_GUID string_to_fmod_guid(const char *p_guid)
+
+Vector4i parse_guid(const String &p_id)
 {
-    FMOD_GUID result;
-    sscanf(p_guid, "{%8x-%4hx-%4hx-%2hhx%2hhx-%2hhx%2hhx%2hhx%2hhx%2hhx%2hhx}", &result.Data1, &result.Data2,
-           &result.Data3, &result.Data4[0], &result.Data4[1], &result.Data4[2], &result.Data4[3], &result.Data4[4],
-           &result.Data4[5], &result.Data4[6], &result.Data4[7]);
-    return result;
+    FMOD_GUID guid;
+    FMOD_Studio_ParseID(p_id.utf8().ptr(), &guid);
+    return cast_to_vector4i(guid);
 }
 String fmod_guid_to_string(const FMOD_GUID &p_guid)
 {
@@ -103,6 +86,20 @@ godot::Vector3 to_godot_vector(FMOD_VECTOR p_vec)
 {
     return godot::Vector3(p_vec.x, p_vec.y, p_vec.z);
 }
+FMOD_3D_ATTRIBUTES to_3d_attributes(const Transform3D &p_transform)
+{
+    FMOD_3D_ATTRIBUTES attr;
+    attr.position = to_fmod_vector(p_transform.get_origin());
+    attr.forward = to_fmod_vector(p_transform.basis.get_column(2).normalized());
+    attr.up = to_fmod_vector(p_transform.basis.get_column(1).normalized());
+    return attr;
+}
+FMOD_3D_ATTRIBUTES to_3d_attributes(const Transform3D &p_transform, const Vector3 &p_velocity)
+{
+    FMOD_3D_ATTRIBUTES attr = to_3d_attributes(p_transform);
+    attr.velocity = to_fmod_vector(p_velocity);
+    return attr;
+}
 
 FMOD_3D_ATTRIBUTES to_3d_attributes(godot::Vector3 p_pos)
 {
@@ -115,18 +112,11 @@ FMOD_3D_ATTRIBUTES to_3d_attributes(godot::Vector3 p_pos)
 }
 FMOD_3D_ATTRIBUTES to_3d_attributes(Node3D *p_node)
 {
-    FMOD_3D_ATTRIBUTES attributes;
-    attributes.position = to_fmod_vector(p_node->get_global_position());
-    attributes.forward = to_fmod_vector(-p_node->get_global_transform().get_basis().get_column(2));
-    attributes.up = to_fmod_vector(p_node->get_global_transform().get_basis().get_column(1));
-    return attributes;
+    return to_3d_attributes(p_node->get_global_transform());
 }
 FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody3D *p_rigidbody)
 {
-    FMOD_3D_ATTRIBUTES attributes;
-    attributes.position = to_fmod_vector(p_rigidbody->get_global_position());
-    attributes.forward = to_fmod_vector(-p_rigidbody->get_global_transform().get_basis().get_column(2));
-    attributes.up = to_fmod_vector(p_rigidbody->get_global_transform().get_basis().get_column(1));
+    FMOD_3D_ATTRIBUTES attributes = to_3d_attributes(p_rigidbody->get_global_transform());
     attributes.velocity = to_fmod_vector(p_rigidbody->get_linear_velocity());
     return attributes;
 }
@@ -155,32 +145,29 @@ FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody2D *p_rigidbody)
     attributes.velocity = to_fmod_vector(p_rigidbody->get_linear_velocity());
     return attributes;
 }
-} // namespace FmodGodot
-Variant _GLOBAL_DEF(const String &p_var, const Variant &p_default, bool p_restart_if_changed, bool p_basic,
-                    bool p_internal)
+Variant to_variant(FMOD_STUDIO_USER_PROPERTY p_property)
 {
-    Variant ret;
-    if (!ProjectSettings::get_singleton()->has_setting(p_var))
+    switch (p_property.type)
     {
-        ProjectSettings::get_singleton()->set(p_var, p_default);
+    case FMOD_STUDIO_USER_PROPERTY_TYPE_INTEGER:
+        return p_property.intvalue;
+    case FMOD_STUDIO_USER_PROPERTY_TYPE_BOOLEAN:
+        return p_property.stringvalue;
+    case FMOD_STUDIO_USER_PROPERTY_TYPE_FLOAT:
+        return p_property.floatvalue;
+    case FMOD_STUDIO_USER_PROPERTY_TYPE_STRING:
+        return p_property.stringvalue;
+    default:
+        return Variant();
+        break;
     }
-    ret = GLOBAL_GET(p_var);
-
-    ProjectSettings::get_singleton()->set_initial_value(p_var, p_default);
-    // ProjectSettings::get_singleton()->set_builtin_order(p_var);
-    ProjectSettings::get_singleton()->set_as_basic(p_var, p_basic);
-    ProjectSettings::get_singleton()->set_restart_if_changed(p_var, p_restart_if_changed);
-    // ProjectSettings::get_singleton()->set_ignore_value_in_docs(p_var, p_ignore_value_in_docs);
-    ProjectSettings::get_singleton()->set_as_internal(p_var, p_internal);
-    return ret;
 }
 
-Variant _GLOBAL_DEF(const PropertyInfo &p_info, const Variant &p_default, bool p_restart_if_changed, bool p_basic,
-                    bool p_internal)
+godot::Transform3D to_transform3d(const FMOD_3D_ATTRIBUTES &p_attr)
 {
-    Variant ret = _GLOBAL_DEF(p_info.name, p_default, p_restart_if_changed, p_basic, p_internal);
-    Dictionary prop = p_info;
-    prop.erase("usage");
-    ProjectSettings::get_singleton()->add_property_info(prop);
-    return ret;
+    const Vector3 position = FmodGodot::to_godot_vector(p_attr.position);
+    const Vector3 up = FmodGodot::to_godot_vector(p_attr.up);
+    const Vector3 forward = FmodGodot::to_godot_vector(p_attr.forward);
+    return Transform3D(up.cross(forward), up, forward, position);
 }
+} // namespace FmodGodot
