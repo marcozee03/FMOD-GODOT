@@ -1,6 +1,7 @@
 #pragma once
 #include "fmod_enums.h"
 #include "fmod_studio_common.h"
+#include "variant/vector4i.hpp"
 #include <fmod_studio.h>
 #include <godot_cpp/classes/resource.hpp>
 using namespace godot;
@@ -24,7 +25,7 @@ class FmodBank : public Resource
     FmodBank();
     ~FmodBank();
 
-    bool is_bank_valid() const;
+    bool is_valid() const;
 
     size_t get_bank() const;
     void set_bank(size_t p_bank_ptr);
@@ -40,8 +41,8 @@ class FmodBank : public Resource
     FMOD_STUDIO_LOADING_STATE get_sample_loading_state() const;
 
     // Enumeration
-    // int getStringCount() const;
-    // FMOD_RESULT getStringInfo(int index, FMOD_GUID *id, char *path, int size, int *retrieved) const;
+    int get_string_count() const;
+    String get_string_info(int p_index, const Vector4i &p_id) const;
     // int getEventCount() const;
     // FMOD_RESULT getEventList(FMOD_STUDIO_EVENTDESCRIPTION **array, int capacity, int *count) const;
     // int getBusCount() const;

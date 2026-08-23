@@ -17,7 +17,7 @@ namespace FmodGodot
             get_fmod_studio(out studio.handle);
             get_fmod_core(out core.handle);
         }
-        private struct Version
+        internal struct Version
         {
 
 #if TOOLS
