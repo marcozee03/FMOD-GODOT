@@ -7,6 +7,7 @@ namespace FmodGodot
 
     public partial class FmodListener2D : Node2D
     {
+        protected FmodListener2D() { }
         [DllImport(FmodAudioServer.Version.dll)]
         private static extern int listener2d_get_listener_index(IntPtr handle);
         [DllImport(FmodAudioServer.Version.dll)]

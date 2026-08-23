@@ -7,6 +7,7 @@ namespace FmodGodot
 
     public partial class FmodListener3D : Node3D
     {
+        protected FmodListener3D() { }
         [DllImport(FmodAudioServer.Version.dll)]
         private static extern int listener3d_get_listener_index(IntPtr handle);
         [DllImport(FmodAudioServer.Version.dll)]
