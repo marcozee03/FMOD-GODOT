@@ -7,6 +7,7 @@
 #include "fmod_studio.h"
 #include "fmod_studio_common.h"
 #include "globals.h"
+#include <bit>
 namespace FmodGodot
 {
 FmodBank::FmodBank()
