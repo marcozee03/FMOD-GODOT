@@ -102,6 +102,8 @@ void FmodBank::_bind_methods()
                            "bank",
                            "get_"
                            "bank");
+    BIND_METHOD(get_string_count);
+    BIND_METHOD(get_string_info, "index", "id");
 }
 extern "C"
 {
@@ -116,9 +118,9 @@ extern "C"
     {
         return reinterpret_cast<FMOD_STUDIO_BANK *>(BANK->get_bank());
     }
-    GDE_EXPORT void fmod_bank_set_bank(void *handle, FMOD_STUDIO_BANK *bank)
+    GDE_EXPORT void fmod_bank_set_bank(void *handle, FMOD_STUDIO_BANK *p_bank)
     {
-        BANK->set_bank(reinterpret_cast<size_t>(bank));
+        BANK->set_bank(reinterpret_cast<size_t>(p_bank));
     }
     GDE_EXPORT FMOD_GUID fmod_bank_get_id(void *handle)
     {
