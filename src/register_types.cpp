@@ -90,9 +90,9 @@ void loadSettings()
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::STRING, FMOD_STUDIO_PATH, PROPERTY_HINT_GLOBAL_FILE, ""), "");
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::STRING, FMOD_PROJECT_PATH, PROPERTY_HINT_GLOBAL_FILE, ""), "");
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::STRING, BANK_DIRECTORY, PROPERTY_HINT_DIR, ""), "res://banks");
-    GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::INT, LOAD_BANKS, PROPERTY_HINT_ENUM, "None:0,Specified:1 ,All:2,"), 0);
+    GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::INT, LOAD_BANKS, PROPERTY_HINT_ENUM, "None:0,Specified:1,All:2"), 0);
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::Type::INT, LOAD_BANKS + String(".editor_hint"), PROPERTY_HINT_ENUM,
-                                  "None:0,Specified:1 ,All:2,"),
+                                  "None:0,Specified:1 ,All:2"),
                      2);
     GLOBAL_DEF_BASIC(PropertyInfo(Variant::ARRAY, SPECIFIED_BANKS, PROPERTY_HINT_TYPE_STRING,
                                   vformat("%d/%d:*.bank", Variant::STRING, PROPERTY_HINT_FILE)),
