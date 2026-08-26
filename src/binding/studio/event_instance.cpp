@@ -44,18 +44,13 @@ void FmodGodot::Studio::StudioEventInstance::_bind_methods()
     BIND_STATIC_METHOD(get_parameter_by_id, "handle", "id");
     BIND_STATIC_METHOD(get_final_parameter_by_id, "handle", "id");
     BIND_STATIC_METHOD(set_parameter_by_id, "handle", "id", "value");
-    ClassDB ::bind_static_method(get_class_static(),
-                                 D_METHOD("set_parameter_by_id_with_label", "handle", "id", "label", "ignoreseekspeed"),
-                                 &self_type ::set_parameter_by_id_with_label, DEFVAL(false));
+    BIND_STATIC_METHOD_WITH_DEF(set_parameter_by_id_with_label, ARGS("handle", "id", "label", "ignoreseekspeed"),
+                                DEFVAL(false))
     // BIND_STATIC_METHOD(set_parameters_by_ids, "ids", "values", "ignore_seek_speed")
     BIND_STATIC_METHOD(get_parameter_by_name, "handle", "name");
-    ClassDB ::bind_static_method(get_class_static(),
-                                 D_METHOD("set_parameter_by_name", "handle", "name", "value", "ignore_seek_speed"),
-                                 &self_type ::set_parameter_by_name, DEFVAL(false));
-    ClassDB ::bind_static_method(
-        get_class_static(),
-        D_METHOD("set_parameter_by_name_with_label", "handle", "name", "label", "ignore_seek_speed"),
-        &self_type ::set_parameter_by_name_with_label, DEFVAL(false));
+    BIND_STATIC_METHOD_WITH_DEF(set_parameter_by_name, ARGS("handle", "name", "value"), DEFVAL(false));
+    BIND_STATIC_METHOD_WITH_DEF(set_parameter_by_name_with_label, ARGS("handle", "name", "label", "ignore_seek_speed"),
+                                DEFVAL(false));
     BIND_STATIC_METHOD(key_off, "handle");
     BIND_STATIC_METHOD(get_inclusive_cpu_usage, "handle");
     BIND_STATIC_METHOD(get_exclusive_cpu_usage, "handle");

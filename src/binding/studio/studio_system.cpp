@@ -31,12 +31,9 @@ void StudioSystem::_bind_methods()
     //
     BIND_STATIC_METHOD(get_parameter_by_id, "handle", "id");
     BIND_STATIC_METHOD(get_final_parameter_by_id, "handle", "id");
-    ClassDB ::bind_static_method(get_class_static(),
-                                 D_METHOD("set_parameter_by_id", "handle", "id", "value", "ignore_seek_speed"),
-                                 &self_type ::set_parameter_by_id, DEFVAL(false));
-    ClassDB ::bind_static_method(
-        get_class_static(), D_METHOD("set_parameter_by_id_with_label", "handle", "id", "label", "ignore_seek_speed"),
-        &self_type ::set_parameter_by_id_with_label, DEFVAL(false));
+    BIND_STATIC_METHOD_WITH_DEF(set_parameter_by_id, ARGS("handle", "id", "value", "ignore_seek_speed"), DEFVAL(false));
+    BIND_STATIC_METHOD_WITH_DEF(set_parameter_by_id_with_label, ARGS("handle", "id", "label", "ignore_seek_speed"),
+                                DEFVAL(false));
     BIND_STATIC_METHOD(set_parameters_by_ids);
     // ClassDB ::bind_static_method(get_class_static(),
     //                              D_METHOD("set_parameters_by_ids", "handle", "ids", "values", "ignore_seek_speed"),

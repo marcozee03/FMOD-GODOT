@@ -4,6 +4,12 @@
 #include <godot_cpp/variant/variant.hpp>
 using namespace godot;
 
+#define ARGS(...) __VA_ARGS__
+#define BIND_METHOD_WITH_DEF(method, params, ...)                                                                      \
+    ClassDB::bind_method(D_METHOD(#method, params), &self_type::method, ##__VA_ARGS__);
+
+#define BIND_STATIC_METHOD_WITH_DEF(method, params, ...)                                                               \
+    ClassDB::bind_static_method(get_class_static(), D_METHOD(#method, params), &self_type::method, ##__VA_ARGS__);
 #define BIND_PROPERTY(property, variantType)                                                                           \
     ClassDB::bind_method(D_METHOD("get_" #property), &self_type ::get_##property);                                     \
     ClassDB::bind_method(D_METHOD("set_" #property, #property), &self_type ::set_##property);                          \
