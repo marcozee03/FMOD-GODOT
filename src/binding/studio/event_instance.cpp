@@ -1,6 +1,5 @@
 #include "event_instance.h"
 #include "../conversions.h"
-#include "core/class_db.hpp"
 #include "fmod_enums.h"
 #include "fmod_studio.h"
 #include "globals.h"

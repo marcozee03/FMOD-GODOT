@@ -50,4 +50,3 @@ Other objects
     class_studioeventinstance
     class_studiosystem
     class_studiovca
-

@@ -160,7 +160,7 @@ template <typename Data> PathTree<Data>::~PathTree()
 }
 template <typename Data> Data &PathTree<Data>::operator[](const String &p_path)
 {
-    return ((PathTree<Data>::DataNode *)find_node(p_path, true))->data;
+    return reinterpret_cast<PathTree<Data>::DataNode *>(find_node(p_path, true))->data;
 }
 
 template <typename Data> Data PathTree<Data>::operator[](const String &p_path) const
@@ -171,7 +171,7 @@ template <typename Data> Data PathTree<Data>::operator[](const String &p_path) c
         print_error("no node at [", p_path, "]");
         return Data();
     }
-    return ((PathTree<Data>::DataNode *)node)->data;
+    return reinterpret_cast<const PathTree<Data>::DataNode *>(node)->data;
 }
 
 template <typename Data> void PathTree<Data>::add_data(const String &p_path, Data p_data)
@@ -181,7 +181,7 @@ template <typename Data> void PathTree<Data>::add_data(const String &p_path, Dat
         print_error(vformat("Cannot cache data at empty path"));
         return;
     }
-    DataNode *node = (DataNode *)find_node(p_path, true);
+    DataNode *node = reinterpret_cast<DataNode *>(find_node(p_path, true));
     node->data = p_data;
 }
 

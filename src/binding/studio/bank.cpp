@@ -2,10 +2,30 @@
 #include "event_description.h"
 #include "fmod_defs.h"
 #include "fmod_enums.h"
+#include "globals.h"
 #include "vca.h"
 #include <bit>
 using namespace FmodGodot;
 using namespace Studio;
+void FmodGodot::Studio::StudioBank::_bind_methods()
+{
+    BIND_STATIC_METHOD(is_valid, "handle");
+    BIND_STATIC_METHOD(get_id, "handle");
+    BIND_STATIC_METHOD(get_path, "handle");
+    BIND_STATIC_METHOD(unload, "handle");
+    BIND_STATIC_METHOD(load_sample_data, "handle");
+    BIND_STATIC_METHOD(unload_sample_data, "handle");
+    BIND_STATIC_METHOD(get_loading_state, "handle");
+    BIND_STATIC_METHOD(get_sample_loading_state, "handle");
+    BIND_STATIC_METHOD(get_string_count, "handle");
+    BIND_STATIC_METHOD(get_string_info, "handle", "index", "id");
+    BIND_STATIC_METHOD(get_event_count, "handle");
+    BIND_STATIC_METHOD(get_event_list, "handle");
+    BIND_STATIC_METHOD(get_bus_count, "handle");
+    BIND_STATIC_METHOD(get_bus_list, "handle");
+    BIND_STATIC_METHOD(get_vca_count, "handle");
+    BIND_STATIC_METHOD(get_vca_list, "handle");
+}
 bool FmodGodot::Studio::StudioBank::is_valid(Handle p_handle)
 {
     return FMOD_Studio_Bank_IsValid(std::bit_cast<FMOD_STUDIO_BANK *>(p_handle));
