@@ -113,8 +113,8 @@ void FmodEventPanner::_draw_event()
         draw_circle(draw_center, get_min_dimension() / world_size * attenuation_min / 2,
                     Color(theme_cache.contrast_color, 0.5), true, -1.0, true);
 
-        draw_line(draw_center - Vector2::from_angle(rotation + Math_PI / 2.0) * (get_min_dimension() / 18),
-                  draw_center - Vector2::from_angle(rotation + Math_PI / 2.0) * (get_min_dimension() / 9),
+        draw_line(draw_center - Vector2::from_angle(rotation + Math::PI / 2.0) * (get_min_dimension() / 18),
+                  draw_center - Vector2::from_angle(rotation + Math::PI / 2.0) * (get_min_dimension() / 9),
                   theme_cache.contrast_color, 2.0, true);
     }
 }
@@ -125,7 +125,7 @@ void FmodEventPanner::_draw_panning()
     const float normalized_distance =
         Math::clamp(event_position.length() / (get_local_square().size.x * scale), 0.0f, 1.0f);
     float c = pow(1 - normalized_distance, 2);
-    float arc_length = 2 * Math_PI * c;
+    float arc_length = 2 * Math::PI * c;
     switch (view)
     {
     case TOP:
@@ -262,12 +262,12 @@ void FmodEventPanner::_gui_input(const Ref<InputEvent> &p_event)
         }
         break;
         case MOUSE_BUTTON_WHEEL_UP:
-            rotation = fmod(rotation + (Math_PI / 16), Math_TAU);
+            rotation = fmod(rotation + (Math::PI / 16), Math::TAU);
             emit_signal("event_rotation_changed", Vector3(0, rotation, 0));
             queue_redraw();
             break;
         case MOUSE_BUTTON_WHEEL_DOWN:
-            rotation = fmod(rotation - (Math_PI / 16), Math_TAU);
+            rotation = fmod(rotation - (Math::PI / 16), Math::TAU);
             emit_signal("event_rotation_changed", get_play_position());
             queue_redraw();
             break;

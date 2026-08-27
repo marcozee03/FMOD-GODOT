@@ -3,8 +3,6 @@
 #include "fmod_studio.h"
 #include "variant/variant.hpp"
 #include "variant/vector2i.hpp"
-#include <bit>
-#include <cstdint>
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/rigid_body2d.hpp>
@@ -15,34 +13,6 @@
 
 namespace FmodGodot
 {
-Vector4i cast_to_vector4i(const FMOD_GUID &p_guid)
-{
-    static_assert(sizeof(Vector4i) == sizeof(FMOD_GUID),
-                  "Vector4i and FMOD_GUID must be the same size for type punning");
-    return std::bit_cast<Vector4i>(p_guid);
-}
-
-FMOD_GUID cast_to_fmod_guid(const Vector4i &p_guid)
-{
-    static_assert(sizeof(Vector4i) == sizeof(FMOD_GUID),
-                  "Vector4i and FMOD_GUID must be the same size for type punning");
-    return std::bit_cast<FMOD_GUID>(p_guid);
-}
-
-static_assert(sizeof(uint64_t) == sizeof(FMOD_STUDIO_PARAMETER_ID));
-FMOD_STUDIO_PARAMETER_ID cast_to_parameter_id(uint64_t p_id)
-{
-    static_assert(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(uint64_t),
-                  "Vector2i and FMOD_STUDIO_PARAMETER_ID must be the same size for type punning");
-    return std::bit_cast<FMOD_STUDIO_PARAMETER_ID>(p_id);
-}
-
-uint64_t cast_to_gd_parameter_id(const FMOD_STUDIO_PARAMETER_ID &p_id)
-{
-    static_assert(sizeof(FMOD_STUDIO_PARAMETER_ID) == sizeof(GD_PARAMETER_ID),
-                  "Vector2i and FMOD_STUDIO_PARAMETER_ID must be the same size for type punning");
-    return std::bit_cast<uint64_t>(p_id);
-}
 
 Vector4i parse_guid(const String &p_id)
 {
@@ -60,56 +30,7 @@ String fmod_guid_to_string(const Vector4i &p_guid)
 {
     return fmod_guid_to_string(cast_to_fmod_guid(p_guid));
 }
-/// @brief converts the godot vector into an fmod vector.
-/// /// @param vec the godot vector to convert
-/// @return
-FMOD_VECTOR to_fmod_vector(godot::Vector3 p_vec)
-{
-    FMOD_VECTOR temp;
-    temp.x = p_vec.x;
-    temp.y = p_vec.y;
-    temp.z = p_vec.z;
 
-    return temp;
-}
-/// @brief converts the godot vector into an fmod vector.// @param vec the godot vector to convert
-/// @return
-FMOD_VECTOR to_fmod_vector(godot::Vector2 p_vec)
-{
-    return {p_vec.x, p_vec.y, 0};
-}
-
-/// @brief converts the fmod vector into an godot vector.
-/// @param vec the fmod vector to convert
-/// @return
-godot::Vector3 to_godot_vector(FMOD_VECTOR p_vec)
-{
-    return godot::Vector3(p_vec.x, p_vec.y, p_vec.z);
-}
-FMOD_3D_ATTRIBUTES to_3d_attributes(const Transform3D &p_transform)
-{
-    FMOD_3D_ATTRIBUTES attr;
-    attr.position = to_fmod_vector(p_transform.get_origin());
-    attr.forward = to_fmod_vector(p_transform.basis.get_column(2).normalized());
-    attr.up = to_fmod_vector(p_transform.basis.get_column(1).normalized());
-    return attr;
-}
-FMOD_3D_ATTRIBUTES to_3d_attributes(const Transform3D &p_transform, const Vector3 &p_velocity)
-{
-    FMOD_3D_ATTRIBUTES attr = to_3d_attributes(p_transform);
-    attr.velocity = to_fmod_vector(p_velocity);
-    return attr;
-}
-
-FMOD_3D_ATTRIBUTES to_3d_attributes(godot::Vector3 p_pos)
-{
-    FMOD_3D_ATTRIBUTES attributes;
-    attributes.forward = {0, 0, -1};
-    attributes.up = {0, 1, 0};
-    attributes.position = to_fmod_vector(p_pos);
-
-    return attributes;
-}
 FMOD_3D_ATTRIBUTES to_3d_attributes(Node3D *p_node)
 {
     return to_3d_attributes(p_node->get_global_transform());
@@ -120,14 +41,7 @@ FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody3D *p_rigidbody)
     attributes.velocity = to_fmod_vector(p_rigidbody->get_linear_velocity());
     return attributes;
 }
-FMOD_3D_ATTRIBUTES to_3d_attributes(godot::Vector2 p_pos)
-{
-    FMOD_3D_ATTRIBUTES attributes;
-    attributes.forward = {0, 0, -1};
-    attributes.up = {0, 1, 0};
-    attributes.position = to_fmod_vector(p_pos);
-    return attributes;
-}
+
 FMOD_3D_ATTRIBUTES to_3d_attributes(Node2D *p_node)
 {
     FMOD_3D_ATTRIBUTES attributes;
@@ -163,11 +77,4 @@ Variant to_variant(FMOD_STUDIO_USER_PROPERTY p_property)
     }
 }
 
-godot::Transform3D to_transform3d(const FMOD_3D_ATTRIBUTES &p_attr)
-{
-    const Vector3 position = FmodGodot::to_godot_vector(p_attr.position);
-    const Vector3 up = FmodGodot::to_godot_vector(p_attr.up);
-    const Vector3 forward = FmodGodot::to_godot_vector(p_attr.forward);
-    return Transform3D(up.cross(forward), up, forward, position);
-}
 } // namespace FmodGodot
