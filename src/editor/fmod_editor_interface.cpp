@@ -6,7 +6,6 @@
 #include "binding/studio/vca.h"
 #include "core/memory.hpp"
 #include "fmod_audio_server.h"
-#include "fmod_bank.h"
 #include "fmod_script_client.h"
 #include "fmod_studio_common.h"
 #include "variant/utility_functions.hpp"
@@ -39,7 +38,7 @@ void FmodEditorInterface::build_banks()
 {
     if (!script->send_script_command("studio.project.build()"))
     {
-        UtilityFunctions::push_warning("Failed to build banks. Fmod Studio may not be open");
+        UtilityFunctions::push_warning("Failed to build banks. Fmod Studio might not be open");
     }
     // OS::get_singleton()->execute(
     // ProjectSettings::get_singleton()->get_setting_with_override(FMOD_STUDIO_PATH),
@@ -90,17 +89,17 @@ void FmodEditorInterface::refresh(bool p_load_start_up_banks)
     }
     if (p_load_start_up_banks)
     {
-        FmodAudioServer::get_singleton()->load_start_up_banks();
+        FmodAudioServer::get_singleton()->_load_start_up_banks();
     }
     else
     {
-        FmodAudioServer::get_singleton()->reload_start_up_banks();
+        FmodAudioServer::get_singleton()->_reload_start_up_banks();
     }
     int bank_count;
     FMOD_Studio_System_GetBankCount(studio, &bank_count);
     if (bank_count < 0)
     {
-        FmodAudioServer::get_singleton()->unload_start_up_banks();
+        FmodAudioServer::get_singleton()->_unload_start_up_banks();
         return;
     }
     FMOD_STUDIO_BANK **banks = memnew_arr(FMOD_STUDIO_BANK *, bank_count);
@@ -157,7 +156,7 @@ void FmodEditorInterface::refresh(bool p_load_start_up_banks)
 
     memdelete_arr(banks);
 
-    FmodAudioServer::get_singleton()->unload_start_up_banks();
+    FmodAudioServer::get_singleton()->_unload_start_up_banks();
 }
 void FmodEditorInterface::show_event_in_fmod_studio(Vector4i p_guid)
 {
