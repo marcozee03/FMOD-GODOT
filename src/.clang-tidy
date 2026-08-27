@@ -6,6 +6,7 @@ Checks:
   - bugprone-use-after-move
   - modernize-deprecated-headers
   - modernize-redundant-void-arg
+  - google-readability-casting
   - modernize-use-bool-literals
   - modernize-use-default-member-init
   - modernize-use-nullptr

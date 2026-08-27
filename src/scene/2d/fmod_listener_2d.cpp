@@ -26,9 +26,9 @@ extern "C"
     {
         return Listener->get_listener_weight();
     }
-    GDE_EXPORT void listener2d_set_listener_weight(void *handle, float weight)
+    GDE_EXPORT void listener2d_set_listener_weight(void *handle, float p_weight)
     {
-        Listener->set_listener_weight(weight);
+        Listener->set_listener_weight(p_weight);
     }
     GDE_EXPORT bool listener2d_is_attached_to_parent(void *handle)
     {

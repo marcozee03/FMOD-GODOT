@@ -79,13 +79,13 @@ String FmodBank::get_string_info(int p_index, const Vector4i &p_id) const
     return Studio::StudioBank::get_string_info(std::bit_cast<size_t>(bank), p_index, p_id);
 }
 
-size_t FmodBank::get_bank() const
+Handle FmodBank::get_bank() const
 {
-    return (size_t)bank;
+    return std::bit_cast<Handle>(bank);
 }
 void FmodBank::set_bank(size_t p_bank_ptr)
 {
-    bank = (FMOD_STUDIO_BANK *)p_bank_ptr;
+    bank = std::bit_cast<FMOD_STUDIO_BANK *>(p_bank_ptr);
 }
 void FmodBank::_bind_methods()
 {

@@ -63,7 +63,7 @@ The FMOD console allows you to interact with FMOD Studio's javascript api.
 
 - ![](plugin_template/icons/bank_icon.svg)**FmodBank**: Fmod Bank files are imported
 into Godot and exported automatically. Banks can be opened in the inspector to view
-what events they contain and their GUID.  
+what events they contain and their GUID.
   ![](images/bank_inspector_example.png)
 
 - ![](plugin_template/icons/FmodEventEmitter2D.svg) **FmodEventEmitter2D/3D**:
@@ -87,7 +87,7 @@ To run the install go to Project > Tools > Finish FMOD Godot setup
 Enter your fmod account info and the installer will close once complete
 
 ## GDScript
-A large subset of the FMOD Studio API is exposed to GDScript. The bindings closely mirrors FMOD's C API. 
+A large subset of the FMOD Studio API is exposed to GDScript. The bindings closely mirrors FMOD's C API.
 
 Also Checkout [FMOD GDExtension](https://github.com/utopia-rise/fmod-gdextension) if you want a higher layer of abstraction over the FMOD API and aren't using C#.
 

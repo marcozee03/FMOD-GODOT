@@ -14,6 +14,7 @@
 #include "fmod_audio_server.h"
 #include "fmod_bank_format_loader.h"
 #include "fmod_bank_loader.h"
+#include "fmod_enums.h"
 #include "fmod_event_emitter_2d.h"
 #include "fmod_event_emitter_3d.h"
 #include "fmod_listener_2d.h"

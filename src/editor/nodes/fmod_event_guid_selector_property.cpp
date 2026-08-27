@@ -67,7 +67,7 @@ void EventGUIDSelectorProperty::_bind_methods()
 
 void EventGUIDSelectorProperty::_update_property()
 {
-    auto newValue = (Vector4i)get_edited_object()->get(get_edited_property());
+    auto newValue = static_cast<Vector4i>(get_edited_object()->get(get_edited_property()));
     if (newValue == currentValue)
     {
         return;

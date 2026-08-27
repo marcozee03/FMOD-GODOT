@@ -268,7 +268,7 @@ Variant FmodObjectDetails::_get_drag_data(const Vector2 &p_at_position)
         // case Variant::VECTOR2I:
         // break;
         case Variant::VECTOR4I:
-            label->set_text(fmod_guid_to_string((Vector4i)hovered_meta));
+            label->set_text(fmod_guid_to_string(static_cast<Vector4i>(hovered_meta)));
             break;
         default:
             break;

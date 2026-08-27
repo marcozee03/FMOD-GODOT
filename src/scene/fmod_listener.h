@@ -4,7 +4,6 @@
 #include "core/math.hpp"
 #include "fmod_audio_server.h"
 #include "fmod_common.h"
-#include "fmod_enums.h"
 #include "fmod_studio.h"
 #include "globals.h"
 #include "variant/string_name.hpp"
@@ -138,18 +137,20 @@ void FmodListener<Derived, NodeType, RigidBody>::_notification(int p_what)
             switch (_parent_type)
             {
             case RIGIDBODY: {
-                FmodAudioServer::get_singleton()->set_listener_location(listener_index, (RigidBody *)parent_rigidbody);
+                FmodAudioServer::get_singleton()->set_listener_location(
+                    listener_index, reinterpret_cast<RigidBody *>(parent_rigidbody));
                 return;
             }
             case NODE: {
-                FmodAudioServer::get_singleton()->set_listener_location(listener_index, (NodeType *)parent_node);
+                FmodAudioServer::get_singleton()->set_listener_location(listener_index,
+                                                                        reinterpret_cast<NodeType *>(parent_node));
                 return;
             }
             default:
                 break;
             }
         }
-        FmodAudioServer::get_singleton()->set_listener_location(listener_index, (NodeType *)this);
+        FmodAudioServer::get_singleton()->set_listener_location(listener_index, reinterpret_cast<NodeType *>(this));
     default:
         break;
     }
