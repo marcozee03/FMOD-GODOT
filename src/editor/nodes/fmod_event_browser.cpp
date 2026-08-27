@@ -95,11 +95,11 @@ void FmodEventBrowser::_visibility_changed()
 {
     if (is_visible_in_tree())
     {
-        FmodAudioServer::get_singleton()->load_start_up_banks();
+        FmodAudioServer::get_singleton()->_load_start_up_banks();
     }
     else
     {
-        FmodAudioServer::get_singleton()->unload_start_up_banks();
+        FmodAudioServer::get_singleton()->_unload_start_up_banks();
     }
 }
 

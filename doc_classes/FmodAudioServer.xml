@@ -8,10 +8,99 @@
 	<tutorials>
 	</tutorials>
 	<methods>
-		<method name="any_sample_data_loading">
+		<method name="any_sample_data_loading" qualifiers="const">
 			<return type="bool" />
 			<description>
-				if [code]true[/code] sample data in a bank or event is currently loading.
+				if [code]true[/code] sample data is currently loading.
+			</description>
+		</method>
+		<method name="attach_instance_to_node2d">
+			<return type="void" />
+			<param index="0" name="node" type="Node2D" />
+			<param index="1" name="event" type="int" />
+			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
+			<description>
+				Attaches event to node tracking it position and optionally velocity.
+			</description>
+		</method>
+		<method name="attach_instance_to_node3d">
+			<return type="void" />
+			<param index="0" name="node" type="Node3D" />
+			<param index="1" name="event" type="int" />
+			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
+			<description>
+				Attaches event to node tracking it position and optionally velocity.
+			</description>
+		</method>
+		<method name="attach_instance_to_rigid_body2d">
+			<return type="void" />
+			<param index="0" name="rigid_body" type="RigidBody2D" />
+			<param index="1" name="event" type="int" />
+			<description>
+				Attaches event to node tracking it position and velocity.
+			</description>
+		</method>
+		<method name="attach_instance_to_rigid_body3d">
+			<return type="void" />
+			<param index="0" name="rigid_body" type="RigidBody3D" />
+			<param index="1" name="event" type="int" />
+			<description>
+				Attaches event to node tracking it position and velocity.
+			</description>
+		</method>
+		<method name="create_instance" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="guid" type="Vector4i" />
+			<description>
+                Creates a handle to an FMOD Event Instance.
+			</description>
+		</method>
+		<method name="create_instance_by_path" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="path" type="String" />
+			<description>
+                Creates a handle to an FMOD Event Instance.
+			</description>
+		</method>
+		<method name="detach_instance">
+			<return type="void" />
+			<param index="0" name="handle" type="int" />
+			<description>
+				Detaches instance from node.
+			</description>
+		</method>
+		<method name="get_bus" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="guid" type="Vector4i" />
+			<description>
+				Returns a loaded bus.
+			</description>
+		</method>
+		<method name="get_bus_by_path" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="path" type="String" />
+			<description>
+                Returns handle to FMOD Bus.
+			</description>
+		</method>
+		<method name="get_core">
+			<return type="int" />
+			<description>
+				Returns handle to FMOD core system
+			</description>
+		</method>
+		<method name="get_event_description" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="id" type="Vector4i" />
+			<description>
+                Returns handle to Event Description.
+			</description>
+		</method>
+		<method name="get_event_description_by_path" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="path" type="String" />
+			<description>
+                Returns handle to Event Description.
 			</description>
 		</method>
 		<method name="get_singleton" qualifiers="static">
@@ -20,81 +109,136 @@
 				Returns the FmodAudioServer instance.
 			</description>
 		</method>
+		<method name="get_studio">
+			<return type="int" />
+			<description>
+                Returns handle to FMOD_STUDIO_SYSTEM.
+			</description>
+		</method>
+		<method name="get_vca" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="guid" type="Vector4i" />
+			<description>
+                Returns handle to FMOD VCA.
+			</description>
+		</method>
+		<method name="get_vca_by_path" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="path" type="String" />
+			<description>
+                Returns handle to FMOD VCA.
+			</description>
+		</method>
 		<method name="get_version_number" qualifiers="static">
 			<return type="String" />
 			<description>
-				Returns the FMOD Version number.
+                Gets the FMOD Headers Version Number.
 			</description>
 		</method>
 		<method name="has_bank_loaded" qualifiers="const">
 			<return type="bool" />
 			<param index="0" name="bank_name" type="String" />
 			<description>
-				if [code]true[/code] [param bank_name] is loaded. returns false if bank does not exist
+                Check if bank at path to file or id string is loaded.
 			</description>
 		</method>
-		<method name="have_all_banks_loaded" qualifiers="const">
+		<method name="is_live_update_connected" qualifiers="const">
 			<return type="bool" />
 			<description>
-				if [code]true[/code] all banks have finished loading.
+                if [code]true[/code] game is connected to fmod studio.
 			</description>
 		</method>
 		<method name="path_to_guid" qualifiers="const">
 			<return type="Vector4i" />
-			<param index="0" name="p_path" type="String" />
-			<description>
-				Returns the guid of the [param path].
-				                                [b]Note:[/b] The Strings banks must be loaded
-			</description>
-		</method>
-		<method name="play_one_shot_2d_attached_by_id">
-			<return type="void" />
-			<param index="0" name="guid" type="Vector4i" />
-			<param index="1" name="node" type="Node2D" />
-			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
-			<description>
-				Plays and attaches fmod event (from [param guid]) to [param node]. Tracks position and optionally velocity.
-			</description>
-		</method>
-		<method name="play_one_shot_2d_attached_by_path">
-			<return type="void" />
 			<param index="0" name="path" type="String" />
-			<param index="1" name="node" type="Node2D" />
-			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
 			<description>
-				Plays and attaches fmod event (from [param path]) to [param node]. Tracks position and optionally velocity.
-				                                [b]Note:[/b] The Strings banks must be loaded
+                Looks up guid for path.
 			</description>
 		</method>
-		<method name="play_one_shot_3d_attached_by_id">
+		<method name="pause_all_events">
 			<return type="void" />
-			<param index="0" name="guid" type="Vector4i" />
-			<param index="1" name="node" type="Node3D" />
-			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
+			<param index="0" name="pause" type="bool" />
 			<description>
-				Plays and attaches fmod event (from [param guid]) to [param node]. Tracks position and optionally velocity.
+                Pauses or unpauses all events.
 			</description>
 		</method>
-		<method name="play_one_shot_3d_attached_by_path">
-			<return type="void" />
-			<param index="0" name="path" type="String" />
-			<param index="1" name="node" type="Node3D" />
-			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
-			<description>
-				Plays and attaches fmod event (from [param path]) to [param node]. Tracks position and optionally velocity.
-				                                [b]Note:[/b] The Strings banks must be loaded
-			</description>
-		</method>
-		<method name="play_one_shot_by_id" qualifiers="const">
+		<method name="play_one_shot">
 			<return type="void" />
 			<param index="0" name="guid" type="Vector4i" />
 			<param index="1" name="position" type="Vector3" default="Vector3(0, 0, 0)" />
 			<description>
-				Plays one shot event at [param position] in world space (from [param guid]). In 2D Z is normally zero
-				                            [b]Note:[/b] In 2D if you want the sound to align with the XY plane Z should be zero
+                Plays sound at [param position]
 			</description>
 		</method>
-		<method name="play_one_shot_by_path" qualifiers="const">
+		<method name="play_one_shot_attached_2d">
+			<return type="void" />
+			<param index="0" name="guid" type="Vector4i" />
+			<param index="1" name="node" type="Node2D" />
+			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
+			<description>
+                Plays sound attached to [param node].
+			</description>
+		</method>
+		<method name="play_one_shot_attached_2d_by_path">
+			<return type="void" />
+			<param index="0" name="path" type="String" />
+			<param index="1" name="node" type="Node2D" />
+			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
+			<description>
+                Plays sound attached to [param node].
+			</description>
+		</method>
+		<method name="play_one_shot_attached_3d">
+			<return type="void" />
+			<param index="0" name="guid" type="Vector4i" />
+			<param index="1" name="node" type="Node3D" />
+			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
+			<description>
+                Plays sound attached to [param node].
+			</description>
+		</method>
+		<method name="play_one_shot_attached_3d_by_path">
+			<return type="void" />
+			<param index="0" name="path" type="String" />
+			<param index="1" name="node" type="Node3D" />
+			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
+			<description>
+                Plays sound attached to [param node].
+			</description>
+		</method>
+		<method name="play_one_shot_attached_rigidbody_2d">
+			<return type="void" />
+			<param index="0" name="guid" type="Vector4i" />
+			<param index="1" name="rigidbody" type="RigidBody2D" />
+			<description>
+                Plays sound attached to [param rigidbody].
+			</description>
+		</method>
+		<method name="play_one_shot_attached_rigidbody_2d_by_path">
+			<return type="void" />
+			<param index="0" name="path" type="String" />
+			<param index="1" name="rigidbody" type="RigidBody2D" />
+			<description>
+                Plays sound attached to [param rigidbody].
+			</description>
+		</method>
+		<method name="play_one_shot_attached_rigidbody_3d">
+			<return type="void" />
+			<param index="0" name="guid" type="Vector4i" />
+			<param index="1" name="rigidbody" type="RigidBody3D" />
+			<description>
+                Plays sound attached to [param rigidbody].
+			</description>
+		</method>
+		<method name="play_one_shot_attached_rigidbody_3d_by_path">
+			<return type="void" />
+			<param index="0" name="path" type="String" />
+			<param index="1" name="rigidbody" type="RigidBody3D" />
+			<description>
+                Plays sound attached to [param rigidbody].
+			</description>
+		</method>
+		<method name="play_one_shot_by_path">
 			<return type="void" />
 			<param index="0" name="path" type="String" />
 			<param index="1" name="position" type="Vector3" default="Vector3(0, 0, 0)" />
@@ -104,87 +248,57 @@
 				                                [b]Note:[/b] The Strings banks must be loaded
 			</description>
 		</method>
-		<method name="play_one_shot_rigid_2d_attached_by_path">
+		<method name="set_listener_location_2d">
 			<return type="void" />
-			<param index="0" name="path" type="String" />
-			<param index="1" name="rigid_body2d" type="RigidBody2D" />
+			<param index="0" name="node" type="Node2D" />
+			<param index="1" name="listener_index" type="int" default="0" />
+			<param index="2" name="attenuation_object" type="Node2D" default="null" />
 			<description>
-				Plays one shot event (from [param path]) and attaches it to [param rigid_body2d]. Tracks position and velocity
-				                                [b]Note:[/b] The Strings banks must be loaded
+                Moves listener at [param listener_index] to [param node]'s position and optionally attenuates on [param attenuation_object]
 			</description>
 		</method>
-		<method name="play_one_shot_rigid_body2d_attached_by_id">
+		<method name="set_listener_location_3d">
 			<return type="void" />
-			<param index="0" name="guid" type="Vector4i" />
-			<param index="1" name="rigid_body2d" type="RigidBody2D" />
+			<param index="0" name="node" type="Node3D" />
+			<param index="1" name="listener_index" type="int" default="0" />
+			<param index="2" name="attenuation_object" type="Node3D" default="null" />
 			<description>
-				Plays one shot event (from [param guid]) and attaches it to [param rigid_body2d]. Tracks position and velocity
+                Moves listener at [param listener_index] to [param node]'s position and optionally attenuates on [param attenuation_object]
 			</description>
 		</method>
-		<method name="play_one_shot_rigid_body3d_attached_by_id">
+		<method name="set_listener_location_rigid_body2d">
 			<return type="void" />
-			<param index="0" name="guid" type="Vector4i" />
-			<param index="1" name="rigid_body3d" type="RigidBody3D" />
+			<param index="0" name="node" type="RigidBody2D" />
+			<param index="1" name="listener_index" type="int" default="0" />
+			<param index="2" name="attenuation_object" type="Node2D" default="null" />
 			<description>
-				Plays one shot event (from [param guid]) and attaches it to [param rigid_body3d]. Tracks position and velocity
+                Moves listener at [param listener_index] to [param node]'s position and optionally attenuates on [param attenuation_object]
 			</description>
 		</method>
-		<method name="play_one_shot_rigid_body3d_attached_by_path">
+		<method name="set_listener_location_rigid_body3d">
 			<return type="void" />
-			<param index="0" name="path" type="String" />
-			<param index="1" name="rigid_body3d" type="RigidBody3D" />
+			<param index="0" name="node" type="RigidBody3D" />
+			<param index="1" name="listener_index" type="int" default="0" />
+			<param index="2" name="attenuation_object" type="Node3D" default="null" />
 			<description>
-				Plays one shot event (from [param path]) and attaches it to [param rigid_body3d]. Tracks position and velocity
-				                                [b]Note:[/b] The Strings banks must be loaded
-			</description>
-		</method>
-		<method name="set_listener_2d_location">
-			<return type="void" />
-			<param index="0" name="listener_index" type="int" />
-			<param index="1" name="node" type="Node2D" />
-			<param index="2" name="attenuation_object" type="Node2D" />
-			<description>
-				Copies [param attenuation_object]'s transform to listener's attributes
-			</description>
-		</method>
-		<method name="set_listener_2d_rigidbody_location">
-			<return type="void" />
-			<param index="0" name="listener_index" type="int" />
-			<param index="1" name="rigidbody" type="RigidBody2D" />
-			<param index="2" name="attenuation_object" type="Node2D" />
-			<description>
-				Copies [param attenuation_object]'s transform and velocity to listener's attributes
-			</description>
-		</method>
-		<method name="set_listener_3d_location">
-			<return type="void" />
-			<param index="0" name="listener_index" type="int" />
-			<param index="1" name="node" type="Node3D" />
-			<param index="2" name="attenuation_object" type="Node3D" />
-			<description>
-				Copies [param attenuation_object]'s transform to listener's attributes
-			</description>
-		</method>
-		<method name="set_listener_3d_rigidbody_location">
-			<return type="void" />
-			<param index="0" name="listener_index" type="int" />
-			<param index="1" name="rigidbody" type="RigidBody3D" />
-			<param index="2" name="attenuation_object" type="Node3D" />
-			<description>
-				Copies [param attenuation_object]'s transform and velocity to listener's attributes
+                Moves listener at [param listener_index] to [param node]'s position and optionally attenuates on [param attenuation_object]
 			</description>
 		</method>
 		<method name="unload_banks">
 			<return type="void" />
 			<description>
-				Unloads all banks.
-				                                [b]Warning:[/b] This ignores the reference count of banks loaded as resources and can lead to audio bugs.
+                Unloads all banks
+			</description>
+		</method>
+		<method name="wait_for_all_sample_loading">
+			<return type="void" />
+			<description>
+                Load all sample data.
 			</description>
 		</method>
 	</methods>
 	<members>
 		<member name="muted" type="bool" setter="set_muted" getter="is_muted" default="false">
-			If [code]true[/code], All fmod sounds are muted.
 		</member>
 	</members>
 	<signals>
@@ -206,11 +320,11 @@
 		</signal>
 	</signals>
 	<constants>
-		<constant name="LIVE_UPDATE_DISABLED" value="0" enum="LiveUpdate">
+		<constant name="InitSettings::LIVE_UPDATE_DISABLED" value="0" enum="LiveUpdate">
 		</constant>
-		<constant name="LIVE_UPDATE_ENABLED" value="1" enum="LiveUpdate">
+		<constant name="InitSettings::LIVE_UPDATE_ENABLED" value="1" enum="LiveUpdate">
 		</constant>
-		<constant name="LIVE_UPDATE_DEV_ONLY" value="2" enum="LiveUpdate">
+		<constant name="InitSettings::LIVE_UPDATE_DEV_ONLY" value="2" enum="LiveUpdate">
 		</constant>
 	</constants>
 </class>

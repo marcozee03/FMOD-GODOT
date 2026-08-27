@@ -137,20 +137,18 @@ void FmodListener<Derived, NodeType, RigidBody>::_notification(int p_what)
             switch (_parent_type)
             {
             case RIGIDBODY: {
-                FmodAudioServer::get_singleton()->set_listener_location(
-                    listener_index, reinterpret_cast<RigidBody *>(parent_rigidbody));
+                FmodAudioServer::get_singleton()->set_listener_location(parent_rigidbody, listener_index);
                 return;
             }
             case NODE: {
-                FmodAudioServer::get_singleton()->set_listener_location(listener_index,
-                                                                        reinterpret_cast<NodeType *>(parent_node));
+                FmodAudioServer::get_singleton()->set_listener_location(parent_node, listener_index);
                 return;
             }
             default:
                 break;
             }
         }
-        FmodAudioServer::get_singleton()->set_listener_location(listener_index, reinterpret_cast<NodeType *>(this));
+        FmodAudioServer::get_singleton()->set_listener_location(Object::cast_to<NodeType>(this), listener_index);
     default:
         break;
     }

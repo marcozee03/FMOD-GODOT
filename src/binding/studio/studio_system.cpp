@@ -35,7 +35,8 @@ void StudioSystem::_bind_methods()
     BIND_STATIC_METHOD_WITH_DEF(set_parameter_by_id, ARGS("handle", "id", "value", "ignore_seek_speed"), DEFVAL(false));
     BIND_STATIC_METHOD_WITH_DEF(set_parameter_by_id_with_label, ARGS("handle", "id", "label", "ignore_seek_speed"),
                                 DEFVAL(false));
-    BIND_STATIC_METHOD(set_parameters_by_ids);
+    BIND_STATIC_METHOD_WITH_DEF(set_parameters_by_ids, ARGS("handle", "ids", "values", "ignore_seek_speed"),
+                                DEFVAL(false));
     // ClassDB ::bind_static_method(get_class_static(),
     //                              D_METHOD("set_parameters_by_ids", "handle", "ids", "values", "ignore_seek_speed"),
     //                              &self_type::set_parameters_by_ids, DEFVAL(false));
@@ -52,7 +53,7 @@ void StudioSystem::_bind_methods()
     BIND_STATIC_METHOD(set_listener_attributes_with_attenuation, "handle", "listener", "transform", "velocity",
                        "attenuation_position");
     BIND_STATIC_METHOD(load_bank_file, "handle", "filename", "flags");
-    BIND_STATIC_METHOD(load_bank_memory, "handle", "buffer", "flags");
+    BIND_STATIC_METHOD(load_bank_memory, "handle", "buffer", "mode", "flags");
     BIND_STATIC_METHOD(unload_all, "handle");
     BIND_STATIC_METHOD(get_bank_count, "handle");
     BIND_STATIC_METHOD(get_bank_list, "handle");

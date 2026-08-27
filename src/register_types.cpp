@@ -150,10 +150,10 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
 #ifdef TOOLS_ENABLED
         if (!Engine::get_singleton()->is_editor_hint())
         {
-            audio_server->load_start_up_banks();
+            audio_server->_load_start_up_banks();
         }
 #else
-        audio_server->load_start_up_banks();
+        audio_server->_load_start_up_banks();
 #endif
     }
 
