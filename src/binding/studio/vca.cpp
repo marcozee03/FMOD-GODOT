@@ -33,7 +33,23 @@ godot::Vector4i StudioVCA::get_id(Handle p_handle)
 }
 godot::String StudioVCA::get_path(Handle p_handle)
 {
-    FMOD_GET_STRING(FMOD_Studio_VCA_GetPath, std::bit_cast<FMOD_STUDIO_VCA *>(p_handle), path)
+    String path = "";
+    {
+        CharString strpath;
+        int retrieved = 0;
+        FMOD_Studio_VCA_GetPath(std ::bit_cast<FMOD_STUDIO_VCA *>(p_handle), nullptr, 0, &retrieved);
+        if (retrieved > 0)
+        {
+            int size = retrieved;
+            strpath.resize_uninitialized(size);
+            FMOD_Studio_VCA_GetPath(std ::bit_cast<FMOD_STUDIO_VCA *>(p_handle), strpath.ptrw(), size, &retrieved);
+        }
+        else
+        {
+            strpath = nullptr;
+        };
+        path = String(strpath.ptr());
+    }
     return path;
 }
 float StudioVCA::get_volume(Handle p_handle)
