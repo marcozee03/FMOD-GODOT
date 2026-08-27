@@ -1,12 +1,10 @@
 #include "fmod_audio_server.h"
 #include "classes/global_constants.hpp"
-#include "classes/os.hpp"
 #include "classes/resource_loader.hpp"
 #include "core/defs.hpp"
 #include "core/error_macros.hpp"
 #include "core/object.hpp"
 #include "core/print_string.hpp"
-#include "fmod.h"
 #include "fmod_common.h"
 #include "fmod_defs.h"
 #include "fmod_string_names.h"
@@ -35,27 +33,6 @@ using namespace std;
 using namespace godot;
 namespace FmodGodot
 {
-FmodAudioServer::InitSettings FmodAudioServer::get_fmod_settings()
-{
-    FmodAudioServer::InitSettings settings;
-    settings.sample_rate = GLOBAL_GET(SAMPLE_RATE);
-    settings.dspbuffer_length = GLOBAL_GET(BUFFER_LENGTH);
-    settings.dspbuffer_count = GLOBAL_GET(BUFFER_COUNT);
-    settings.software_channels = GLOBAL_GET(REAL_COUNT);
-    settings.virtual_channels = GLOBAL_GET(VIRTUAL_COUNT);
-    settings.encryption_key = GLOBAL_GET(ENCRYPTION_KEY);
-    settings.rolloff_scale = GLOBAL_GET(ROLLOFF_SCALE);
-    settings.doppler_scale = GLOBAL_GET(DOPPLER_SCALE);
-    settings.distance_factor = GLOBAL_GET(DISTANCE_FACTOR);
-
-    settings.live_update = static_cast<FmodAudioServer::LiveUpdate>(static_cast<int>(GLOBAL_GET(LIVE_UPDATE)));
-    settings.live_update_port = GLOBAL_GET(LIVE_UPDATE_PORT);
-
-    settings.logging_level = GLOBAL_GET(LOGGING_LEVEL);
-    settings.debug_type = GLOBAL_GET(DEBUG_TYPE);
-    settings.debug_display = GLOBAL_GET(DEBUG_DISPLAY);
-    return settings;
-}
 
 FMOD_RESULT fmod_debug_callback(FMOD_DEBUG_FLAGS p_flags, const char *p_file, int p_line, const char *p_func,
                                 const char *p_message)
@@ -110,24 +87,6 @@ FMOD_RESULT F_CALL fmod_studio_system_callback(FMOD_STUDIO_SYSTEM *p_system, FMO
     return FMOD_ERR_INVALID_HANDLE;
 }
 
-FMOD_RESULT godot_file_error_to_fmod_file_error(Error p_err)
-{
-    switch (p_err)
-    {
-    case OK:
-        return FMOD_OK;
-    case ERR_FILE_NOT_FOUND:
-        return FMOD_ERR_FILE_NOTFOUND;
-    case ERR_FILE_BAD_PATH:
-        return FMOD_ERR_FILE_BAD;
-    case ERR_FILE_CANT_READ:
-        return FMOD_ERR_FILE_COULDNOTSEEK;
-    case ERR_FILE_EOF:
-        return FMOD_ERR_FILE_EOF;
-    default:
-        return FMOD_ERR_FILE_BAD;
-    }
-}
 FMOD_RESULT open_callback(const char *p_name, unsigned int *p_filesize, void **p_handle, void *p_userdata)
 {
     auto file = FileAccess::open(String(p_name), FileAccess::ModeFlags::READ);
@@ -166,10 +125,80 @@ FMOD_RESULT read_callback(void *p_handle, void *p_buffer, unsigned int p_sizebyt
 #pragma region Server Functionality
 FmodAudioServer *FmodAudioServer::singleton = nullptr;
 
+godot::String FmodAudioServer::_get_version_number()
+{
+    constexpr unsigned int major = (FMOD_VERSION & 0xffff0000) >> 16;
+    constexpr unsigned int minor = (FMOD_VERSION & 0x0000ff00) >> 8;
+    constexpr unsigned int patch = (FMOD_VERSION & 0x000000ff);
+    return vformat("%x.%02x.%02x", major, minor, patch);
+}
+Handle FmodAudioServer::_get_core()
+{
+    return std::bit_cast<Handle>(core_system);
+}
+Handle FmodAudioServer::_get_studio()
+{
+    return std::bit_cast<Handle>(studio_system);
+}
+Handle FmodAudioServer::_create_instance(const Vector4i &p_guid) const
+{
+    return std::bit_cast<Handle>(create_instance(p_guid));
+}
+Handle FmodAudioServer::_create_instance_by_path(const String &p_path) const
+{
+    return _create_instance(path_to_guid(p_path));
+}
+
+void FmodAudioServer::_attach_instance_to_node3d(Node3D *p_node, Handle p_event, bool p_non_rigid_body_velocity)
+{
+    attach_instance(p_node, std::bit_cast<FMOD_STUDIO_EVENTINSTANCE *>(p_event), p_non_rigid_body_velocity);
+}
+void FmodAudioServer::_attach_instance_to_rigid_body3d(RigidBody3D *p_node, Handle p_event)
+{
+    attach_instance(p_node, std::bit_cast<FMOD_STUDIO_EVENTINSTANCE *>(p_event));
+}
+void FmodAudioServer::_attach_instance_to_node2d(Node2D *p_node, Handle p_event, bool p_non_rigid_body_velocity)
+{
+    attach_instance(p_node, std::bit_cast<FMOD_STUDIO_EVENTINSTANCE *>(p_event), p_non_rigid_body_velocity);
+}
+void FmodAudioServer::_attach_instance_to_rigid_body2d(RigidBody2D *p_node, Handle p_event)
+{
+
+    attach_instance(p_node, std::bit_cast<FMOD_STUDIO_EVENTINSTANCE *>(p_event));
+}
+void FmodAudioServer::_detach_instance(Handle p_event)
+{
+    detach_instance(std::bit_cast<FMOD_STUDIO_EVENTINSTANCE *>(p_event));
+}
+Handle FmodAudioServer::_get_event_description(const String &p_path) const
+{
+    return std::bit_cast<Handle>(get_event_description(p_path));
+}
+Handle FmodAudioServer::_get_event_description(const Vector4i &p_guid) const
+{
+    return std::bit_cast<Handle>(get_event_description(p_guid));
+}
+Handle FmodAudioServer::_get_bus(const Vector4i &p_path) const
+{
+
+    return std::bit_cast<Handle>(get_bus(p_path));
+}
+Handle FmodAudioServer::_get_vca(const Vector4i &p_path) const
+{
+    return std::bit_cast<Handle>(get_vca(p_path));
+}
+Handle FmodAudioServer::_get_bus_by_path(const String &p_path) const
+{
+
+    return std::bit_cast<Handle>(get_bus(p_path));
+}
+Handle FmodAudioServer::_get_vca_by_path(const String &p_path) const
+{
+    return std::bit_cast<Handle>(get_vca(p_path));
+}
+
 FmodAudioServer::FmodAudioServer()
 {
-    studio_system = nullptr;
-    core_system = nullptr;
 }
 FmodAudioServer::~FmodAudioServer()
 {
@@ -178,7 +207,7 @@ FmodAudioServer::~FmodAudioServer()
 
 FMOD_RESULT FmodAudioServer::init_with_project_settings()
 {
-    return init(get_fmod_settings());
+    return init(InitSettings::create_from_project_settings());
 }
 
 FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
@@ -189,14 +218,14 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
     FMOD_STUDIO_INITFLAGS studio_init = FMOD_STUDIO_INIT_NORMAL;
     switch (p_settings.live_update)
     {
-    case LIVE_UPDATE_DISABLED: // disabled
+    case InitSettings::LIVE_UPDATE_DISABLED: // disabled
         studio_init = FMOD_STUDIO_INIT_NORMAL;
         break;
-    case LIVE_UPDATE_ENABLED:
+    case InitSettings::LIVE_UPDATE_ENABLED:
         studio_init = FMOD_STUDIO_INIT_LIVEUPDATE;
         print_line("Live Update");
         print_line(p_settings.live_update_port);
-    case LIVE_UPDATE_DEV_ONLY: // dev
+    case InitSettings::LIVE_UPDATE_DEV_ONLY: // dev
 #if defined(TOOLS_ENABLED) || defined(DEBUG)
         studio_init = FMOD_STUDIO_INIT_LIVEUPDATE;
 #else
@@ -248,13 +277,13 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
                                            FMOD_INIT_NORMAL & FMOD_INIT_3D_RIGHTHANDED, nullptr);
     if (result != FMOD_OK)
     {
-        UtilityFunctions::printerr("Init FmodAudioServer Error", FMOD_ErrorString(result));
+        UtilityFunctions::printerr("Init FmodAudioServerInternal Error", FMOD_ErrorString(result));
     }
     initialized = true;
 
     FMOD_Studio_System_SetUserData(studio_system, this);
     FMOD_Studio_System_SetCallback(studio_system, fmod_studio_system_callback, FMOD_STUDIO_SYSTEM_CALLBACK_ALL);
-    thread->start(callable_mp(this, &FmodAudioServer::thread_func), Thread::Priority::PRIORITY_NORMAL);
+    thread->start(callable_mp(this, &FmodAudioServer::_thread_func), Thread::Priority::PRIORITY_NORMAL);
     String plugin_path = GLOBAL_GET(PLUGIN_PATH);
     ;
     if (!plugin_path.is_empty())
@@ -325,7 +354,7 @@ void FmodAudioServer::_physics_process()
     }
     unlock();
 }
-void FmodAudioServer::thread_func()
+void FmodAudioServer::_thread_func()
 {
     thread->set_thread_safety_checks_enabled(false);
     SceneTree *tree = cast_to<SceneTree>(Engine::get_singleton()->get_main_loop());
@@ -400,7 +429,7 @@ void FmodAudioServer::thread_func()
  * @param p_event
  * @return
  */
-int FmodAudioServer::find_instance(FMOD_STUDIO_EVENTINSTANCE *p_event)
+int FmodAudioServer::_find_instance(FMOD_STUDIO_EVENTINSTANCE *p_event)
 {
     for (uint32_t i = 0; i < instances.size(); i++)
     {
@@ -445,73 +474,87 @@ void FmodAudioServer::finish()
     initialized = false;
     thread_exited = true;
 }
-
-#pragma endregion
 void FmodAudioServer::_bind_methods()
 {
-    BIND_ENUM_CONSTANT(LIVE_UPDATE_DISABLED);
-    BIND_ENUM_CONSTANT(LIVE_UPDATE_ENABLED);
-    BIND_ENUM_CONSTANT(LIVE_UPDATE_DEV_ONLY);
-    ClassDB::bind_static_method(get_class_static(), D_METHOD("get_version_number"),
-                                &FmodAudioServer::get_version_number);
-    ClassDB::bind_method(D_METHOD("unload_banks"), &FmodAudioServer::unload_banks);
+    BIND_ENUM_CONSTANT(InitSettings::LIVE_UPDATE_DISABLED);
+    BIND_ENUM_CONSTANT(InitSettings::LIVE_UPDATE_ENABLED);
+    BIND_ENUM_CONSTANT(InitSettings::LIVE_UPDATE_DEV_ONLY);
+    ClassDB ::bind_static_method(get_class_static(), D_METHOD("get_version_number"), &self_type ::_get_version_number);
+    ClassDB ::bind_method(D_METHOD("get_core"), &self_type ::_get_core);
+    ClassDB ::bind_method(D_METHOD("get_studio"), &self_type ::_get_studio);
+    ClassDB ::bind_method(D_METHOD("create_instance", "guid"), &self_type ::_create_instance);
+    ClassDB ::bind_method(D_METHOD("create_instance_by_path", "path"), &self_type ::_create_instance_by_path);
 
+    BIND_METHOD(unload_banks);
     BIND_BOOL_PROPERTY(muted);
-    ClassDB::bind_method(D_METHOD("play_one_shot_by_id", "guid", "position"), &FmodAudioServer::play_one_shot_by_id,
-                         DEFVAL(Vector3(0, 0, 0)));
-    ClassDB::bind_static_method("FmodAudioServer", D_METHOD("get_singleton"), &FmodAudioServer::get_singleton);
-    ClassDB::bind_method(D_METHOD("play_one_shot_by_path", "path", "position"), &FmodAudioServer::play_one_shot_by_path,
-                         DEFVAL(Vector3(0, 0, 0)));
-    ClassDB::bind_method(D_METHOD("play_one_shot_3d_attached_by_id", "guid", "node", "non_rigid_body_velocity"),
-                         &FmodAudioServer::play_one_shot_3d_attached_by_id, DEFVAL(false));
-    ClassDB::bind_method(D_METHOD("play_one_shot_3d_attached_by_path", "path", "node", "non_rigid_body_velocity"),
-                         &FmodAudioServer::play_one_shot_3d_attached_by_path, DEFVAL(false));
-    ClassDB::bind_method(D_METHOD("play_one_shot_2d_attached_by_id", "guid", "node", "non_rigid_body_velocity"),
-                         &FmodAudioServer::play_one_shot_2d_attached_by_id, DEFVAL(false));
-    ClassDB::bind_method(D_METHOD("play_one_shot_2d_attached_by_path", "path", "node", "non_rigid_body_velocity"),
-                         &FmodAudioServer::play_one_shot_2d_attached_by_path, DEFVAL(false));
+    BIND_METHOD_OL_WITH_DEF(play_one_shot, "play_one_shot", ARGS("guid", "position"), void,
+                            ARGS(const Vector4i &, const Vector3 &), DEFVAL(Vector3()));
+    BIND_METHOD_OL_WITH_DEF(play_one_shot, "play_one_shot_by_path", ARGS("path", "position"), void,
+                            ARGS(const String &, const Vector3 &), DEFVAL(Vector3()));
 
-    ClassDB::bind_method(D_METHOD("play_one_shot_rigid_body3d_attached_by_id", "guid", "rigid_body3d"),
-                         &FmodAudioServer::play_one_shot_rigid_body3d_attached_by_id);
-    ClassDB::bind_method(D_METHOD("play_one_shot_rigid_body3d_attached_by_path", "path", "rigid_body3d"),
-                         &FmodAudioServer::play_one_shot_rigid_body3d_attached_by_path);
-    ClassDB::bind_method(D_METHOD("play_one_shot_rigid_body2d_attached_by_id", "guid", "rigid_body2d"),
-                         &FmodAudioServer::play_one_shot_rigid_body2d_attached_by_id);
-    ClassDB::bind_method(D_METHOD("play_one_shot_rigid_2d_attached_by_path", "path", "rigid_body2d"),
-                         &FmodAudioServer::play_one_shot_rigid_body2d_attached_by_path);
-    ClassDB::bind_method(D_METHOD("any_sample_data_loading"), &FmodAudioServer::any_sample_data_loading);
-    // ClassDB::bind_method(D_METHOD("attach_instance_to_node3d", "node",
-    // "instance", "non_rigid_body_velocity"),
-    // &FmodAudioServer::attach_instance_to_node3d); void
-    // attach_instance_to_node3D(Node3D * p_node, FMOD_STUDIO_EVENTINSTANCE *
-    // p_instance, bool p_non_rigid_body_velocity = false); void
-    // attach_instance_to_rigid_body_3D(RigidBody3D * p_node,
-    // FMOD_STUDIO_EVENTINSTANCE * p_instance); void
-    // attach_instance_to_node2D(Node2D * p_node, FMOD_STUDIO_EVENTINSTANCE *
-    // p_instance, bool p_non_rigid_body_velocity = false); void
-    // attach_instance_to_rigid_body_2D(RigidBody2D * p_node,
-    // FMOD_STUDIO_EVENTINSTANCE * p_instance);
+    BIND_METHOD_OL_WITH_DEF(play_one_shot_attached, "play_one_shot_attached_3d",
+                            ARGS("guid", "node", "non_rigid_body_velocity"), void,
+                            ARGS(const Vector4i &, Node3D *, bool), DEFVAL(false));
+    BIND_METHOD_OL_WITH_DEF(play_one_shot_attached, "play_one_shot_attached_3d_by_path",
+                            ARGS("path", "node", "non_rigid_body_velocity"), void, ARGS(const String &, Node3D *, bool),
+                            DEFVAL(false));
 
-    // void detach_instance_from_node(FMOD_STUDIO_EVENTINSTANCE * p_instance);
+    BIND_METHOD_OL_WITH_DEF(play_one_shot_attached, "play_one_shot_attached_2d",
+                            ARGS("guid", "node", "non_rigid_body_velocity"), void,
+                            ARGS(const Vector4i &, Node2D *, bool), DEFVAL(false));
+    BIND_METHOD_OL_WITH_DEF(play_one_shot_attached, "play_one_shot_attached_2d_by_path",
+                            ARGS("path", "node", "non_rigid_body_velocity"), void, ARGS(const String &, Node2D *, bool),
+                            DEFVAL(false));
 
-    ClassDB::bind_method(D_METHOD("path_to_guid", "p_path"), &FmodAudioServer::path_to_guid);
-    // FMOD_STUDIO_EVENTDESCRIPTION *get_event_description(String p_path);
-    // FMOD_STUDIO_EVENTDESCRIPTION *get_event_description(Vector4i p_guid);
-    // void pause_all_events(bool p_pause);
+    BIND_METHOD_OL(play_one_shot_attached, "play_one_shot_attached_rigidbody_3d", ARGS("guid", "rigidbody"), void,
+                   const Vector4i &, RigidBody3D *);
+    BIND_METHOD_OL(play_one_shot_attached, "play_one_shot_attached_rigidbody_3d_by_path", ARGS("path", "rigidbody"),
+                   void, const String &, RigidBody3D *);
 
-    // Studio::Bus *get_bus(String p_path);
-    // Studio::VCA *get_vca(String p_path);
+    BIND_METHOD_OL(play_one_shot_attached, "play_one_shot_attached_rigidbody_2d", ARGS("guid", "rigidbody"), void,
+                   const Vector4i &, RigidBody2D *);
+    BIND_METHOD_OL(play_one_shot_attached, "play_one_shot_attached_rigidbody_2d_by_path", ARGS("path", "rigidbody"),
+                   void, const String &, RigidBody2D *);
 
-    BIND_METHOD(has_bank_loaded, "bank_name")
+    BIND_STATIC_METHOD(get_singleton);
+    BIND_METHOD(any_sample_data_loading);
 
-    // bool have_all_banks_loaded();
-    BIND_METHOD(have_all_banks_loaded);
-    // set_listener_location
-    BIND_METHOD(set_listener_2d_location, "listener_index", "node", "attenuation_object");
-    BIND_METHOD(set_listener_3d_location, "listener_index", "node", "attenuation_object");
-    BIND_METHOD(set_listener_2d_rigidbody_location, "listener_index", "rigidbody", "attenuation_object");
-    BIND_METHOD(set_listener_3d_rigidbody_location, "listener_index", "rigidbody", "attenuation_object");
+    ClassDB ::bind_method(D_METHOD("attach_instance_to_node3d", "node", "event", "non_rigid_body_velocity"),
+                          &self_type::_attach_instance_to_node3d, (false));
+    ClassDB ::bind_method(D_METHOD("attach_instance_to_node2d", "node", "event", "non_rigid_body_velocity"),
+                          &self_type::_attach_instance_to_node2d, (false));
+    ClassDB ::bind_method(D_METHOD("attach_instance_to_rigid_body2d", "rigid_body", "event"),
+                          &self_type::_attach_instance_to_rigid_body2d);
+    ClassDB ::bind_method(D_METHOD("attach_instance_to_rigid_body3d", "rigid_body", "event"),
+                          &self_type::_attach_instance_to_rigid_body3d);
+    ClassDB ::bind_method(D_METHOD("detach_instance", "handle"), &self_type ::_detach_instance);
 
+    BIND_METHOD_OL_C(_get_event_description, "get_event_description", ARGS("id"), Handle, const Vector4i &);
+    BIND_METHOD_OL_C(_get_event_description, "get_event_description_by_path", ARGS("path"), Handle, const String &);
+    ClassDB ::bind_method(D_METHOD("get_bus", "guid"), &self_type ::_get_bus);
+    ClassDB ::bind_method(D_METHOD("get_vca", "guid"), &self_type ::_get_vca);
+
+    ClassDB ::bind_method(D_METHOD("get_bus_by_path", "path"), &self_type ::_get_bus_by_path);
+    ClassDB ::bind_method(D_METHOD("get_vca_by_path", "path"), &self_type ::_get_vca_by_path);
+
+    BIND_METHOD(path_to_guid, "path");
+    BIND_METHOD(has_bank_loaded, "bank_name");
+    BIND_METHOD(pause_all_events, "pause");
+
+    BIND_METHOD_OL_WITH_DEF(set_listener_location, "set_listener_location_3d",
+                            ARGS("node", "listener_index", "attenuation_object"), void, ARGS(Node3D *, int, Node3D *),
+                            DEFVAL(0), DEFVAL(nullptr));
+    BIND_METHOD_OL_WITH_DEF(set_listener_location, "set_listener_location_2d",
+                            ARGS("node", "listener_index", "attenuation_object"), void, ARGS(Node2D *, int, Node2D *),
+                            DEFVAL(0), DEFVAL(nullptr));
+    BIND_METHOD_OL_WITH_DEF(set_listener_location, "set_listener_location_rigid_body2d",
+                            ARGS("node", "listener_index", "attenuation_object"), void,
+                            ARGS(RigidBody2D *, int, Node2D *), DEFVAL(0), DEFVAL(nullptr));
+    BIND_METHOD_OL_WITH_DEF(set_listener_location, "set_listener_location_rigid_body3d",
+                            ARGS("node", "listener_index", "attenuation_object"), void,
+                            ARGS(RigidBody3D *, int, Node3D *), DEFVAL(0), DEFVAL(nullptr));
+    BIND_METHOD(is_live_update_connected);
+    BIND_METHOD(wait_for_all_sample_loading);
     ADD_SIGNAL(MethodInfo("preupdate"));
     ADD_SIGNAL(MethodInfo("postupdate"));
     // ADD_SIGNAL(MethodInfo("bank_unloaded"));
@@ -519,11 +562,13 @@ void FmodAudioServer::_bind_methods()
     ADD_SIGNAL(MethodInfo("live_update_disconnected"));
 }
 
+#pragma endregion
+
 FmodAudioServer *FmodAudioServer::get_singleton()
 {
     return singleton;
 }
-void FmodAudioServer::load_start_up_banks()
+void FmodAudioServer::_load_start_up_banks()
 {
     if (!start_up_banks_loaded)
     {
@@ -581,14 +626,14 @@ void FmodAudioServer::load_start_up_banks()
         }
     }
 }
-void FmodAudioServer::reload_start_up_banks()
+void FmodAudioServer::_reload_start_up_banks()
 {
     for (auto bank : start_up_banks)
     {
         bank->reload();
     }
 }
-void FmodAudioServer::unload_start_up_banks()
+void FmodAudioServer::_unload_start_up_banks()
 {
     lock();
     if (start_up_banks_loaded)
@@ -599,8 +644,6 @@ void FmodAudioServer::unload_start_up_banks()
     }
     unlock();
 }
-
-#pragma region server api
 
 void FmodAudioServer::unload_banks()
 {
@@ -616,14 +659,7 @@ void FmodAudioServer::unload_banks()
     print_verbose("Unloading all banks");
     unlock();
 }
-void FmodAudioServer::get_core_ref(FMOD_SYSTEM **p_core)
-{
-    *p_core = this->core_system;
-}
-void FmodAudioServer::get_studio_ref(FMOD_STUDIO_SYSTEM **p_studio)
-{
-    *p_studio = this->studio_system;
-}
+
 bool FmodAudioServer::is_live_update_connected() const
 {
     return live_update_connected;
@@ -644,7 +680,7 @@ const FMOD_STUDIO_SYSTEM *FmodAudioServer::get_studio() const
 {
     return studio_system;
 }
-FMOD_STUDIO_EVENTINSTANCE *FmodAudioServer::create_instance(const Vector4i p_guid) const
+FMOD_STUDIO_EVENTINSTANCE *FmodAudioServer::create_instance(const Vector4i &p_guid) const
 {
     FMOD_GUID guid = cast_to_fmod_guid(p_guid);
     FMOD_STUDIO_EVENTDESCRIPTION *description;
@@ -654,7 +690,7 @@ FMOD_STUDIO_EVENTINSTANCE *FmodAudioServer::create_instance(const Vector4i p_gui
     return event;
 }
 
-void FmodAudioServer::play_one_shot_by_id(const Vector4i p_guid, const Vector3 p_position) const
+void FmodAudioServer::play_one_shot(const Vector4i &p_guid, const Vector3 &p_position)
 {
     FMOD_STUDIO_EVENTINSTANCE *event = create_instance(p_guid);
     FMOD_3D_ATTRIBUTES attr;
@@ -666,64 +702,45 @@ void FmodAudioServer::play_one_shot_by_id(const Vector4i p_guid, const Vector3 p
     FMOD_Studio_EventInstance_Start(event);
     FMOD_Studio_EventInstance_Release(event);
 }
-void FmodAudioServer::play_one_shot_by_path(const String &p_path, const Vector3 p_position) const
-{
-    play_one_shot_by_id(path_to_guid(p_path), p_position);
-}
-void FmodAudioServer::play_one_shot_3d_attached_by_id(const Vector4i p_guid, Node3D *p_node,
-                                                      bool p_non_rigid_body_velocity)
-{
-    FMOD_STUDIO_EVENTINSTANCE *event = create_instance(p_guid);
 
-    attach_instance_to_node3d(p_node, event);
-    FMOD_Studio_EventInstance_Start(event);
-    FMOD_Studio_EventInstance_Release(event);
-}
-void FmodAudioServer::play_one_shot_3d_attached_by_path(const String &p_path, Node3D *p_node,
-                                                        bool p_non_rigid_body_velocity)
+void FmodAudioServer::play_one_shot(const String &p_path, const Vector3 &p_position)
 {
-    play_one_shot_3d_attached_by_id(path_to_guid(p_path), p_node);
+    play_one_shot(path_to_guid(p_path), p_position);
 }
-void FmodAudioServer::play_one_shot_2d_attached_by_id(const Vector4i p_guid, Node2D *p_node,
-                                                      bool p_non_rigid_body_velocity)
+void FmodAudioServer::play_one_shot_attached(const Vector4i &p_guid, Node3D *p_node, bool p_non_rigid_body_velocity)
 {
-    FMOD_STUDIO_EVENTINSTANCE *event = create_instance(p_guid);
-
-    attach_instance_to_node2D(p_node, event);
-    FMOD_Studio_EventInstance_Start(event);
-    FMOD_Studio_EventInstance_Release(event);
+    _play_one_shot_attached(p_guid, p_node, p_non_rigid_body_velocity);
 }
-void FmodAudioServer::play_one_shot_2d_attached_by_path(const String &p_path, Node2D *p_node,
-                                                        bool p_non_rigid_body_velocity)
+void FmodAudioServer::play_one_shot_attached(const String &p_path, Node3D *p_node, bool p_non_rigid_body_velocity)
 {
-    play_one_shot_2d_attached_by_id(path_to_guid(p_path), p_node);
+    play_one_shot_attached(path_to_guid(p_path), p_node, p_non_rigid_body_velocity);
+}
+void FmodAudioServer::play_one_shot_attached(const Vector4i &p_guid, Node2D *p_node, bool p_non_rigid_body_velocity)
+{
+    _play_one_shot_attached(p_guid, p_node, p_non_rigid_body_velocity);
+}
+void FmodAudioServer::play_one_shot_attached(const String &p_path, Node2D *p_node, bool p_non_rigid_body_velocity)
+{
+    play_one_shot_attached(path_to_guid(p_path), p_node, p_non_rigid_body_velocity);
 }
 
-void FmodAudioServer::play_one_shot_rigid_body3d_attached_by_id(const Vector4i p_guid, RigidBody3D *p_rigid_body3d)
+void FmodAudioServer::play_one_shot_attached(const Vector4i &p_guid, RigidBody3D *p_rigid_body3d)
 {
-    FMOD_STUDIO_EVENTINSTANCE *event = create_instance(p_guid);
-
-    attach_instance_to_rigid_body3d(p_rigid_body3d, event);
-    FMOD_Studio_EventInstance_Start(event);
-    FMOD_Studio_EventInstance_Release(event);
+    _play_one_shot_attached(p_guid, p_rigid_body3d);
 }
-void FmodAudioServer::play_one_shot_rigid_body3d_attached_by_path(const String &p_path, RigidBody3D *p_rigid_body3d)
+void FmodAudioServer::play_one_shot_attached(const String &p_path, RigidBody3D *p_rigid_body3d)
 {
-    play_one_shot_rigid_body3d_attached_by_id(path_to_guid(p_path), p_rigid_body3d);
+    play_one_shot_attached(path_to_guid(p_path), p_rigid_body3d);
 }
-void FmodAudioServer::play_one_shot_rigid_body2d_attached_by_id(const Vector4i p_guid, RigidBody2D *p_rigid_body2d)
+void FmodAudioServer::play_one_shot_attached(const Vector4i &p_guid, RigidBody2D *p_rigid_body2d)
 {
-    FMOD_STUDIO_EVENTINSTANCE *event = create_instance(p_guid);
-
-    attach_instance_to_rigid_body2d(p_rigid_body2d, event);
-    FMOD_Studio_EventInstance_Start(event);
-    FMOD_Studio_EventInstance_Release(event);
+    _play_one_shot_attached(p_guid, p_rigid_body2d);
 }
-void FmodAudioServer::play_one_shot_rigid_body2d_attached_by_path(const String &p_path, RigidBody2D *p_rigid_body2d)
+void FmodAudioServer::play_one_shot_attached(const String &p_path, RigidBody2D *p_rigid_body2d)
 {
-    play_one_shot_rigid_body2d_attached_by_id(path_to_guid(p_path), p_rigid_body2d);
+    play_one_shot_attached(path_to_guid(p_path), p_rigid_body2d);
 }
-bool FmodAudioServer::any_sample_data_loading()
+bool FmodAudioServer::any_sample_data_loading() const
 {
     int count;
     FMOD_Studio_System_GetBankCount(studio_system, &count);
@@ -741,30 +758,29 @@ bool FmodAudioServer::any_sample_data_loading()
     memdelete_arr(banks);
     return loading;
 }
+void FmodAudioServer::attach_instance(Node3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event,
+                                      bool p_non_rigid_body_velocity)
+{
+    _attach_instance(p_node, p_event, p_non_rigid_body_velocity);
+}
+void FmodAudioServer::attach_instance(RigidBody3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event)
+{
+    _attach_instance(p_node, p_event);
+}
+void FmodAudioServer::attach_instance(Node2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event,
+                                      bool p_non_rigid_body_velocity)
+{
+    _attach_instance(p_node, p_event, p_non_rigid_body_velocity);
+}
+void FmodAudioServer::attach_instance(RigidBody2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event)
+{
+    _attach_instance(p_node, p_event);
+}
 
-void FmodAudioServer::attach_instance_to_node3d(Node3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_instance,
-                                                bool p_non_rigid_body_velocity)
-{
-    _attach_instance_3d(p_node, p_instance, NODE3D, false);
-}
-void FmodAudioServer::attach_instance_to_rigid_body3d(RigidBody3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_instance)
-{
-    _attach_instance_3d<RigidBody3D>(p_node, p_instance, RIGIDBODY3D, false);
-}
-void FmodAudioServer::attach_instance_to_node2D(Node2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_instance,
-                                                bool p_non_rigid_body_velocity)
-{
-    _attach_instance_2d<Node2D>(p_node, p_instance, NODE2D, p_non_rigid_body_velocity);
-}
-void FmodAudioServer::attach_instance_to_rigid_body2d(RigidBody2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_instance)
-{
-    _attach_instance_2d<RigidBody2D>(p_node, p_instance, RIGIDBODY2D, false);
-}
-
-void FmodAudioServer::detach_instance_from_node(FMOD_STUDIO_EVENTINSTANCE *p_instance)
+void FmodAudioServer::detach_instance(FMOD_STUDIO_EVENTINSTANCE *p_instance)
 {
     lock();
-    int i = find_instance(p_instance);
+    int i = _find_instance(p_instance);
     if (i != -1)
     {
         instances[i] = instances[instances.size() - 1];
@@ -772,6 +788,10 @@ void FmodAudioServer::detach_instance_from_node(FMOD_STUDIO_EVENTINSTANCE *p_ins
         return;
     }
     unlock();
+}
+void FmodAudioServer::wait_for_all_sample_loading()
+{
+    FMOD_Studio_System_FlushSampleLoading(studio_system);
 }
 
 Vector4i FmodAudioServer::path_to_guid(const String &p_path) const
@@ -786,11 +806,10 @@ FMOD_STUDIO_EVENTDESCRIPTION *FmodAudioServer::get_event_description(const Strin
     FMOD_Studio_System_GetEvent(studio_system, p_path.utf8().ptr(), &description);
     return description;
 }
-FMOD_STUDIO_EVENTDESCRIPTION *FmodAudioServer::get_event_description(Vector4i p_guid) const
+FMOD_STUDIO_EVENTDESCRIPTION *FmodAudioServer::get_event_description(const Vector4i &p_guid) const
 {
     FMOD_STUDIO_EVENTDESCRIPTION *description;
-    FMOD_GUID guid = cast_to_fmod_guid(p_guid);
-    FMOD_Studio_System_GetEventByID(studio_system, &guid, &description);
+    FMOD_Studio_System_GetEventByID(studio_system, reinterpret_cast<const FMOD_GUID *>(&p_guid), &description);
     return description;
 }
 void FmodAudioServer::pause_all_events(bool p_pause)
@@ -826,126 +845,50 @@ FMOD_STUDIO_VCA *FmodAudioServer::get_vca(const String &p_path) const
     FMOD_Studio_System_GetVCA(studio_system, p_path.utf8().ptr(), &vca);
     return vca;
 }
-bool FmodAudioServer::has_bank_loaded(const String &p_bank_name) const
+FMOD_STUDIO_BUS *FmodAudioServer::get_bus(const Vector4i &p_guid) const
+{
+    FMOD_STUDIO_BUS *bus;
+    FMOD_Studio_System_GetBusByID(studio_system, reinterpret_cast<const FMOD_GUID *>(&p_guid), &bus);
+    return bus;
+}
+FMOD_STUDIO_VCA *FmodAudioServer::get_vca(const Vector4i &p_guid) const
+{
+    FMOD_STUDIO_VCA *vca;
+    FMOD_Studio_System_GetVCAByID(studio_system, reinterpret_cast<const FMOD_GUID *>(&p_guid), &vca);
+    return vca;
+}
+
+bool FmodAudioServer::has_bank_loaded(const String &p_bank_path_or_guid) const
 {
     FMOD_STUDIO_BANK *bank;
     // TODO Only works synchronously
-    return FMOD_Studio_System_GetBank(studio_system, p_bank_name.utf8().ptr(), &bank) == FMOD_OK;
+    return FMOD_Studio_System_GetBank(studio_system, p_bank_path_or_guid.utf8().ptr(), &bank) == FMOD_OK;
 }
 
-bool FmodAudioServer::have_all_banks_loaded() const
+void FmodAudioServer::set_listener_location(Node2D *p_node, int p_listener_index, Node2D *p_attenuation_object)
 {
-    // TODO works because banks are loaded syncronously. but should be more
-    // robust.
-    return true;
+    _set_listener_location(p_node, p_listener_index, p_attenuation_object);
 }
-
-void FmodAudioServer::set_listener_location(Node2D *p_node, Node2D *p_attenuation_object)
-{
-    set_listener_2d_location(0, p_node, p_attenuation_object);
-}
-void FmodAudioServer::set_listener_location(int p_listener_index, Node2D *p_node, Node2D *p_attenuation_object)
-{
-    set_listener_2d_location(p_listener_index, p_node, p_attenuation_object);
-}
-void FmodAudioServer::set_listener_location(RigidBody2D *p_rigid_body2d, Node2D *p_attenuation_object)
-{
-    set_listener_2d_rigidbody_location(0, p_rigid_body2d, p_attenuation_object);
-}
-void FmodAudioServer::set_listener_location(int p_listener_index, RigidBody2D *p_rigid_body2d,
+void FmodAudioServer::set_listener_location(RigidBody2D *p_rigid_body2d, int p_listener_index,
                                             Node2D *p_attenuation_object)
 {
-    set_listener_2d_rigidbody_location(p_listener_index, p_rigid_body2d, p_attenuation_object);
+    _set_listener_location(p_rigid_body2d, p_listener_index, p_attenuation_object);
 }
-void FmodAudioServer::set_listener_2d_rigidbody_location(int p_listener_index, RigidBody2D *p_rigid_body_2d,
-                                                         Node2D *p_attenuation_object)
+void FmodAudioServer::set_listener_location(Node3D *p_node, int p_listener_index, Node3D *p_attenuation_object)
 {
-    FMOD_3D_ATTRIBUTES node_attr;
-    FMOD_VECTOR attenuation_attr;
-    node_attr = to_3d_attributes(p_rigid_body_2d);
-    if (p_attenuation_object)
-    {
-        attenuation_attr = to_fmod_vector(p_attenuation_object->get_global_position());
-
-        FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, &attenuation_attr);
-    }
-    else
-    {
-        FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, nullptr);
-    }
+    _set_listener_location(p_node, p_listener_index, p_attenuation_object);
 }
-void FmodAudioServer::set_listener_2d_location(int p_listener_index, Node2D *p_node, Node2D *p_attenuation_object)
-{
-    FMOD_3D_ATTRIBUTES node_attr;
-    FMOD_VECTOR attenuation_attr;
-    node_attr = to_3d_attributes(p_node);
-    if (p_attenuation_object)
-    {
-        attenuation_attr = to_fmod_vector(p_attenuation_object->get_global_position());
-        FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, &attenuation_attr);
-    }
-    else
-    {
-        FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, nullptr);
-    }
-}
-
-void FmodAudioServer::set_listener_location(Node3D *p_node, Node3D *p_attenuation_object)
-{
-    set_listener_3d_location(0, p_node, p_attenuation_object);
-}
-void FmodAudioServer::set_listener_location(int p_listener_index, Node3D *p_node, Node3D *p_attenuation_object)
-{
-    set_listener_3d_location(p_listener_index, p_node, p_attenuation_object);
-}
-void FmodAudioServer::set_listener_location(RigidBody3D *p_rigid_body3d, Node3D *p_attenuation_object)
-{
-    set_listener_3d_rigidbody_location(0, p_rigid_body3d, p_attenuation_object);
-}
-void FmodAudioServer::set_listener_location(int p_listener_index, RigidBody3D *p_rigid_body3d,
+void FmodAudioServer::set_listener_location(RigidBody3D *p_rigid_body3d, int p_listener_index,
                                             Node3D *p_attenuation_object)
 {
-    set_listener_3d_rigidbody_location(p_listener_index, p_rigid_body3d, p_attenuation_object);
-}
-void FmodAudioServer::set_listener_3d_rigidbody_location(int p_listener_index, RigidBody3D *p_rigid_body3d,
-                                                         Node3D *p_attenuation_object)
-{
-    FMOD_3D_ATTRIBUTES node_attr;
-    FMOD_VECTOR attenuation_attr;
-    node_attr = to_3d_attributes(p_rigid_body3d);
-    if (p_attenuation_object)
-    {
-        attenuation_attr = to_fmod_vector(p_attenuation_object->get_global_position());
-        FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, &attenuation_attr);
-    }
-    else
-    {
-        FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, nullptr);
-    }
+    _set_listener_location(p_rigid_body3d, p_listener_index, p_attenuation_object);
 }
 
-void FmodAudioServer::set_listener_3d_location(int p_listener_index, Node3D *p_node, Node3D *p_attenuation_object)
-{
-    FMOD_3D_ATTRIBUTES node_attr;
-    FMOD_VECTOR attenuation_attr;
-    node_attr = to_3d_attributes(p_node);
-    if (p_attenuation_object)
-    {
-        attenuation_attr = to_fmod_vector(p_attenuation_object->get_global_position());
-        FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, &attenuation_attr);
-    }
-    else
-    {
-        FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, nullptr);
-    }
-}
-
-#pragma endregion
 extern "C"
 {
     GDE_EXPORT int get_fmod_core(FMOD_SYSTEM **p_core)
     {
-        FmodAudioServer::get_singleton()->get_core_ref(p_core);
+        *p_core = FmodAudioServer::get_singleton()->get_core();
         if (p_core == nullptr)
         {
             return 1;
@@ -957,7 +900,7 @@ extern "C"
     }
     GDE_EXPORT int get_fmod_studio(FMOD_STUDIO_SYSTEM **p_studio)
     {
-        FmodAudioServer::get_singleton()->get_studio_ref(p_studio);
+        *p_studio = FmodAudioServer::get_singleton()->get_studio();
         if (p_studio == nullptr)
         {
             return 1;
@@ -974,50 +917,50 @@ extern "C"
         return FS->create_instance(p_guid);
     }
 
-    GDE_EXPORT void play_one_shot_by_id(const Vector4i p_guid, const godot::Vector3 p_position = godot::Vector3())
+    GDE_EXPORT void play_one_shot_by_id(const Vector4i &p_guid, const godot::Vector3 &p_position = Vector3())
     {
-        FS->play_one_shot_by_id(p_guid, p_position);
+        FS->play_one_shot(p_guid, p_position);
     }
-    GDE_EXPORT void play_one_shot_by_path(const char *p_path, const godot::Vector3 p_position = godot::Vector3())
+    GDE_EXPORT void play_one_shot(const char *p_path, const Vector3 p_position = Vector3())
     {
-        FS->play_one_shot_by_path(p_path, p_position);
+        FS->play_one_shot(p_path, p_position);
     }
     GDE_EXPORT void play_one_shot_3d_attached_by_id(const Vector4i p_guid, Node3D *p_node,
                                                     bool p_non_rigid_body_velocity = false)
     {
-        FS->play_one_shot_3d_attached_by_id(p_guid, p_node, p_non_rigid_body_velocity);
+        FS->play_one_shot_attached(p_guid, p_node, p_non_rigid_body_velocity);
     }
-    GDE_EXPORT void play_one_shot_3d_attached_by_path(const char *p_path, Node3D *p_node,
-                                                      bool p_non_rigid_body_velocity = false)
+    GDE_EXPORT void play_one_shot_3d_attached(const char *p_path, Node3D *p_node,
+                                              bool p_non_rigid_body_velocity = false)
     {
-        FS->play_one_shot_3d_attached_by_path(p_path, p_node, p_non_rigid_body_velocity);
+        FS->play_one_shot_attached(p_path, p_node, p_non_rigid_body_velocity);
     }
     GDE_EXPORT void play_one_shot_2d_attached_by_id(const Vector4i p_guid, Node2D *p_node,
                                                     bool p_non_rigid_body_velocity = false)
     {
-        FS->play_one_shot_2d_attached_by_id(p_guid, p_node, p_non_rigid_body_velocity);
+        FS->play_one_shot_attached(p_guid, p_node, p_non_rigid_body_velocity);
     }
-    GDE_EXPORT void play_one_shot_2d_attached_by_path(const char *p_path, Node2D *p_node,
-                                                      bool p_non_rigid_body_velocity = false)
+    GDE_EXPORT void play_one_shot_2d_attached(const char *p_path, Node2D *p_node,
+                                              bool p_non_rigid_body_velocity = false)
     {
-        FS->play_one_shot_2d_attached_by_path(p_path, p_node, p_non_rigid_body_velocity);
+        FS->play_one_shot_attached(p_path, p_node, p_non_rigid_body_velocity);
     }
 
     GDE_EXPORT void play_one_shot_rigid_body3d_attached_by_id(const Vector4i p_guid, RigidBody3D *p_rigid_body3d)
     {
-        FS->play_one_shot_rigid_body3d_attached_by_id(p_guid, p_rigid_body3d);
+        FS->play_one_shot_attached(p_guid, p_rigid_body3d);
     }
-    GDE_EXPORT void play_one_shot_rigid_body3d_attached_by_path(const char *p_path, RigidBody3D *p_rigid_body3d)
+    GDE_EXPORT void play_one_shot_rigid_body3d_attached(const char *p_path, RigidBody3D *p_rigid_body3d)
     {
-        FS->play_one_shot_rigid_body3d_attached_by_path(p_path, p_rigid_body3d);
+        FS->play_one_shot_attached(p_path, p_rigid_body3d);
     }
     GDE_EXPORT void play_one_shot_rigid_body2d_attached_by_id(const Vector4i p_guid, RigidBody2D *p_rigid_body2d)
     {
-        FS->play_one_shot_rigid_body2d_attached_by_id(p_guid, p_rigid_body2d);
+        FS->play_one_shot_attached(p_guid, p_rigid_body2d);
     }
-    GDE_EXPORT void play_one_shot_rigid_body2d_attached_by_path(const char *p_path, RigidBody2D *p_rigid_body2d)
+    GDE_EXPORT void play_one_shot_rigid_body2d_attached(const char *p_path, RigidBody2D *p_rigid_body2d)
     {
-        FS->play_one_shot_rigid_body2d_attached_by_path(p_path, p_rigid_body2d);
+        FS->play_one_shot_attached(p_path, p_rigid_body2d);
     }
     GDE_EXPORT bool any_sample_data_loading()
     {
@@ -1026,31 +969,31 @@ extern "C"
     GDE_EXPORT void attach_instance_to_node3d(Node3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event,
                                               bool p_non_rigid_body_velocity = false)
     {
-        FS->attach_instance_to_node3d(p_node, p_event, p_non_rigid_body_velocity);
+        FS->attach_instance(p_node, p_event, p_non_rigid_body_velocity);
     }
     GDE_EXPORT void attach_instance_to_rigid_body3d(RigidBody3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event)
     {
-        FS->attach_instance_to_rigid_body3d(p_node, p_event);
+        FS->attach_instance(p_node, p_event);
     }
     GDE_EXPORT void attach_instance_to_node2D(Node2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event,
                                               bool p_non_rigid_body_velocity = false)
     {
-        FS->attach_instance_to_node2D(p_node, p_event, p_non_rigid_body_velocity);
+        FS->attach_instance(p_node, p_event, p_non_rigid_body_velocity);
     }
     GDE_EXPORT void attach_instance_to_rigid_body2d(RigidBody2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event)
     {
-        FS->attach_instance_to_rigid_body2d(p_node, p_event);
+        FS->attach_instance(p_node, p_event);
     }
     GDE_EXPORT void detach_instance_from_node(FMOD_STUDIO_EVENTINSTANCE *p_event)
     {
-        FS->detach_instance_from_node(p_event);
+        FS->detach_instance(p_event);
     }
 
     GDE_EXPORT FMOD_GUID path_to_guid(const char *p_path)
     {
         return cast_to_fmod_guid(FmodAudioServer::get_singleton()->path_to_guid(p_path));
     }
-    GDE_EXPORT FMOD_STUDIO_EVENTDESCRIPTION *get_event_description_by_path(const char *p_path)
+    GDE_EXPORT FMOD_STUDIO_EVENTDESCRIPTION *get_event_description(const char *p_path)
     {
         return FS->get_event_description(p_path);
     }
@@ -1090,42 +1033,33 @@ extern "C"
         return FS->has_bank_loaded(p_bank_name);
     }
 
-    GDE_EXPORT bool have_all_banks_loaded()
-    {
-        return FS->have_all_banks_loaded();
-    }
-
-    GDE_EXPORT void set_listener_2d_rigidbody_location(int p_listener_index, void *p_rigid_body2_d,
+    GDE_EXPORT void set_listener_2d_rigidbody_location(int p_listener_index, void *p_rigid_body2d,
                                                        void *p_attenuation_object = nullptr)
     {
-        FS->set_listener_2d_rigidbody_location(p_listener_index,
-                                               (RigidBody2D *)internal::get_object_instance_binding(p_rigid_body2_d),
-                                               (Node2D *)internal::get_object_instance_binding(p_attenuation_object));
+        FS->set_listener_location(static_cast<RigidBody2D *>(internal::get_object_instance_binding(p_rigid_body2d)),
+                                  p_listener_index,
+                                  static_cast<Node2D *>(internal::get_object_instance_binding(p_attenuation_object)));
     }
-    GDE_EXPORT void set_listener_2d_location(int p_listener_index, void *p_node, void *p_attenuation_object = nullptr)
+    GDE_EXPORT void set_listener_2d_location(void *p_node, int p_listener_index, void *p_attenuation_object = nullptr)
     {
-        FS->set_listener_2d_location(p_listener_index, (Node2D *)internal::get_object_instance_binding(p_node),
-                                     (Node2D *)internal::get_object_instance_binding(p_attenuation_object));
+        FS->set_listener_location(static_cast<Node2D *>(internal::get_object_instance_binding(p_node)),
+                                  p_listener_index,
+                                  static_cast<Node2D *>(internal::get_object_instance_binding(p_attenuation_object)));
     }
 
     GDE_EXPORT void set_listener_3d_rigidbody_location(int p_listener_index, void *p_rigid_body,
                                                        void *p_attenuation_object = nullptr)
     {
-        FS->set_listener_3d_rigidbody_location(p_listener_index,
-                                               (RigidBody3D *)internal::get_object_instance_binding(p_rigid_body),
-                                               (Node3D *)internal::get_object_instance_binding(p_attenuation_object));
+        FS->set_listener_location(static_cast<RigidBody3D *>(internal::get_object_instance_binding(p_rigid_body)),
+                                  p_listener_index,
+                                  static_cast<Node3D *>(internal::get_object_instance_binding(p_attenuation_object)));
     }
     GDE_EXPORT void set_listener_3d_location(int p_listener_index, void *p_node, void *p_attenuation_object = nullptr)
     {
-        FS->set_listener_3d_location(p_listener_index, (Node3D *)internal::get_object_instance_binding(p_node),
-                                     (Node3D *)internal::get_object_instance_binding(p_attenuation_object));
+        FS->set_listener_location(static_cast<RigidBody3D *>(internal::get_object_instance_binding(p_node)),
+                                  p_listener_index,
+                                  static_cast<Node3D *>(internal::get_object_instance_binding(p_attenuation_object)));
     }
 }
-godot::String FmodAudioServer::get_version_number()
-{
-    const unsigned int major = (FMOD_VERSION & 0xffff0000) >> 16;
-    const unsigned int minor = (FMOD_VERSION & 0x0000ff00) >> 8;
-    const unsigned int patch = (FMOD_VERSION & 0x000000ff);
-    return vformat("%x.%02x.%02x", major, minor, patch);
-}
 } // namespace FmodGodot
+#undef SERVER

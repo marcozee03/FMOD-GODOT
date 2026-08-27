@@ -22,7 +22,7 @@ void FmodGodot::Studio::StudioBus::_bind_methods()
     BIND_STATIC_METHOD(get_port_index, "handle");
     BIND_STATIC_METHOD(set_port_index, "handle", "port_index");
     BIND_STATIC_METHOD(get_channel_group, "handle");
-    BIND_STATIC_METHOD(stop_all_events, "handle");
+    BIND_STATIC_METHOD(stop_all_events, "handle", "stop_mode");
     BIND_STATIC_METHOD(lock_channel_group, "handle");
     BIND_STATIC_METHOD(unlock_channel_group, "handle");
 }
