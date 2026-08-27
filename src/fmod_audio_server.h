@@ -1,6 +1,9 @@
 #pragma once
+#include "classes/object.hpp"
+#include "classes/wrapped.hpp"
 #include "conversions.h"
 #include "fmod_bank.h"
+#include "fmod_init_settings.h"
 #include "variant/variant.hpp"
 #include <classes/node.hpp>
 #include <fmod.h>
@@ -11,6 +14,7 @@
 #include <godot_cpp/classes/rigid_body2d.hpp>
 #include <godot_cpp/classes/rigid_body3d.hpp>
 #include <godot_cpp/classes/thread.hpp>
+#include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/templates/hash_map.hpp>
 #include <godot_cpp/templates/mutex.hpp>
 
@@ -23,6 +27,31 @@ class FmodAudioServer : public Object
 {
     GDCLASS(FmodAudioServer, Object)
   private:
+    static String _get_version_number();
+    Handle _get_core();
+    Handle _get_studio();
+
+    Handle _create_instance(const Vector4i &p_guid) const;
+    Handle _create_instance_by_path(const String &p_path) const;
+
+    void _attach_instance_to_node3d(Node3D *p_node, Handle p_event, bool p_non_rigid_body_velocity = false);
+    void _attach_instance_to_rigid_body3d(RigidBody3D *p_node, Handle p_event);
+    void _attach_instance_to_node2d(Node2D *p_node, Handle p_event, bool p_non_rigid_body_velocity = false);
+
+    void _attach_instance_to_rigid_body2d(RigidBody2D *p_node, Handle p_event);
+
+    void _detach_instance(Handle p_event);
+
+    Handle _get_event_description(const String &p_path) const;
+    Handle _get_event_description(const Vector4i &p_guid) const;
+
+    Handle _get_bus(const Vector4i &p_guid) const;
+    Handle _get_vca(const Vector4i &p_guid) const;
+
+    Handle _get_bus_by_path(const String &p_path) const;
+    Handle _get_vca_by_path(const String &p_path) const;
+
+  private:
     enum Attachment
     {
         RIGIDBODY2D,
@@ -30,6 +59,25 @@ class FmodAudioServer : public Object
         NODE2D,
         NODE3D
     };
+    template <typename T> static Attachment get_attachment_type()
+    {
+        if constexpr (std::is_base_of_v<RigidBody2D, T>)
+        {
+            return RIGIDBODY2D;
+        }
+        else if constexpr (std::is_base_of_v<Node2D, T>)
+        {
+            return NODE2D;
+        }
+        else if constexpr (std::is_base_of_v<RigidBody3D, T>)
+        {
+            return RIGIDBODY3D;
+        }
+        else if constexpr (std::is_base_of_v<Node3D, T>)
+        {
+            return NODE3D;
+        }
+    }
     struct AttachedInstance
     {
         FMOD_STUDIO_EVENTINSTANCE *instance;
@@ -41,34 +89,8 @@ class FmodAudioServer : public Object
             RigidBody2D *rigidBody2D;
             RigidBody3D *rigidBody3D;
         };
-        godot::Vector3 lastFramePosition;
+        Vector3 lastFramePosition;
         bool nonRigidbodyVelocity;
-    };
-
-  public:
-    enum LiveUpdate : unsigned int
-    {
-        LIVE_UPDATE_DISABLED = 0,
-        LIVE_UPDATE_ENABLED = 1,
-        LIVE_UPDATE_DEV_ONLY = 2
-    };
-    struct InitSettings
-    {
-        FMOD_DEBUG_FLAGS logging_level = FMOD_DEBUG_LEVEL_WARNING;
-        FMOD_DEBUG_FLAGS debug_type = 0;
-        FMOD_DEBUG_FLAGS debug_display = 0;
-        int sample_rate = 48000;
-        int dspbuffer_length = 1024;
-        int dspbuffer_count = 5;
-        int software_channels = 64;
-        int virtual_channels = 1024;
-        LiveUpdate live_update = LIVE_UPDATE_DISABLED;
-        int live_update_port = 9264;
-        String encryption_key = "";
-        String bank_directory = "res://";
-        float doppler_scale = 1;
-        float distance_factor = 1;
-        float rolloff_scale = 1;
     };
 
   private:
@@ -89,90 +111,97 @@ class FmodAudioServer : public Object
                                                           void *p_userdata);
     FmodAudioServer();
     ~FmodAudioServer();
-    static String get_version_number();
-    static InitSettings get_fmod_settings();
     FMOD_SYSTEM *get_core();
     const FMOD_SYSTEM *get_core() const;
     FMOD_STUDIO_SYSTEM *get_studio();
     const FMOD_STUDIO_SYSTEM *get_studio() const;
-    void get_core_ref(FMOD_SYSTEM **p_core);
-    void get_studio_ref(FMOD_STUDIO_SYSTEM **p_studio);
-
     bool is_live_update_connected() const;
 
-    FMOD_STUDIO_EVENTINSTANCE *create_instance(const Vector4i p_guid) const;
+    FMOD_STUDIO_EVENTINSTANCE *create_instance(const Vector4i &p_guid) const;
 
-    void play_one_shot_by_id(const Vector4i p_guid, const godot::Vector3 p_position = godot::Vector3()) const;
-    void play_one_shot_by_path(const String &p_path, const godot::Vector3 p_position = godot::Vector3()) const;
-    void play_one_shot_3d_attached_by_id(const Vector4i p_guid, Node3D *p_node, bool p_non_rigid_body_velocity = false);
-    void play_one_shot_3d_attached_by_path(const String &p_path, Node3D *p_node,
-                                           bool p_non_rigid_body_velocity = false);
-    void play_one_shot_2d_attached_by_id(const Vector4i p_guid, Node2D *p_node, bool p_non_rigid_body_velocity = false);
-    void play_one_shot_2d_attached_by_path(const String &p_path, Node2D *p_node,
-                                           bool p_non_rigid_body_velocity = false);
+    // =======Playing-Audio============
+  private:
+    template <typename T>
+        requires((std::is_base_of_v<godot::Node2D, T> || std::is_base_of_v<godot::Node3D, T>) &&
+                 !(std::is_base_of_v<godot::RigidBody2D, T> || std::is_base_of_v<godot::RigidBody3D, T>))
+    void _play_one_shot_attached(const Vector4i &p_guid, T *p_node, bool p_non_rigid_body_velocity = false);
+    template <typename T>
+        requires((std::is_base_of_v<godot::RigidBody2D, T> || std::is_base_of_v<godot::RigidBody3D, T>))
+    void _play_one_shot_attached(const Vector4i &p_guid, T *p_rigidbody);
 
-    void play_one_shot_rigid_body3d_attached_by_id(const Vector4i p_guid, RigidBody3D *p_rigid_body3d);
-    void play_one_shot_rigid_body3d_attached_by_path(const String &p_path, RigidBody3D *p_rigid_body3d);
-    void play_one_shot_rigid_body2d_attached_by_id(const Vector4i p_guid, RigidBody2D *p_rigid_body2d);
-    void play_one_shot_rigid_body2d_attached_by_path(const String &p_path, RigidBody2D *p_rigid_body2d);
-    bool any_sample_data_loading();
+  public:
+    void play_one_shot(const Vector4i &p_guid, const Vector3 &p_position = Vector3());
+    void play_one_shot(const String &p_path, const Vector3 &p_position = Vector3());
 
-    void attach_instance_to_node3d(Node3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event,
-                                   bool p_non_rigid_body_velocity = false);
-    void attach_instance_to_rigid_body3d(RigidBody3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event);
-    void attach_instance_to_node2D(Node2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event,
-                                   bool p_non_rigid_body_velocity = false);
-    void attach_instance_to_rigid_body2d(RigidBody2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event);
+    void play_one_shot_attached(const Vector4i &p_guid, Node3D *p_node, bool p_non_rigid_body_velocity = false);
+    void play_one_shot_attached(const String &p_path, Node3D *p_node, bool p_non_rigid_body_velocity = false);
+    void play_one_shot_attached(const Vector4i &p_guid, RigidBody3D *p_rigid_body3d);
+    void play_one_shot_attached(const String &p_path, RigidBody3D *p_rigid_body3d);
 
-    void detach_instance_from_node(FMOD_STUDIO_EVENTINSTANCE *p_event);
+    void play_one_shot_attached(const Vector4i &p_guid, Node2D *p_node, bool p_non_rigid_body_velocity = false);
+    void play_one_shot_attached(const String &p_path, Node2D *p_node, bool p_non_rigid_body_velocity = false);
+    void play_one_shot_attached(const Vector4i &p_guid, RigidBody2D *p_rigid_body2d);
+    void play_one_shot_attached(const String &p_path, RigidBody2D *p_rigid_body2d);
+    bool any_sample_data_loading() const;
+
+    void attach_instance(Node3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event, bool p_non_rigid_body_velocity = false);
+    void attach_instance(RigidBody3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event);
+    void attach_instance(Node2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event, bool p_non_rigid_body_velocity = false);
+    void attach_instance(RigidBody2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event);
+
+    void detach_instance(FMOD_STUDIO_EVENTINSTANCE *p_event);
+
+    void wait_for_all_sample_loading();
 
     Vector4i path_to_guid(const String &p_path) const;
     FMOD_STUDIO_EVENTDESCRIPTION *get_event_description(const String &p_path) const;
-    FMOD_STUDIO_EVENTDESCRIPTION *get_event_description(Vector4i p_guid) const;
+    FMOD_STUDIO_EVENTDESCRIPTION *get_event_description(const Vector4i &p_guid) const;
     void pause_all_events(bool p_pause);
 
     bool is_muted() const;
     void set_muted(bool p_muted);
 
+    FMOD_STUDIO_BUS *get_bus(const Vector4i &p_guid) const;
+    FMOD_STUDIO_VCA *get_vca(const Vector4i &p_guid) const;
+
     FMOD_STUDIO_BUS *get_bus(const String &p_path) const;
     FMOD_STUDIO_VCA *get_vca(const String &p_path) const;
 
     void unload_banks();
-    bool has_bank_loaded(const String &p_bank_name) const;
+    bool has_bank_loaded(const String &p_bank_path_or_guid) const;
 
-    bool have_all_banks_loaded() const;
+    //=======Listeners===========
+  private:
+    template <typename T, typename A>
+        requires((std::is_base_of_v<godot::Node2D, T> && std::is_base_of_v<godot::Node2D, A>) ||
+                 (std::is_base_of_v<godot::Node3D, T> && std::is_base_of_v<godot::Node3D, A>))
+    void _set_listener_location(T *p_node, int p_listener_index = 0, A *p_attenuation_object = nullptr);
 
-    void set_listener_location(int p_listener_index, Node2D *p_node, Node2D *p_attenuation_object = nullptr);
-    void set_listener_location(Node2D *p_node, Node2D *p_attenuation_object = nullptr);
-    void set_listener_location(int p_listener_index, RigidBody2D *p_rigid_body2_d,
+  public:
+    void set_listener_location(Node2D *p_node, int p_listener_index = 0, Node2D *p_attenuation_object = nullptr);
+    void set_listener_location(RigidBody2D *p_rigid_body2d, int p_listener_index = 0,
                                Node2D *p_attenuation_object = nullptr);
-    void set_listener_location(RigidBody2D *p_rigid_body2_d, Node2D *p_attenuation_object = nullptr);
-    void set_listener_2d_rigidbody_location(int p_listener_index, RigidBody2D *p_rigid_body2_d,
-                                            Node2D *p_attenuation_object = nullptr);
-    void set_listener_2d_location(int p_istener_index, Node2D *p_node, Node2D *p_attenuation_object = nullptr);
 
-    void set_listener_location(Node3D *p_node, Node3D *p_attenuation_object = nullptr);
-    void set_listener_location(int p_listener_index, Node3D *p_node, Node3D *p_attenuation_object = nullptr);
-    void set_listener_location(RigidBody3D *p_rigid_body3_d, Node3D *p_attenuation_object = nullptr);
-    void set_listener_location(int p_listener_index, RigidBody3D *p_rigid_body3_d,
+    void set_listener_location(Node3D *p_node, int p_listener_index, Node3D *p_attenuation_object = nullptr);
+    void set_listener_location(RigidBody3D *p_rigid_body3d, int p_listener_index,
                                Node3D *p_attenuation_object = nullptr);
-    void set_listener_3d_rigidbody_location(int p_listener_index, RigidBody3D *p_rigid_body,
-                                            Node3D *p_attenuation_object = nullptr);
-    void set_listener_3d_location(int p_listener_index, Node3D *p_node, Node3D *p_attenuation_object = nullptr);
-    void load_start_up_banks();
-    void reload_start_up_banks();
-    void unload_start_up_banks();
+
+  public: // Internal unexposed
+    void _load_start_up_banks();
+    void _reload_start_up_banks();
+    void _unload_start_up_banks();
 
   private:
+    template <typename T>
+        requires((std::is_base_of_v<godot::Node2D, T> || std::is_base_of_v<godot::Node3D, T>) &&
+                 !(std::is_base_of_v<godot::RigidBody2D, T> || std::is_base_of_v<godot::RigidBody3D, T>))
+    void _attach_instance(T *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event, bool p_non_rigid_body_velocity = false);
+    template <typename T>
+        requires((std::is_base_of_v<godot::RigidBody2D, T> || std::is_base_of_v<godot::RigidBody3D, T>))
+    void _attach_instance(T *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event);
     LocalVector<AttachedInstance> instances;
-    void thread_func();
-    int find_instance(FMOD_STUDIO_EVENTINSTANCE *p_event);
-    template <typename Node2D>
-    void _attach_instance_2d(Node2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event, Attachment p_attachment,
-                             bool p_non_rigid_body_velocity = false);
-    template <typename Node3D>
-    void _attach_instance_3d(Node3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event, Attachment p_attachment,
-                             bool p_non_rigid_body_velocity = false);
+    void _thread_func();
+    int _find_instance(FMOD_STUDIO_EVENTINSTANCE *p_event);
 
     bool thread_exited;
     mutable bool exit_thread = false;
@@ -185,21 +214,60 @@ class FmodAudioServer : public Object
     static FmodAudioServer *get_singleton();
     FMOD_RESULT init_with_project_settings();
     FMOD_RESULT init(const InitSettings &p_settings);
+
     void lock();
     void unlock();
     void finish();
 
   protected:
     static void _bind_methods();
-    // void _notification(int p_what);
 };
+template <typename T, typename A>
+    requires((std::is_base_of_v<godot::Node2D, T> && std::is_base_of_v<godot::Node2D, A>) ||
+             (std::is_base_of_v<godot::Node3D, T> && std::is_base_of_v<godot::Node3D, A>))
+inline void FmodAudioServer::_set_listener_location(T *p_node, int p_listener_index, A *p_attenuation_object)
+{
+    FMOD_3D_ATTRIBUTES node_attr;
+    FMOD_VECTOR attenuation_attr;
+    node_attr = to_3d_attributes(p_node);
+    if (p_attenuation_object)
+    {
+        attenuation_attr = to_fmod_vector(p_attenuation_object->get_global_position());
+        FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, &attenuation_attr);
+    }
+    else
+    {
+        FMOD_Studio_System_SetListenerAttributes(studio_system, p_listener_index, &node_attr, nullptr);
+    }
+}
 
-template <typename Node2D>
-inline void FmodAudioServer::_attach_instance_2d(Node2D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event,
-                                                 Attachment p_attachment, bool p_non_rigid_body_velocity)
+template <typename T>
+    requires((std::is_base_of_v<godot::Node2D, T> || std::is_base_of_v<godot::Node3D, T>) &&
+             !(std::is_base_of_v<godot::RigidBody2D, T> || std::is_base_of_v<godot::RigidBody3D, T>))
+inline void FmodAudioServer::_play_one_shot_attached(const Vector4i &p_guid, T *p_node, bool p_non_rigid_body_velocity)
+{
+    FMOD_STUDIO_EVENTINSTANCE *event = create_instance(p_guid);
+    attach_instance(p_node, event, p_non_rigid_body_velocity);
+    FMOD_Studio_EventInstance_Start(event);
+    FMOD_Studio_EventInstance_Release(event);
+}
+
+template <typename T>
+    requires((std::is_base_of_v<godot::RigidBody2D, T> || std::is_base_of_v<godot::RigidBody3D, T>))
+inline void FmodAudioServer::_play_one_shot_attached(const Vector4i &p_guid, T *p_rigidbody)
+{
+    FMOD_STUDIO_EVENTINSTANCE *event = create_instance(p_guid);
+    attach_instance(p_rigidbody, event);
+    FMOD_Studio_EventInstance_Start(event);
+    FMOD_Studio_EventInstance_Release(event);
+}
+
+template <typename T>
+    requires((std::is_base_of_v<godot::RigidBody2D, T> || std::is_base_of_v<godot::RigidBody3D, T>))
+inline void FmodAudioServer::_attach_instance(T *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event)
 {
     lock();
-    int instance_index = find_instance(p_event);
+    int instance_index = _find_instance(p_event);
     if (!p_node->is_inside_tree())
     {
         print_error(vformat("Cannot Attach Fmod Event to node '%s' not inside tree", p_node->get_name()));
@@ -207,21 +275,22 @@ inline void FmodAudioServer::_attach_instance_2d(Node2D *p_node, FMOD_STUDIO_EVE
     if (instance_index == -1)
     {
         AttachedInstance instance;
-        instance.node = p_node;
-        instance.nonRigidbodyVelocity = p_non_rigid_body_velocity;
-        instance.attachment = p_attachment;
-        instance.lastFramePosition = {p_node->get_position().x, p_node->get_position().y, 0};
-        instance.instance = p_event;
-        FMOD_3D_ATTRIBUTES attributes = to_3d_attributes(p_node);
-        FMOD_Studio_EventInstance_Set3DAttributes(instance.instance, &attributes);
+        instance_index = instances.size();
         instances.push_back(instance);
     }
     else
     {
         instances[instance_index].node = p_node;
-        instances[instance_index].nonRigidbodyVelocity = p_non_rigid_body_velocity;
-        instances[instance_index].attachment = p_attachment;
-        instances[instance_index].lastFramePosition = {p_node->get_position().x, p_node->get_position().y, 0};
+        instances[instance_index].nonRigidbodyVelocity = false;
+        instances[instance_index].attachment = get_attachment_type<T>();
+        if constexpr (std::is_base_of_v<Node2D, T>)
+        {
+            instances[instance_index].lastFramePosition = {p_node->get_position().x, p_node->get_position().y, 0};
+        }
+        else if constexpr (std::is_base_of_v<Node3D, T>)
+        {
+            instances[instance_index].lastFramePosition = p_node->get_position();
+        }
         FMOD_3D_ATTRIBUTES attributes = to_3d_attributes(p_node);
         FMOD_Studio_EventInstance_Set3DAttributes(instances[instance_index].instance, &attributes);
         instances[instance_index].instance = p_event;
@@ -229,12 +298,14 @@ inline void FmodAudioServer::_attach_instance_2d(Node2D *p_node, FMOD_STUDIO_EVE
     unlock();
 }
 
-template <typename Node3D>
-inline void FmodAudioServer::_attach_instance_3d(Node3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event,
-                                                 Attachment p_attachment, bool p_non_rigid_body_velocity)
+template <typename T>
+    requires((std::is_base_of_v<godot::Node2D, T> || std::is_base_of_v<godot::Node3D, T>) &&
+             !(std::is_base_of_v<godot::RigidBody2D, T> || std::is_base_of_v<godot::RigidBody3D, T>))
+inline void FmodAudioServer::_attach_instance(T *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event,
+                                              bool p_non_rigid_body_velocity)
 {
     lock();
-    int instance_index = find_instance(p_event);
+    int instance_index = _find_instance(p_event);
     if (!p_node->is_inside_tree())
     {
         print_error(vformat("Cannot Attach Fmod Event to node '%s' not inside tree", p_node->get_name()));
@@ -242,21 +313,22 @@ inline void FmodAudioServer::_attach_instance_3d(Node3D *p_node, FMOD_STUDIO_EVE
     if (instance_index == -1)
     {
         AttachedInstance instance;
-        instance.node = p_node;
-        instance.nonRigidbodyVelocity = p_non_rigid_body_velocity;
-        instance.attachment = p_attachment;
-        instance.lastFramePosition = p_node->get_position();
-        instance.instance = p_event;
-        FMOD_3D_ATTRIBUTES attributes = to_3d_attributes(p_node);
-        FMOD_Studio_EventInstance_Set3DAttributes(instance.instance, &attributes);
+        instance_index = instances.size();
         instances.push_back(instance);
     }
     else
     {
         instances[instance_index].node = p_node;
         instances[instance_index].nonRigidbodyVelocity = p_non_rigid_body_velocity;
-        instances[instance_index].attachment = p_attachment;
-        instances[instance_index].lastFramePosition = p_node->get_position();
+        instances[instance_index].attachment = get_attachment_type<T>();
+        if constexpr (std::is_base_of_v<Node2D, T>)
+        {
+            instances[instance_index].lastFramePosition = {p_node->get_position().x, p_node->get_position().y, 0};
+        }
+        else if constexpr (std::is_base_of_v<Node3D, T>)
+        {
+            instances[instance_index].lastFramePosition = p_node->get_position();
+        }
         FMOD_3D_ATTRIBUTES attributes = to_3d_attributes(p_node);
         FMOD_Studio_EventInstance_Set3DAttributes(instances[instance_index].instance, &attributes);
         instances[instance_index].instance = p_event;
@@ -264,4 +336,4 @@ inline void FmodAudioServer::_attach_instance_3d(Node3D *p_node, FMOD_STUDIO_EVE
     unlock();
 }
 } // namespace FmodGodot
-VARIANT_ENUM_CAST(FmodGodot::FmodAudioServer::LiveUpdate);
+VARIANT_ENUM_CAST(FmodGodot::InitSettings::LiveUpdate);

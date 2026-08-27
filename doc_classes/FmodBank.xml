@@ -29,10 +29,22 @@
 				                                [b]Note:[/b] Refer to [url=https://www.fmod.com/docs/2.03/api/studio-api-common.html#fmod_studio_loading_state]FMOD_STUDIO_LOADING_STATE[/url]
 			</description>
 		</method>
-		<method name="is_bank_valid" qualifiers="const">
+		<method name="get_string_count" qualifiers="const">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_string_info" qualifiers="const">
+			<return type="String" />
+			<param index="0" name="index" type="int" />
+			<param index="1" name="id" type="Vector4i" />
+			<description>
+			</description>
+		</method>
+		<method name="is_valid" qualifiers="const">
 			<return type="bool" />
 			<description>
-				if [code]true[/code] bank reference is valid.
+				if [code]true[/code] bank reference is valid
 			</description>
 		</method>
 		<method name="unload">

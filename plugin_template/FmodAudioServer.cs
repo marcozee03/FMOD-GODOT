@@ -111,8 +111,6 @@ namespace FmodGodot
         [DllImport(Version.dll)]
         private static extern bool has_bank_loaded([MarshalAs(UnmanagedType.LPUTF8Str)] string p_bankName);
         [DllImport(Version.dll)]
-        private static extern bool have_all_banks_loaded();
-        [DllImport(Version.dll)]
         private static extern void set_listener_2d_rigidbody_location(int p_listenerIndex, IntPtr p_rigidBody2D, IntPtr p_attenuationObject = 0);
         [DllImport(Version.dll)]
         private static extern void set_listener_2d_location(int p_listenerIndex, IntPtr p_node, IntPtr p_attenuationObject = 0);
@@ -278,10 +276,6 @@ namespace FmodGodot
         public static bool HasBankLoaded(string bankname)
         {
             return has_bank_loaded(bankname);
-        }
-        public static bool HaveAllBanksLoaded()
-        {
-            return have_all_banks_loaded();
         }
         public static void SetListenerLocation(int listenerIndex, RigidBody2D body, Node2D attenuationObject = null)
         {

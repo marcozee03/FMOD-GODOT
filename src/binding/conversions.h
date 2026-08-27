@@ -137,5 +137,22 @@ constexpr Transform3D to_transform3d(const FMOD_3D_ATTRIBUTES &p_attr)
     const Vector3 forward = FmodGodot::to_godot_vector(p_attr.forward);
     return Transform3D(cross(up, forward), up, forward, position);
 }
-
+constexpr FMOD_RESULT godot_file_error_to_fmod_file_error(Error p_err)
+{
+    switch (p_err)
+    {
+    case OK:
+        return FMOD_OK;
+    case ERR_FILE_NOT_FOUND:
+        return FMOD_ERR_FILE_NOTFOUND;
+    case ERR_FILE_BAD_PATH:
+        return FMOD_ERR_FILE_BAD;
+    case ERR_FILE_CANT_READ:
+        return FMOD_ERR_FILE_COULDNOTSEEK;
+    case ERR_FILE_EOF:
+        return FMOD_ERR_FILE_EOF;
+    default:
+        return FMOD_ERR_FILE_BAD;
+    }
+}
 } // namespace FmodGodot

@@ -145,17 +145,17 @@ FMOD_RESULT FmodGodot::Studio::StudioBank::set_user_data(Handle p_handle, void *
 #ifdef TOOLS_ENABLED
 FmodGodot::Studio::StudioBank::Cache::Cache(FMOD_STUDIO_BANK *p_bank)
 {
-    const size_t handle = std::bit_cast<size_t>(p_bank);
+    const Handle handle = std::bit_cast<Handle>(p_bank);
     full_path = Studio::StudioBank::get_path(handle);
     guid = Studio::StudioBank::get_id(handle);
     {
-        for (size_t description : Studio::StudioBank::get_event_list(handle))
+        for (Handle description : Studio::StudioBank::get_event_list(handle))
         {
             children.push_back(Studio::StudioEventDescription::get_path(description));
         }
     }
     {
-        for (size_t vca : Studio::StudioBank::get_vca_list(handle))
+        for (Handle vca : Studio::StudioBank::get_vca_list(handle))
         {
             children.push_back(Studio::StudioVCA::get_path(vca));
         }
