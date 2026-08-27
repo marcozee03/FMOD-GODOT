@@ -32,7 +32,7 @@ void FmodGodot::Studio::StudioEventInstance::_bind_methods()
     BIND_STATIC_METHOD(get_paused, "handle");
     BIND_STATIC_METHOD(set_paused, "handle", "paused");
     BIND_STATIC_METHOD(start, "handle");
-    BIND_STATIC_METHOD(stop, "handle");
+    BIND_STATIC_METHOD(stop, "handle", "stop_mode");
     BIND_STATIC_METHOD(get_timeline_position, "handle");
     BIND_STATIC_METHOD(set_timeline_position, "handle", "timeline_position");
     BIND_STATIC_METHOD(get_playback_state, "handle");
@@ -42,12 +42,13 @@ void FmodGodot::Studio::StudioEventInstance::_bind_methods()
     BIND_STATIC_METHOD(is_virtual, "handle");
     BIND_STATIC_METHOD(get_parameter_by_id, "handle", "id");
     BIND_STATIC_METHOD(get_final_parameter_by_id, "handle", "id");
-    BIND_STATIC_METHOD(set_parameter_by_id, "handle", "id", "value");
+    BIND_STATIC_METHOD_WITH_DEF(set_parameter_by_id, ARGS("handle", "id", "value", "ignore_seek_speed"), DEFVAL(false));
     BIND_STATIC_METHOD_WITH_DEF(set_parameter_by_id_with_label, ARGS("handle", "id", "label", "ignoreseekspeed"),
-                                DEFVAL(false))
+                                DEFVAL(false));
     // BIND_STATIC_METHOD(set_parameters_by_ids, "ids", "values", "ignore_seek_speed")
     BIND_STATIC_METHOD(get_parameter_by_name, "handle", "name");
-    BIND_STATIC_METHOD_WITH_DEF(set_parameter_by_name, ARGS("handle", "name", "value"), DEFVAL(false));
+    BIND_STATIC_METHOD_WITH_DEF(set_parameter_by_name, ARGS("handle", "name", "value", "ignore_seek_speed"),
+                                DEFVAL(false));
     BIND_STATIC_METHOD_WITH_DEF(set_parameter_by_name_with_label, ARGS("handle", "name", "label", "ignore_seek_speed"),
                                 DEFVAL(false));
     BIND_STATIC_METHOD(key_off, "handle");

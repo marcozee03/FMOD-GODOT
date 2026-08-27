@@ -6,12 +6,12 @@ namespace FmodGodot
 {
 void FmodEventEmitter3D::attach_instance_to_rigid_body(RigidBody3D *p_body, FMOD_STUDIO_EVENTINSTANCE *p_event)
 {
-    FmodAudioServer::get_singleton()->attach_instance_to_rigid_body3d(p_body, p_event);
+    FmodAudioServer::get_singleton()->attach_instance(p_body, p_event);
 }
 void FmodEventEmitter3D::attach_instance_to_node(Node3D *p_node, FMOD_STUDIO_EVENTINSTANCE *p_event,
                                                  bool p_non_rigid_body_velocity)
 {
-    FmodAudioServer::get_singleton()->attach_instance_to_node3d(p_node, p_event, p_non_rigid_body_velocity);
+    FmodAudioServer::get_singleton()->attach_instance(p_node, p_event, p_non_rigid_body_velocity);
 }
 PackedStringArray FmodEventEmitter3D::_get_configuration_warnings() const
 {
