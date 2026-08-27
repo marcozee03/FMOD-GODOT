@@ -6,13 +6,13 @@
 #include <fmod.h>
 #include <fmod_studio.h>
 #include <fmod_studio_common.h>
-#include <godot_cpp/classes/mutex.hpp>
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/rigid_body2d.hpp>
 #include <godot_cpp/classes/rigid_body3d.hpp>
 #include <godot_cpp/classes/thread.hpp>
 #include <godot_cpp/templates/hash_map.hpp>
+#include <godot_cpp/templates/mutex.hpp>
 
 using namespace std;
 using namespace godot;
@@ -74,6 +74,7 @@ class FmodAudioServer : public Object
   private:
     FMOD_SYSTEM *core_system;
     FMOD_STUDIO_SYSTEM *studio_system;
+    CharString encryption_key;
     bool initialized;
     bool muted;
     LocalVector<Ref<FmodBank>> start_up_banks;
@@ -176,7 +177,7 @@ class FmodAudioServer : public Object
     bool thread_exited;
     mutable bool exit_thread = false;
     Ref<Thread> thread;
-    Ref<Mutex> mutex;
+    Mutex mutex;
     void _physics_process();
 
   public:

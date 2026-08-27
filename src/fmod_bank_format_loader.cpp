@@ -52,7 +52,7 @@ Variant FmodGodot::FmodBankFormatLoader::_load(const String &p_path, const Strin
 
     Ref<FmodBank> bank = memnew(FmodBank);
     // bank->set_path(path);
-    auto err = FMOD_Studio_System_LoadBankFile(FmodAudioServer::get_singleton()->get_studio(), p_path.utf8(),
+    auto err = FMOD_Studio_System_LoadBankFile(FmodAudioServer::get_singleton()->get_studio(), p_path.utf8().ptr(),
                                                FMOD_STUDIO_LOAD_BANK_NORMAL, &(bank->bank));
 #ifndef TOOLS_ENABLED
     switch (p_cache_mode)

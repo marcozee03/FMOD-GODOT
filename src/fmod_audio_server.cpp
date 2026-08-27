@@ -183,7 +183,6 @@ FMOD_RESULT FmodAudioServer::init_with_project_settings()
 
 FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
 {
-    mutex.instantiate();
     thread.instantiate();
     exit_thread = false;
     thread_exited = false;
@@ -241,7 +240,8 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
     studio_settings.cbsize = sizeof(FMOD_STUDIO_ADVANCEDSETTINGS);
     FMOD_Studio_System_GetAdvancedSettings(studio_system, &studio_settings);
     studio_settings.cbsize = sizeof(FMOD_STUDIO_ADVANCEDSETTINGS);
-    studio_settings.encryptionkey = p_settings.encryption_key.utf8();
+    encryption_key = p_settings.encryption_key.utf8();
+    studio_settings.encryptionkey = encryption_key.ptr();
     FMOD_Studio_System_SetAdvancedSettings(studio_system, &studio_settings);
 
     result = FMOD_Studio_System_Initialize(studio_system, p_settings.virtual_channels, studio_init,
@@ -414,22 +414,22 @@ int FmodAudioServer::find_instance(FMOD_STUDIO_EVENTINSTANCE *p_event)
 
 void FmodAudioServer::unlock()
 {
-    if (!thread.is_valid() || !mutex.is_valid())
+    if (!thread.is_valid())
     {
         return;
     }
 
-    mutex->unlock();
+    mutex.unlock();
 }
 
 void FmodAudioServer::lock()
 {
-    if (!thread.is_valid() || !mutex.is_valid())
+    if (!thread.is_valid())
     {
         return;
     }
 
-    mutex->lock();
+    mutex.lock();
 }
 
 void FmodAudioServer::finish()
@@ -444,7 +444,6 @@ void FmodAudioServer::finish()
     thread.unref();
     initialized = false;
     thread_exited = true;
-    mutex.unref();
 }
 
 #pragma endregion
@@ -778,13 +777,13 @@ void FmodAudioServer::detach_instance_from_node(FMOD_STUDIO_EVENTINSTANCE *p_ins
 Vector4i FmodAudioServer::path_to_guid(const String &p_path) const
 {
     FMOD_GUID guid;
-    FMOD_Studio_System_LookupID(studio_system, p_path.utf8(), &guid);
+    FMOD_Studio_System_LookupID(studio_system, p_path.utf8().ptr(), &guid);
     return cast_to_vector4i(guid);
 }
 FMOD_STUDIO_EVENTDESCRIPTION *FmodAudioServer::get_event_description(const String &p_path) const
 {
     FMOD_STUDIO_EVENTDESCRIPTION *description;
-    FMOD_Studio_System_GetEvent(studio_system, p_path.utf8(), &description);
+    FMOD_Studio_System_GetEvent(studio_system, p_path.utf8().ptr(), &description);
     return description;
 }
 FMOD_STUDIO_EVENTDESCRIPTION *FmodAudioServer::get_event_description(Vector4i p_guid) const
@@ -818,20 +817,20 @@ void FmodAudioServer::set_muted(bool p_muted)
 FMOD_STUDIO_BUS *FmodAudioServer::get_bus(const String &p_path) const
 {
     FMOD_STUDIO_BUS *bus;
-    FMOD_Studio_System_GetBus(studio_system, p_path.utf8(), &bus);
+    FMOD_Studio_System_GetBus(studio_system, p_path.utf8().ptr(), &bus);
     return bus;
 }
 FMOD_STUDIO_VCA *FmodAudioServer::get_vca(const String &p_path) const
 {
     FMOD_STUDIO_VCA *vca;
-    FMOD_Studio_System_GetVCA(studio_system, p_path.utf8(), &vca);
+    FMOD_Studio_System_GetVCA(studio_system, p_path.utf8().ptr(), &vca);
     return vca;
 }
 bool FmodAudioServer::has_bank_loaded(const String &p_bank_name) const
 {
     FMOD_STUDIO_BANK *bank;
     // TODO Only works synchronously
-    return FMOD_Studio_System_GetBank(studio_system, p_bank_name.utf8(), &bank) == FMOD_OK;
+    return FMOD_Studio_System_GetBank(studio_system, p_bank_name.utf8().ptr(), &bank) == FMOD_OK;
 }
 
 bool FmodAudioServer::have_all_banks_loaded() const
