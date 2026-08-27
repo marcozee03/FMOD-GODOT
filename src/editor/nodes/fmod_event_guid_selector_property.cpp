@@ -40,7 +40,7 @@ void EventGUIDSelectorProperty::on_text_changed(String p_new_text)
 {
     FMOD_STUDIO_SYSTEM *studio = FmodAudioServer::get_singleton()->get_studio();
     FMOD_GUID guid;
-    FMOD_Studio_System_LookupID(studio, p_new_text.utf8(), &guid);
+    FMOD_Studio_System_LookupID(studio, p_new_text.utf8().ptr(), &guid);
     eventSelector->get_line_edit()->set_tooltip_text(fmod_guid_to_string(guid));
 
     Vector4i newValue = cast_to_vector4i(guid);

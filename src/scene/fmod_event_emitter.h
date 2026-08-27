@@ -239,7 +239,7 @@ bool FmodEventEmitter<Derived, NodeType, RigidBody>::_property_get_revert(const 
         return false;
     }
     FMOD_STUDIO_PARAMETER_DESCRIPTION param;
-    FMOD_Studio_EventDescription_GetParameterDescriptionByName(description, p_name.substr(6).utf8(), &param);
+    FMOD_Studio_EventDescription_GetParameterDescriptionByName(description, p_name.substr(6).utf8().ptr(), &param);
     r_property = param.defaultvalue;
     return true;
 }
@@ -303,7 +303,7 @@ void FmodEventEmitter<Derived, NodeType, RigidBody>::_get_property_list(List<Pro
                                                                       nullptr, 0, &retrieved);
 
                 CharString label;
-                label.resize(retrieved + 1);
+                label.resize_uninitialized(retrieved + 1);
                 if (retrieved > 0)
                 {
                     int size = retrieved;
@@ -312,7 +312,7 @@ void FmodEventEmitter<Derived, NodeType, RigidBody>::_get_property_list(List<Pro
                     label[size - 1] = ':';
                     label[size] = '\0';
                 }
-                labels.set(label_index, label + itos(label_index));
+                labels.set(label_index, String(label.ptr()) + itos(label_index));
             }
             info.hint_string = String(",").join(labels);
         }
