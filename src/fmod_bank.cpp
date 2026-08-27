@@ -72,18 +72,18 @@ FMOD_STUDIO_LOADING_STATE FmodBank::get_sample_loading_state() const
 }
 int FmodBank::get_string_count() const
 {
-    return Studio::StudioBank::get_string_count(std::bit_cast<size_t>(bank));
+    return Studio::StudioBank::get_string_count(std::bit_cast<Handle>(bank));
 }
 String FmodBank::get_string_info(int p_index, const Vector4i &p_id) const
 {
-    return Studio::StudioBank::get_string_info(std::bit_cast<size_t>(bank), p_index, p_id);
+    return Studio::StudioBank::get_string_info(std::bit_cast<Handle>(bank), p_index, p_id);
 }
 
 Handle FmodBank::get_bank() const
 {
     return std::bit_cast<Handle>(bank);
 }
-void FmodBank::set_bank(size_t p_bank_ptr)
+void FmodBank::set_bank(Handle p_bank_ptr)
 {
     bank = std::bit_cast<FMOD_STUDIO_BANK *>(p_bank_ptr);
 }
@@ -121,7 +121,7 @@ extern "C"
     }
     GDE_EXPORT void fmod_bank_set_bank(void *handle, FMOD_STUDIO_BANK *p_bank)
     {
-        BANK->set_bank(reinterpret_cast<size_t>(p_bank));
+        BANK->set_bank(std::bit_cast<Handle>(p_bank));
     }
     GDE_EXPORT FMOD_GUID fmod_bank_get_id(void *handle)
     {
