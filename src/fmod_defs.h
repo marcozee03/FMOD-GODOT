@@ -37,7 +37,7 @@ namespace FmodGodot
     if (retrieved > 0)                                                                                                 \
     {                                                                                                                  \
         int size = retrieved;                                                                                          \
-        variable_name.resize(size);                                                                                    \
+        variable_name.resize_uninitialized(size);                                                                      \
         function(object, variable_name.ptrw(), size, &retrieved);                                                      \
     }
 
@@ -48,7 +48,7 @@ namespace FmodGodot
 #define FMOD_GET_OUT_STRING(function, object, variable_name)                                                           \
     {                                                                                                                  \
         FMOD_GET_CHARSTRING(function, object, str##variable_name);                                                     \
-        variable_name = String(str##variable_name);                                                                    \
+        variable_name = String(str##variable_name.ptr());                                                              \
     }
 
 #define FMOD_GET_STRING(function, object, variable_name)                                                               \
