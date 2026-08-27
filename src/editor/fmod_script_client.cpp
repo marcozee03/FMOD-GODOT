@@ -67,7 +67,7 @@ bool FmodScriptClient::send_script_command(const String &p_command)
         poll();
     }
     Array arr = get_partial_data(get_available_bytes());
-    if ((int)arr[0] != Error::OK)
+    if (static_cast<int>(arr[0]) != Error::OK)
     {
         return false;
     }
@@ -99,7 +99,7 @@ String FmodGodot::FmodScriptClient::get_script_output(const String &p_command)
     while (get_available_bytes() > 0)
     {
         Array arr = get_data(get_available_bytes());
-        if ((int)arr[0] == Error::OK)
+        if (static_cast<int>(arr[0]) == Error::OK)
         {
             buffer.append_array(arr[1]);
         }

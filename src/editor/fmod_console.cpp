@@ -107,7 +107,7 @@ void FmodConsole::_update_theme()
 
 void FmodConsole::_editor_settings_changed()
 {
-    int new_line_limit = int(EDITOR_GET("run/output/max_lines"));
+    int new_line_limit = static_cast<int>(EDITOR_GET("run/output/max_lines"));
     if (new_line_limit != line_limit)
     {
         line_limit = new_line_limit;
@@ -426,7 +426,7 @@ FmodConsole::FmodConsole()
     set_process_shortcut_input(true);
     set_shortcut_context(this);
 
-    line_limit = int(EDITOR_GET("run/output/max_lines"));
+    line_limit = static_cast<int>(EDITOR_GET("run/output/max_lines"));
     EditorInterface::get_singleton()->get_editor_settings()->connect(
         "settings_changed", callable_mp(this, &FmodConsole::_editor_settings_changed));
 

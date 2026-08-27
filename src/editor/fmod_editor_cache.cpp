@@ -3,7 +3,6 @@
 #include "binding/studio/event_description.h"
 #include "binding/studio/vca.h"
 #include "core/error_macros.hpp"
-#include "core/print_string.hpp"
 #include "variant/variant.hpp"
 #include <godot_cpp/variant/packed_string_array.hpp>
 #include <variant/utility_functions.hpp>

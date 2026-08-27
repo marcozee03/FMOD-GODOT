@@ -3,11 +3,9 @@
 #include "core/error_macros.hpp"
 #include "core/math.hpp"
 #include "core/print_string.hpp"
-#include "event_description.h"
 #include "fmod_audio_server.h"
 #include "fmod_common.h"
 #include "fmod_defs.h"
-#include "fmod_enums.h"
 #include "fmod_studio_common.h"
 #include "globals.h"
 #include "variant/char_string.hpp"
@@ -195,11 +193,11 @@ bool FmodEventEmitter<Derived, NodeType, RigidBody>::_set(const StringName &p_na
     {
         if (str.casecmp_to(parameters[i].name) == 0)
         {
-            parameters.write[i].value = (float)p_property;
+            parameters.write[i].value = static_cast<float>(p_property);
             if (FMOD_Studio_EventInstance_IsValid(event_instance))
             {
-                FMOD_Studio_EventInstance_SetParameterByName(event_instance, parameters[i].name, (float)p_property,
-                                                             false);
+                FMOD_Studio_EventInstance_SetParameterByName(event_instance, parameters[i].name,
+                                                             static_cast<float>(p_property), false);
             }
             return true;
         }

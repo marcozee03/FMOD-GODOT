@@ -9,7 +9,6 @@
 #include "fmod.h"
 #include "fmod_common.h"
 #include "fmod_defs.h"
-#include "fmod_enums.h"
 #include "fmod_string_names.h"
 #include "fmod_studio.h"
 #include "fmod_studio_common.h"
@@ -78,7 +77,7 @@ FMOD_RESULT fmod_debug_callback(FMOD_DEBUG_FLAGS p_flags, const char *p_file, in
 FMOD_RESULT F_CALL fmod_studio_system_callback(FMOD_STUDIO_SYSTEM *p_system, FMOD_STUDIO_SYSTEM_CALLBACK_TYPE p_type,
                                                void *p_commanddata, void *p_userdata)
 {
-    FmodAudioServer *as = (FmodAudioServer *)p_userdata;
+    FmodAudioServer *as = reinterpret_cast<FmodAudioServer *>(p_userdata);
     if (as)
     {
         switch (p_type)
@@ -143,22 +142,25 @@ FMOD_RESULT open_callback(const char *p_name, unsigned int *p_filesize, void **p
 }
 FMOD_RESULT close_callback(void *p_handle, void *p_userdata)
 {
-    ((FileAccess *)p_handle)->close();
-    ((FileAccess *)p_handle)->unreference();
-    FMOD_RESULT result = godot_file_error_to_fmod_file_error(((FileAccess *)p_handle)->get_error());
-    memdelete((FileAccess *)p_handle);
+    FileAccess *file = reinterpret_cast<FileAccess *>(p_handle);
+    file->close();
+    file->unreference();
+    FMOD_RESULT result = godot_file_error_to_fmod_file_error(file->get_error());
+    memdelete(file);
     return result;
 }
 FMOD_RESULT seek_callback(void *p_handle, unsigned int p_pos, void *p_userdata)
 {
-    ((FileAccess *)p_handle)->seek(p_pos);
-    return godot_file_error_to_fmod_file_error(((FileAccess *)p_handle)->get_error());
+    FileAccess *file = reinterpret_cast<FileAccess *>(p_handle);
+    file->seek(p_pos);
+    return godot_file_error_to_fmod_file_error(file->get_error());
 }
 FMOD_RESULT read_callback(void *p_handle, void *p_buffer, unsigned int p_sizebytes, unsigned int *p_bytesread,
                           void *p_userdata)
 {
-    *p_bytesread = ((FileAccess *)p_handle)->get_buffer((uint8_t *)p_buffer, p_sizebytes);
-    return godot_file_error_to_fmod_file_error(((FileAccess *)p_handle)->get_error());
+    FileAccess *file = reinterpret_cast<FileAccess *>(p_handle);
+    *p_bytesread = file->get_buffer(reinterpret_cast<uint8_t *>(p_buffer), p_sizebytes);
+    return godot_file_error_to_fmod_file_error(file->get_error());
 }
 
 #pragma region Server Functionality

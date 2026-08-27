@@ -1,7 +1,6 @@
 #pragma once
 #include "conversions.h"
 #include "fmod_bank.h"
-#include "fmod_defs.h"
 #include "variant/variant.hpp"
 #include <classes/node.hpp>
 #include <fmod.h>

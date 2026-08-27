@@ -1,5 +1,4 @@
 #pragma once
-#include "binding/conversions.h"
 #include "fmod_common.h"
 #include "fmod_defs.h"
 #include "fmod_studio_common.h"

@@ -42,7 +42,7 @@ void EventPathSelectorProperty::_bind_methods()
 
 void EventPathSelectorProperty::_update_property()
 {
-    auto newValue = (String)get_edited_object()->get(get_edited_property());
+    auto newValue = static_cast<String>(get_edited_object()->get(get_edited_property()));
     if (newValue == currentValue)
     {
         return;

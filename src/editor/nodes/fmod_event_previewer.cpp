@@ -142,8 +142,8 @@ void FmodEventPreviewer::set_event_guid(Vector4i p_event_guid)
         }
         auto inspector = EditorInterface::get_singleton()->get_inspector();
         String name = property["name"];
-        Variant::Type vType = (Variant::Type)(int)property["type"];
-        PropertyHint hint = (PropertyHint)(int)property["hint"];
+        Variant::Type vType = static_cast<Variant::Type>(static_cast<int>(property["type"]));
+        PropertyHint hint = static_cast<PropertyHint>(static_cast<int>(property["hint"]));
         EditorProperty *prop = inspector->instantiate_property_editor(emitter, vType, name, hint,
                                                                       property["hint_string"], property["usage"]);
         prop->set_object_and_property(emitter, name);

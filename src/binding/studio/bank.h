@@ -1,9 +1,7 @@
 #pragma once
-#include "binding/conversions.h"
 #include "fmod_common.h"
 #include "fmod_defs.h"
 #include "fmod_studio_common.h"
-#include "globals.h"
 #include <fmod_studio.h>
 #include <godot_cpp/classes/resource.hpp>
 #include <godot_cpp/core/defs.hpp>
@@ -20,25 +18,7 @@ class StudioBank : public Object
 
   private:
   protected:
-    static void _bind_methods()
-    {
-        BIND_STATIC_METHOD(is_valid, "handle");
-        BIND_STATIC_METHOD(get_id, "handle");
-        BIND_STATIC_METHOD(get_path, "handle");
-        BIND_STATIC_METHOD(unload, "handle");
-        BIND_STATIC_METHOD(load_sample_data, "handle");
-        BIND_STATIC_METHOD(unload_sample_data, "handle");
-        BIND_STATIC_METHOD(get_loading_state, "handle");
-        BIND_STATIC_METHOD(get_sample_loading_state, "handle");
-        BIND_STATIC_METHOD(get_string_count, "handle");
-        BIND_STATIC_METHOD(get_string_info, "handle", "index", "id");
-        BIND_STATIC_METHOD(get_event_count, "handle");
-        BIND_STATIC_METHOD(get_event_list, "handle");
-        BIND_STATIC_METHOD(get_bus_count, "handle");
-        BIND_STATIC_METHOD(get_bus_list, "handle");
-        BIND_STATIC_METHOD(get_vca_count, "handle");
-        BIND_STATIC_METHOD(get_vca_list, "handle");
-    }
+    static void _bind_methods();
 
   public:
 #ifdef TOOLS_ENABLED

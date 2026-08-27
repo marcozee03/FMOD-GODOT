@@ -3,7 +3,6 @@
 #include "binding/studio/event_description.h"
 #include "binding/studio/parameter_cache.h"
 #include "binding/studio/vca.h"
-#include "fmod_bank.h"
 #include "path_tree.h"
 namespace FmodGodot
 {

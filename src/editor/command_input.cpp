@@ -36,7 +36,7 @@ void CommandInput::_gui_input(const Ref<InputEvent> &p_event)
 {
     if (p_event->is_action_pressed("ui_up"))
     {
-        history_index = Math::clamp(history_index + 1, -1, (int)history.size() - 1);
+        history_index = Math::clamp(history_index + 1, -1, static_cast<int>(history.size()) - 1);
         if (history_index == -1)
         {
             clear();
@@ -49,7 +49,7 @@ void CommandInput::_gui_input(const Ref<InputEvent> &p_event)
     }
     else if (p_event->is_action_pressed("ui_down"))
     {
-        history_index = Math::clamp(history_index - 1, -1, (int)history.size() - 1);
+        history_index = Math::clamp(history_index - 1, -1, static_cast<int>(history.size()) - 1);
         if (history_index == -1)
         {
             clear();
@@ -63,7 +63,7 @@ void CommandInput::_gui_input(const Ref<InputEvent> &p_event)
     Ref<InputEventKey> key = p_event;
     if (key.is_valid() && key->is_pressed())
     {
-        if (key->get_keycode_with_modifiers() == (Key)(KEY_ENTER | KEY_MASK_SHIFT))
+        if (key->get_keycode_with_modifiers() == static_cast<Key>(KEY_ENTER | KEY_MASK_SHIFT))
         {
             insert_text_at_caret("\n");
             accept_event();

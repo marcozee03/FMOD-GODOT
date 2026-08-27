@@ -1,6 +1,5 @@
 #include "vca.h"
 #include "binding/conversions.h"
-#include "core/class_db.hpp"
 #include "fmod_defs.h"
 #include "fmod_enums.h"
 #include "fmod_studio.h"

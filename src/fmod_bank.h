@@ -1,5 +1,5 @@
 #pragma once
-#include "fmod_enums.h"
+#include "fmod_defs.h"
 #include "fmod_studio_common.h"
 #include "variant/vector4i.hpp"
 #include <fmod_studio.h>
@@ -27,8 +27,8 @@ class FmodBank : public Resource
 
     bool is_valid() const;
 
-    size_t get_bank() const;
-    void set_bank(size_t p_bank_ptr);
+    Handle get_bank() const;
+    void set_bank(Handle p_bank_ptr);
     Vector4i get_id() const;
     // string getPath(char *path, int size, int *retrieved) const;
     // Loading control
