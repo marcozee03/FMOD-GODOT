@@ -1,6 +1,9 @@
 #pragma once
 
+#include "fmod.h"
 #include "fmod_common.h"
+#include "fmod_studio.h"
+#include "fmod_studio_common.h"
 #include <classes/project_settings.hpp>
 namespace FmodGodot
 {
@@ -30,5 +33,11 @@ struct InitSettings
     float doppler_scale = 1;
     float distance_factor = 1;
     float rolloff_scale = 1;
+
+  public:
+    FMOD_ADVANCEDSETTINGS get_fmod_advanced_settings() const;
+    FMOD_ADVANCEDSETTINGS get_fmod_advanced_settings(FMOD_SYSTEM *p_system) const;
+    FMOD_STUDIO_ADVANCEDSETTINGS get_fmod_studio_advanced_settings() const;
+    FMOD_STUDIO_ADVANCEDSETTINGS get_fmod_studio_advanced_settings(FMOD_STUDIO_SYSTEM *p_system) const;
 };
 } // namespace FmodGodot

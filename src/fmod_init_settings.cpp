@@ -27,3 +27,38 @@ void FmodGodot::InitSettings::fill_from_project_settings()
     debug_type = GLOBAL_GET(DEBUG_TYPE);
     debug_display = GLOBAL_GET(DEBUG_DISPLAY);
 }
+FMOD_ADVANCEDSETTINGS FmodGodot::InitSettings::get_fmod_advanced_settings() const
+{
+    FMOD_ADVANCEDSETTINGS fmod_settings = {0};
+    fmod_settings.cbSize = sizeof(FMOD_ADVANCEDSETTINGS);
+    fmod_settings.profilePort = live_update_port;
+    return fmod_settings;
+}
+FMOD_ADVANCEDSETTINGS FmodGodot::InitSettings::get_fmod_advanced_settings(FMOD_SYSTEM *p_system) const
+{
+    FMOD_ADVANCEDSETTINGS fmod_settings = {0};
+    fmod_settings.cbSize = sizeof(FMOD_ADVANCEDSETTINGS);
+    FMOD_System_GetAdvancedSettings(p_system, &fmod_settings);
+    fmod_settings.cbSize = sizeof(FMOD_ADVANCEDSETTINGS);
+    fmod_settings.profilePort = live_update_port;
+    return fmod_settings;
+}
+FMOD_STUDIO_ADVANCEDSETTINGS FmodGodot::InitSettings::get_fmod_studio_advanced_settings() const
+{
+    FMOD_STUDIO_ADVANCEDSETTINGS studio_settings = {0};
+    studio_settings.cbsize = sizeof(FMOD_STUDIO_ADVANCEDSETTINGS);
+    // WARN: causes dangling reference
+    // studio_settings.encryptionkey = encryption_key.utf8().ptr();
+    return studio_settings;
+}
+FMOD_STUDIO_ADVANCEDSETTINGS FmodGodot::InitSettings::get_fmod_studio_advanced_settings(
+    FMOD_STUDIO_SYSTEM *p_system) const
+{
+    FMOD_STUDIO_ADVANCEDSETTINGS studio_settings = {0};
+    studio_settings.cbsize = sizeof(FMOD_STUDIO_ADVANCEDSETTINGS);
+    FMOD_Studio_System_GetAdvancedSettings(p_system, &studio_settings);
+    studio_settings.cbsize = sizeof(FMOD_STUDIO_ADVANCEDSETTINGS);
+    // WARN: causes dangling reference
+    // studio_settings.encryptionkey = encryption_key.utf8().ptr();
+    return studio_settings;
+}

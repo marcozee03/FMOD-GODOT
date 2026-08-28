@@ -26,4 +26,6 @@ inline constexpr const char *DISTANCE_FACTOR = "fmod/general/3d_settings/distanc
 inline constexpr const char *ROLLOFF_SCALE = "fmod/general/3d_settings/rolloff_scale";
 inline constexpr const char *PLUGIN_PATH = "fmod/plugins/path";
 inline constexpr const char *PLUGINS = "fmod/plugins/plugins";
+
+inline constexpr const char *LIVE_UPDATE_GROUP = "fmod_gd_live_update_indicator";
 } // namespace FmodGodot

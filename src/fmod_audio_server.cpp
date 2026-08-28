@@ -1,4 +1,5 @@
 #include "fmod_audio_server.h"
+#include "classes/engine_debugger.hpp"
 #include "classes/global_constants.hpp"
 #include "classes/resource_loader.hpp"
 #include "core/defs.hpp"
@@ -25,6 +26,7 @@
 #include <godot_cpp/classes/project_settings.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
 #include <godot_cpp/core/class_db.hpp>
+#include <godot_cpp/core/error_macros.hpp>
 #ifdef TOOLS_ENABLED
 #include <classes/editor_interface.hpp>
 #include <classes/editor_settings.hpp>
@@ -39,7 +41,7 @@ FMOD_RESULT fmod_debug_callback(FMOD_DEBUG_FLAGS p_flags, const char *p_file, in
 {
     if (p_flags & FMOD_DEBUG_LEVEL_ERROR)
     {
-        _err_print_error(p_func, p_file, p_line, p_message, true, true);
+        _err_print_error(p_func, p_file, p_line, p_message, true, false);
     }
     else if (p_flags & FMOD_DEBUG_LEVEL_WARNING)
     {
@@ -61,12 +63,33 @@ FMOD_RESULT F_CALL fmod_studio_system_callback(FMOD_STUDIO_SYSTEM *p_system, FMO
         {
         case FMOD_STUDIO_SYSTEM_CALLBACK_LIVEUPDATE_CONNECTED: {
             as->emit_signal("live_update_connected");
+#ifdef DEBUG_ENABLED
+            if (!Engine::get_singleton()->is_editor_hint())
+            {
+                EngineDebugger *debugger = EngineDebugger::get_singleton();
+                if (debugger != nullptr)
+                {
+                    debugger->send_message("fmod:live_update", {true});
+                }
+            }
+#endif
             as->live_update_connected = true;
         }
         break;
 
         case FMOD_STUDIO_SYSTEM_CALLBACK_LIVEUPDATE_DISCONNECTED: {
             as->emit_signal("live_update_disconnected");
+#ifdef DEBUG_ENABLED
+            if (!Engine::get_singleton()->is_editor_hint())
+            {
+                EngineDebugger *debugger = EngineDebugger::get_singleton();
+                if (debugger != nullptr)
+                {
+                    debugger->send_message("fmod:live_update", {false});
+                }
+            }
+#endif
+
             as->live_update_connected = false;
         }
         break;
@@ -237,52 +260,42 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
     default:
         break;
     }
-    FMOD_RESULT result;
-    result = FMOD_Debug_Initialize(p_settings.logging_level | p_settings.debug_type | p_settings.debug_display,
-                                   FMOD_DEBUG_MODE_CALLBACK, fmod_debug_callback, nullptr);
+    FMOD_ERR_FAIL_VE_MSG(
+        FMOD_Debug_Initialize(p_settings.logging_level | p_settings.debug_type | p_settings.debug_display,
+                              FMOD_DEBUG_MODE_CALLBACK, fmod_debug_callback, nullptr),
+        "Failed to initialize debug callbacks.");
 
-    result = FMOD_Studio_System_Create(&studio_system, FMOD_VERSION);
-    if (result != FMOD_OK)
-    {
-        print_error("Failed to create studio system");
-    }
-    result = FMOD_Studio_System_GetCoreSystem(studio_system, &core_system);
-    if (result != FMOD_OK)
-    {
-        print_error("Failed to get core system");
-    }
+    FMOD_ERR_FAIL_VE_MSG(FMOD_Studio_System_Create(&studio_system, FMOD_VERSION), "Failed to create studio system.");
+    FMOD_ERR_FAIL_VE_MSG(FMOD_Studio_System_GetCoreSystem(studio_system, &core_system), "Failed to get core system.");
 
     // Core Settings | Initialize to zero/NUll since thats default according to FMOD docs. and as recommended;
-    FMOD_ADVANCEDSETTINGS fmod_settings = {0};
-    fmod_settings.cbSize = sizeof(FMOD_ADVANCEDSETTINGS);
-    fmod_settings.profilePort = p_settings.live_update_port;
-    FMOD_System_SetAdvancedSettings(core_system, &fmod_settings);
-    FMOD_System_SetSoftwareFormat(core_system, p_settings.sample_rate, FMOD_SPEAKERMODE_DEFAULT, 0);
-    FMOD_System_SetDSPBufferSize(core_system, p_settings.dspbuffer_length, p_settings.dspbuffer_count);
-    FMOD_System_SetSoftwareChannels(core_system, p_settings.software_channels);
-    FMOD_System_Set3DSettings(core_system, p_settings.doppler_scale, p_settings.distance_factor,
-                              p_settings.rolloff_scale);
-    FMOD_System_SetFileSystem(core_system, open_callback, close_callback, read_callback, seek_callback, nullptr,
-                              nullptr, 2048);
+    FMOD_ADVANCEDSETTINGS fmod_settings = p_settings.get_fmod_advanced_settings();
+
+    FMOD_ERR_FAIL_VE(FMOD_System_SetAdvancedSettings(core_system, &fmod_settings))
+    FMOD_ERR_FAIL_VE(FMOD_System_SetSoftwareFormat(core_system, p_settings.sample_rate, FMOD_SPEAKERMODE_DEFAULT, 0));
+    FMOD_ERR_FAIL_VE(
+        FMOD_System_SetDSPBufferSize(core_system, p_settings.dspbuffer_length, p_settings.dspbuffer_count));
+    FMOD_ERR_FAIL_VE(FMOD_System_SetSoftwareChannels(core_system, p_settings.software_channels));
+    FMOD_ERR_FAIL_VE(FMOD_System_Set3DSettings(core_system, p_settings.doppler_scale, p_settings.distance_factor,
+                                               p_settings.rolloff_scale));
+    FMOD_ERR_FAIL_VE(FMOD_System_SetFileSystem(core_system, open_callback, close_callback, read_callback, seek_callback,
+                                               nullptr, nullptr, 2048));
     // studio settings
-    FMOD_STUDIO_ADVANCEDSETTINGS studio_settings;
-    studio_settings.cbsize = sizeof(FMOD_STUDIO_ADVANCEDSETTINGS);
-    FMOD_Studio_System_GetAdvancedSettings(studio_system, &studio_settings);
-    studio_settings.cbsize = sizeof(FMOD_STUDIO_ADVANCEDSETTINGS);
+    FMOD_STUDIO_ADVANCEDSETTINGS studio_settings = p_settings.get_fmod_studio_advanced_settings(studio_system);
+    // PRevents dangling pointer;
     encryption_key = p_settings.encryption_key.utf8();
     studio_settings.encryptionkey = encryption_key.ptr();
-    FMOD_Studio_System_SetAdvancedSettings(studio_system, &studio_settings);
 
-    result = FMOD_Studio_System_Initialize(studio_system, p_settings.virtual_channels, studio_init,
-                                           FMOD_INIT_NORMAL & FMOD_INIT_3D_RIGHTHANDED, nullptr);
-    if (result != FMOD_OK)
-    {
-        UtilityFunctions::printerr("Init FmodAudioServerInternal Error", FMOD_ErrorString(result));
-    }
+    FMOD_ERR_FAIL_VE(FMOD_Studio_System_SetAdvancedSettings(studio_system, &studio_settings));
+    FMOD_ERR_FAIL_VE(
+        FMOD_Studio_System_SetCallback(studio_system, fmod_studio_system_callback, FMOD_STUDIO_SYSTEM_CALLBACK_ALL))
+    FMOD_ERR_FAIL_VE(FMOD_Studio_System_SetUserData(studio_system, this))
+
+    FMOD_ERR_FAIL_VE_MSG(FMOD_Studio_System_Initialize(studio_system, p_settings.virtual_channels, studio_init,
+                                                       FMOD_INIT_NORMAL & FMOD_INIT_3D_RIGHTHANDED, nullptr),
+                         "Failed to initialized Fmod Studio System");
     initialized = true;
 
-    FMOD_Studio_System_SetUserData(studio_system, this);
-    FMOD_Studio_System_SetCallback(studio_system, fmod_studio_system_callback, FMOD_STUDIO_SYSTEM_CALLBACK_ALL);
     thread->start(callable_mp(this, &FmodAudioServer::_thread_func), Thread::Priority::PRIORITY_NORMAL);
     String plugin_path = GLOBAL_GET(PLUGIN_PATH);
     ;
@@ -297,7 +310,7 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
         FMOD_System_LoadPlugin(core_system, String(plugin_file).utf8().ptr(), &handle,
                                /*Priority*/ plugins[plugin_file]);
     }
-    return result;
+    return FMOD_OK;
 }
 
 void FmodAudioServer::_physics_process()
