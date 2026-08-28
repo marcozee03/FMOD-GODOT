@@ -73,6 +73,9 @@ void FmodEditorPlugin::_enter_tree()
     add_inspector_plugin(bankInspector);
     bankImporter = memnew(FmodBankImporter);
     add_import_plugin(bankImporter);
+
+    debugger_plugin = memnew(FmodDebuggerPlugin);
+    add_debugger_plugin(debugger_plugin);
     browser = memnew(FmodEventBrowser());
     add_dock(log);
     add_dock(browser);
@@ -91,11 +94,11 @@ void FmodEditorPlugin::_enter_tree()
 
 void FmodEditorPlugin::_exit_tree()
 {
-
     remove_inspector_plugin(eventInspector);
     remove_inspector_plugin(bankInspector);
     remove_export_plugin(export_plugin);
     remove_import_plugin(bankImporter);
+    remove_debugger_plugin(debugger_plugin);
     remove_tool_menu_item("Finish FMOD Godot setup");
     memdelete_notnull(log);
     memdelete_notnull(browser);

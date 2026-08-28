@@ -172,6 +172,7 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
             editor_interface->refresh(true);
         }
 
+        GDREGISTER_INTERNAL_CLASS(FmodDebuggerPlugin)
         GDREGISTER_INTERNAL_CLASS(FmodEditorPlugin)
         GDREGISTER_INTERNAL_CLASS(EventInspector)
         GDREGISTER_INTERNAL_CLASS(EventPathSelectorProperty)

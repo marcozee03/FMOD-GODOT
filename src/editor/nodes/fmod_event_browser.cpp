@@ -80,11 +80,8 @@ void FmodEventBrowser::_update_layout(int p_layout)
 
 void FmodGodot::FmodEventBrowser::refresh()
 {
-    print_line("InterfaceRefresh");
     FmodEditorInterface::get_singleton()->refresh();
-    print_line("explorer");
     explorer->refresh();
-    print_line("vis");
     _visibility_changed();
 }
 void FmodEventBrowser::_update_theme()
