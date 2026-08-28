@@ -1,6 +1,9 @@
 #include "live_update_indicator.h"
 #include "classes/control.hpp"
+#include "core/print_string.hpp"
 #include "fmod_audio_server.h"
+#include "fmod_string_names.h"
+#include "globals.h"
 #include "variant/callable.hpp"
 #include "variant/callable_method_pointer.hpp"
 
@@ -24,14 +27,33 @@ void LiveUpdateIndicator::_update_theme()
 }
 void LiveUpdateIndicator::_connected()
 {
-    icon->call_deferred("set_modulate", Color(1, 0, 0));
+    if (!game_running)
+    {
+        icon->call_deferred("set_modulate", Color(1, 0, 0));
+    }
 }
 void LiveUpdateIndicator::_disconnected()
 {
-    icon->call_deferred("set_modulate", theme_cache.disconnected_color);
+    if (!game_running)
+    {
+        icon->call_deferred("set_modulate", theme_cache.disconnected_color);
+    }
 }
+void LiveUpdateIndicator::_start_session()
+{
+    game_running = true;
+}
+void LiveUpdateIndicator::_stop_session()
+{
+    game_running = false;
+    _update_theme();
+}
+
 void LiveUpdateIndicator::_bind_methods()
 {
+    BIND_METHOD(_start_session);
+    BIND_METHOD(_stop_session);
+    BIND_METHOD(connected, "connected");
 }
 void LiveUpdateIndicator::_notification(int p_what)
 {
@@ -43,6 +65,7 @@ void LiveUpdateIndicator::_notification(int p_what)
     break;
     case NOTIFICATION_ENTER_TREE: {
         _update_theme();
+        add_to_group(LIVE_UPDATE_GROUP);
         FmodAudioServer::get_singleton()->connect("live_update_connected",
                                                   callable_mp(this, &LiveUpdateIndicator::_connected));
         FmodAudioServer::get_singleton()->connect("live_update_disconnected",
@@ -50,6 +73,7 @@ void LiveUpdateIndicator::_notification(int p_what)
     }
     break;
     case NOTIFICATION_EXIT_TREE: {
+        remove_from_group(LIVE_UPDATE_GROUP);
         FmodAudioServer::get_singleton()->disconnect("live_update_connected",
                                                      callable_mp(this, &LiveUpdateIndicator::_connected));
         FmodAudioServer::get_singleton()->disconnect("live_update_disconnected",
@@ -70,4 +94,17 @@ LiveUpdateIndicator::LiveUpdateIndicator()
     add_child(label);
     add_theme_constant_override("separation", 0);
 }
+void LiveUpdateIndicator::connected(bool p_connected)
+{
+    print_line("Connected: ", p_connected);
+    if (p_connected)
+    {
+        icon->call_deferred("set_modulate", Color(1, 0, 0));
+    }
+    else
+    {
+        icon->call_deferred("set_modulate", theme_cache.disconnected_color);
+    }
+}
+
 } // namespace FmodGodot
