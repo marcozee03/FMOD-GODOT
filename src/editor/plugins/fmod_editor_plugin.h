@@ -3,6 +3,7 @@
 #include "classes/editor_interface.hpp"
 #include "fmod_bank_importer.h"
 #include "fmod_console.h"
+#include "fmod_debugger_plugin.h"
 #include "fmod_event_browser.h"
 #include "fmod_event_inspector_plugin.h"
 #include "fmod_export_plugin.h"
@@ -23,6 +24,7 @@ class FmodEditorPlugin : public EditorPlugin
     FmodConsole *log = nullptr;
     FmodInstaller *installer = nullptr;
     Ref<FmodExportPlugin> export_plugin = nullptr;
+    Ref<FmodDebuggerPlugin> debugger_plugin = nullptr;
     uint64_t installer_id;
     void _open_installer();
 
