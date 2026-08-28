@@ -12,6 +12,7 @@
 #include "fmod_studio.h"
 #include "fmod_studio_common.h"
 #include "globals.h"
+#include "variant/callable.hpp"
 #include "variant/dictionary.hpp"
 #include "variant/typed_dictionary.hpp"
 #include "variant/utility_functions.hpp"
@@ -31,6 +32,10 @@
 #include <classes/editor_interface.hpp>
 #include <classes/editor_settings.hpp>
 #endif
+#ifdef DEBUG_ENABLED
+#include "classes/performance.hpp"
+#endif
+
 using namespace std;
 using namespace godot;
 namespace FmodGodot
@@ -310,6 +315,23 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
         FMOD_System_LoadPlugin(core_system, String(plugin_file).utf8().ptr(), &handle,
                                /*Priority*/ plugins[plugin_file]);
     }
+#ifdef DEBUG_ENABLED
+    Callable cpu = callable_mp(this, &FmodAudioServer::track_cpu);
+    Performance::get_singleton()->add_custom_monitor(
+        "fmod/memory_usage", callable_mp(this, &FmodAudioServer::track_memory), {}, Performance::MONITOR_TYPE_MEMORY);
+    Performance::get_singleton()->add_custom_monitor("fmod/dsp_cpu_usage", cpu, {USAGE_DSP},
+                                                     Performance::MONITOR_TYPE_PERCENTAGE);
+    Performance::get_singleton()->add_custom_monitor("fmod/convulution1_cpu_usage", cpu, {USAGE_CONVULUTION1},
+                                                     Performance::MONITOR_TYPE_PERCENTAGE);
+    Performance::get_singleton()->add_custom_monitor("fmod/convulution2_cpu_usage", cpu, {USAGE_CONVULUTION1},
+                                                     Performance::MONITOR_TYPE_PERCENTAGE);
+    Performance::get_singleton()->add_custom_monitor("fmod/core_update_cpu_usage", cpu, {USAGE_UPDATE},
+                                                     Performance::MONITOR_TYPE_PERCENTAGE);
+    Performance::get_singleton()->add_custom_monitor("fmod/studio_update_cpu_usage", cpu, {USAGE_STUDIO_UPDATE},
+                                                     Performance::MONITOR_TYPE_PERCENTAGE);
+    Performance::get_singleton()->add_custom_monitor("fmod/stream_cpu_usage", cpu, {USAGE_STREAM},
+                                                     Performance::MONITOR_TYPE_PERCENTAGE);
+#endif
     return FMOD_OK;
 }
 
@@ -367,6 +389,41 @@ void FmodAudioServer::_physics_process()
     }
     unlock();
 }
+#ifdef DEBUG_ENABLED
+int FmodAudioServer::track_memory()
+{
+    int current;
+    FMOD_Memory_GetStats(&current, nullptr, false);
+    return current;
+}
+float FmodAudioServer::track_cpu(CPUUsage p_usage)
+{
+
+    FMOD_STUDIO_CPU_USAGE studio_usage;
+    FMOD_CPU_USAGE usage;
+    FMOD_Studio_System_GetCPUUsage(studio_system, &studio_usage, &usage);
+    switch (p_usage)
+    {
+    case USAGE_STUDIO_UPDATE:
+        return studio_usage.update;
+    case USAGE_DSP:
+        return usage.dsp;
+    case USAGE_STREAM:
+        return usage.stream;
+    case USAGE_GEOMETRY:
+        return usage.geometry;
+    case USAGE_UPDATE:
+        return usage.update;
+    case USAGE_CONVULUTION1:
+        return usage.convolution1;
+    case USAGE_CONVULUTION2:
+        return usage.convolution2;
+        break;
+    }
+    return 0;
+}
+#endif
+
 void FmodAudioServer::_thread_func()
 {
     thread->set_thread_safety_checks_enabled(false);
