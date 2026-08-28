@@ -8,6 +8,7 @@
 #include "fmod_event_inspector_plugin.h"
 #include "fmod_export_plugin.h"
 #include "fmod_installer.h"
+#include "variant/dictionary.hpp"
 #include <classes/editor_plugin.hpp>
 using namespace godot;
 namespace FmodGodot
@@ -38,5 +39,7 @@ class FmodEditorPlugin : public EditorPlugin
     void _exit_tree() override;
     String _get_plugin_name() const override;
     Ref<Texture2D> _get_plugin_icon() const override;
+    Dictionary _get_state() const override;
+    void _set_state(const Dictionary &p_state) override;
 };
 } // namespace FmodGodot
