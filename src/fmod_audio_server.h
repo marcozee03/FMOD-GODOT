@@ -2,6 +2,7 @@
 #include "classes/object.hpp"
 #include "classes/wrapped.hpp"
 #include "conversions.h"
+#include "core/print_string.hpp"
 #include "fmod_bank.h"
 #include "fmod_init_settings.h"
 #include "variant/variant.hpp"
@@ -225,6 +226,9 @@ class FmodAudioServer : public Object
   private:
     int track_memory();
     float track_cpu(CPUUsage p_usage);
+
+  public:
+    bool debugger_capture(const String &p_message, const Array &p_data);
 #endif
 
   public:
