@@ -38,6 +38,16 @@ Ref<Texture2D> FmodEditorPlugin::_get_plugin_icon() const
 {
     return ResourceLoader::get_singleton()->load("res://addons/FmodGodot/icons/fmod_icon.svg");
 }
+godot::Dictionary FmodEditorPlugin::_get_state() const
+{
+    Dictionary dict;
+    dict["fmod_mute_state"] = debugger_plugin->get_mute();
+    return dict;
+}
+void FmodEditorPlugin::_set_state(const Dictionary &p_state)
+{
+    debugger_plugin->set_mute(p_state["fmod_mute_state"]);
+}
 
 FmodEditorPlugin::FmodEditorPlugin()
 {
@@ -66,7 +76,7 @@ void FmodEditorPlugin::_enter_tree()
     editor_theme->set_icon("Fmod", "EditorIcons",
                            ResourceLoader::get_singleton()->load("res://addons/FmodGodot/icons/fmod_icon.svg"));
     log = memnew(FmodConsole);
-    FmodEditorInterface::get_singleton()->set_console(log);
+    FmodEditorInterface::get_singleton()->register_console(log);
     eventInspector = memnew(EventInspector);
     add_inspector_plugin(eventInspector);
     bankInspector = memnew(BankInspectorPlugin);
@@ -75,6 +85,7 @@ void FmodEditorPlugin::_enter_tree()
     add_import_plugin(bankImporter);
 
     debugger_plugin = memnew(FmodDebuggerPlugin);
+    FmodEditorInterface::get_singleton()->register_debugger(debugger_plugin);
     add_debugger_plugin(debugger_plugin);
     browser = memnew(FmodEventBrowser());
     add_dock(log);
