@@ -638,6 +638,29 @@ FmodAudioServer *FmodAudioServer::get_singleton()
 {
     return singleton;
 }
+void FmodAudioServer::_load_all_banks_in(const String &p_directory)
+{
+    auto dir = DirAccess::open(p_directory);
+    if (DirAccess::get_open_error() != godot::OK)
+    {
+        print_error(vformat("Failed To Open Bank Directory: '%s' with error: %s", p_directory,
+                            UtilityFunctions::error_string(DirAccess::get_open_error())));
+        return;
+    }
+    for (auto file : dir->get_files())
+    {
+        if (!file.ends_with(".bank"))
+        {
+            continue;
+        }
+        Ref<FmodBank> loaded_bank = ResourceLoader::get_singleton()->load(p_directory.path_join(file), "FmodBank",
+                                                                          godot::ResourceLoader::CACHE_MODE_REUSE);
+        if (loaded_bank.is_valid())
+        {
+            registered_banks.push_back(loaded_bank);
+        }
+    }
+}
 void FmodAudioServer::_load_start_up_banks()
 {
     if (!start_up_banks_loaded)
@@ -652,45 +675,21 @@ void FmodAudioServer::_load_start_up_banks()
             return;
         }
         case 1: {
-            Array arr = ProjectSettings::get_singleton()->get_setting_with_override(SPECIFIED_BANKS);
+            Array arr = GLOBAL_GET(SPECIFIED_BANKS);
             for (auto bank : arr)
             {
                 Ref<FmodBank> loaded_bank =
                     ResourceLoader::get_singleton()->load(bank, "FmodBank", ResourceLoader::CACHE_MODE_REUSE);
                 if (loaded_bank.is_valid())
                 {
-                    start_up_banks.push_back(loaded_bank);
+                    registered_banks.push_back(loaded_bank);
                 }
             }
         }
         break;
         case 2: // all
-        {
-            auto dir = DirAccess::open(ProjectSettings::get_singleton()->get_setting_with_override(BANK_DIRECTORY));
-            if (DirAccess::get_open_error() != godot::OK)
-            {
-                print_error(vformat("Failed To Open Bank Directory: '%s' with error code: %s", dir,
-                                    UtilityFunctions::error_string(DirAccess::get_open_error())));
-                return;
-            }
-            for (auto file : dir->get_files())
-            {
-                if (!file.ends_with(".bank"))
-                {
-                    continue;
-                }
-                ProjectSettings *ps = ProjectSettings::get_singleton();
-
-                Ref<FmodBank> loaded_bank = ResourceLoader::get_singleton()->load(
-                    ps->get_setting_with_override(BANK_DIRECTORY).stringify() + "/" + file, String(),
-                    godot::ResourceLoader::CACHE_MODE_REUSE);
-                if (loaded_bank.is_valid())
-                {
-                    start_up_banks.push_back(loaded_bank);
-                }
-            }
+            _load_all_banks_in(GLOBAL_GET(BANK_DIRECTORY));
             break;
-        }
         default:
             break;
         }
@@ -698,7 +697,7 @@ void FmodAudioServer::_load_start_up_banks()
 }
 void FmodAudioServer::_reload_start_up_banks()
 {
-    for (auto bank : start_up_banks)
+    for (auto bank : registered_banks)
     {
         bank->reload();
     }
@@ -709,7 +708,7 @@ void FmodAudioServer::_unload_start_up_banks()
     if (start_up_banks_loaded)
     {
         print_verbose("Unloading Start Up Banks");
-        start_up_banks.clear();
+        registered_banks.clear();
         start_up_banks_loaded = false;
     }
     unlock();
@@ -724,7 +723,7 @@ void FmodAudioServer::unload_banks()
         return;
     }
     FMOD_Studio_System_UnloadAll(studio_system);
-    start_up_banks.clear();
+    registered_banks.clear();
     start_up_banks_loaded = false;
     print_verbose("Unloading all banks");
     unlock();

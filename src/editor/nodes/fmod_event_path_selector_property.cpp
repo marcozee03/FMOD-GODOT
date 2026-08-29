@@ -11,31 +11,28 @@ EventPathSelectorProperty::EventPathSelectorProperty()
 {
     eventSelector = memnew(FmodEventSelector);
     add_child(eventSelector);
-    eventSelector->get_line_edit()->connect("text_submitted",
-                                            callable_mp(this, &EventPathSelectorProperty::on_text_changed));
-    eventSelector->get_line_edit()->connect("editing_toggled",
-                                            callable_mp(this, &EventPathSelectorProperty::on_editing_toggled));
+    eventSelector->connect("fmod_guid_and_path_selected",
+                           callable_mp(this, &EventPathSelectorProperty::_fmod_guid_and_path_changed));
 }
 EventPathSelectorProperty::~EventPathSelectorProperty()
 {
 }
-void EventPathSelectorProperty::on_editing_toggled(bool p_toggled_on)
+void EventPathSelectorProperty::_fmod_guid_and_path_changed(const Vector4i &p_guid, const String &p_path)
 {
-    if (!p_toggled_on)
+    if (currentValue != p_path)
     {
-        on_text_changed(eventSelector->get_line_edit()->get_text());
+        currentValue = p_path;
+        emit_changed(get_edited_property(), currentValue);
     }
-}
-void EventPathSelectorProperty::on_text_changed(String p_new_text)
-{
-    if (currentValue == p_new_text)
-    {
-        return;
-    }
-    currentValue = p_new_text;
-    emit_changed(get_edited_property(), currentValue);
-}
 
+    if (p_guid == Vector4i(0, 0, 0, 0))
+    {
+        _err_print_error(__FUNCTION__, __FILE__, __LINE__,
+                         vformat("Could not find FMOD_GUID %v for '%s' setting will not persist only guid is stored",
+                                 p_guid, p_path),
+                         true, true);
+    }
+}
 void EventPathSelectorProperty::_bind_methods()
 {
 }
@@ -50,7 +47,7 @@ void EventPathSelectorProperty::_update_property()
     // Update the control with the new value.
     updating = true;
     currentValue = newValue;
-    eventSelector->get_line_edit()->set_text(currentValue);
+    eventSelector->set_path(currentValue);
     updating = false;
 }
 } // namespace FmodGodot
