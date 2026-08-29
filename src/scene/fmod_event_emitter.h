@@ -1,4 +1,5 @@
 #pragma once
+#include "classes/engine.hpp"
 #include "classes/global_constants.hpp"
 #include "core/error_macros.hpp"
 #include "core/math.hpp"
@@ -6,6 +7,10 @@
 #include "fmod_audio_server.h"
 #include "fmod_common.h"
 #include "fmod_defs.h"
+#include <binding/studio/parameter_cache.h>
+#ifdef TOOLS_ENABLED
+#include "fmod_editor_interface.h"
+#endif
 #include "fmod_studio_common.h"
 #include "globals.h"
 #include "variant/char_string.hpp"
@@ -184,11 +189,12 @@ void FmodEventEmitter<Derived, NodeType, RigidBody>::refresh_parameters()
 template <class Derived, class NodeType, class RigidBody>
 bool FmodEventEmitter<Derived, NodeType, RigidBody>::_set(const StringName &p_name, const Variant &p_property)
 {
-    if (!p_name.begins_with("param:"))
+    if (!p_name.begins_with("parameters/"))
     {
         return false;
     }
-    auto str = p_name.substr(6);
+
+    auto str = p_name.substr(sizeof("parameters/") - 1);
     for (int i = 0; i < parameters.size(); i++)
     {
         if (str.casecmp_to(parameters[i].name) == 0)
@@ -203,17 +209,17 @@ bool FmodEventEmitter<Derived, NodeType, RigidBody>::_set(const StringName &p_na
         }
     }
     parameters.push_back({str.utf8().ptr(), p_property});
-    return p_name.begins_with("param:");
+    return true;
 }
 
 template <class Derived, class NodeType, class RigidBody>
 bool FmodEventEmitter<Derived, NodeType, RigidBody>::_get(const StringName &p_name, Variant &r_property) const
 {
-    if (!p_name.begins_with("param:"))
+    if (!p_name.begins_with("parameters/"))
     {
         return false;
     }
-    float temp = get_parameter(p_name.substr(6));
+    float temp = get_parameter(p_name.substr(sizeof("parameters/") - 1));
     if (temp == NAN)
     {
         return false;
@@ -228,18 +234,19 @@ bool FmodEventEmitter<Derived, NodeType, RigidBody>::_get(const StringName &p_na
 template <class Derived, class NodeType, class RigidBody>
 bool FmodEventEmitter<Derived, NodeType, RigidBody>::_property_can_revert(const StringName &p_name) const
 {
-    return p_name.begins_with("param:");
+    return p_name.begins_with("parameters/");
 }
 
 template <class Derived, class NodeType, class RigidBody>
 bool FmodEventEmitter<Derived, NodeType, RigidBody>::_property_get_revert(const StringName &p_name, Variant &r_property)
 {
-    if (!p_name.begins_with("param:"))
+    if (!p_name.begins_with("parameters/"))
     {
         return false;
     }
     FMOD_STUDIO_PARAMETER_DESCRIPTION param;
-    FMOD_Studio_EventDescription_GetParameterDescriptionByName(description, p_name.substr(6).utf8().ptr(), &param);
+    FMOD_Studio_EventDescription_GetParameterDescriptionByName(
+        description, p_name.substr(sizeof("parameters/") - 1).utf8().ptr(), &param);
     r_property = param.defaultvalue;
     return true;
 }
@@ -263,21 +270,37 @@ void FmodEventEmitter<Derived, NodeType, RigidBody>::_get_property_list(List<Pro
 {
     if (!FMOD_Studio_EventDescription_IsValid(description))
     {
-        UtilityFunctions::push_warning("event description was not valid defaulting to cache");
-        for (auto param : parameters)
+        if (!Engine::get_singleton()->is_editor_hint())
         {
-            PropertyInfo info;
-            info.name = "param:" + String(param.name);
-            info.hint = PROPERTY_HINT_NONE;
-            info.type = Variant::FLOAT;
-            info.usage = PropertyUsageFlags::PROPERTY_USAGE_DEFAULT;
-            p_list->push_back(info);
+            UtilityFunctions::push_warning("event description was not valid defaulting to cache");
+        }
+        else
+        {
+#ifdef TOOLS_ENABLED
+            auto event = FmodEditorInterface::get_singleton()->get_cache()->get_event(event_guid);
+            for (auto param : event.parameters)
+            {
+                if (param.type == FMOD_STUDIO_PARAMETER_GAME_CONTROLLED)
+                {
+                    PropertyInfo info = static_cast<PropertyInfo>(param);
+                    p_list->push_back(info);
+                }
+            }
+#else
+            for (auto param : parameters)
+            {
+                PropertyInfo info;
+                info.name = "parameters/" + String(param.name);
+                info.hint = PROPERTY_HINT_NONE;
+                info.type = Variant::FLOAT;
+                info.usage = PropertyUsageFlags::PROPERTY_USAGE_DEFAULT;
+                p_list->push_back(info);
+            }
+#endif
         }
         return;
     }
     int count;
-    p_list->push_back(
-        PropertyInfo(Variant::Type::STRING, "Parameters", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_SUBGROUP));
     FMOD_Studio_EventDescription_GetParameterDescriptionCount(description, &count);
     for (int parameter_index = 0; parameter_index < count; parameter_index++)
     {
@@ -287,48 +310,7 @@ void FmodEventEmitter<Derived, NodeType, RigidBody>::_get_property_list(List<Pro
         {
             continue;
         }
-        PropertyInfo info;
-        info.name = "param:" + String(param.name);
-        info.usage = PropertyUsageFlags::PROPERTY_USAGE_DEFAULT;
-        if (param.flags & (FMOD_STUDIO_PARAMETER_LABELED | FMOD_STUDIO_PARAMETER_DISCRETE))
-        {
-            info.hint = PROPERTY_HINT_ENUM;
-            info.type = Variant::INT;
-            PackedStringArray labels;
-            labels.resize(param.maximum + 1);
-            for (int label_index = 0; label_index <= param.maximum; label_index++)
-            {
-                int retrieved = 0;
-                FMOD_Studio_EventDescription_GetParameterLabelByIndex(description, parameter_index, label_index,
-                                                                      nullptr, 0, &retrieved);
-
-                CharString label;
-                label.resize_uninitialized(retrieved + 1);
-                if (retrieved > 0)
-                {
-                    int size = retrieved;
-                    FMOD_Studio_EventDescription_GetParameterLabelByIndex(description, parameter_index, label_index,
-                                                                          label.ptrw(), size, &retrieved);
-                    label[size - 1] = ':';
-                    label[size] = '\0';
-                }
-                labels.set(label_index, String(label.ptr()) + itos(label_index));
-            }
-            info.hint_string = String(",").join(labels);
-        }
-        else
-        {
-            info.hint = PROPERTY_HINT_RANGE;
-            info.type = Variant::FLOAT;
-            if (param.flags & FMOD_STUDIO_PARAMETER_DISCRETE)
-            {
-                info.hint_string = vformat("%f,%f,%f", param.minimum, param.maximum, 1);
-            }
-            else
-            {
-                info.hint_string = vformat("%f,%f", param.minimum, param.maximum);
-            }
-        }
+        PropertyInfo info = ParameterCache::propInfo(param, description);
         p_list->push_back(info);
     }
 }

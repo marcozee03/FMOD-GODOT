@@ -136,7 +136,7 @@ void FmodEventPreviewer::set_event_guid(Vector4i p_event_guid)
     editor_properties.clear();
     for (Dictionary property : emitter->get_property_list())
     {
-        if (!property["name"].stringify().begins_with("param:"))
+        if (!property["name"].stringify().begins_with("parameters/"))
         {
             continue;
         }
@@ -146,10 +146,11 @@ void FmodEventPreviewer::set_event_guid(Vector4i p_event_guid)
         PropertyHint hint = static_cast<PropertyHint>(static_cast<int>(property["hint"]));
         EditorProperty *prop = inspector->instantiate_property_editor(emitter, vType, name, hint,
                                                                       property["hint_string"], property["usage"]);
+        print_line(prop);
         prop->set_object_and_property(emitter, name);
         editor_properties.push_back(prop);
         prop->connect("property_changed", callable_mp(this, &FmodEventPreviewer::on_property_changed));
-        prop->set_label(name.substr(6));
+        prop->set_label(name.substr(sizeof("parameters/") - 1));
         add_child(prop);
     }
 }

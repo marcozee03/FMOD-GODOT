@@ -95,6 +95,10 @@ template <typename Data> class PathTree
 
   public:
     PathTree(/* args */);
+    PathTree(const PathTree &) = delete;
+    PathTree(PathTree &&) = delete;
+    PathTree &operator=(const PathTree &) = delete;
+    PathTree &operator=(PathTree &&) = delete;
     virtual ~PathTree();
 
     Data &operator[](const String &p_path);
@@ -105,6 +109,7 @@ template <typename Data> class PathTree
     void clear();
     PackedStringArray get_contents(const String &p_path) const;
     TreeItem get_root() const;
+    bool has(const String &p_path) const;
 };
 template <typename Data>
 typename PathTree<Data>::Node *PathTree<Data>::find_node(const String &p_path, bool p_last_is_data)
@@ -222,6 +227,11 @@ template <typename Data> typename PathTree<Data>::TreeItem PathTree<Data>::get_r
 {
     return {&root};
 }
+template <typename Data> inline bool PathTree<Data>::has(const String &p_path) const
+{
+    return find_node(p_path) != nullptr;
+}
+
 template <typename Data>
 PathTree<Data>::Node::Node(const String &p_name, bool p_has_children) : has_children(p_has_children)
 {

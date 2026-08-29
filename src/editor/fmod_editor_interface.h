@@ -1,6 +1,6 @@
 #pragma once
 #include "fmod_console.h"
-#include "fmod_editor_cache.h"
+#include "fmod_editor_index.h"
 #include "fmod_script_client.h"
 #include "variant/string.hpp"
 #include <classes/object.hpp>
@@ -12,7 +12,7 @@ class FmodEditorInterface : public Object
     GDCLASS(FmodEditorInterface, Object)
   private:
     /* data */
-    FmodEditorCache cache;
+    FmodEditorIndex cache;
     static FmodEditorInterface *singleton;
     bool live_update_enabled = false;
     FmodScriptClient *script;
@@ -27,7 +27,7 @@ class FmodEditorInterface : public Object
     void restart_server();
     void build_banks();
     void refresh(bool p_load_start_up_banks = false);
-    const FmodEditorCache *get_cache() const;
+    const FmodEditorIndex *get_cache() const;
     FmodScriptClient *get_script_client() const;
     void set_console(FmodConsole *p_console);
     void print(const String &p_message);
