@@ -3,6 +3,7 @@
 #include "binding/studio/event_description.h"
 #include "binding/studio/event_instance.h"
 #include "binding/studio/studio_system.h"
+#include "classes/engine_debugger.hpp"
 #include "core/binder_common.hpp"
 #include <fmod_studio_common.h>
 
@@ -48,6 +49,7 @@
 #include "fmod_project_explorer.h"
 #include "fmod_script_client.h"
 #include "live_update_indicator.h"
+#include "mute_button.h"
 #include <classes/editor_interface.hpp>
 #include <classes/editor_plugin_registration.hpp>
 #include <classes/editor_settings.hpp>
@@ -155,11 +157,19 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
 #else
         audio_server->_load_start_up_banks();
 #endif
+#ifdef DEBUG_ENABLED
+        if (!Engine::get_singleton()->is_editor_hint())
+        {
+            EngineDebugger::get_singleton()->register_message_capture(
+                "fmod", callable_mp(audio_server, &FmodAudioServer::debugger_capture));
+        }
+#endif
     }
 
     if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
     {
 #ifdef TOOLS_ENABLED
+        GDREGISTER_INTERNAL_CLASS(MuteButton);
         GDREGISTER_INTERNAL_CLASS(FmodEventSelector);
         GDREGISTER_INTERNAL_CLASS(EventTree);
 

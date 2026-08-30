@@ -3,9 +3,12 @@
 #include "classes/editor_dock.hpp"
 #include "classes/h_box_container.hpp"
 #include "classes/v_box_container.hpp"
+#include "core/object.hpp"
+#include "core/property_info.hpp"
 #include "fmod_editor_interface.h"
 #include "fmod_project_explorer.h"
 #include "live_update_indicator.h"
+#include "mute_button.h"
 #include "variant/callable_method_pointer.hpp"
 #include <classes/button.hpp>
 #include <classes/label.hpp>
@@ -53,6 +56,7 @@ FmodGodot::FmodEventBrowser::FmodEventBrowser()
     restart_server->connect("pressed",
                             callable_mp(FmodEditorInterface::get_singleton(), &FmodEditorInterface::restart_server));
     hbox_right->add_child(memnew(LiveUpdateIndicator));
+    hbox_right->add_child(memnew(MuteButton));
     hbox_right->add_child(refresh_button);
 
     explorer = memnew(FmodProjectExplorer);
@@ -102,6 +106,7 @@ void FmodEventBrowser::_visibility_changed()
 
 void FmodGodot::FmodEventBrowser::_bind_methods()
 {
+    ADD_SIGNAL(MethodInfo("mute_changed", PropertyInfo(Variant::BOOL, "muted")));
 }
 void FmodEventBrowser::_notification(int p_what)
 {
