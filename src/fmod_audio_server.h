@@ -100,7 +100,7 @@ class FmodAudioServer : public Object
     CharString encryption_key;
     bool initialized;
     bool muted;
-    LocalVector<Ref<FmodBank>> start_up_banks;
+    LocalVector<Ref<FmodBank>> registered_banks;
     bool live_update_connected;
     bool start_up_banks_loaded;
 
@@ -188,6 +188,7 @@ class FmodAudioServer : public Object
                                Node3D *p_attenuation_object = nullptr);
 
   public: // Internal unexposed
+    void _load_all_banks_in(const String &p_directory);
     void _load_start_up_banks();
     void _reload_start_up_banks();
     void _unload_start_up_banks();

@@ -14,8 +14,7 @@ class EventPathSelectorProperty : public EditorProperty
     FmodEventSelector *eventSelector;
     String currentValue;
     bool updating = false;
-    void on_text_changed(String p_new_text);
-    void on_editing_toggled(bool p_toggled_on);
+    void _fmod_guid_and_path_changed(const Vector4i &p_guid, const String &p_path);
 
   protected:
     static void _bind_methods();

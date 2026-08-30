@@ -1,13 +1,9 @@
 
 #include "fmod_editor_interface.h"
 #include "binding/conversions.h"
-#include "binding/studio/event_description.h"
-#include "binding/studio/parameter_cache.h"
-#include "binding/studio/vca.h"
 #include "core/memory.hpp"
 #include "fmod_audio_server.h"
 #include "fmod_script_client.h"
-#include "fmod_studio_common.h"
 #include "variant/utility_functions.hpp"
 #include <classes/os.hpp>
 #include <classes/project_settings.hpp>
@@ -47,7 +43,7 @@ void FmodEditorInterface::build_banks()
 void FmodEditorInterface::_bind_methods()
 {
 }
-const FmodEditorCache *FmodEditorInterface::get_cache() const
+const FmodEditorIndex *FmodEditorInterface::get_cache() const
 {
     return &cache;
 }
@@ -95,11 +91,6 @@ FmodEditorInterface *FmodEditorInterface::get_singleton()
 // namespace
 void FmodEditorInterface::refresh(bool p_load_start_up_banks)
 {
-    FMOD_STUDIO_SYSTEM *studio = FmodAudioServer::get_singleton()->get_studio();
-    if (!studio)
-    {
-        return;
-    }
     if (p_load_start_up_banks)
     {
         FmodAudioServer::get_singleton()->_load_start_up_banks();
@@ -109,67 +100,16 @@ void FmodEditorInterface::refresh(bool p_load_start_up_banks)
         FmodAudioServer::get_singleton()->_reload_start_up_banks();
     }
     int bank_count;
-    FMOD_Studio_System_GetBankCount(studio, &bank_count);
-    if (bank_count < 0)
+    FMOD_Studio_System_GetBankCount(FmodAudioServer::get_singleton()->get_studio(), &bank_count);
+    if (bank_count <= 0)
     {
-        FmodAudioServer::get_singleton()->_unload_start_up_banks();
         return;
     }
-    FMOD_STUDIO_BANK **banks = memnew_arr(FMOD_STUDIO_BANK *, bank_count);
-    FMOD_Studio_System_GetBankList(studio, banks, bank_count, &bank_count);
-    for (int i = 0; i < bank_count; i++)
+    cache.refresh(FmodAudioServer::get_singleton()->get_studio());
+    if (p_load_start_up_banks)
     {
-
-        Studio::StudioBank::Cache bank(banks[i]);
-        cache.add(bank);
-        {
-            int event_count;
-            FMOD_Studio_Bank_GetEventCount(banks[i], &event_count);
-            if (event_count > 0)
-            {
-                FMOD_STUDIO_EVENTDESCRIPTION **descriptions = memnew_arr(FMOD_STUDIO_EVENTDESCRIPTION *, event_count);
-                FMOD_Studio_Bank_GetEventList(banks[i], descriptions, event_count, &event_count);
-                for (int j = 0; j < event_count; j++)
-                {
-                    FmodGodot::Studio::StudioEventDescription::Cache event(descriptions[j]);
-                    cache.add(event);
-                }
-                memdelete_arr(descriptions);
-            }
-        }
-        {
-            int vca_count;
-            FMOD_Studio_Bank_GetVCACount(banks[i], &vca_count);
-            if (vca_count > 0)
-            {
-                FMOD_STUDIO_VCA **vcas = memnew_arr(FMOD_STUDIO_VCA *, vca_count);
-                FMOD_Studio_Bank_GetVCAList(banks[i], vcas, vca_count, &vca_count);
-                for (int j = 0; j < vca_count; j++)
-                {
-                    FmodGodot::Studio::StudioVCA::Cache vca(vcas[j]);
-                    cache.add(vca);
-                }
-                memdelete_arr(vcas);
-            }
-        }
+        FmodAudioServer::get_singleton()->_load_start_up_banks();
     }
-
-    int p_count;
-    FMOD_Studio_System_GetParameterDescriptionCount(studio, &p_count);
-    if (p_count > 0)
-    {
-        FMOD_STUDIO_PARAMETER_DESCRIPTION *params = memnew_arr(FMOD_STUDIO_PARAMETER_DESCRIPTION, p_count);
-        FMOD_Studio_System_GetParameterDescriptionList(studio, params, p_count, &p_count);
-        for (int i = 0; i < p_count; i++)
-        {
-            cache.add(ParameterCache(params[i]));
-        }
-        memdelete_arr(params);
-    }
-
-    memdelete_arr(banks);
-
-    FmodAudioServer::get_singleton()->_unload_start_up_banks();
 }
 void FmodEditorInterface::show_event_in_fmod_studio(Vector4i p_guid)
 {
