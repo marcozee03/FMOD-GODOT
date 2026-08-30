@@ -73,7 +73,7 @@ Methods
    +----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | int                  | :ref:`load_bank_file<class_StudioSystem_method_load_bank_file>`\ (\ handle\: int, filename\: String, flags\: int\ ) |static|                                                                                                                          |
    +----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | int                  | :ref:`load_bank_memory<class_StudioSystem_method_load_bank_memory>`\ (\ handle\: int, buffer\: ``PackedByteArray``, flags\: FMOD_STUDIO_LOAD_MEMORY_MODE, _unnamed_arg3\: int\ ) |static|                                                             |
+   | int                  | :ref:`load_bank_memory<class_StudioSystem_method_load_bank_memory>`\ (\ handle\: int, buffer\: ``PackedByteArray``, mode\: FMOD_STUDIO_LOAD_MEMORY_MODE, flags\: int\ ) |static|                                                                      |
    +----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | int                  | :ref:`load_command_replay<class_StudioSystem_method_load_command_replay>`\ (\ handle\: int, filename\: String, flags\: int\ ) |static|                                                                                                                |
    +----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -93,7 +93,7 @@ Methods
    +----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | FMOD_RESULT          | :ref:`set_parameter_by_id_with_label<class_StudioSystem_method_set_parameter_by_id_with_label>`\ (\ handle\: int, id\: int, label\: String, ignore_seek_speed\: bool = false\ ) |static|                                                              |
    +----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_RESULT          | :ref:`set_parameters_by_ids<class_StudioSystem_method_set_parameters_by_ids>`\ (\ _unnamed_arg0\: int, _unnamed_arg1\: ``PackedInt64Array``, _unnamed_arg2\: ``PackedFloat32Array``, _unnamed_arg3\: bool\ ) |static|                                 |
+   | FMOD_RESULT          | :ref:`set_parameters_by_ids<class_StudioSystem_method_set_parameters_by_ids>`\ (\ handle\: int, ids\: ``PackedInt64Array``, values\: ``PackedFloat32Array``, ignore_seek_speed\: bool = false\ ) |static|                                             |
    +----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | FMOD_RESULT          | :ref:`start_command_capture<class_StudioSystem_method_start_command_capture>`\ (\ handle\: int, filename\: String, flags\: int\ ) |static|                                                                                                            |
    +----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -453,7 +453,7 @@ int **load_bank_file**\ (\ handle\: int, filename\: String, flags\: int\ ) |stat
 
 .. rst-class:: classref-method
 
-int **load_bank_memory**\ (\ handle\: int, buffer\: ``PackedByteArray``, flags\: FMOD_STUDIO_LOAD_MEMORY_MODE, _unnamed_arg3\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_load_bank_memory>`
+int **load_bank_memory**\ (\ handle\: int, buffer\: ``PackedByteArray``, mode\: FMOD_STUDIO_LOAD_MEMORY_MODE, flags\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_load_bank_memory>`
 
 .. container:: contribute
 
@@ -593,7 +593,7 @@ FMOD_RESULT **set_parameter_by_id_with_label**\ (\ handle\: int, id\: int, label
 
 .. rst-class:: classref-method
 
-FMOD_RESULT **set_parameters_by_ids**\ (\ _unnamed_arg0\: int, _unnamed_arg1\: ``PackedInt64Array``, _unnamed_arg2\: ``PackedFloat32Array``, _unnamed_arg3\: bool\ ) |static| :ref:`🔗<class_StudioSystem_method_set_parameters_by_ids>`
+FMOD_RESULT **set_parameters_by_ids**\ (\ handle\: int, ids\: ``PackedInt64Array``, values\: ``PackedFloat32Array``, ignore_seek_speed\: bool = false\ ) |static| :ref:`🔗<class_StudioSystem_method_set_parameters_by_ids>`
 
 .. container:: contribute
 

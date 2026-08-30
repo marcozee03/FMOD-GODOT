@@ -79,7 +79,7 @@ Methods
    +----------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | FMOD_RESULT                | :ref:`set_listener_mask<class_StudioEventInstance_method_set_listener_mask>`\ (\ handle\: int, listener_mask\: int\ ) |static|                                                                           |
    +----------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_RESULT                | :ref:`set_parameter_by_id<class_StudioEventInstance_method_set_parameter_by_id>`\ (\ handle\: int, id\: int, value\: float, _unnamed_arg3\: bool\ ) |static|                                             |
+   | FMOD_RESULT                | :ref:`set_parameter_by_id<class_StudioEventInstance_method_set_parameter_by_id>`\ (\ handle\: int, id\: int, value\: float, ignore_seek_speed\: bool = false\ ) |static|                                 |
    +----------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | FMOD_RESULT                | :ref:`set_parameter_by_id_with_label<class_StudioEventInstance_method_set_parameter_by_id_with_label>`\ (\ handle\: int, id\: int, label\: String, ignoreseekspeed\: bool = false\ ) |static|            |
    +----------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -105,7 +105,7 @@ Methods
    +----------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | FMOD_RESULT                | :ref:`start<class_StudioEventInstance_method_start>`\ (\ handle\: int\ ) |static|                                                                                                                        |
    +----------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | FMOD_RESULT                | :ref:`stop<class_StudioEventInstance_method_stop>`\ (\ handle\: int, _unnamed_arg1\: FMOD_STUDIO_STOP_MODE\ ) |static|                                                                                   |
+   | FMOD_RESULT                | :ref:`stop<class_StudioEventInstance_method_stop>`\ (\ handle\: int, stop_mode\: FMOD_STUDIO_STOP_MODE\ ) |static|                                                                                       |
    +----------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
@@ -499,7 +499,7 @@ FMOD_RESULT **set_listener_mask**\ (\ handle\: int, listener_mask\: int\ ) |stat
 
 .. rst-class:: classref-method
 
-FMOD_RESULT **set_parameter_by_id**\ (\ handle\: int, id\: int, value\: float, _unnamed_arg3\: bool\ ) |static| :ref:`🔗<class_StudioEventInstance_method_set_parameter_by_id>`
+FMOD_RESULT **set_parameter_by_id**\ (\ handle\: int, id\: int, value\: float, ignore_seek_speed\: bool = false\ ) |static| :ref:`🔗<class_StudioEventInstance_method_set_parameter_by_id>`
 
 .. container:: contribute
 
@@ -681,7 +681,7 @@ FMOD_RESULT **start**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventI
 
 .. rst-class:: classref-method
 
-FMOD_RESULT **stop**\ (\ handle\: int, _unnamed_arg1\: FMOD_STUDIO_STOP_MODE\ ) |static| :ref:`🔗<class_StudioEventInstance_method_stop>`
+FMOD_RESULT **stop**\ (\ handle\: int, stop_mode\: FMOD_STUDIO_STOP_MODE\ ) |static| :ref:`🔗<class_StudioEventInstance_method_stop>`
 
 .. container:: contribute
 

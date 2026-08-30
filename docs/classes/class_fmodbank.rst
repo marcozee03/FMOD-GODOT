@@ -41,19 +41,23 @@ Methods
 .. table::
    :widths: auto
 
-   +---------------------------+-----------------------------------------------------------------------------------------------+
-   | Vector4i                  | :ref:`get_id<class_FmodBank_method_get_id>`\ (\ ) |const|                                     |
-   +---------------------------+-----------------------------------------------------------------------------------------------+
-   | FMOD_STUDIO_LOADING_STATE | :ref:`get_loading_state<class_FmodBank_method_get_loading_state>`\ (\ ) |const|               |
-   +---------------------------+-----------------------------------------------------------------------------------------------+
-   | FMOD_STUDIO_LOADING_STATE | :ref:`get_sample_loading_state<class_FmodBank_method_get_sample_loading_state>`\ (\ ) |const| |
-   +---------------------------+-----------------------------------------------------------------------------------------------+
-   | bool                      | :ref:`is_bank_valid<class_FmodBank_method_is_bank_valid>`\ (\ ) |const|                       |
-   +---------------------------+-----------------------------------------------------------------------------------------------+
-   | int                       | :ref:`unload<class_FmodBank_method_unload>`\ (\ )                                             |
-   +---------------------------+-----------------------------------------------------------------------------------------------+
-   | int                       | :ref:`unload_sample_data<class_FmodBank_method_unload_sample_data>`\ (\ )                     |
-   +---------------------------+-----------------------------------------------------------------------------------------------+
+   +---------------------------+---------------------------------------------------------------------------------------------------------+
+   | Vector4i                  | :ref:`get_id<class_FmodBank_method_get_id>`\ (\ ) |const|                                               |
+   +---------------------------+---------------------------------------------------------------------------------------------------------+
+   | FMOD_STUDIO_LOADING_STATE | :ref:`get_loading_state<class_FmodBank_method_get_loading_state>`\ (\ ) |const|                         |
+   +---------------------------+---------------------------------------------------------------------------------------------------------+
+   | FMOD_STUDIO_LOADING_STATE | :ref:`get_sample_loading_state<class_FmodBank_method_get_sample_loading_state>`\ (\ ) |const|           |
+   +---------------------------+---------------------------------------------------------------------------------------------------------+
+   | int                       | :ref:`get_string_count<class_FmodBank_method_get_string_count>`\ (\ ) |const|                           |
+   +---------------------------+---------------------------------------------------------------------------------------------------------+
+   | String                    | :ref:`get_string_info<class_FmodBank_method_get_string_info>`\ (\ index\: int, id\: Vector4i\ ) |const| |
+   +---------------------------+---------------------------------------------------------------------------------------------------------+
+   | bool                      | :ref:`is_valid<class_FmodBank_method_is_valid>`\ (\ ) |const|                                           |
+   +---------------------------+---------------------------------------------------------------------------------------------------------+
+   | int                       | :ref:`unload<class_FmodBank_method_unload>`\ (\ )                                                       |
+   +---------------------------+---------------------------------------------------------------------------------------------------------+
+   | int                       | :ref:`unload_sample_data<class_FmodBank_method_unload_sample_data>`\ (\ )                               |
+   +---------------------------+---------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -126,13 +130,41 @@ The audio sample's current loading state.
 
 ----
 
-.. _class_FmodBank_method_is_bank_valid:
+.. _class_FmodBank_method_get_string_count:
 
 .. rst-class:: classref-method
 
-bool **is_bank_valid**\ (\ ) |const| :ref:`🔗<class_FmodBank_method_is_bank_valid>`
+int **get_string_count**\ (\ ) |const| :ref:`🔗<class_FmodBank_method_get_string_count>`
 
-if ``true`` bank reference is valid.
+.. container:: contribute
+
+	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FmodBank_method_get_string_info:
+
+.. rst-class:: classref-method
+
+String **get_string_info**\ (\ index\: int, id\: Vector4i\ ) |const| :ref:`🔗<class_FmodBank_method_get_string_info>`
+
+.. container:: contribute
+
+	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_FmodBank_method_is_valid:
+
+.. rst-class:: classref-method
+
+bool **is_valid**\ (\ ) |const| :ref:`🔗<class_FmodBank_method_is_valid>`
+
+if ``true`` bank reference is valid
 
 .. rst-class:: classref-item-separator
 
