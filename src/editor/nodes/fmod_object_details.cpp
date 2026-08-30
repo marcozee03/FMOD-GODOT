@@ -146,7 +146,7 @@ void FmodObjectDetails::set_hide_event_parameter(bool p_hide)
 void FmodObjectDetails::display_fmod_object(const String &p_path)
 {
     text->clear();
-    const FmodEditorCache *cache = FmodEditorInterface::get_singleton()->get_cache();
+    const FmodEditorIndex *cache = FmodEditorInterface::get_singleton()->get_cache();
     Ref<Texture2D> event_icon = get_theme_icon("FmodEvent", "EditorIcons");
     Ref<Texture2D> c_parameter_icon = get_theme_icon("FmodContinuousParameter", "EditorIcons");
     Ref<Texture2D> d_parameter_icon = get_theme_icon("FmodDiscreteParameter", "EditorIcons");

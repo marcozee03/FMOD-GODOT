@@ -4,7 +4,7 @@
 #include "classes/label.hpp"
 #include "classes/texture_rect.hpp"
 #include "classes/tree_item.hpp"
-#include "fmod_editor_cache.h"
+#include "fmod_editor_index.h"
 #include "fmod_editor_interface.h"
 #include "globals.h"
 #include <classes/project_settings.hpp>
@@ -61,7 +61,7 @@ EventTree::~EventTree()
 }
 namespace
 {
-void recurOverEvents(TreeItem *p_root, const FmodEditorCache *p_cache, const PackedStringArray &p_contents,
+void recurOverEvents(TreeItem *p_root, const FmodEditorIndex *p_cache, const PackedStringArray &p_contents,
                      const String &p_current_path)
 {
     for (auto str : p_contents)
@@ -76,7 +76,7 @@ void recurOverEvents(TreeItem *p_root, const FmodEditorCache *p_cache, const Pac
         }
     }
 }
-void initRecur(TreeItem *p_root, const FmodEditorCache *p_cache, const String &p_current_path)
+void initRecur(TreeItem *p_root, const FmodEditorIndex *p_cache, const String &p_current_path)
 {
     TreeItem *item = p_root->create_child(-1);
     item->set_text(0, p_current_path);
@@ -112,7 +112,7 @@ void EventTree::LoadEvents()
 {
     this->clear();
     create_item();
-    const FmodEditorCache *cache = FmodEditorInterface::get_singleton()->get_cache();
+    const FmodEditorIndex *cache = FmodEditorInterface::get_singleton()->get_cache();
     String current_path;
     if (display_flags & EVENTS)
     {
