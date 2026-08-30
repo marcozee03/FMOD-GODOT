@@ -1,12 +1,11 @@
 #pragma once
 
 #include "classes/menu_button.hpp"
-#include "classes/popup_menu.hpp"
 #include "classes/wrapped.hpp"
 namespace FmodGodot
 {
 using namespace godot;
-class EventBrowserMenuButton : MenuButton
+class EventBrowserMenuButton : public MenuButton
 {
     GDCLASS(EventBrowserMenuButton, MenuButton)
   private:
@@ -16,12 +15,13 @@ class EventBrowserMenuButton : MenuButton
         RESTART_SERVER,
     };
 
+    void _id_pressed(int p_id);
+
+  protected:
+    static void _bind_methods();
+    void _notification(int p_what);
+
   public:
-    EventBrowserMenuButton()
-    {
-        get_popup()->add_item("Build Banks", BUILD_BANKS);
-        get_popup()->set_item_tooltip(0, "Fmod Studio must be open and Project build output must be configured");
-        get_popup()->add_item("Restart Server", RESTART_SERVER);
-    }
+    EventBrowserMenuButton();
 };
 } // namespace FmodGodot
