@@ -1,6 +1,5 @@
 #include "live_update_indicator.h"
 #include "classes/control.hpp"
-#include "core/print_string.hpp"
 #include "fmod_audio_server.h"
 #include "fmod_string_names.h"
 #include "globals.h"
@@ -96,7 +95,6 @@ LiveUpdateIndicator::LiveUpdateIndicator()
 }
 void LiveUpdateIndicator::connected(bool p_connected)
 {
-    print_line("Connected: ", p_connected);
     if (p_connected)
     {
         icon->call_deferred("set_modulate", Color(1, 0, 0));
