@@ -87,10 +87,10 @@ LiveUpdateIndicator::LiveUpdateIndicator()
     icon->set_expand_mode(godot::TextureRect::EXPAND_KEEP_SIZE);
     icon->set_stretch_mode(godot::TextureRect::STRETCH_KEEP_ASPECT_CENTERED);
     icon->set_v_size_flags(SIZE_EXPAND_FILL);
-    add_child(icon);
     label = memnew(Label);
     label->set_text("Live Update");
     add_child(label);
+    add_child(icon);
     add_theme_constant_override("separation", 0);
 }
 void LiveUpdateIndicator::connected(bool p_connected)

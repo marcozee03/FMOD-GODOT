@@ -5,6 +5,7 @@
 #include "classes/v_box_container.hpp"
 #include "core/object.hpp"
 #include "core/property_info.hpp"
+#include "event_browser_menu_button.h"
 #include "fmod_editor_interface.h"
 #include "fmod_project_explorer.h"
 #include "live_update_indicator.h"
@@ -43,21 +44,10 @@ FmodGodot::FmodEventBrowser::FmodEventBrowser()
     hbox->add_child(top_buttons, false, INTERNAL_MODE_FRONT);
     hbox->add_child(hbox_right);
 
-    Button *build = memnew(Button());
-    build->set_text("Build Banks");
-    build->set_tooltip_text("The FMOD Studio project build path must be set inside this godot project");
-    top_buttons->add_child(build);
-    build->connect("pressed", callable_mp(FmodEditorInterface::get_singleton(), &FmodEditorInterface::build_banks));
-    // build->set_disabled(true);
-    Button *restart_server = memnew(Button());
-    restart_server->set_text("Restart Server");
-    restart_server->set_tooltip_text("restarts the fmod audio server");
-    top_buttons->add_child(restart_server);
-    restart_server->connect("pressed",
-                            callable_mp(FmodEditorInterface::get_singleton(), &FmodEditorInterface::restart_server));
-    hbox_right->add_child(memnew(LiveUpdateIndicator));
+    top_buttons->add_child(memnew(LiveUpdateIndicator));
     hbox_right->add_child(memnew(MuteButton));
     hbox_right->add_child(refresh_button);
+    hbox_right->add_child(memnew(EventBrowserMenuButton));
 
     explorer = memnew(FmodProjectExplorer);
     explorer->set_v_size_flags(SIZE_EXPAND_FILL);
