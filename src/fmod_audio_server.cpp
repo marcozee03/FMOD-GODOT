@@ -251,8 +251,6 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
         break;
     case InitSettings::LIVE_UPDATE_ENABLED:
         studio_init = FMOD_STUDIO_INIT_LIVEUPDATE;
-        print_line("Live Update");
-        print_line(p_settings.live_update_port);
     case InitSettings::LIVE_UPDATE_DEV_ONLY: // dev
 #if defined(TOOLS_ENABLED) || defined(DEBUG)
         studio_init = FMOD_STUDIO_INIT_LIVEUPDATE;
@@ -422,6 +420,15 @@ float FmodAudioServer::track_cpu(CPUUsage p_usage)
     }
     return 0;
 }
+bool FmodAudioServer::debugger_capture(const String &p_message, const Array &p_data)
+{
+    if (p_message == "mute_audio")
+    {
+        set_muted(static_cast<bool>(p_data[0]));
+    }
+    return false;
+}
+
 #endif
 
 void FmodAudioServer::_thread_func()

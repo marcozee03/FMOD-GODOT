@@ -51,9 +51,22 @@ FmodScriptClient *FmodEditorInterface::get_script_client() const
 {
     return script;
 }
-void FmodEditorInterface::set_console(FmodConsole *p_console)
+void FmodEditorInterface::register_console(FmodConsole *p_console)
 {
     console = p_console;
+}
+void FmodEditorInterface::register_debugger(Ref<FmodDebuggerPlugin> p_debugger)
+{
+    debugger = p_debugger;
+}
+bool FmodEditorInterface::get_mute_remote(bool p_muted) const
+{
+    return debugger->get_mute();
+}
+
+void FmodEditorInterface::set_mute_remote(bool p_muted)
+{
+    debugger->set_mute(p_muted);
 };
 void FmodEditorInterface::print(const String &p_message)
 {
