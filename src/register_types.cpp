@@ -33,6 +33,7 @@
 #include <godot_cpp/variant/typed_dictionary.hpp>
 #ifdef TOOLS_ENABLED
 #include "bank_inspector_plugin.h"
+#include "event_browser_menu_button.h"
 #include "fmod_bank_importer.h"
 #include "fmod_console.h"
 #include "fmod_editor_interface.h"
@@ -196,6 +197,7 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         GDREGISTER_INTERNAL_CLASS(FmodProjectExplorer);
         GDREGISTER_INTERNAL_CLASS(FmodConsole);
         GDREGISTER_INTERNAL_CLASS(CommandInput);
+        GDREGISTER_INTERNAL_CLASS(EventBrowserMenuButton);
         GDREGISTER_INTERNAL_CLASS(LiveUpdateIndicator);
         GDREGISTER_CLASS(FmodInstaller);
         EditorPlugins::add_by_type<FmodEditorPlugin>();
