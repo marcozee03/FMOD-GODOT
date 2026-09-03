@@ -100,3 +100,7 @@ godot::String FmodGodot::FmodExportPlugin::_get_name() const
 {
     return "Fmod Export Plugin";
 }
+bool FmodGodot::FmodExportPlugin::_supports_platform(const Ref<EditorExportPlatform> &p_platform) const
+{
+    return true;
+}
