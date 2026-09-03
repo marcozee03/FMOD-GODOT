@@ -14,5 +14,6 @@ class FmodExportPlugin : public EditorExportPlugin
     bool is_feature_subset(const PackedStringArray &p_subset, const PackedStringArray &p_features);
     void _export_file(const String &p_path, const String &p_type, const PackedStringArray &p_features) override;
     String _get_name() const override;
+    bool _supports_platform(const Ref<EditorExportPlatform> &p_platform) const override;
 };
 } // namespace FmodGodot
