@@ -145,7 +145,7 @@ extern "C"
     {
         Emitter->set_parameter(p_name, p_value);
     }
-    GDE_EXPORT void emitter2d_set_parameter_by_id(void *handle, GD_PARAMETER_ID &p_id, float p_value)
+    GDE_EXPORT void emitter2d_set_parameter_by_id(void *handle, GD_PARAMETER_ID p_id, float p_value)
     {
         Emitter->set_parameter_by_id(p_id, p_value);
     }
@@ -153,7 +153,7 @@ extern "C"
     {
         return Emitter->get_parameter(p_name);
     }
-    GDE_EXPORT float emitter2d_get_parameter_by_id(void *handle, GD_PARAMETER_ID &p_id)
+    GDE_EXPORT float emitter2d_get_parameter_by_id(void *handle, GD_PARAMETER_ID p_id)
     {
         return Emitter->get_parameter_by_id(p_id);
     }

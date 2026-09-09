@@ -993,7 +993,7 @@ extern "C"
         return FS->create_instance(p_guid);
     }
 
-    GDE_EXPORT void play_one_shot_by_id(const Vector4i &p_guid, const godot::Vector3 &p_position = Vector3())
+    GDE_EXPORT void play_one_shot_by_id(const Vector4i p_guid, const godot::Vector3 p_position = Vector3())
     {
         FS->play_one_shot(p_guid, p_position);
     }
@@ -1104,7 +1104,7 @@ extern "C"
     {
         FS->unload_banks();
     }
-    GDE_EXPORT bool has_bank_loaded(const char *&p_bank_name)
+    GDE_EXPORT bool has_bank_loaded(const char *p_bank_name)
     {
         return FS->has_bank_loaded(p_bank_name);
     }
