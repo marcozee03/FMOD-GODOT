@@ -118,4 +118,5 @@ jobs:
         with:
           name: FmodGodot
           pattern: fmod-godot-*
+          path: addons
           delete-merged: true
