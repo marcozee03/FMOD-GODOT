@@ -197,13 +197,6 @@ func download_version(version: String, token: String, target_platform: String) -
 	return true
 
 
-enum State {
-	NONE,
-	BUSY,
-}
-var current_state: State = State.NONE
-
-
 func get_downloaded_filename() -> String:
 	return "fmodstudioapi%slinux" % get_version_id()
 
