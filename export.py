@@ -82,6 +82,11 @@ def exportDependencies(platform, arch):
             os.path.join(script_dir, "libs", platform, arch, file),
             os.path.join(script_dir, "plugin_template", "bin", platform, arch, file),
         )
+    shutil.copy(
+        os.path.join(script_dir, "LICENSE.txt"),
+        os.path.join(script_dir, "plugin_template", "LICENSE.txt"),
+    )
+
 
 
 def main():
