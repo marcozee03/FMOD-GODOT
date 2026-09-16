@@ -123,9 +123,7 @@ Method Descriptions
 
 int **get_description**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_description>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the event description.
 
 .. rst-class:: classref-item-separator
 
@@ -137,9 +135,7 @@ int **get_description**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEven
 
 int **get_exclusive_cpu_usage**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_exclusive_cpu_usage>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the event CPU usage processing just this unit during the last update in microseconds.
 
 .. rst-class:: classref-item-separator
 
@@ -151,9 +147,7 @@ int **get_exclusive_cpu_usage**\ (\ handle\: int\ ) |static| :ref:`🔗<class_St
 
 float **get_final_parameter_by_id**\ (\ handle\: int, id\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_final_parameter_by_id>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a parameter value by unique identifier. after applying adjustments due to automation, modulation, seek speed, and parameter velocity to value. This is calculated asynchronously when the Studio system updates.
 
 .. rst-class:: classref-item-separator
 
@@ -165,9 +159,9 @@ float **get_final_parameter_by_id**\ (\ handle\: int, id\: int\ ) |static| :ref:
 
 float **get_final_pitch**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_final_pitch>`
 
-.. container:: contribute
+Retrieves the pitch multiplier.
 
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+The final combined value returned in finalpitch combines the pitch set using Studio::EventInstance::setPitch with the result of any automation or modulation. The final combined pitch is calculated asynchronously when the Studio system updates.
 
 .. rst-class:: classref-item-separator
 
@@ -179,9 +173,7 @@ float **get_final_pitch**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEv
 
 float **get_final_volume**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_final_volume>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the volume level. The final combined value returned in finalvolume combines the volume set using the public API with the result of any automation or modulation. The final combined volume is calculated asynchronously when the Studio system updates.
 
 .. rst-class:: classref-item-separator
 
@@ -193,9 +185,7 @@ float **get_final_volume**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioE
 
 int **get_inclusive_cpu_usage**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_inclusive_cpu_usage>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the event CPU time spent processing this unit and all of its input during the last update in microseconds.
 
 .. rst-class:: classref-item-separator
 
@@ -207,9 +197,7 @@ int **get_inclusive_cpu_usage**\ (\ handle\: int\ ) |static| :ref:`🔗<class_St
 
 int **get_listener_mask**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_listener_mask>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the listener mask.
 
 .. rst-class:: classref-item-separator
 
@@ -221,9 +209,7 @@ int **get_listener_mask**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEv
 
 float **get_max_distance**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_max_distance>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the maximum distances for 3D attenuation.
 
 .. rst-class:: classref-item-separator
 
@@ -235,9 +221,7 @@ float **get_max_distance**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioE
 
 float **get_min_distance**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_min_distance>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the minimum distances for 3D attenuation.
 
 .. rst-class:: classref-item-separator
 
@@ -249,9 +233,7 @@ float **get_min_distance**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioE
 
 float **get_parameter_by_id**\ (\ handle\: int, id\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_parameter_by_id>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a parameter value by unique identifier.
 
 .. rst-class:: classref-item-separator
 
@@ -263,9 +245,7 @@ float **get_parameter_by_id**\ (\ handle\: int, id\: int\ ) |static| :ref:`🔗<
 
 float **get_parameter_by_name**\ (\ handle\: int, name\: String\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_parameter_by_name>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a parameter value by name, including the path if needed.
 
 .. rst-class:: classref-item-separator
 
@@ -277,9 +257,7 @@ float **get_parameter_by_name**\ (\ handle\: int, name\: String\ ) |static| :ref
 
 bool **get_paused**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_paused>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the pause state.
 
 .. rst-class:: classref-item-separator
 
@@ -291,9 +269,7 @@ bool **get_paused**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventIns
 
 float **get_pitch**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_pitch>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the pitch multiplier.
 
 .. rst-class:: classref-item-separator
 
@@ -305,9 +281,7 @@ float **get_pitch**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventIns
 
 FMOD_STUDIO_PLAYBACK_STATE **get_playback_state**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_playback_state>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the playback state.
 
 .. rst-class:: classref-item-separator
 
@@ -319,9 +293,7 @@ FMOD_STUDIO_PLAYBACK_STATE **get_playback_state**\ (\ handle\: int\ ) |static| :
 
 float **get_property**\ (\ handle\: int, index\: FMOD_STUDIO_EVENT_PROPERTY\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_property>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the value of a built-in property.
 
 .. rst-class:: classref-item-separator
 
@@ -333,9 +305,7 @@ float **get_property**\ (\ handle\: int, index\: FMOD_STUDIO_EVENT_PROPERTY\ ) |
 
 float **get_reverb_level**\ (\ handle\: int, index\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_reverb_level>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the core reverb send level.
 
 .. rst-class:: classref-item-separator
 
@@ -347,9 +317,7 @@ float **get_reverb_level**\ (\ handle\: int, index\: int\ ) |static| :ref:`🔗<
 
 int **get_system**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_system>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the FMOD Studio System.
 
 .. rst-class:: classref-item-separator
 
@@ -361,9 +329,7 @@ int **get_system**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInst
 
 int **get_timeline_position**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_timeline_position>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the timeline cursor position.
 
 .. rst-class:: classref-item-separator
 
@@ -375,9 +341,7 @@ int **get_timeline_position**\ (\ handle\: int\ ) |static| :ref:`🔗<class_Stud
 
 Transform3D **get_transform**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_transform>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the instance's transform. (Corresponds to get3DAttributes)
 
 .. rst-class:: classref-item-separator
 
@@ -389,9 +353,7 @@ Transform3D **get_transform**\ (\ handle\: int\ ) |static| :ref:`🔗<class_Stud
 
 ``Vector3`` **get_velocity**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_velocity>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the instance's transform. (Corresponds to get3DAttributes)
 
 .. rst-class:: classref-item-separator
 
@@ -403,9 +365,7 @@ Transform3D **get_transform**\ (\ handle\: int\ ) |static| :ref:`🔗<class_Stud
 
 float **get_volume**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_get_volume>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the volume level.
 
 .. rst-class:: classref-item-separator
 
@@ -417,9 +377,7 @@ float **get_volume**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventIn
 
 bool **is_valid**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_is_valid>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Checks that the EventInstance reference is valid.
 
 .. rst-class:: classref-item-separator
 
@@ -431,9 +389,7 @@ bool **is_valid**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInsta
 
 bool **is_virtual**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_is_virtual>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the virtualization state.
 
 .. rst-class:: classref-item-separator
 
@@ -445,9 +401,7 @@ bool **is_virtual**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventIns
 
 FMOD_RESULT **key_off**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_key_off>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Allow an event to continue past a sustain point.
 
 .. rst-class:: classref-item-separator
 
@@ -459,9 +413,7 @@ FMOD_RESULT **key_off**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEven
 
 FMOD_RESULT **release**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_release>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Marks the event instance for release.
 
 .. rst-class:: classref-item-separator
 
@@ -473,9 +425,7 @@ FMOD_RESULT **release**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEven
 
 FMOD_RESULT **set_3d_attributes**\ (\ handle\: int, transform\: Transform3D, velocity\: ``Vector3``\ ) |static| :ref:`🔗<class_StudioEventInstance_method_set_3d_attributes>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets the 3D attributes.
 
 .. rst-class:: classref-item-separator
 
@@ -487,9 +437,7 @@ FMOD_RESULT **set_3d_attributes**\ (\ handle\: int, transform\: Transform3D, vel
 
 FMOD_RESULT **set_listener_mask**\ (\ handle\: int, listener_mask\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_set_listener_mask>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets the listener mask.
 
 .. rst-class:: classref-item-separator
 
@@ -501,9 +449,7 @@ FMOD_RESULT **set_listener_mask**\ (\ handle\: int, listener_mask\: int\ ) |stat
 
 FMOD_RESULT **set_parameter_by_id**\ (\ handle\: int, id\: int, value\: float, ignore_seek_speed\: bool = false\ ) |static| :ref:`🔗<class_StudioEventInstance_method_set_parameter_by_id>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets a parameter value by unique identifier.
 
 .. rst-class:: classref-item-separator
 
@@ -515,9 +461,7 @@ FMOD_RESULT **set_parameter_by_id**\ (\ handle\: int, id\: int, value\: float, i
 
 FMOD_RESULT **set_parameter_by_id_with_label**\ (\ handle\: int, id\: int, label\: String, ignoreseekspeed\: bool = false\ ) |static| :ref:`🔗<class_StudioEventInstance_method_set_parameter_by_id_with_label>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets a parameter value by unique identifier, looking up the value label.
 
 .. rst-class:: classref-item-separator
 
@@ -529,9 +473,7 @@ FMOD_RESULT **set_parameter_by_id_with_label**\ (\ handle\: int, id\: int, label
 
 FMOD_RESULT **set_parameter_by_name**\ (\ handle\: int, name\: String, value\: float, ignore_seek_speed\: bool = false\ ) |static| :ref:`🔗<class_StudioEventInstance_method_set_parameter_by_name>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets a parameter value by name, including the path if needed.
 
 .. rst-class:: classref-item-separator
 
@@ -543,9 +485,7 @@ FMOD_RESULT **set_parameter_by_name**\ (\ handle\: int, name\: String, value\: f
 
 FMOD_RESULT **set_parameter_by_name_with_label**\ (\ handle\: int, name\: String, label\: String, ignore_seek_speed\: bool = false\ ) |static| :ref:`🔗<class_StudioEventInstance_method_set_parameter_by_name_with_label>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets a parameter value by name, including the path if needed, looking up the value label.
 
 .. rst-class:: classref-item-separator
 
@@ -557,9 +497,7 @@ FMOD_RESULT **set_parameter_by_name_with_label**\ (\ handle\: int, name\: String
 
 FMOD_RESULT **set_paused**\ (\ handle\: int, paused\: bool\ ) |static| :ref:`🔗<class_StudioEventInstance_method_set_paused>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the pause state.
 
 .. rst-class:: classref-item-separator
 
@@ -571,9 +509,7 @@ FMOD_RESULT **set_paused**\ (\ handle\: int, paused\: bool\ ) |static| :ref:`�
 
 FMOD_RESULT **set_pitch**\ (\ handle\: int, pitch\: float\ ) |static| :ref:`🔗<class_StudioEventInstance_method_set_pitch>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the pitch multiplier.
 
 .. rst-class:: classref-item-separator
 
@@ -585,9 +521,7 @@ FMOD_RESULT **set_pitch**\ (\ handle\: int, pitch\: float\ ) |static| :ref:`🔗
 
 FMOD_RESULT **set_property**\ (\ handle\: int, index\: FMOD_STUDIO_EVENT_PROPERTY, level\: float\ ) |static| :ref:`🔗<class_StudioEventInstance_method_set_property>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the value of a built-in property.
 
 .. rst-class:: classref-item-separator
 
@@ -599,9 +533,7 @@ FMOD_RESULT **set_property**\ (\ handle\: int, index\: FMOD_STUDIO_EVENT_PROPERT
 
 FMOD_RESULT **set_reverb_level**\ (\ handle\: int, index\: int, level\: float\ ) |static| :ref:`🔗<class_StudioEventInstance_method_set_reverb_level>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets the core reverb send level.
 
 .. rst-class:: classref-item-separator
 
@@ -627,9 +559,7 @@ FMOD_RESULT **set_timeline_position**\ (\ handle\: int, timeline_position\: int\
 
 FMOD_RESULT **set_transform**\ (\ handle\: int, transform\: Transform3D\ ) |static| :ref:`🔗<class_StudioEventInstance_method_set_transform>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets the instance transform. (Corresponds to Set3DAttributes)
 
 .. rst-class:: classref-item-separator
 
@@ -641,9 +571,7 @@ FMOD_RESULT **set_transform**\ (\ handle\: int, transform\: Transform3D\ ) |stat
 
 FMOD_RESULT **set_velocity**\ (\ handle\: int, velocity\: ``Vector3``\ ) |static| :ref:`🔗<class_StudioEventInstance_method_set_velocity>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets the instance velocity. (Corresponds to Set3DAttributes)
 
 .. rst-class:: classref-item-separator
 
@@ -655,9 +583,7 @@ FMOD_RESULT **set_velocity**\ (\ handle\: int, velocity\: ``Vector3``\ ) |static
 
 FMOD_RESULT **set_volume**\ (\ handle\: int, volume\: float\ ) |static| :ref:`🔗<class_StudioEventInstance_method_set_volume>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets the volume level.
 
 .. rst-class:: classref-item-separator
 
@@ -669,9 +595,7 @@ FMOD_RESULT **set_volume**\ (\ handle\: int, volume\: float\ ) |static| :ref:`�
 
 FMOD_RESULT **start**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventInstance_method_start>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Starts playback.
 
 .. rst-class:: classref-item-separator
 
@@ -683,9 +607,7 @@ FMOD_RESULT **start**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventI
 
 FMOD_RESULT **stop**\ (\ handle\: int, stop_mode\: FMOD_STUDIO_STOP_MODE\ ) |static| :ref:`🔗<class_StudioEventInstance_method_stop>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Stops playback.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

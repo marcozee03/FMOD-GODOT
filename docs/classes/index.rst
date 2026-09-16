@@ -43,6 +43,7 @@ Other objects
     :name: toc-class-ref-objects
 
     class_object
+    class_fmod
     class_fmodaudioserver
     class_studiobank
     class_studiobus

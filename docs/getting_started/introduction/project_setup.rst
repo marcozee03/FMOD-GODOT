@@ -5,7 +5,8 @@ Project Setup
 
 Project Settings
 ----------------
-..note::
+
+.. note::
 
     See :ref:`Project Settings <class_projectsettings>` for more info
 

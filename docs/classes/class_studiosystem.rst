@@ -119,9 +119,7 @@ Method Descriptions
 
 int **create**\ (\ header_version\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_create>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+This function creates the studio system.
 
 .. rst-class:: classref-item-separator
 
@@ -133,9 +131,7 @@ int **create**\ (\ header_version\: int\ ) |static| :ref:`🔗<class_StudioSyste
 
 FMOD_RESULT **flush_commands**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_flush_commands>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Block until all pending commands have been executed.
 
 .. rst-class:: classref-item-separator
 
@@ -147,9 +143,7 @@ FMOD_RESULT **flush_commands**\ (\ handle\: int\ ) |static| :ref:`🔗<class_Stu
 
 FMOD_RESULT **flush_sample_loading**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_flush_sample_loading>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Block until all sample loading and unloading has completed.
 
 .. rst-class:: classref-item-separator
 
@@ -161,9 +155,7 @@ FMOD_RESULT **flush_sample_loading**\ (\ handle\: int\ ) |static| :ref:`🔗<cla
 
 int **get_bank**\ (\ handle\: int, path\: String\ ) |static| :ref:`🔗<class_StudioSystem_method_get_bank>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a loaded bank with the specified file path.
 
 .. rst-class:: classref-item-separator
 
@@ -175,9 +167,7 @@ int **get_bank**\ (\ handle\: int, path\: String\ ) |static| :ref:`🔗<class_St
 
 int **get_bank_by_id**\ (\ handle\: int, id\: Vector4i\ ) |static| :ref:`🔗<class_StudioSystem_method_get_bank_by_id>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a loaded bank with the specified ID.
 
 .. rst-class:: classref-item-separator
 
@@ -189,9 +179,7 @@ int **get_bank_by_id**\ (\ handle\: int, id\: Vector4i\ ) |static| :ref:`🔗<cl
 
 int **get_bank_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_get_bank_count>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the number of currently-loaded banks.
 
 .. rst-class:: classref-item-separator
 
@@ -203,9 +191,7 @@ int **get_bank_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioSyste
 
 ``PackedInt64Array`` **get_bank_list**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_get_bank_list>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a list of the currently-loaded banks.
 
 .. rst-class:: classref-item-separator
 
@@ -217,9 +203,7 @@ int **get_bank_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioSyste
 
 int **get_bus**\ (\ handle\: int, path\: String\ ) |static| :ref:`🔗<class_StudioSystem_method_get_bus>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a loaded bus.
 
 .. rst-class:: classref-item-separator
 
@@ -231,9 +215,7 @@ int **get_bus**\ (\ handle\: int, path\: String\ ) |static| :ref:`🔗<class_Stu
 
 int **get_bus_by_id**\ (\ handle\: int, id\: Vector4i\ ) |static| :ref:`🔗<class_StudioSystem_method_get_bus_by_id>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a loaded bus.
 
 .. rst-class:: classref-item-separator
 
@@ -245,9 +227,7 @@ int **get_bus_by_id**\ (\ handle\: int, id\: Vector4i\ ) |static| :ref:`🔗<cla
 
 int **get_event**\ (\ handle\: int, path\: String\ ) |static| :ref:`🔗<class_StudioSystem_method_get_event>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves an EventDescription of an event or snapshot with the specified file path.
 
 .. rst-class:: classref-item-separator
 
@@ -259,9 +239,7 @@ int **get_event**\ (\ handle\: int, path\: String\ ) |static| :ref:`🔗<class_S
 
 int **get_event_by_id**\ (\ handle\: int, id\: Vector4i\ ) |static| :ref:`🔗<class_StudioSystem_method_get_event_by_id>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves an EventDescription.
 
 .. rst-class:: classref-item-separator
 
@@ -273,9 +251,7 @@ int **get_event_by_id**\ (\ handle\: int, id\: Vector4i\ ) |static| :ref:`🔗<c
 
 float **get_final_parameter_by_id**\ (\ handle\: int, id\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_get_final_parameter_by_id>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a global parameter value by unique identifier. finalvalue is the final value of the parameter after applying adjustments due to automation, modulation, seek speed, and parameter velocity to value. This is calculated asynchronously when the Studio system updates.
 
 .. rst-class:: classref-item-separator
 
@@ -287,9 +263,7 @@ float **get_final_parameter_by_id**\ (\ handle\: int, id\: int\ ) |static| :ref:
 
 ``Vector3`` **get_listener_attenuation_position**\ (\ handle\: int, listener\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_get_listener_attenuation_position>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Gets the attenuation position of the listener. (Corresponds to getListenerAttributes)
 
 .. rst-class:: classref-item-separator
 
@@ -301,9 +275,7 @@ float **get_final_parameter_by_id**\ (\ handle\: int, id\: int\ ) |static| :ref:
 
 Transform3D **get_listener_transform**\ (\ handle\: int, listener\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_get_listener_transform>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Gets the transform of the listener. (Corresponds to getListenerAttributes)
 
 .. rst-class:: classref-item-separator
 
@@ -315,9 +287,7 @@ Transform3D **get_listener_transform**\ (\ handle\: int, listener\: int\ ) |stat
 
 ``Vector3`` **get_listener_velocity**\ (\ handle\: int, listener\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_get_listener_velocity>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Gets the velocity of the listener. (Corresponds to getListenerAttributes)
 
 .. rst-class:: classref-item-separator
 
@@ -329,9 +299,7 @@ Transform3D **get_listener_transform**\ (\ handle\: int, listener\: int\ ) |stat
 
 int **get_num_listeners**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_get_num_listeners>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the number of listeners.
 
 .. rst-class:: classref-item-separator
 
@@ -343,9 +311,7 @@ int **get_num_listeners**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioSy
 
 float **get_parameter_by_id**\ (\ handle\: int, id\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_get_parameter_by_id>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a global parameter value by unique identifier.
 
 .. rst-class:: classref-item-separator
 
@@ -357,9 +323,7 @@ float **get_parameter_by_id**\ (\ handle\: int, id\: int\ ) |static| :ref:`🔗<
 
 String **get_parameter_label_by_id**\ (\ handle\: int, id\: int, label_index\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_get_parameter_label_by_id>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a global parameter label by ID.
 
 .. rst-class:: classref-item-separator
 
@@ -371,9 +335,7 @@ String **get_parameter_label_by_id**\ (\ handle\: int, id\: int, label_index\: i
 
 String **get_parameter_label_by_name**\ (\ handle\: int, name\: String, label_index\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_get_parameter_label_by_name>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a global parameter label by name, including the path if needed.
 
 .. rst-class:: classref-item-separator
 
@@ -385,9 +347,7 @@ String **get_parameter_label_by_name**\ (\ handle\: int, name\: String, label_in
 
 int **get_vca**\ (\ handle\: int, path\: String\ ) |static| :ref:`🔗<class_StudioSystem_method_get_vca>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a loaded VCA.
 
 .. rst-class:: classref-item-separator
 
@@ -399,9 +359,7 @@ int **get_vca**\ (\ handle\: int, path\: String\ ) |static| :ref:`🔗<class_Stu
 
 int **get_vca_by_id**\ (\ handle\: int, id\: Vector4i\ ) |static| :ref:`🔗<class_StudioSystem_method_get_vca_by_id>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a loaded VCA.
 
 .. rst-class:: classref-item-separator
 
@@ -413,9 +371,7 @@ int **get_vca_by_id**\ (\ handle\: int, id\: Vector4i\ ) |static| :ref:`🔗<cla
 
 FMOD_RESULT **initialize**\ (\ handle\: int, max_channels\: int, studio_flags\: int, flags\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_initialize>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Initializes the Studio System.
 
 .. rst-class:: classref-item-separator
 
@@ -427,9 +383,7 @@ FMOD_RESULT **initialize**\ (\ handle\: int, max_channels\: int, studio_flags\: 
 
 bool **is_valid**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_is_valid>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Checks that the System reference is valid and has been initialized.
 
 .. rst-class:: classref-item-separator
 
@@ -441,9 +395,7 @@ bool **is_valid**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioSystem_met
 
 int **load_bank_file**\ (\ handle\: int, filename\: String, flags\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_load_bank_file>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Loads the metadata of a bank. This does not load the bank's sample data.
 
 .. rst-class:: classref-item-separator
 
@@ -455,9 +407,7 @@ int **load_bank_file**\ (\ handle\: int, filename\: String, flags\: int\ ) |stat
 
 int **load_bank_memory**\ (\ handle\: int, buffer\: ``PackedByteArray``, mode\: FMOD_STUDIO_LOAD_MEMORY_MODE, flags\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_load_bank_memory>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Loads the metadata of a bank from memory. Does not load the bank's sample data.
 
 .. rst-class:: classref-item-separator
 
@@ -469,9 +419,7 @@ int **load_bank_memory**\ (\ handle\: int, buffer\: ``PackedByteArray``, mode\: 
 
 int **load_command_replay**\ (\ handle\: int, filename\: String, flags\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_load_command_replay>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Load a command replay.
 
 .. rst-class:: classref-item-separator
 
@@ -483,9 +431,7 @@ int **load_command_replay**\ (\ handle\: int, filename\: String, flags\: int\ ) 
 
 Vector4i **lookup_id**\ (\ handle\: int, path\: String\ ) |static| :ref:`🔗<class_StudioSystem_method_lookup_id>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the ID for a bank, event, snapshot, bus or VCA.
 
 .. rst-class:: classref-item-separator
 
@@ -497,9 +443,7 @@ Vector4i **lookup_id**\ (\ handle\: int, path\: String\ ) |static| :ref:`🔗<cl
 
 String **lookup_path**\ (\ handle\: int, id\: Vector4i\ ) |static| :ref:`🔗<class_StudioSystem_method_lookup_path>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the path for a bank, event, snapshot, bus or VCA.
 
 .. rst-class:: classref-item-separator
 
@@ -511,9 +455,7 @@ String **lookup_path**\ (\ handle\: int, id\: Vector4i\ ) |static| :ref:`🔗<cl
 
 FMOD_RESULT **release**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_release>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Shut down and free the Studio System object.
 
 .. rst-class:: classref-item-separator
 
@@ -525,9 +467,7 @@ FMOD_RESULT **release**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioSyst
 
 FMOD_RESULT **set_listener_attributes**\ (\ handle\: int, listener\: int, transform\: Transform3D, velocity\: ``Vector3``\ ) |static| :ref:`🔗<class_StudioSystem_method_set_listener_attributes>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets the 3D attributes of the listener.
 
 .. rst-class:: classref-item-separator
 
@@ -539,9 +479,7 @@ FMOD_RESULT **set_listener_attributes**\ (\ handle\: int, listener\: int, transf
 
 FMOD_RESULT **set_listener_attributes_with_attenuation**\ (\ handle\: int, listener\: int, transform\: Transform3D, velocity\: ``Vector3``, attenuation_position\: ``Vector3``\ ) |static| :ref:`🔗<class_StudioSystem_method_set_listener_attributes_with_attenuation>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets the 3D attributes and attenuation position of the listener.
 
 .. rst-class:: classref-item-separator
 
@@ -553,9 +491,7 @@ FMOD_RESULT **set_listener_attributes_with_attenuation**\ (\ handle\: int, liste
 
 FMOD_RESULT **set_num_listeners**\ (\ handle\: int, num_listeners\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_set_num_listeners>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets the number of listeners in the 3D sound scene.
 
 .. rst-class:: classref-item-separator
 
@@ -567,9 +503,7 @@ FMOD_RESULT **set_num_listeners**\ (\ handle\: int, num_listeners\: int\ ) |stat
 
 FMOD_RESULT **set_parameter_by_id**\ (\ handle\: int, id\: int, value\: float, ignore_seek_speed\: bool = false\ ) |static| :ref:`🔗<class_StudioSystem_method_set_parameter_by_id>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets a global parameter value by unique identifier.
 
 .. rst-class:: classref-item-separator
 
@@ -581,9 +515,7 @@ FMOD_RESULT **set_parameter_by_id**\ (\ handle\: int, id\: int, value\: float, i
 
 FMOD_RESULT **set_parameter_by_id_with_label**\ (\ handle\: int, id\: int, label\: String, ignore_seek_speed\: bool = false\ ) |static| :ref:`🔗<class_StudioSystem_method_set_parameter_by_id_with_label>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets a global parameter value by unique identifier, looking up the value label.
 
 .. rst-class:: classref-item-separator
 
@@ -595,9 +527,7 @@ FMOD_RESULT **set_parameter_by_id_with_label**\ (\ handle\: int, id\: int, label
 
 FMOD_RESULT **set_parameters_by_ids**\ (\ handle\: int, ids\: ``PackedInt64Array``, values\: ``PackedFloat32Array``, ignore_seek_speed\: bool = false\ ) |static| :ref:`🔗<class_StudioSystem_method_set_parameters_by_ids>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets multiple global parameter values by unique identifier.
 
 .. rst-class:: classref-item-separator
 
@@ -609,9 +539,7 @@ FMOD_RESULT **set_parameters_by_ids**\ (\ handle\: int, ids\: ``PackedInt64Array
 
 FMOD_RESULT **start_command_capture**\ (\ handle\: int, filename\: String, flags\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_start_command_capture>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Start recording Studio API commands to a file.
 
 .. rst-class:: classref-item-separator
 
@@ -623,9 +551,7 @@ FMOD_RESULT **start_command_capture**\ (\ handle\: int, filename\: String, flags
 
 FMOD_RESULT **stop_command_capture**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_stop_command_capture>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Stop recording Studio API commands.
 
 .. rst-class:: classref-item-separator
 
@@ -637,9 +563,7 @@ FMOD_RESULT **stop_command_capture**\ (\ handle\: int\ ) |static| :ref:`🔗<cla
 
 FMOD_RESULT **unload_all**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_unload_all>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Unloads all currently loaded banks.
 
 .. rst-class:: classref-item-separator
 
@@ -651,9 +575,7 @@ FMOD_RESULT **unload_all**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioS
 
 FMOD_RESULT **update**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioSystem_method_update>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Update the studio system.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

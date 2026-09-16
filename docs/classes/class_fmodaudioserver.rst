@@ -127,9 +127,7 @@ Signals
 
 **live_update_connected**\ (\ ) :ref:`🔗<class_FmodAudioServer_signal_live_update_connected>`
 
-.. container:: contribute
-
-	There is currently no description for this signal. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Called after a live update connection has been established.
 
 .. rst-class:: classref-item-separator
 
@@ -141,9 +139,7 @@ Signals
 
 **live_update_disconnected**\ (\ ) :ref:`🔗<class_FmodAudioServer_signal_live_update_disconnected>`
 
-.. container:: contribute
-
-	There is currently no description for this signal. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Called after live update session disconnects.
 
 .. rst-class:: classref-item-separator
 
@@ -155,9 +151,7 @@ Signals
 
 **postupdate**\ (\ ) :ref:`🔗<class_FmodAudioServer_signal_postupdate>`
 
-.. container:: contribute
-
-	There is currently no description for this signal. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Called at the end of the main Studio update. For async mode this will be on its own thread.
 
 .. rst-class:: classref-item-separator
 
@@ -169,9 +163,7 @@ Signals
 
 **preupdate**\ (\ ) :ref:`🔗<class_FmodAudioServer_signal_preupdate>`
 
-.. container:: contribute
-
-	There is currently no description for this signal. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Called at the start of the main Studio update. For async mode this will be on its own thread.
 
 .. rst-class:: classref-section-separator
 

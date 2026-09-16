@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="StudioEventDescription" inherits="Object" api_type="extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
+The description for an FMOD Studio event.
 	</brief_description>
 	<description>
 	</description>
@@ -11,48 +12,56 @@
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Creates a playable instance.
 			</description>
 		</method>
 		<method name="get_id" qualifiers="static">
 			<return type="Vector4i" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the GUID associated with the event.
 			</description>
 		</method>
 		<method name="get_instance_count" qualifiers="static">
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the number of instances.
 			</description>
 		</method>
 		<method name="get_instance_list" qualifiers="static">
 			<return type="PackedInt64Array" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves a list of the instances.
 			</description>
 		</method>
 		<method name="get_length" qualifiers="static">
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the length of the timeline.
 			</description>
 		</method>
 		<method name="get_max_distance" qualifiers="static">
 			<return type="float" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the maximum distances for 3D attenuation.
 			</description>
 		</method>
 		<method name="get_min_distance" qualifiers="static">
 			<return type="float" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the minimum distances for 3D attenuation.
 			</description>
 		</method>
 		<method name="get_parameter_description_count" qualifiers="static">
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the number of parameters in the event.
 			</description>
 		</method>
 		<method name="get_parameter_label_by_id" qualifiers="static">
@@ -61,6 +70,7 @@
 			<param index="1" name="id" type="int" />
 			<param index="2" name="label_index" type="int" />
 			<description>
+Retrieves an event parameter label by ID.
 			</description>
 		</method>
 		<method name="get_parameter_label_by_index" qualifiers="static">
@@ -69,6 +79,7 @@
 			<param index="1" name="index" type="int" />
 			<param index="2" name="label_index" type="int" />
 			<description>
+Retrieves an event parameter label by index.
 			</description>
 		</method>
 		<method name="get_parameter_label_by_name" qualifiers="static">
@@ -77,24 +88,28 @@
 			<param index="1" name="name" type="String" />
 			<param index="2" name="label_index" type="int" />
 			<description>
+Retrieves an event parameter label by name, including the path
 			</description>
 		</method>
 		<method name="get_path" qualifiers="static">
 			<return type="String" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the path.
 			</description>
 		</method>
 		<method name="get_sample_loading_state" qualifiers="static">
 			<return type="int" enum="FMOD_STUDIO_LOADING_STATE" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the sample data loading state.
 			</description>
 		</method>
 		<method name="get_sound_size" qualifiers="static">
 			<return type="float" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the sound size for 3D panning.
 			</description>
 		</method>
 		<method name="get_user_property" qualifiers="static">
@@ -102,6 +117,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="name" type="String" />
 			<description>
+Retrieves a user property by name.
 			</description>
 		</method>
 		<method name="get_user_property_by_index" qualifiers="static">
@@ -109,72 +125,84 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="index" type="int" />
 			<description>
+Retrieves a user property by index.
 			</description>
 		</method>
 		<method name="get_user_property_count" qualifiers="static">
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the number of user properties attached to the event.
 			</description>
 		</method>
 		<method name="has_sustain_point" qualifiers="static">
 			<return type="bool" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves whether the event has any sustain points.
 			</description>
 		</method>
 		<method name="is3D" qualifiers="static">
 			<return type="bool" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the event's 3D status.
 			</description>
 		</method>
 		<method name="is_doppler_enabled" qualifiers="static">
 			<return type="bool" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the event's doppler status.
 			</description>
 		</method>
 		<method name="is_oneshot" qualifiers="static">
 			<return type="bool" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the event's oneshot status.
 			</description>
 		</method>
 		<method name="is_snapshot" qualifiers="static">
 			<return type="bool" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the event's snapshot status.
 			</description>
 		</method>
 		<method name="is_stream" qualifiers="static">
 			<return type="bool" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the event's stream status.
 			</description>
 		</method>
 		<method name="is_valid" qualifiers="static">
 			<return type="bool" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Checks that the EventDescription reference is valid.
 			</description>
 		</method>
 		<method name="load_sample_data" qualifiers="static">
 			<return type="int" enum="FMOD_RESULT" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Loads non-streaming sample data used by the event.
 			</description>
 		</method>
 		<method name="release_all_instances" qualifiers="static">
 			<return type="int" enum="FMOD_RESULT" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Releases all instances.
 			</description>
 		</method>
 		<method name="unload_sample_data" qualifiers="static">
 			<return type="int" enum="FMOD_RESULT" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Unloads all non-streaming sample data.
 			</description>
 		</method>
 	</methods>

@@ -110,7 +110,7 @@ FMOD_STUDIO_LOADING_STATE **get_loading_state**\ (\ ) |const| :ref:`🔗<class_F
 
 The banks current loading state.
 
-                                **Note:** Refer to `FMOD_STUDIO_LOADING_STATE <https://www.fmod.com/docs/2.03/api/studio-api-common.html#fmod_studio_loading_state>`__
+\ **Note:** Refer to `FMOD_STUDIO_LOADING_STATE <https://www.fmod.com/docs/2.03/api/studio-api-common.html#fmod_studio_loading_state>`__
 
 .. rst-class:: classref-item-separator
 
@@ -124,7 +124,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ ) |const| :ref:`🔗<
 
 The audio sample's current loading state.
 
-                                **Note:** Refer to `FMOD_STUDIO_LOADING_STATE <https://www.fmod.com/docs/2.03/api/studio-api-common.html#fmod_studio_loading_state>`__
+\ **Note:** Refer to `FMOD_STUDIO_LOADING_STATE <https://www.fmod.com/docs/2.03/api/studio-api-common.html#fmod_studio_loading_state>`__
 
 .. rst-class:: classref-item-separator
 
@@ -136,9 +136,7 @@ The audio sample's current loading state.
 
 int **get_string_count**\ (\ ) |const| :ref:`🔗<class_FmodBank_method_get_string_count>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the number of string table entries in the bank. This is only relevant for studio string banks, as other banks do not contain string tables.
 
 .. rst-class:: classref-item-separator
 
@@ -150,9 +148,7 @@ int **get_string_count**\ (\ ) |const| :ref:`🔗<class_FmodBank_method_get_stri
 
 String **get_string_info**\ (\ index\: int, id\: Vector4i\ ) |const| :ref:`🔗<class_FmodBank_method_get_string_info>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a string table entry. This is only relevant for studio string banks, as other banks do not contain string tables.
 
 .. rst-class:: classref-item-separator
 
@@ -178,7 +174,7 @@ int **unload**\ (\ ) :ref:`🔗<class_FmodBank_method_unload>`
 
 Unloads the bank.
 
-                            **Warning:** Ignores reference count can lead to bugs if bank is needed elsewhere.
+\ **Warning:** Ignores reference count can lead to bugs if bank is needed elsewhere.
 
 .. rst-class:: classref-item-separator
 

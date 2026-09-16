@@ -73,9 +73,7 @@ Method Descriptions
 
 int **get_channel_group**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_get_channel_group>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the core ChannelGroup.
 
 .. rst-class:: classref-item-separator
 
@@ -87,9 +85,7 @@ int **get_channel_group**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBu
 
 float **get_final_volume**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_get_final_volume>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the final combined volume level.
 
 .. rst-class:: classref-item-separator
 
@@ -101,9 +97,7 @@ float **get_final_volume**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioB
 
 Vector4i **get_id**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_get_id>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the GUID.
 
 .. rst-class:: classref-item-separator
 
@@ -115,9 +109,7 @@ Vector4i **get_id**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_meth
 
 bool **get_mute**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_get_mute>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the mute state.
 
 .. rst-class:: classref-item-separator
 
@@ -129,9 +121,7 @@ bool **get_mute**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method
 
 String **get_path**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_get_path>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the path.
 
 .. rst-class:: classref-item-separator
 
@@ -143,9 +133,7 @@ String **get_path**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_meth
 
 bool **get_paused**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_get_paused>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the pause state.
 
 .. rst-class:: classref-item-separator
 
@@ -157,9 +145,7 @@ bool **get_paused**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_meth
 
 int **get_port_index**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_get_port_index>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the port index assigned to the bus.
 
 .. rst-class:: classref-item-separator
 
@@ -171,9 +157,7 @@ int **get_port_index**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_m
 
 float **get_volume**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_get_volume>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the volume level.
 
 .. rst-class:: classref-item-separator
 
@@ -185,9 +169,7 @@ float **get_volume**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_met
 
 bool **is_valid**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_is_valid>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Checks that the Bus reference is valid.
 
 .. rst-class:: classref-item-separator
 
@@ -199,9 +181,7 @@ bool **is_valid**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method
 
 FMOD_RESULT **lock_channel_group**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_lock_channel_group>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Locks the core ChannelGroup.
 
 .. rst-class:: classref-item-separator
 
@@ -213,9 +193,7 @@ FMOD_RESULT **lock_channel_group**\ (\ handle\: int\ ) |static| :ref:`🔗<class
 
 FMOD_RESULT **set_mute**\ (\ handle\: int, mute\: bool\ ) |static| :ref:`🔗<class_StudioBus_method_set_mute>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets the mute state.
 
 .. rst-class:: classref-item-separator
 
@@ -227,9 +205,7 @@ FMOD_RESULT **set_mute**\ (\ handle\: int, mute\: bool\ ) |static| :ref:`🔗<cl
 
 FMOD_RESULT **set_paused**\ (\ handle\: int, paused\: bool\ ) |static| :ref:`🔗<class_StudioBus_method_set_paused>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets the pause state.
 
 .. rst-class:: classref-item-separator
 
@@ -241,9 +217,7 @@ FMOD_RESULT **set_paused**\ (\ handle\: int, paused\: bool\ ) |static| :ref:`�
 
 FMOD_RESULT **set_port_index**\ (\ handle\: int, port_index\: int\ ) |static| :ref:`🔗<class_StudioBus_method_set_port_index>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets the port index to use when attaching to an output port.
 
 .. rst-class:: classref-item-separator
 
@@ -255,9 +229,7 @@ FMOD_RESULT **set_port_index**\ (\ handle\: int, port_index\: int\ ) |static| :r
 
 FMOD_RESULT **set_volume**\ (\ handle\: int, volume\: float\ ) |static| :ref:`🔗<class_StudioBus_method_set_volume>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets the volume level.
 
 .. rst-class:: classref-item-separator
 
@@ -269,9 +241,7 @@ FMOD_RESULT **set_volume**\ (\ handle\: int, volume\: float\ ) |static| :ref:`�
 
 FMOD_RESULT **stop_all_events**\ (\ handle\: int, stop_mode\: FMOD_STUDIO_STOP_MODE\ ) |static| :ref:`🔗<class_StudioBus_method_stop_all_events>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Stops all event instances that are routed into the bus.
 
 .. rst-class:: classref-item-separator
 
@@ -283,9 +253,7 @@ FMOD_RESULT **stop_all_events**\ (\ handle\: int, stop_mode\: FMOD_STUDIO_STOP_M
 
 FMOD_RESULT **unlock_channel_group**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBus_method_unlock_channel_group>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Unlocks the core ChannelGroup.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

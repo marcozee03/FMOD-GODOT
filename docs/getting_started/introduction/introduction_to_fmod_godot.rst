@@ -25,48 +25,24 @@ Overview
 * :ref:`FmodListener2D <class_fmodlistener2d>` :ref:`FmodListener3D <class_fmodlistener2d>`
     place listeners into the scene that automatically update their position.
 
-Playing Sounds with FmodAudioServer
------------------------------------
-.. note::
-
-    Since godot doesn't support exposing structs to scripting the extension uses Vector4I is cast to FMOD::GUID and vice versa.
-
-Add a FmodEvent tag to strings or Vector4Is to choose an FMOD_Event from the inspector to be passed  to FMOD API Functions.
-
-.. tabs::
- .. code-tab:: gdscript
-
-    @export_custom(PROPERTY_HINT_NONE, "FmodEvent")
-    var soundfx1 : String
-    @export_custom(PROPERTY_HINT_NONE, "FmodEvent")
-    var soundfx2 : Vector4I
-    func _jump() -> void:
-        # ...
-        FmodAudioServer.play_one_shot_by_id(jump, GlobalPosition)
-
- .. code-tab:: csharp
-
-    [Export(PropertyHint.None,"FmodEvent")]
-    public string jump_sfx;
-    [Export(PropertyHint.None,"FmodEvent")]
-    public Vector4I jump_sfx_str;
-    void Jump(){
-        //...
-        FmodAudioServer.PlayOneShotById(jump, GlobalPosition)
-    }
-
-.. image:: img/exported_event.png
-
 EventBrowser
 -------------
 The editor will load all of the banks in the banks folder. and cache them at startup. to be referenced by inspectors. You can drag and drop events from the browser
 
-.. image:: img/event_browser.png
+.. image:: ../../../images/event_browser.png
 
 Fmod Console
 ------------
 
 The Fmod console allows you to interact with FMOD Scripting API straight from the godot editor. (Fmod Studio needs to be open) see `Terminal Interface`_ for more info
 
+.. image:: ../../../images/fmod_console.png
+
+Performance Monitors
+--------------------
+
+FMOD Godot implements custom performance monitors to track Fmod's cpu and memory usage
+
+.. image:: ../../../images/performance_monitors.png
+
 .. _Terminal Interface: https://www.fmod.com/docs/2.03/studio/scripting-terminal-reference.html#terminal-interface
-.. image:: img/fmod_console.png
