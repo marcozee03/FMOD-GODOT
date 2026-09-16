@@ -98,7 +98,7 @@ constexpr FMOD_3D_ATTRIBUTES to_3d_attributes(const Transform3D &p_transform)
 {
     FMOD_3D_ATTRIBUTES attr;
     attr.position = to_fmod_vector(p_transform.origin);
-    attr.forward = to_fmod_vector(normalized(get_column(p_transform.basis, 2)));
+    attr.forward = to_fmod_vector(normalized(-get_column(p_transform.basis, 2)));
     attr.up = to_fmod_vector(normalized(get_column(p_transform.basis, 1)));
     return attr;
 }

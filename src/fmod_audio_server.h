@@ -81,10 +81,10 @@ class FmodAudioServer : public Object
     }
     struct AttachedInstance
     {
-        FMOD_STUDIO_EVENTINSTANCE *instance;
+        FMOD_STUDIO_EVENTINSTANCE *instance = nullptr;
         Attachment attachment;
         union {
-            Node *node;
+            Node *node = nullptr;
             Node2D *node2D;
             Node3D *node3D;
             RigidBody2D *rigidBody2D;
@@ -95,8 +95,8 @@ class FmodAudioServer : public Object
     };
 
   private:
-    FMOD_SYSTEM *core_system;
-    FMOD_STUDIO_SYSTEM *studio_system;
+    FMOD_SYSTEM *core_system = nullptr;
+    FMOD_STUDIO_SYSTEM *studio_system = nullptr;
     CharString encryption_key;
     bool initialized;
     bool muted;
@@ -301,23 +301,20 @@ inline void FmodAudioServer::_attach_instance(T *p_node, FMOD_STUDIO_EVENTINSTAN
         instance_index = instances.size();
         instances.push_back(instance);
     }
-    else
+    instances[instance_index].node = p_node;
+    instances[instance_index].nonRigidbodyVelocity = false;
+    instances[instance_index].attachment = get_attachment_type<T>();
+    if constexpr (std::is_base_of_v<Node2D, T>)
     {
-        instances[instance_index].node = p_node;
-        instances[instance_index].nonRigidbodyVelocity = false;
-        instances[instance_index].attachment = get_attachment_type<T>();
-        if constexpr (std::is_base_of_v<Node2D, T>)
-        {
-            instances[instance_index].lastFramePosition = {p_node->get_position().x, p_node->get_position().y, 0};
-        }
-        else if constexpr (std::is_base_of_v<Node3D, T>)
-        {
-            instances[instance_index].lastFramePosition = p_node->get_position();
-        }
-        FMOD_3D_ATTRIBUTES attributes = to_3d_attributes(p_node);
-        FMOD_Studio_EventInstance_Set3DAttributes(instances[instance_index].instance, &attributes);
-        instances[instance_index].instance = p_event;
+        instances[instance_index].lastFramePosition = {p_node->get_position().x, p_node->get_position().y, 0};
     }
+    else if constexpr (std::is_base_of_v<Node3D, T>)
+    {
+        instances[instance_index].lastFramePosition = p_node->get_position();
+    }
+    FMOD_3D_ATTRIBUTES attributes = to_3d_attributes(p_node);
+    FMOD_Studio_EventInstance_Set3DAttributes(instances[instance_index].instance, &attributes);
+    instances[instance_index].instance = p_event;
     unlock();
 }
 
@@ -339,23 +336,20 @@ inline void FmodAudioServer::_attach_instance(T *p_node, FMOD_STUDIO_EVENTINSTAN
         instance_index = instances.size();
         instances.push_back(instance);
     }
-    else
+    instances[instance_index].node = p_node;
+    instances[instance_index].nonRigidbodyVelocity = p_non_rigid_body_velocity;
+    instances[instance_index].attachment = get_attachment_type<T>();
+    if constexpr (std::is_base_of_v<Node2D, T>)
     {
-        instances[instance_index].node = p_node;
-        instances[instance_index].nonRigidbodyVelocity = p_non_rigid_body_velocity;
-        instances[instance_index].attachment = get_attachment_type<T>();
-        if constexpr (std::is_base_of_v<Node2D, T>)
-        {
-            instances[instance_index].lastFramePosition = {p_node->get_position().x, p_node->get_position().y, 0};
-        }
-        else if constexpr (std::is_base_of_v<Node3D, T>)
-        {
-            instances[instance_index].lastFramePosition = p_node->get_position();
-        }
-        FMOD_3D_ATTRIBUTES attributes = to_3d_attributes(p_node);
-        FMOD_Studio_EventInstance_Set3DAttributes(instances[instance_index].instance, &attributes);
-        instances[instance_index].instance = p_event;
+        instances[instance_index].lastFramePosition = {p_node->get_position().x, p_node->get_position().y, 0};
     }
+    else if constexpr (std::is_base_of_v<Node3D, T>)
+    {
+        instances[instance_index].lastFramePosition = p_node->get_position();
+    }
+    FMOD_3D_ATTRIBUTES attributes = to_3d_attributes(p_node);
+    FMOD_Studio_EventInstance_Set3DAttributes(instances[instance_index].instance, &attributes);
+    instances[instance_index].instance = p_event;
     unlock();
 }
 } // namespace FmodGodot
