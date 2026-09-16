@@ -32,10 +32,6 @@
 #include <classes/editor_interface.hpp>
 #include <classes/editor_settings.hpp>
 #endif
-#ifdef DEBUG_ENABLED
-#include "classes/performance.hpp"
-#endif
-
 using namespace std;
 using namespace godot;
 namespace FmodGodot
@@ -68,33 +64,12 @@ FMOD_RESULT F_CALL fmod_studio_system_callback(FMOD_STUDIO_SYSTEM *p_system, FMO
         {
         case FMOD_STUDIO_SYSTEM_CALLBACK_LIVEUPDATE_CONNECTED: {
             as->emit_signal("live_update_connected");
-#ifdef DEBUG_ENABLED
-            if (!Engine::get_singleton()->is_editor_hint())
-            {
-                EngineDebugger *debugger = EngineDebugger::get_singleton();
-                if (debugger != nullptr)
-                {
-                    debugger->send_message("fmod:live_update", {true});
-                }
-            }
-#endif
             as->live_update_connected = true;
         }
         break;
 
         case FMOD_STUDIO_SYSTEM_CALLBACK_LIVEUPDATE_DISCONNECTED: {
             as->emit_signal("live_update_disconnected");
-#ifdef DEBUG_ENABLED
-            if (!Engine::get_singleton()->is_editor_hint())
-            {
-                EngineDebugger *debugger = EngineDebugger::get_singleton();
-                if (debugger != nullptr)
-                {
-                    debugger->send_message("fmod:live_update", {false});
-                }
-            }
-#endif
-
             as->live_update_connected = false;
         }
         break;
@@ -295,7 +270,7 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
     FMOD_ERR_FAIL_VE(FMOD_Studio_System_SetUserData(studio_system, this))
 
     FMOD_ERR_FAIL_VE_MSG(FMOD_Studio_System_Initialize(studio_system, p_settings.virtual_channels, studio_init,
-                                                       FMOD_INIT_NORMAL | FMOD_INIT_3D_RIGHTHANDED, nullptr),
+                                                       FMOD_INIT_NORMAL & FMOD_INIT_3D_RIGHTHANDED, nullptr),
                          "Failed to initialized Fmod Studio System");
     initialized = true;
 
@@ -313,23 +288,6 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
         FMOD_System_LoadPlugin(core_system, String(plugin_file).utf8().ptr(), &handle,
                                /*Priority*/ plugins[plugin_file]);
     }
-#ifdef DEBUG_ENABLED
-    Callable cpu = callable_mp(this, &FmodAudioServer::track_cpu);
-    Performance::get_singleton()->add_custom_monitor(
-        "fmod/memory_usage", callable_mp(this, &FmodAudioServer::track_memory), {}, Performance::MONITOR_TYPE_MEMORY);
-    Performance::get_singleton()->add_custom_monitor("fmod/dsp_cpu_usage", cpu, {USAGE_DSP},
-                                                     Performance::MONITOR_TYPE_PERCENTAGE);
-    Performance::get_singleton()->add_custom_monitor("fmod/convulution1_cpu_usage", cpu, {USAGE_CONVULUTION1},
-                                                     Performance::MONITOR_TYPE_PERCENTAGE);
-    Performance::get_singleton()->add_custom_monitor("fmod/convulution2_cpu_usage", cpu, {USAGE_CONVULUTION1},
-                                                     Performance::MONITOR_TYPE_PERCENTAGE);
-    Performance::get_singleton()->add_custom_monitor("fmod/core_update_cpu_usage", cpu, {USAGE_UPDATE},
-                                                     Performance::MONITOR_TYPE_PERCENTAGE);
-    Performance::get_singleton()->add_custom_monitor("fmod/studio_update_cpu_usage", cpu, {USAGE_STUDIO_UPDATE},
-                                                     Performance::MONITOR_TYPE_PERCENTAGE);
-    Performance::get_singleton()->add_custom_monitor("fmod/stream_cpu_usage", cpu, {USAGE_STREAM},
-                                                     Performance::MONITOR_TYPE_PERCENTAGE);
-#endif
     return FMOD_OK;
 }
 
@@ -387,49 +345,6 @@ void FmodAudioServer::_physics_process()
     }
     unlock();
 }
-#ifdef DEBUG_ENABLED
-int FmodAudioServer::track_memory()
-{
-    int current;
-    FMOD_Memory_GetStats(&current, nullptr, false);
-    return current;
-}
-float FmodAudioServer::track_cpu(CPUUsage p_usage)
-{
-
-    FMOD_STUDIO_CPU_USAGE studio_usage;
-    FMOD_CPU_USAGE usage;
-    FMOD_Studio_System_GetCPUUsage(studio_system, &studio_usage, &usage);
-    switch (p_usage)
-    {
-    case USAGE_STUDIO_UPDATE:
-        return studio_usage.update;
-    case USAGE_DSP:
-        return usage.dsp;
-    case USAGE_STREAM:
-        return usage.stream;
-    case USAGE_GEOMETRY:
-        return usage.geometry;
-    case USAGE_UPDATE:
-        return usage.update;
-    case USAGE_CONVULUTION1:
-        return usage.convolution1;
-    case USAGE_CONVULUTION2:
-        return usage.convolution2;
-        break;
-    }
-    return 0;
-}
-bool FmodAudioServer::debugger_capture(const String &p_message, const Array &p_data)
-{
-    if (p_message == "mute_audio")
-    {
-        set_muted(static_cast<bool>(p_data[0]));
-    }
-    return false;
-}
-
-#endif
 
 void FmodAudioServer::_thread_func()
 {
