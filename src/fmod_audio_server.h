@@ -211,27 +211,6 @@ class FmodAudioServer : public Object
     Mutex mutex;
     void _physics_process();
 
-#ifdef DEBUG_ENABLED
-  public:
-    enum CPUUsage
-    {
-        USAGE_STUDIO_UPDATE,
-        USAGE_DSP,
-        USAGE_STREAM,
-        USAGE_GEOMETRY,
-        USAGE_UPDATE,
-        USAGE_CONVULUTION1,
-        USAGE_CONVULUTION2,
-    };
-
-  private:
-    int track_memory();
-    float track_cpu(CPUUsage p_usage);
-
-  public:
-    bool debugger_capture(const String &p_message, const Array &p_data);
-#endif
-
   public:
     static FmodAudioServer *singleton;
     static FmodAudioServer *get_singleton();
@@ -354,6 +333,3 @@ inline void FmodAudioServer::_attach_instance(T *p_node, FMOD_STUDIO_EVENTINSTAN
 }
 } // namespace FmodGodot
 VARIANT_ENUM_CAST(FmodGodot::InitSettings::LiveUpdate);
-#ifdef DEBUG_ENABLED
-VARIANT_ENUM_CAST(FmodGodot::FmodAudioServer::CPUUsage);
-#endif

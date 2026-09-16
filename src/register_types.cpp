@@ -11,6 +11,7 @@
 #include "binding/studio/vca.h"
 #include "classes/global_constants.hpp"
 #include "core/class_db.hpp"
+#include "core/memory.hpp"
 #include "core/property_info.hpp"
 #include "fmod_audio_server.h"
 #include "fmod_bank_format_loader.h"
@@ -57,6 +58,10 @@
 #include <fmod_event_panner.h>
 #endif
 
+#ifdef DEBUG_ENABLED
+#include "fmod_debugger_client.h"
+#endif
+
 using namespace godot;
 using namespace FmodGodot;
 
@@ -64,6 +69,10 @@ static FmodAudioServer *audio_server;
 Ref<FmodBankFormatLoader> bank_format_loader;
 #ifdef TOOLS_ENABLED
 FmodEditorInterface *editor_interface;
+#endif
+
+#ifdef DEBUG_ENABLED
+FmodDebuggerClient *debugger_client;
 #endif
 
 namespace FmodGodot
@@ -131,6 +140,12 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         FmodAudioServer::singleton = audio_server;
         audio_server->init_with_project_settings();
         Engine::get_singleton()->register_singleton("FmodAudioServer", audio_server);
+
+#if DEBUG_ENABLED
+        GDREGISTER_INTERNAL_CLASS(FmodDebuggerClient);
+        debugger_client = memnew(FmodDebuggerClient);
+        debugger_client->init(p_level);
+#endif
     }
     if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
     {
@@ -149,6 +164,7 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         GDREGISTER_CLASS(FmodEventEmitter3D);
         bank_format_loader.instantiate();
         ResourceLoader::get_singleton()->add_resource_format_loader(bank_format_loader);
+
         GDREGISTER_CLASS(FmodBankLoader);
 #ifdef TOOLS_ENABLED
         if (!Engine::get_singleton()->is_editor_hint())
@@ -158,12 +174,9 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
 #else
         audio_server->_load_start_up_banks();
 #endif
-#ifdef DEBUG_ENABLED
-        if (!Engine::get_singleton()->is_editor_hint())
-        {
-            EngineDebugger::get_singleton()->register_message_capture(
-                "fmod", callable_mp(audio_server, &FmodAudioServer::debugger_capture));
-        }
+
+#if DEBUG_ENABLED
+        debugger_client->init(p_level);
 #endif
     }
 
@@ -211,6 +224,9 @@ void uninitialize_fmod_module(ModuleInitializationLevel p_level)
         audio_server->finish();
         Engine::get_singleton()->unregister_singleton("FmodAudioServer");
         memdelete(audio_server);
+#ifdef DEBUG_ENABLED
+        memdelete(debugger_client);
+#endif
         return;
     }
     if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
