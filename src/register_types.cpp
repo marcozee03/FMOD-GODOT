@@ -152,6 +152,7 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
 
         GDREGISTER_CLASS(FmodListener2D);
         GDREGISTER_CLASS(FmodListener3D);
+        GDREGISTER_CLASS(Fmod)
         GDREGISTER_ABSTRACT_CLASS(FmodBank);
         GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::StudioBank)
         GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::StudioSystem)

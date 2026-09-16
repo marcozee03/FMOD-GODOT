@@ -1,11 +1,13 @@
 #pragma once
 #include "classes/object.hpp"
+#include "classes/wrapped.hpp"
 #include "core/binder_common.hpp"
 #include "core/class_db.hpp"
 #include <fmod_studio_common.h>
 
-class Fmod : godot::Object
+class Fmod : public godot::Object
 {
+    GDCLASS(Fmod, godot::Object)
   protected:
     static void _bind_methods()
     {
