@@ -115,10 +115,7 @@ Transform3D StudioEventInstance::get_transform(Handle p_handle)
 {
     FMOD_3D_ATTRIBUTES attr;
     FMOD_Studio_EventInstance_Get3DAttributes(std::bit_cast<FMOD_STUDIO_EVENTINSTANCE *>(p_handle), &attr);
-    const Vector3 position = FmodGodot::to_godot_vector(attr.position);
-    const Vector3 up = FmodGodot::to_godot_vector(attr.up);
-    const Vector3 forward = FmodGodot::to_godot_vector(attr.forward);
-    return Transform3D(up.cross(forward), up, forward, position);
+    return to_transform3d(attr);
 }
 Vector3 StudioEventInstance::get_velocity(Handle p_handle)
 {

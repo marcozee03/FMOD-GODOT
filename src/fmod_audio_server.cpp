@@ -295,7 +295,7 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
     FMOD_ERR_FAIL_VE(FMOD_Studio_System_SetUserData(studio_system, this))
 
     FMOD_ERR_FAIL_VE_MSG(FMOD_Studio_System_Initialize(studio_system, p_settings.virtual_channels, studio_init,
-                                                       FMOD_INIT_NORMAL & FMOD_INIT_3D_RIGHTHANDED, nullptr),
+                                                       FMOD_INIT_NORMAL | FMOD_INIT_3D_RIGHTHANDED, nullptr),
                          "Failed to initialized Fmod Studio System");
     initialized = true;
 
