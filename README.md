@@ -64,6 +64,7 @@ The FMOD console allows you to interact with FMOD Studio's javascript api.
 - ![](plugin_template/icons/bank_icon.svg)**FmodBank**: Fmod Bank files are imported
 into Godot and exported automatically. Banks can be opened in the inspector to view
 what events they contain and their GUID.
+
   ![](images/bank_inspector_example.png)
 
 - ![](plugin_template/icons/FmodEventEmitter2D.svg) **FmodEventEmitter2D/3D**:
@@ -91,53 +92,11 @@ A large subset of the FMOD Studio API is exposed to GDScript. The bindings close
 
 Also Checkout [FMOD GDExtension](https://github.com/utopia-rise/fmod-gdextension) if you want a higher layer of abstraction over the FMOD API and aren't using C#.
 
-
-
 ## Supported Platforms
 
-| Platform | Support | Notes                                             |
-|----------|---------|---------------------------------------------------|
-|Linux     |✅       |Manually Tested                                    |
-|Windows   |✅       |Manually Tested                                    |
-|Android   |🟨       |Builds are untested so there might be unfound bugs |
-|Other     |❌       |Untested/Unsupported                               |
-
-## Installation and Getting Started
-
-Open project Settings to adjust settings like error logging, banks loaded at
-runtime and more.
-
-### Compiling From Source
-
-> [!Note]
-> you will need python installed and the [requests](https://github.com/psf/requests) library
-
-You will need to add the FMOD headers and libraries to the appropriate location.
-A helper script "fmod_installer.py" is provided. you will need to pass your fmod
-credentials either as arguments or interactively.
-
-``` bash
-python3 fmod_installer.py setup --username <username> --password <password> setup <fmod-version>
-```
-
-use --help for more info and other options.
-
-The simplest way to compile this addon to your project is to run the export.py
-script example below.
-
-``` bash
-#builds the extension into the plugin_template folder and copies dependencies over.
-python3 export.py build -p <platform> -a <architecture>
-#copys output of build to destination folder
-python3 export.py export /path/to/godot_project/addons
-```
-
-Alternatively refer to [Introduction to the buildsystem](https://docs.godotengine.org/en/stable/contributing/development/compiling/introduction_to_the_buildsystem.html)
-
-
-
-
-
-### Pre-built packages
-
-[Releases](https://github.com/marcozee03/FMOD-GODOT/releases)
+| Platform | Support | Notes                                                                 |
+|----------|---------|-----------------------------------------------------------------------|
+|Linux     |✅       |Manually Tested                                                        |
+|Windows   |✅       |Manually Tested                                                        |
+|Android   |🟨       |Builds are untested so there might be unfound bugs or additional setup |
+|Other     |❌       |Untested/Unsupported                                                   |
