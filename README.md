@@ -50,6 +50,11 @@ startup. to be referenced by inspectors. You can drag and drop events from the b
 The FMOD console allows you to interact with FMOD Studio's javascript api.
 ![](images/fmod_console.png)
 
+### Performance Monitors
+
+Open Godot's debugger panel and you can track FMOD's cpu and memory usage
+![](images/performance_monitors.png)
+
 ### Class Overview
 
 - ![](./plugin_template/icons/fmod_icon.svg)**FmodAudioServer**:
