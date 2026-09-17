@@ -14,16 +14,14 @@
 			<return type="float" />
 			<param index="0" name="name" type="String" />
 			<description>
-				Returns parameter's value by [param name]. Returns NAN if parameter with
-				                                				name does not exist.
+				Returns parameter's value by [param name]. Returns NAN if parameter with name does not exist.
 			</description>
 		</method>
 		<method name="get_parameter_by_id" qualifiers="const">
 			<return type="float" />
 			<param index="0" name="id" type="int" />
 			<description>
-				Returns parameter's value by [param id]. Returns NAN if parameter with
-				                                				name does not exist.
+				Returns parameter's value by [param id]. Returns NAN if parameter with name does not exist.
 			</description>
 		</method>
 		<method name="is_playing" qualifiers="const">
@@ -51,8 +49,7 @@
 		<method name="start">
 			<return type="void" />
 			<description>
-				Starts playing the Fmod Event from the beginning. Or plays a new one shot
-				event.
+				Starts playing the Fmod Event from the beginning. Or plays a new one shot event.
 			</description>
 		</method>
 		<method name="stop">

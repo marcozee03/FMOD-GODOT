@@ -304,18 +304,22 @@
 	<signals>
 		<signal name="live_update_connected">
 			<description>
+                            Called after a live update connection has been established.
 			</description>
 		</signal>
 		<signal name="live_update_disconnected">
 			<description>
+                            Called after live update session disconnects.
 			</description>
 		</signal>
 		<signal name="postupdate">
 			<description>
+                            Called at the end of the main Studio update. For async mode this will be on its own thread.
 			</description>
 		</signal>
 		<signal name="preupdate">
 			<description>
+                            Called at the start of the main Studio update. For async mode this will be on its own thread.
 			</description>
 		</signal>
 	</signals>

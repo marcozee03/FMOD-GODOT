@@ -53,9 +53,7 @@ Method Descriptions
 
 float **get_final_volume**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioVCA_method_get_final_volume>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the volume level. The final combined volume returned in finalvolume combines the user value set using Studio::VCA::setVolume with the result of any automation or modulation applied to the VCA. The final combined volume is calculated asynchronously when the Studio system updates.
 
 .. rst-class:: classref-item-separator
 
@@ -67,9 +65,7 @@ float **get_final_volume**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioV
 
 Vector4i **get_id**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioVCA_method_get_id>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the VCA's GUID.
 
 .. rst-class:: classref-item-separator
 
@@ -81,9 +77,7 @@ Vector4i **get_id**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioVCA_meth
 
 String **get_path**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioVCA_method_get_path>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the path.
 
 .. rst-class:: classref-item-separator
 
@@ -95,9 +89,7 @@ String **get_path**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioVCA_meth
 
 float **get_volume**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioVCA_method_get_volume>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the volume level.
 
 .. rst-class:: classref-item-separator
 
@@ -109,9 +101,7 @@ float **get_volume**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioVCA_met
 
 bool **is_valid**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioVCA_method_is_valid>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Checks that the VCA reference is valid.
 
 .. rst-class:: classref-item-separator
 
@@ -123,9 +113,7 @@ bool **is_valid**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioVCA_method
 
 FMOD_RESULT **set_volume**\ (\ handle\: int, volume\: float\ ) |static| :ref:`🔗<class_StudioVCA_method_set_volume>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Sets the volume level.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

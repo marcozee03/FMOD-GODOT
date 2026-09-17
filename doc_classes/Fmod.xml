@@ -8,44 +8,64 @@
 	</tutorials>
 	<constants>
 		<constant name="FMOD_STUDIO_LOADING_STATE_LOADING" value="2" enum="FMOD_STUDIO_LOADING_STATE">
+                    Loading in progress.
 		</constant>
 		<constant name="FMOD_STUDIO_LOADING_STATE_LOADED" value="3" enum="FMOD_STUDIO_LOADING_STATE">
+                    Loaded and ready to play.
 		</constant>
 		<constant name="FMOD_STUDIO_LOADING_STATE_UNLOADED" value="1" enum="FMOD_STUDIO_LOADING_STATE">
+                    Not loaded.
 		</constant>
 		<constant name="FMOD_STUDIO_LOADING_STATE_UNLOADING" value="0" enum="FMOD_STUDIO_LOADING_STATE">
+                    Currently unloading.
 		</constant>
 		<constant name="FMOD_STUDIO_LOADING_STATE_ERROR" value="4" enum="FMOD_STUDIO_LOADING_STATE">
+                    Failed to load.
 		</constant>
 		<constant name="FMOD_STUDIO_LOAD_MEMORY" value="0" enum="FMOD_STUDIO_LOAD_MEMORY_MODE">
+                    Memory buffer is copied internally.
 		</constant>
 		<constant name="FMOD_STUDIO_LOAD_MEMORY_POINT" value="1" enum="FMOD_STUDIO_LOAD_MEMORY_MODE">
+                    Memory buffer is used directly in user memory.
 		</constant>
 		<constant name="FMOD_STUDIO_EVENT_PROPERTY_CHANNELPRIORITY" value="0" enum="FMOD_STUDIO_EVENT_PROPERTY">
+                    Priority to set on Core API Channels created by this event instance, 0 for most important, 256 for least important, and -1 for default.
 		</constant>
 		<constant name="FMOD_STUDIO_EVENT_PROPERTY_SCHEDULE_DELAY" value="1" enum="FMOD_STUDIO_EVENT_PROPERTY">
+                    Schedule delay in DSP clocks, or -1 for default.
 		</constant>
 		<constant name="FMOD_STUDIO_EVENT_PROPERTY_SCHEDULE_LOOKAHEAD" value="2" enum="FMOD_STUDIO_EVENT_PROPERTY">
+                    Schedule look-ahead on the timeline in DSP clocks, or -1 for default.
 		</constant>
 		<constant name="FMOD_STUDIO_EVENT_PROPERTY_MINIMUM_DISTANCE" value="3" enum="FMOD_STUDIO_EVENT_PROPERTY">
+                    Override the event's 3D minimum distance, or -1 for default.
 		</constant>
 		<constant name="FMOD_STUDIO_EVENT_PROPERTY_MAXIMUM_DISTANCE" value="4" enum="FMOD_STUDIO_EVENT_PROPERTY">
+                    Override the event's 3D maximum distance, or -1 for default.
 		</constant>
 		<constant name="FMOD_STUDIO_EVENT_PROPERTY_COOLDOWN" value="5" enum="FMOD_STUDIO_EVENT_PROPERTY">
+                    Override the event's cooldown, or -1 for default
 		</constant>
 		<constant name="FMOD_STUDIO_PLAYBACK_PLAYING" value="0" enum="FMOD_STUDIO_PLAYBACK_STATE">
+                    Playing.
 		</constant>
 		<constant name="FMOD_STUDIO_PLAYBACK_SUSTAINING" value="1" enum="FMOD_STUDIO_PLAYBACK_STATE">
+                    The timeline cursor is paused on a sustain point. (Studio::EventInstance only.)
 		</constant>
 		<constant name="FMOD_STUDIO_PLAYBACK_STOPPED" value="2" enum="FMOD_STUDIO_PLAYBACK_STATE">
+                    Stopped.
 		</constant>
 		<constant name="FMOD_STUDIO_PLAYBACK_STARTING" value="3" enum="FMOD_STUDIO_PLAYBACK_STATE">
+                    Preparing to start.
 		</constant>
 		<constant name="FMOD_STUDIO_PLAYBACK_STOPPING" value="4" enum="FMOD_STUDIO_PLAYBACK_STATE">
+                    Preparing to stop.
 		</constant>
 		<constant name="FMOD_STUDIO_STOP_ALLOWFADEOUT" value="0" enum="FMOD_STUDIO_STOP_MODE">
+                    Allows AHDSR modulators to complete their release, and DSP effect tails to play out.
 		</constant>
 		<constant name="FMOD_STUDIO_STOP_IMMEDIATE" value="1" enum="FMOD_STUDIO_STOP_MODE">
+                    Stops the event instance immediately.
 		</constant>
 	</constants>
 </class>

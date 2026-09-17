@@ -19,19 +19,20 @@
 			<return type="int" enum="FMOD_STUDIO_LOADING_STATE" />
 			<description>
 				The banks current loading state.
-				                                [b]Note:[/b] Refer to [url=https://www.fmod.com/docs/2.03/api/studio-api-common.html#fmod_studio_loading_state]FMOD_STUDIO_LOADING_STATE[/url]
+				[b]Note:[/b] Refer to [url=https://www.fmod.com/docs/2.03/api/studio-api-common.html#fmod_studio_loading_state]FMOD_STUDIO_LOADING_STATE[/url]
 			</description>
 		</method>
 		<method name="get_sample_loading_state" qualifiers="const">
 			<return type="int" enum="FMOD_STUDIO_LOADING_STATE" />
 			<description>
 				The audio sample's current loading state.
-				                                [b]Note:[/b] Refer to [url=https://www.fmod.com/docs/2.03/api/studio-api-common.html#fmod_studio_loading_state]FMOD_STUDIO_LOADING_STATE[/url]
+				[b]Note:[/b] Refer to [url=https://www.fmod.com/docs/2.03/api/studio-api-common.html#fmod_studio_loading_state]FMOD_STUDIO_LOADING_STATE[/url]
 			</description>
 		</method>
 		<method name="get_string_count" qualifiers="const">
 			<return type="int" />
 			<description>
+Retrieves the number of string table entries in the bank. This is only relevant for studio string banks, as other banks do not contain string tables.
 			</description>
 		</method>
 		<method name="get_string_info" qualifiers="const">
@@ -39,6 +40,7 @@
 			<param index="0" name="index" type="int" />
 			<param index="1" name="id" type="Vector4i" />
 			<description>
+Retrieves a string table entry. This is only relevant for studio string banks, as other banks do not contain string tables.
 			</description>
 		</method>
 		<method name="is_valid" qualifiers="const">
@@ -51,7 +53,7 @@
 			<return type="int" />
 			<description>
 				Unloads the bank.
-				                            [b]Warning:[/b] Ignores reference count can lead to bugs if bank is needed elsewhere.
+				[b]Warning:[/b] Ignores reference count can lead to bugs if bank is needed elsewhere.
 			</description>
 		</method>
 		<method name="unload_sample_data">

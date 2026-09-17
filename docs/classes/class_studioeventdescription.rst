@@ -95,9 +95,7 @@ Method Descriptions
 
 int **create_instance**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_create_instance>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Creates a playable instance.
 
 .. rst-class:: classref-item-separator
 
@@ -109,9 +107,7 @@ int **create_instance**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEven
 
 Vector4i **get_id**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_id>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the GUID associated with the event.
 
 .. rst-class:: classref-item-separator
 
@@ -123,9 +119,7 @@ Vector4i **get_id**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDes
 
 int **get_instance_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_instance_count>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the number of instances.
 
 .. rst-class:: classref-item-separator
 
@@ -137,9 +131,7 @@ int **get_instance_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioE
 
 ``PackedInt64Array`` **get_instance_list**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_instance_list>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a list of the instances.
 
 .. rst-class:: classref-item-separator
 
@@ -151,9 +143,7 @@ int **get_instance_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioE
 
 int **get_length**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_length>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the length of the timeline.
 
 .. rst-class:: classref-item-separator
 
@@ -165,9 +155,7 @@ int **get_length**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDesc
 
 float **get_max_distance**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_max_distance>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the maximum distances for 3D attenuation.
 
 .. rst-class:: classref-item-separator
 
@@ -179,9 +167,7 @@ float **get_max_distance**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioE
 
 float **get_min_distance**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_min_distance>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the minimum distances for 3D attenuation.
 
 .. rst-class:: classref-item-separator
 
@@ -193,9 +179,7 @@ float **get_min_distance**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioE
 
 int **get_parameter_description_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_parameter_description_count>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the number of parameters in the event.
 
 .. rst-class:: classref-item-separator
 
@@ -207,9 +191,7 @@ int **get_parameter_description_count**\ (\ handle\: int\ ) |static| :ref:`🔗<
 
 String **get_parameter_label_by_id**\ (\ handle\: int, id\: int, label_index\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_parameter_label_by_id>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves an event parameter label by ID.
 
 .. rst-class:: classref-item-separator
 
@@ -221,9 +203,7 @@ String **get_parameter_label_by_id**\ (\ handle\: int, id\: int, label_index\: i
 
 String **get_parameter_label_by_index**\ (\ handle\: int, index\: int, label_index\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_parameter_label_by_index>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves an event parameter label by index.
 
 .. rst-class:: classref-item-separator
 
@@ -235,9 +215,7 @@ String **get_parameter_label_by_index**\ (\ handle\: int, index\: int, label_ind
 
 String **get_parameter_label_by_name**\ (\ handle\: int, name\: String, label_index\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_parameter_label_by_name>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves an event parameter label by name, including the path
 
 .. rst-class:: classref-item-separator
 
@@ -249,9 +227,7 @@ String **get_parameter_label_by_name**\ (\ handle\: int, name\: String, label_in
 
 String **get_path**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_path>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the path.
 
 .. rst-class:: classref-item-separator
 
@@ -263,9 +239,7 @@ String **get_path**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDes
 
 FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_sample_loading_state>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the sample data loading state.
 
 .. rst-class:: classref-item-separator
 
@@ -277,9 +251,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: int\ ) |stat
 
 float **get_sound_size**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_sound_size>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the sound size for 3D panning.
 
 .. rst-class:: classref-item-separator
 
@@ -291,9 +263,7 @@ float **get_sound_size**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEve
 
 ``Variant`` **get_user_property**\ (\ handle\: int, name\: String\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_user_property>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a user property by name.
 
 .. rst-class:: classref-item-separator
 
@@ -305,9 +275,7 @@ float **get_sound_size**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEve
 
 ``Variant`` **get_user_property_by_index**\ (\ handle\: int, index\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_user_property_by_index>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a user property by index.
 
 .. rst-class:: classref-item-separator
 
@@ -319,9 +287,7 @@ float **get_sound_size**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEve
 
 int **get_user_property_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_get_user_property_count>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the number of user properties attached to the event.
 
 .. rst-class:: classref-item-separator
 
@@ -333,9 +299,7 @@ int **get_user_property_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_St
 
 bool **has_sustain_point**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_has_sustain_point>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves whether the event has any sustain points.
 
 .. rst-class:: classref-item-separator
 
@@ -347,9 +311,7 @@ bool **has_sustain_point**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioE
 
 bool **is3D**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is3D>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the event's 3D status.
 
 .. rst-class:: classref-item-separator
 
@@ -361,9 +323,7 @@ bool **is3D**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescripti
 
 bool **is_doppler_enabled**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is_doppler_enabled>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the event's doppler status.
 
 .. rst-class:: classref-item-separator
 
@@ -375,9 +335,7 @@ bool **is_doppler_enabled**\ (\ handle\: int\ ) |static| :ref:`🔗<class_Studio
 
 bool **is_oneshot**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is_oneshot>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the event's oneshot status.
 
 .. rst-class:: classref-item-separator
 
@@ -389,9 +347,7 @@ bool **is_oneshot**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDes
 
 bool **is_snapshot**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is_snapshot>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the event's snapshot status.
 
 .. rst-class:: classref-item-separator
 
@@ -403,9 +359,7 @@ bool **is_snapshot**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDe
 
 bool **is_stream**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is_stream>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the event's stream status.
 
 .. rst-class:: classref-item-separator
 
@@ -417,9 +371,7 @@ bool **is_stream**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDesc
 
 bool **is_valid**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_is_valid>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Checks that the EventDescription reference is valid.
 
 .. rst-class:: classref-item-separator
 
@@ -431,9 +383,7 @@ bool **is_valid**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescr
 
 FMOD_RESULT **load_sample_data**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_load_sample_data>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Loads non-streaming sample data used by the event.
 
 .. rst-class:: classref-item-separator
 
@@ -445,9 +395,7 @@ FMOD_RESULT **load_sample_data**\ (\ handle\: int\ ) |static| :ref:`🔗<class_S
 
 FMOD_RESULT **release_all_instances**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_release_all_instances>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Releases all instances.
 
 .. rst-class:: classref-item-separator
 
@@ -459,9 +407,7 @@ FMOD_RESULT **release_all_instances**\ (\ handle\: int\ ) |static| :ref:`🔗<cl
 
 FMOD_RESULT **unload_sample_data**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioEventDescription_method_unload_sample_data>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Unloads all non-streaming sample data.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

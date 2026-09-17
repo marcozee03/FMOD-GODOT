@@ -305,9 +305,7 @@ Method Descriptions
 
 float **get_parameter**\ (\ name\: String\ ) |const| :ref:`🔗<class_FmodEventEmitter2D_method_get_parameter>`
 
-Returns parameter's value by ``name``. Returns NAN if parameter with
-
-                                				name does not exist.
+Returns parameter's value by ``name``. Returns NAN if parameter with name does not exist.
 
 .. rst-class:: classref-item-separator
 
@@ -319,9 +317,7 @@ Returns parameter's value by ``name``. Returns NAN if parameter with
 
 float **get_parameter_by_id**\ (\ id\: int\ ) |const| :ref:`🔗<class_FmodEventEmitter2D_method_get_parameter_by_id>`
 
-Returns parameter's value by ``id``. Returns NAN if parameter with
-
-                                				name does not exist.
+Returns parameter's value by ``id``. Returns NAN if parameter with name does not exist.
 
 .. rst-class:: classref-item-separator
 
@@ -369,9 +365,7 @@ Sets value of parameter with ``id``.
 
 |void| **start**\ (\ ) :ref:`🔗<class_FmodEventEmitter2D_method_start>`
 
-Starts playing the Fmod Event from the beginning. Or plays a new one shot
-
-event.
+Starts playing the Fmod Event from the beginning. Or plays a new one shot event.
 
 .. rst-class:: classref-item-separator
 

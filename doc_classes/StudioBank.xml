@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="StudioBank" inherits="Object" api_type="extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
+A collection of sound samples and meta data
 	</brief_description>
-	<description>
+    <description>
+        Banks made in FMOD Studio contain the metadata and audio sample data required for runtime mixing and playback. Audio sample data may be packed into the same bank as the event metadata which references it, or it may be packed into separate banks.
 	</description>
 	<tutorials>
 	</tutorials>
@@ -11,54 +13,63 @@
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the number of buses in the bank. This is only relevant for master banks, as other banks do not contain buses.
 			</description>
 		</method>
 		<method name="get_bus_list" qualifiers="static">
 			<return type="PackedInt64Array" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves a list of the buses in the bank. This is only relevant for master banks, as other banks do not contain buses.
 			</description>
 		</method>
 		<method name="get_event_count" qualifiers="static">
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the number of event descriptions in the bank.
 			</description>
 		</method>
 		<method name="get_event_list" qualifiers="static">
 			<return type="PackedInt64Array" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves a list of the event descriptions in the bank.
 			</description>
 		</method>
 		<method name="get_id" qualifiers="static">
 			<return type="Vector4i" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the bank's GUID.
 			</description>
 		</method>
 		<method name="get_loading_state" qualifiers="static">
 			<return type="int" enum="FMOD_STUDIO_LOADING_STATE" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the loading state.
 			</description>
 		</method>
 		<method name="get_path" qualifiers="static">
 			<return type="String" />
 			<param index="0" name="handle" type="int" />
 			<description>
+                Retrieves the path.
 			</description>
 		</method>
 		<method name="get_sample_loading_state" qualifiers="static">
 			<return type="int" enum="FMOD_STUDIO_LOADING_STATE" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the loading state of the samples in the bank.
 			</description>
 		</method>
 		<method name="get_string_count" qualifiers="static">
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the number of string table entries in the bank. This is only relevant for studio string banks, as other banks do not contain string tables.
 			</description>
 		</method>
 		<method name="get_string_info" qualifiers="static">
@@ -67,42 +78,49 @@
 			<param index="1" name="index" type="int" />
 			<param index="2" name="id" type="Vector4i" />
 			<description>
+Retrieves a string table entry. This is only relevant for studio string banks, as other banks do not contain string tables.
 			</description>
 		</method>
 		<method name="get_vca_count" qualifiers="static">
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the number of VCAs in the bank.
 			</description>
 		</method>
 		<method name="get_vca_list" qualifiers="static">
 			<return type="PackedInt64Array" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves a list of the VCAs in the bank.
 			</description>
 		</method>
 		<method name="is_valid" qualifiers="static">
 			<return type="bool" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Checks that the bank reference is valid.
 			</description>
 		</method>
 		<method name="load_sample_data" qualifiers="static">
 			<return type="int" enum="FMOD_RESULT" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Loads non-streaming sample data for all events in the bank.
 			</description>
 		</method>
 		<method name="unload" qualifiers="static">
 			<return type="int" enum="FMOD_RESULT" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Unloads the bank.
 			</description>
 		</method>
 		<method name="unload_sample_data" qualifiers="static">
 			<return type="int" enum="FMOD_RESULT" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Unloads non-streaming sample data for all events in the bank.
 			</description>
 		</method>
 	</methods>

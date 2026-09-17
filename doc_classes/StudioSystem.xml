@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="StudioSystem" inherits="Object" api_type="extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
+The main system object for FMOD Studio.
 	</brief_description>
 	<description>
 	</description>
@@ -11,18 +12,21 @@
 			<return type="int" />
 			<param index="0" name="header_version" type="int" />
 			<description>
+This function creates the studio system.
 			</description>
 		</method>
 		<method name="flush_commands" qualifiers="static">
 			<return type="int" enum="FMOD_RESULT" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Block until all pending commands have been executed.
 			</description>
 		</method>
 		<method name="flush_sample_loading" qualifiers="static">
 			<return type="int" enum="FMOD_RESULT" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Block until all sample loading and unloading has completed.
 			</description>
 		</method>
 		<method name="get_bank" qualifiers="static">
@@ -30,6 +34,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="path" type="String" />
 			<description>
+ Retrieves a loaded bank with the specified file path.
 			</description>
 		</method>
 		<method name="get_bank_by_id" qualifiers="static">
@@ -37,18 +42,21 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="id" type="Vector4i" />
 			<description>
+Retrieves a loaded bank with the specified ID.
 			</description>
 		</method>
 		<method name="get_bank_count" qualifiers="static">
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the number of currently-loaded banks.
 			</description>
 		</method>
 		<method name="get_bank_list" qualifiers="static">
 			<return type="PackedInt64Array" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves a list of the currently-loaded banks.
 			</description>
 		</method>
 		<method name="get_bus" qualifiers="static">
@@ -56,6 +64,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="path" type="String" />
 			<description>
+Retrieves a loaded bus.
 			</description>
 		</method>
 		<method name="get_bus_by_id" qualifiers="static">
@@ -63,6 +72,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="id" type="Vector4i" />
 			<description>
+Retrieves a loaded bus.
 			</description>
 		</method>
 		<method name="get_event" qualifiers="static">
@@ -70,6 +80,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="path" type="String" />
 			<description>
+Retrieves an EventDescription of an event or snapshot with the specified file path.
 			</description>
 		</method>
 		<method name="get_event_by_id" qualifiers="static">
@@ -77,6 +88,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="id" type="Vector4i" />
 			<description>
+Retrieves an EventDescription.
 			</description>
 		</method>
 		<method name="get_final_parameter_by_id" qualifiers="static">
@@ -84,6 +96,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="id" type="int" />
 			<description>
+Retrieves a global parameter value by unique identifier. finalvalue is the final value of the parameter after applying adjustments due to automation, modulation, seek speed, and parameter velocity to value. This is calculated asynchronously when the Studio system updates.
 			</description>
 		</method>
 		<method name="get_listener_attenuation_position" qualifiers="static">
@@ -91,6 +104,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="listener" type="int" />
 			<description>
+Gets the attenuation position of the listener. (Corresponds to getListenerAttributes)
 			</description>
 		</method>
 		<method name="get_listener_transform" qualifiers="static">
@@ -98,6 +112,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="listener" type="int" />
 			<description>
+Gets the transform of the listener. (Corresponds to getListenerAttributes)
 			</description>
 		</method>
 		<method name="get_listener_velocity" qualifiers="static">
@@ -105,12 +120,14 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="listener" type="int" />
 			<description>
+Gets the velocity of the listener. (Corresponds to getListenerAttributes)
 			</description>
 		</method>
 		<method name="get_num_listeners" qualifiers="static">
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the number of listeners.
 			</description>
 		</method>
 		<method name="get_parameter_by_id" qualifiers="static">
@@ -118,6 +135,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="id" type="int" />
 			<description>
+Retrieves a global parameter value by unique identifier.
 			</description>
 		</method>
 		<method name="get_parameter_label_by_id" qualifiers="static">
@@ -126,6 +144,7 @@
 			<param index="1" name="id" type="int" />
 			<param index="2" name="label_index" type="int" />
 			<description>
+Retrieves a global parameter label by ID.
 			</description>
 		</method>
 		<method name="get_parameter_label_by_name" qualifiers="static">
@@ -134,6 +153,7 @@
 			<param index="1" name="name" type="String" />
 			<param index="2" name="label_index" type="int" />
 			<description>
+Retrieves a global parameter label by name, including the path if needed.
 			</description>
 		</method>
 		<method name="get_vca" qualifiers="static">
@@ -141,6 +161,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="path" type="String" />
 			<description>
+Retrieves a loaded VCA.
 			</description>
 		</method>
 		<method name="get_vca_by_id" qualifiers="static">
@@ -148,6 +169,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="id" type="Vector4i" />
 			<description>
+Retrieves a loaded VCA.
 			</description>
 		</method>
 		<method name="initialize" qualifiers="static">
@@ -157,12 +179,14 @@
 			<param index="2" name="studio_flags" type="int" />
 			<param index="3" name="flags" type="int" />
 			<description>
+Initializes the Studio System.
 			</description>
 		</method>
 		<method name="is_valid" qualifiers="static">
 			<return type="bool" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Checks that the System reference is valid and has been initialized.
 			</description>
 		</method>
 		<method name="load_bank_file" qualifiers="static">
@@ -171,6 +195,7 @@
 			<param index="1" name="filename" type="String" />
 			<param index="2" name="flags" type="int" />
 			<description>
+Loads the metadata of a bank. This does not load the bank's sample data.
 			</description>
 		</method>
 		<method name="load_bank_memory" qualifiers="static">
@@ -180,6 +205,7 @@
 			<param index="2" name="mode" type="int" enum="FMOD_STUDIO_LOAD_MEMORY_MODE" />
 			<param index="3" name="flags" type="int" />
 			<description>
+Loads the metadata of a bank from memory. Does not load the bank's sample data.
 			</description>
 		</method>
 		<method name="load_command_replay" qualifiers="static">
@@ -188,6 +214,7 @@
 			<param index="1" name="filename" type="String" />
 			<param index="2" name="flags" type="int" />
 			<description>
+Load a command replay.
 			</description>
 		</method>
 		<method name="lookup_id" qualifiers="static">
@@ -195,6 +222,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="path" type="String" />
 			<description>
+Retrieves the ID for a bank, event, snapshot, bus or VCA.
 			</description>
 		</method>
 		<method name="lookup_path" qualifiers="static">
@@ -202,12 +230,14 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="id" type="Vector4i" />
 			<description>
+Retrieves the path for a bank, event, snapshot, bus or VCA.
 			</description>
 		</method>
 		<method name="release" qualifiers="static">
 			<return type="int" enum="FMOD_RESULT" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Shut down and free the Studio System object.
 			</description>
 		</method>
 		<method name="set_listener_attributes" qualifiers="static">
@@ -217,6 +247,7 @@
 			<param index="2" name="transform" type="Transform3D" />
 			<param index="3" name="velocity" type="Vector3" />
 			<description>
+Sets the 3D attributes of the listener.
 			</description>
 		</method>
 		<method name="set_listener_attributes_with_attenuation" qualifiers="static">
@@ -227,6 +258,8 @@
 			<param index="3" name="velocity" type="Vector3" />
 			<param index="4" name="attenuation_position" type="Vector3" />
 			<description>
+
+Sets the 3D attributes and attenuation position of the listener.
 			</description>
 		</method>
 		<method name="set_num_listeners" qualifiers="static">
@@ -234,6 +267,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="num_listeners" type="int" />
 			<description>
+Sets the number of listeners in the 3D sound scene.
 			</description>
 		</method>
 		<method name="set_parameter_by_id" qualifiers="static">
@@ -243,6 +277,7 @@
 			<param index="2" name="value" type="float" />
 			<param index="3" name="ignore_seek_speed" type="bool" default="false" />
 			<description>
+Sets a global parameter value by unique identifier.
 			</description>
 		</method>
 		<method name="set_parameter_by_id_with_label" qualifiers="static">
@@ -252,6 +287,7 @@
 			<param index="2" name="label" type="String" />
 			<param index="3" name="ignore_seek_speed" type="bool" default="false" />
 			<description>
+Sets a global parameter value by unique identifier, looking up the value label.
 			</description>
 		</method>
 		<method name="set_parameters_by_ids" qualifiers="static">
@@ -261,6 +297,7 @@
 			<param index="2" name="values" type="PackedFloat32Array" />
 			<param index="3" name="ignore_seek_speed" type="bool" default="false" />
 			<description>
+Sets multiple global parameter values by unique identifier.
 			</description>
 		</method>
 		<method name="start_command_capture" qualifiers="static">
@@ -269,24 +306,28 @@
 			<param index="1" name="filename" type="String" />
 			<param index="2" name="flags" type="int" />
 			<description>
+Start recording Studio API commands to a file.
 			</description>
 		</method>
 		<method name="stop_command_capture" qualifiers="static">
 			<return type="int" enum="FMOD_RESULT" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Stop recording Studio API commands.
 			</description>
 		</method>
 		<method name="unload_all" qualifiers="static">
 			<return type="int" enum="FMOD_RESULT" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Unloads all currently loaded banks.
 			</description>
 		</method>
 		<method name="update" qualifiers="static">
 			<return type="int" enum="FMOD_RESULT" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Update the studio system.
 			</description>
 		</method>
 	</methods>

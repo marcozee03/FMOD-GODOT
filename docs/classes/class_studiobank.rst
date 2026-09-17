@@ -73,9 +73,7 @@ Method Descriptions
 
 int **get_bus_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_bus_count>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the number of buses in the bank. This is only relevant for master banks, as other banks do not contain buses.
 
 .. rst-class:: classref-item-separator
 
@@ -87,9 +85,7 @@ int **get_bus_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_m
 
 ``PackedInt64Array`` **get_bus_list**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_bus_list>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a list of the buses in the bank. This is only relevant for master banks, as other banks do not contain buses.
 
 .. rst-class:: classref-item-separator
 
@@ -101,9 +97,7 @@ int **get_bus_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_m
 
 int **get_event_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_event_count>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the number of event descriptions in the bank.
 
 .. rst-class:: classref-item-separator
 
@@ -115,9 +109,7 @@ int **get_event_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank
 
 ``PackedInt64Array`` **get_event_list**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_event_list>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a list of the event descriptions in the bank.
 
 .. rst-class:: classref-item-separator
 
@@ -129,9 +121,7 @@ int **get_event_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank
 
 Vector4i **get_id**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_id>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the bank's GUID.
 
 .. rst-class:: classref-item-separator
 
@@ -143,9 +133,7 @@ Vector4i **get_id**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_met
 
 FMOD_STUDIO_LOADING_STATE **get_loading_state**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_loading_state>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the loading state.
 
 .. rst-class:: classref-item-separator
 
@@ -157,9 +145,7 @@ FMOD_STUDIO_LOADING_STATE **get_loading_state**\ (\ handle\: int\ ) |static| :re
 
 String **get_path**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_path>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the path.
 
 .. rst-class:: classref-item-separator
 
@@ -171,9 +157,7 @@ String **get_path**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_met
 
 FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_sample_loading_state>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the loading state of the samples in the bank.
 
 .. rst-class:: classref-item-separator
 
@@ -185,9 +169,7 @@ FMOD_STUDIO_LOADING_STATE **get_sample_loading_state**\ (\ handle\: int\ ) |stat
 
 int **get_string_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_string_count>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the number of string table entries in the bank. This is only relevant for studio string banks, as other banks do not contain string tables.
 
 .. rst-class:: classref-item-separator
 
@@ -199,9 +181,7 @@ int **get_string_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBan
 
 String **get_string_info**\ (\ handle\: int, index\: int, id\: Vector4i\ ) |static| :ref:`🔗<class_StudioBank_method_get_string_info>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a string table entry. This is only relevant for studio string banks, as other banks do not contain string tables.
 
 .. rst-class:: classref-item-separator
 
@@ -213,9 +193,7 @@ String **get_string_info**\ (\ handle\: int, index\: int, id\: Vector4i\ ) |stat
 
 int **get_vca_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_vca_count>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves the number of VCAs in the bank.
 
 .. rst-class:: classref-item-separator
 
@@ -227,9 +205,7 @@ int **get_vca_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_m
 
 ``PackedInt64Array`` **get_vca_list**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_get_vca_list>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Retrieves a list of the VCAs in the bank.
 
 .. rst-class:: classref-item-separator
 
@@ -241,9 +217,7 @@ int **get_vca_count**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_m
 
 bool **is_valid**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_is_valid>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Checks that the bank reference is valid.
 
 .. rst-class:: classref-item-separator
 
@@ -255,9 +229,7 @@ bool **is_valid**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_metho
 
 FMOD_RESULT **load_sample_data**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_load_sample_data>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Loads non-streaming sample data for all events in the bank.
 
 .. rst-class:: classref-item-separator
 
@@ -269,9 +241,7 @@ FMOD_RESULT **load_sample_data**\ (\ handle\: int\ ) |static| :ref:`🔗<class_S
 
 FMOD_RESULT **unload**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_unload>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Unloads the bank.
 
 .. rst-class:: classref-item-separator
 
@@ -283,9 +253,7 @@ FMOD_RESULT **unload**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_
 
 FMOD_RESULT **unload_sample_data**\ (\ handle\: int\ ) |static| :ref:`🔗<class_StudioBank_method_unload_sample_data>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+Unloads non-streaming sample data for all events in the bank.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

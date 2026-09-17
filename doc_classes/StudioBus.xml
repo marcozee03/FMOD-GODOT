@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="StudioBus" inherits="Object" api_type="extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
+Represents a global mixer bus.
 	</brief_description>
 	<description>
 	</description>
@@ -11,60 +12,70 @@
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the core ChannelGroup.
 			</description>
 		</method>
 		<method name="get_final_volume" qualifiers="static">
 			<return type="float" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the final combined volume level.
 			</description>
 		</method>
 		<method name="get_id" qualifiers="static">
 			<return type="Vector4i" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the GUID.
 			</description>
 		</method>
 		<method name="get_mute" qualifiers="static">
 			<return type="bool" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the mute state.
 			</description>
 		</method>
 		<method name="get_path" qualifiers="static">
 			<return type="String" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the path.
 			</description>
 		</method>
 		<method name="get_paused" qualifiers="static">
 			<return type="bool" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the pause state.
 			</description>
 		</method>
 		<method name="get_port_index" qualifiers="static">
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Retrieves the port index assigned to the bus.
 			</description>
 		</method>
 		<method name="get_volume" qualifiers="static">
 			<return type="float" />
 			<param index="0" name="handle" type="int" />
 			<description>
+ Retrieves the volume level.
 			</description>
 		</method>
 		<method name="is_valid" qualifiers="static">
 			<return type="bool" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Checks that the Bus reference is valid.
 			</description>
 		</method>
 		<method name="lock_channel_group" qualifiers="static">
 			<return type="int" enum="FMOD_RESULT" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Locks the core ChannelGroup.
 			</description>
 		</method>
 		<method name="set_mute" qualifiers="static">
@@ -72,6 +83,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="mute" type="bool" />
 			<description>
+Sets the mute state.
 			</description>
 		</method>
 		<method name="set_paused" qualifiers="static">
@@ -79,6 +91,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="paused" type="bool" />
 			<description>
+Sets the pause state.
 			</description>
 		</method>
 		<method name="set_port_index" qualifiers="static">
@@ -86,6 +99,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="port_index" type="int" />
 			<description>
+Sets the port index to use when attaching to an output port.
 			</description>
 		</method>
 		<method name="set_volume" qualifiers="static">
@@ -93,6 +107,7 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="volume" type="float" />
 			<description>
+                Sets the volume level.
 			</description>
 		</method>
 		<method name="stop_all_events" qualifiers="static">
@@ -100,12 +115,14 @@
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="stop_mode" type="int" enum="FMOD_STUDIO_STOP_MODE" />
 			<description>
+Stops all event instances that are routed into the bus.
 			</description>
 		</method>
 		<method name="unlock_channel_group" qualifiers="static">
 			<return type="int" enum="FMOD_RESULT" />
 			<param index="0" name="handle" type="int" />
 			<description>
+Unlocks the core ChannelGroup.
 			</description>
 		</method>
 	</methods>

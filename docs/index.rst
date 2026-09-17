@@ -8,7 +8,7 @@ Fmod Godot Docs – *master* branch
 
 Welcome to the official documentation of `Fmod Godot <https://github.com/marcozee03/FMOD-GODOT/tree/master>`__,
 
-Fmod-Godot is a GDExtension library that integrates the Fmod API with the Godot Engine. Adding several features explained below and enables use of the Official FMOD C# Wrapper. C# is prioritized as wonderful extensions like `FMOD GDExtension`_ already exist. So the GDScript bindings have a lower level of abstraction compared to `FMOD_GDExtension`_ similar to FMOD's C API. GDScript currently only features a large subset of the FMOD Studio API
+Fmod-Godot is a GDExtension library that integrates the Fmod API with the Godot Engine. Adding several features explained below and enables use of the Official FMOD C# Wrapper. C# is prioritized as wonderful extensions like `FMOD GDExtension`_ already exist. So the GDScript bindings have a lower level of abstraction compared to `FMOD GDExtension`_ similar to FMOD's C API. GDScript currently only features a large subset of the FMOD Studio API
 
 .. _FMOD GDExtension: https://github.com/utopia-rise/fmod-gdextension>
 
@@ -37,13 +37,15 @@ for your topic of interest. You can also use the search function in the top-left
 .. Sections below are split into two groups. First come meta sections, covering
    general matters. Below that different areas of the engine are listed.
    These sections are sorted alphabetically. Please keep them that way.
+
 .. toctree::
    :hidden:
    :maxdepth: 1
    :caption: Manual
    :name: sec-tutorials
 
-   tutorials/placeholder/index
+   tutorials/basic/index
+   tutorials/advanced/index
 
 
 .. toctree::
