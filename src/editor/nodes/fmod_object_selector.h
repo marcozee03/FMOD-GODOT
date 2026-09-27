@@ -10,9 +10,9 @@
 using namespace godot;
 namespace FmodGodot
 {
-class FmodEventSelector : public LineEdit
+class FmodObjectSelector : public LineEdit
 {
-    GDCLASS(FmodEventSelector, LineEdit)
+    GDCLASS(FmodObjectSelector, LineEdit)
   private:
     Button *open_explorer;
     Window *window;
@@ -27,8 +27,9 @@ class FmodEventSelector : public LineEdit
     static void _bind_methods();
 
   public:
-    FmodEventSelector();
-    ~FmodEventSelector();
+    FmodObjectSelector();
+    FmodObjectSelector(FmodObjectTree::DisplayFlags p_flags);
+    ~FmodObjectSelector();
     void set_guid(const Vector4i &p_guid);
     void set_path(const String &p_path_or_guid);
     void open_window();

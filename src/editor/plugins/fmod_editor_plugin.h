@@ -5,9 +5,9 @@
 #include "fmod_console.h"
 #include "fmod_debugger_plugin.h"
 #include "fmod_event_browser.h"
-#include "fmod_event_inspector_plugin.h"
 #include "fmod_export_plugin.h"
 #include "fmod_installer.h"
+#include "fmod_selector_inspector_plugin.h"
 #include "variant/dictionary.hpp"
 #include <classes/editor_plugin.hpp>
 using namespace godot;
@@ -18,7 +18,7 @@ class FmodEditorPlugin : public EditorPlugin
 {
     GDCLASS(FmodEditorPlugin, EditorPlugin)
   private:
-    Ref<EventInspector> eventInspector = nullptr;
+    Ref<FmodSelectorInspector> eventInspector = nullptr;
     Ref<FmodBankImporter> bankImporter = nullptr;
     Ref<BankInspectorPlugin> bankInspector = nullptr;
     FmodEventBrowser *browser = nullptr;

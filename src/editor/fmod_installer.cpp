@@ -1,4 +1,5 @@
 #include "fmod_installer.h"
+#include "classes/control.hpp"
 #include "classes/global_constants.hpp"
 #include "classes/h_box_container.hpp"
 #include "classes/object.hpp"
@@ -137,8 +138,6 @@ FmodInstaller::FmodInstaller()
         installer_subtitle->set_text("Installer");
         installer_subtitle->set_anchors_and_offsets_preset(godot::Control::PRESET_CENTER_TOP);
         installer_subtitle->set_anchor(SIDE_TOP, 1.0);
-        installer_subtitle->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER);
-        installer_subtitle->set_vertical_alignment(VERTICAL_ALIGNMENT_CENTER);
 
         fmod_icon->add_child(installer_subtitle);
     }
@@ -152,13 +151,11 @@ FmodInstaller::FmodInstaller()
         // User Inputs
         user_inputs = memnew(VBoxContainer);
         user_inputs->set_anchors_and_offsets_preset(Control::PRESET_CENTER);
+        user_inputs->set_offset(Side::SIDE_LEFT, -110);
+        user_inputs->set_offset(Side::SIDE_RIGHT, 110);
+        user_inputs->set_offset(Side::SIDE_BOTTOM, 64);
+        user_inputs->set_offset(Side::SIDE_TOP, -64);
 
-        user_inputs->set_anchor_and_offset(Side::SIDE_LEFT, 0.5, -110, false);
-        user_inputs->set_anchor_and_offset(Side::SIDE_RIGHT, 0.5, 110, false);
-        user_inputs->set_anchor_and_offset(Side::SIDE_BOTTOM, 0.5, 64, false);
-        user_inputs->set_anchor_and_offset(Side::SIDE_TOP, 0.5, -64, false);
-        user_inputs->set_h_grow_direction(godot::Control::GROW_DIRECTION_BOTH);
-        user_inputs->set_v_grow_direction(godot::Control::GROW_DIRECTION_BOTH);
         container->add_child(user_inputs);
         username = memnew(LineEdit);
         username->set_h_size_flags(Control::SIZE_EXPAND_FILL);
@@ -166,10 +163,8 @@ FmodInstaller::FmodInstaller()
 
         user_inputs->add_child(username);
         Label *username_label = memnew(Label);
-        username_label->set_anchor_and_offset(Side::SIDE_BOTTOM, 0.5, 11.5, false);
-        username_label->set_anchor_and_offset(Side::SIDE_TOP, 0.5, -11.5, false);
+        username_label->set_anchors_and_offsets_preset(godot::Control::PRESET_CENTER_LEFT);
         username_label->set_h_grow_direction(Control::GROW_DIRECTION_BEGIN);
-        username_label->set_v_grow_direction(Control::GROW_DIRECTION_BOTH);
         username_label->set_text("Username: ");
         username->add_child(username_label);
         password = memnew(LineEdit);
@@ -179,20 +174,13 @@ FmodInstaller::FmodInstaller()
         user_inputs->add_child(password);
 
         Label *password_label = memnew(Label);
-        password_label->set_anchor_and_offset(Side::SIDE_BOTTOM, 0.5, 11.5, false);
-        password_label->set_anchor_and_offset(Side::SIDE_TOP, 0.5, -11.5, false);
+        password_label->set_anchors_and_offsets_preset(godot::Control::PRESET_CENTER_LEFT);
         password_label->set_h_grow_direction(Control::GROW_DIRECTION_BEGIN);
-        password_label->set_v_grow_direction(Control::GROW_DIRECTION_BOTH);
         password_label->set_text(" Password: ");
         password->add_child(password_label);
 
         show_password = memnew(Button);
-        show_password->set_anchors_preset(godot::Control::PRESET_RIGHT_WIDE);
-        show_password->set_anchor_and_offset(SIDE_LEFT, 1.0, -8.0);
-        show_password->set_anchor(SIDE_RIGHT, 1.0);
-        show_password->set_anchor(SIDE_BOTTOM, 1.0);
-        show_password->set_h_grow_direction(godot::Control::GROW_DIRECTION_BEGIN);
-        show_password->set_v_grow_direction(godot::Control::GROW_DIRECTION_BOTH);
+        show_password->set_anchors_and_offsets_preset(godot::Control::PRESET_RIGHT_WIDE);
         show_password->set_flat(true);
         show_password->set_icon_alignment(HORIZONTAL_ALIGNMENT_CENTER);
         show_password->connect("button_down", callable_mp(this, &FmodInstaller::_show_password));
@@ -214,17 +202,11 @@ FmodInstaller::FmodInstaller()
         user_inputs->add_child(submit);
         installInfo = memnew(Label);
         installInfo->set_anchors_and_offsets_preset(godot::Control::PRESET_CENTER);
-        installInfo->set_h_grow_direction(godot::Control::GROW_DIRECTION_BOTH);
-        installInfo->set_v_grow_direction(godot::Control::GROW_DIRECTION_BOTH);
         installInfo->set_visible_characters_behavior(TextServer::VisibleCharactersBehavior::VC_CHARS_AFTER_SHAPING);
         container->add_child(installInfo);
         progress_bar = memnew(ProgressBar);
-        progress_bar->set_anchor(SIDE_LEFT, .05);
-        progress_bar->set_anchor(SIDE_TOP, .8335948);
-        progress_bar->set_anchor(SIDE_BOTTOM, .88113916);
-        progress_bar->set_anchor(SIDE_RIGHT, .96000005);
-        progress_bar->set_h_grow_direction(godot::Control::GROW_DIRECTION_BOTH);
-        progress_bar->set_v_grow_direction(godot::Control::GROW_DIRECTION_BEGIN);
+        progress_bar->set_anchors_and_offsets_preset(godot::Control::PRESET_BOTTOM_WIDE,
+                                                     godot::Control::PRESET_MODE_KEEP_HEIGHT, 5);
         progress_bar->set_max(1.0);
         progress_bar->set_step(0.0);
         progress_bar->set_show_percentage(false);

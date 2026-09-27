@@ -172,7 +172,7 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
             text->add_text("  ");
             push_labeln(text, "Max Distance: ", rtos(event.max));
         }
-        int hours = event.lengthMS / (60 * 1000 * 60);
+        // int hours = event.lengthMS / (60 * 1000 * 60);
         int minutes = event.lengthMS / (60 * 1000) % 60;
         int seconds = (event.lengthMS / 1000) % 60;
         int milliseconds = event.lengthMS % 1000;
@@ -236,7 +236,7 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
         push_label_str_meta(text, "Full Path: ", vca.full_path, "Copy vca path");
         push_label_var_meta(text, "Guid: ", fmod_guid_to_string(vca.guid), vca.guid, "Drag Event");
     }
-    else if (p_path.begins_with("param:"))
+    else if (p_path.begins_with("parameter:"))
     {
         header->set_text("Global Parameter:" + p_path.get_file().get_basename());
         ParameterCache parameter = cache->get_parameter(p_path);

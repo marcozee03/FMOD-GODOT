@@ -2,7 +2,7 @@
 #include "classes/control.hpp"
 #include "classes/v_box_container.hpp"
 #include "fmod_event_previewer.h"
-#include "fmod_event_tree.h"
+#include "fmod_object_tree.h"
 #include "variant/callable_method_pointer.hpp"
 #include "variant/packed_string_array.hpp"
 #include <classes/button.hpp>
@@ -12,12 +12,14 @@
 using namespace godot;
 namespace FmodGodot
 {
-FmodGodot::FmodProjectExplorer::FmodProjectExplorer()
+FmodGodot::FmodProjectExplorer::FmodProjectExplorer() : FmodGodot::FmodProjectExplorer(FmodObjectTree::FMOD_DISPLAY_ALL)
+{
+}
+FmodGodot::FmodProjectExplorer::FmodProjectExplorer(FmodObjectTree::DisplayFlags p_flags)
 {
     set_v_size_flags(SIZE_EXPAND_FILL);
-    tree = memnew(EventTree());
-    tree->set_display_flags(EventTree::DisplayFlags::BANKS | EventTree::EVENTS | EventTree::VCAS |
-                            EventTree::GLOBAL_PARAMETERS);
+    tree = memnew(FmodObjectTree());
+    tree->set_display_flags(p_flags);
     tree->set_stretch_ratio(1.0);
     add_child(tree);
 
@@ -63,7 +65,7 @@ void FmodProjectExplorer::_update_theme()
     }
 }
 
-void FmodProjectExplorer::set_display_flags(EventTree::DisplayFlags p_flags)
+void FmodProjectExplorer::set_display_flags(FmodObjectTree::DisplayFlags p_flags)
 {
     tree->set_display_flags(p_flags);
 }

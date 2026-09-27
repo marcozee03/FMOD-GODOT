@@ -1,5 +1,6 @@
 #include "fmod_event_guid_selector_property.h"
-#include "fmod_event_selector.h"
+#include "fmod_object_selector.h"
+#include "fmod_object_tree.h"
 #include "variant/variant.hpp"
 #include <classes/project_settings.hpp>
 #include <fmod_defs.h>
@@ -12,18 +13,23 @@
 using namespace godot;
 namespace FmodGodot
 {
-EventGUIDSelectorProperty::EventGUIDSelectorProperty()
+FmodGUIDSelectorProperty::FmodGUIDSelectorProperty()
+    : FmodGodot::FmodGUIDSelectorProperty(FmodObjectTree::FMOD_DISPLAY_ALL)
 {
-    eventSelector = memnew(FmodEventSelector);
-    add_child(eventSelector);
-    eventSelector->connect("fmod_guid_and_path_selected",
-                           callable_mp(this, &EventGUIDSelectorProperty::_fmod_guid_and_path_changed));
 }
-EventGUIDSelectorProperty::~EventGUIDSelectorProperty()
+FmodGUIDSelectorProperty::FmodGUIDSelectorProperty(FmodObjectTree::DisplayFlags p_flags)
+{
+    objectSelector = memnew(FmodObjectSelector(p_flags));
+    add_child(objectSelector);
+    objectSelector->connect("fmod_guid_and_path_selected",
+                            callable_mp(this, &FmodGUIDSelectorProperty::_fmod_guid_and_path_changed));
+}
+
+FmodGUIDSelectorProperty::~FmodGUIDSelectorProperty()
 {
 }
 
-void EventGUIDSelectorProperty::_fmod_guid_and_path_changed(const Vector4i &p_guid, const String &p_path)
+void FmodGUIDSelectorProperty::_fmod_guid_and_path_changed(const Vector4i &p_guid, const String &p_path)
 {
     if (currentValue != p_guid)
     {
@@ -40,11 +46,11 @@ void EventGUIDSelectorProperty::_fmod_guid_and_path_changed(const Vector4i &p_gu
     }
 }
 
-void EventGUIDSelectorProperty::_bind_methods()
+void FmodGUIDSelectorProperty::_bind_methods()
 {
 }
 
-void EventGUIDSelectorProperty::_update_property()
+void FmodGUIDSelectorProperty::_update_property()
 {
     auto newValue = static_cast<Vector4i>(get_edited_object()->get(get_edited_property()));
     if (newValue == currentValue)
@@ -54,7 +60,7 @@ void EventGUIDSelectorProperty::_update_property()
     // Update the control with the new value.
     updating = true;
     currentValue = newValue;
-    eventSelector->set_guid(currentValue);
+    objectSelector->set_guid(currentValue);
     updating = false;
 }
 } // namespace FmodGodot

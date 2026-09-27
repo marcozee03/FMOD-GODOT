@@ -4,17 +4,18 @@ using namespace godot;
 
 namespace FmodGodot
 {
-class EventTree : public Tree
+class FmodObjectTree : public Tree
 {
-    GDCLASS(EventTree, Tree);
+    GDCLASS(FmodObjectTree, Tree);
 
   public:
-    enum DisplayFlags
+    enum DisplayFlags : uint
     {
-        BANKS = 1,
-        EVENTS = 2,
-        VCAS = 4,
-        GLOBAL_PARAMETERS = 8
+        FMOD_DISPLAY_BANKS = 1,
+        FMOD_DISPLAY_EVENTS = 2,
+        FMOD_DISPLAY_VCAS = 4,
+        FMOD_DISPLAY_GLOBAL_PARAMETERS = 8,
+        FMOD_DISPLAY_ALL = 0xffffffff
     };
 
   private:
@@ -26,8 +27,8 @@ class EventTree : public Tree
     static void _bind_methods();
 
   public:
-    EventTree();
-    ~EventTree();
+    FmodObjectTree();
+    ~FmodObjectTree();
     void set_display_flags(int p_flags);
     int get_display_flags() const;
     void LoadEvents();
@@ -36,4 +37,4 @@ class EventTree : public Tree
 };
 
 } // namespace FmodGodot
-VARIANT_BITFIELD_CAST(FmodGodot::EventTree::DisplayFlags)
+VARIANT_BITFIELD_CAST(FmodGodot::FmodObjectTree::DisplayFlags)

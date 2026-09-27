@@ -1,5 +1,5 @@
 #include "fmod_event_path_selector_property.h"
-#include "fmod_event_selector.h"
+#include "fmod_object_selector.h"
 #include <godot_cpp/classes/editor_property.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
@@ -7,17 +7,22 @@
 using namespace godot;
 namespace FmodGodot
 {
-EventPathSelectorProperty::EventPathSelectorProperty()
-{
-    eventSelector = memnew(FmodEventSelector);
-    add_child(eventSelector);
-    eventSelector->connect("fmod_guid_and_path_selected",
-                           callable_mp(this, &EventPathSelectorProperty::_fmod_guid_and_path_changed));
-}
-EventPathSelectorProperty::~EventPathSelectorProperty()
+FmodPathSelectorProperty::FmodPathSelectorProperty()
+    : FmodGodot::FmodPathSelectorProperty(FmodObjectTree::FMOD_DISPLAY_EVENTS)
 {
 }
-void EventPathSelectorProperty::_fmod_guid_and_path_changed(const Vector4i &p_guid, const String &p_path)
+FmodPathSelectorProperty::FmodPathSelectorProperty(FmodObjectTree::DisplayFlags p_flags)
+{
+    objectSelector = memnew(FmodObjectSelector(p_flags));
+    add_child(objectSelector);
+    objectSelector->connect("fmod_guid_and_path_selected",
+                            callable_mp(this, &FmodPathSelectorProperty::_fmod_guid_and_path_changed));
+}
+
+FmodPathSelectorProperty::~FmodPathSelectorProperty()
+{
+}
+void FmodPathSelectorProperty::_fmod_guid_and_path_changed(const Vector4i &p_guid, const String &p_path)
 {
     if (currentValue != p_path)
     {
@@ -33,11 +38,11 @@ void EventPathSelectorProperty::_fmod_guid_and_path_changed(const Vector4i &p_gu
                          true, true);
     }
 }
-void EventPathSelectorProperty::_bind_methods()
+void FmodPathSelectorProperty::_bind_methods()
 {
 }
 
-void EventPathSelectorProperty::_update_property()
+void FmodPathSelectorProperty::_update_property()
 {
     auto newValue = static_cast<String>(get_edited_object()->get(get_edited_property()));
     if (newValue == currentValue)
@@ -47,7 +52,7 @@ void EventPathSelectorProperty::_update_property()
     // Update the control with the new value.
     updating = true;
     currentValue = newValue;
-    eventSelector->set_path(currentValue);
+    objectSelector->set_path(currentValue);
     updating = false;
 }
 } // namespace FmodGodot

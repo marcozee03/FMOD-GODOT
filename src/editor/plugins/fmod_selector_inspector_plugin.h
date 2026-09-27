@@ -4,9 +4,9 @@
 using namespace godot;
 namespace FmodGodot
 {
-class EventInspector : public EditorInspectorPlugin
+class FmodSelectorInspector : public EditorInspectorPlugin
 {
-    GDCLASS(EventInspector, EditorInspectorPlugin)
+    GDCLASS(FmodSelectorInspector, EditorInspectorPlugin)
   public:
     virtual bool _parse_property(Object *p_object, Variant::Type p_type, const String &p_name, PropertyHint p_hint_type,
                                  const String &p_hint_string, BitField<PropertyUsageFlags> p_usage_flags,

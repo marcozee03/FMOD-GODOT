@@ -78,7 +78,7 @@ void FmodEditorPlugin::_enter_tree()
     get_editor_interface()->get_editor_theme()->merge_with(theme);
     log = memnew(FmodConsole);
     FmodEditorInterface::get_singleton()->register_console(log);
-    eventInspector = memnew(EventInspector);
+    eventInspector = memnew(FmodSelectorInspector);
     add_inspector_plugin(eventInspector);
     bankInspector = memnew(BankInspectorPlugin);
     add_inspector_plugin(bankInspector);
