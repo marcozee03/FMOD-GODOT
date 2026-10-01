@@ -25,6 +25,16 @@ Overview
 * :ref:`FmodListener2D <class_fmodlistener2d>` :ref:`FmodListener3D <class_fmodlistener2d>`
     place listeners into the scene that automatically update their position.
 
+
+Tags
+----
+
+FMOD Godot introduces several tags for selecting FMOD paths and GUIDs. The hint string is case insensitive and one of FmodEvent, FmodParam, FmodVCA.
+
+.. code-block::
+
+   @export(PROPERTY_HINT_NONE, <TAG>);
+
 EventBrowser
 -------------
 The editor will load all of the banks in the banks folder. and cache them at startup. to be referenced by inspectors. You can drag and drop events from the browser

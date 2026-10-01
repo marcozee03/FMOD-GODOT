@@ -1,4 +1,4 @@
-#include "fmod_event_tree.h"
+#include "fmod_object_tree.h"
 #include "classes/editor_interface.hpp"
 #include "classes/h_box_container.hpp"
 #include "classes/label.hpp"
@@ -16,7 +16,7 @@
 using namespace godot;
 namespace FmodGodot
 {
-void EventTree::on_item_activated()
+void FmodObjectTree::on_item_activated()
 {
     TreeItem *current = get_selected();
     if (current->get_child_count() > 0 || current->get_parent() == get_root())
@@ -26,7 +26,7 @@ void EventTree::on_item_activated()
     emit_signal("fmod_object_activated", get_item_path(get_selected()));
 }
 
-void EventTree::on_item_selected()
+void FmodObjectTree::on_item_selected()
 {
     TreeItem *current = get_selected();
     if (current->get_child_count() > 0 || current->get_parent() == get_root())
@@ -36,27 +36,27 @@ void EventTree::on_item_selected()
     emit_signal("fmod_object_selected", get_item_path(get_selected()));
 }
 
-void EventTree::_bind_methods()
+void FmodObjectTree::_bind_methods()
 {
-    BIND_BITFIELD_FLAG(BANKS);
-    BIND_BITFIELD_FLAG(EVENTS);
-    BIND_BITFIELD_FLAG(VCAS);
-    BIND_BITFIELD_FLAG(GLOBAL_PARAMETERS);
+    BIND_BITFIELD_FLAG(FMOD_DISPLAY_BANKS);
+    BIND_BITFIELD_FLAG(FMOD_DISPLAY_EVENTS);
+    BIND_BITFIELD_FLAG(FMOD_DISPLAY_VCAS);
+    BIND_BITFIELD_FLAG(FMOD_DISPLAY_GLOBAL_PARAMETERS);
     BIND_PROPERTY_WITH_HINT(display_flags, Variant::Type::INT, PROPERTY_HINT_FLAGS,
                             "BANKS:1,EVENTS:2,VCAS:4,GLOBAL_PARAMETERS:8")
     ADD_SIGNAL(MethodInfo("fmod_object_activated", PropertyInfo(Variant::STRING, "fmod_object_path")));
     ADD_SIGNAL(MethodInfo("fmod_object_selected", PropertyInfo(Variant::STRING, "fmod_object_path")));
 }
-EventTree::EventTree()
+FmodObjectTree::FmodObjectTree()
 {
     set_columns(1);
     set_hide_root(true);
-    connect("item_activated", callable_mp(this, &EventTree::on_item_activated));
-    connect("item_selected", callable_mp(this, &EventTree::on_item_selected));
+    connect("item_activated", callable_mp(this, &FmodObjectTree::on_item_activated));
+    connect("item_selected", callable_mp(this, &FmodObjectTree::on_item_selected));
     set_h_scroll_enabled(false);
     set_scroll_hint_mode(Tree::SCROLL_HINT_MODE_TOP);
 }
-EventTree::~EventTree()
+FmodObjectTree::~FmodObjectTree()
 {
 }
 namespace
@@ -96,7 +96,7 @@ void initRecur(TreeItem *p_root, const FmodEditorIndex *p_cache, const String &p
 }
 
 } // namespace
-void EventTree::set_display_flags(int p_flags)
+void FmodObjectTree::set_display_flags(int p_flags)
 {
     if (display_flags != p_flags)
     {
@@ -104,35 +104,35 @@ void EventTree::set_display_flags(int p_flags)
         LoadEvents();
     }
 }
-int EventTree::get_display_flags() const
+int FmodObjectTree::get_display_flags() const
 {
     return static_cast<DisplayFlags>(display_flags);
 }
-void EventTree::LoadEvents()
+void FmodObjectTree::LoadEvents()
 {
     this->clear();
     create_item();
     const FmodEditorIndex *cache = FmodEditorInterface::get_singleton()->get_cache();
     String current_path;
-    if (display_flags & EVENTS)
+    if (display_flags & FMOD_DISPLAY_EVENTS)
     {
         initRecur(get_root(), cache, "event:");
     }
-    if (display_flags & BANKS)
+    if (display_flags & FMOD_DISPLAY_BANKS)
     {
         initRecur(get_root(), cache, "bank:");
     }
 
-    if (display_flags & VCAS)
+    if (display_flags & FMOD_DISPLAY_VCAS)
     {
         initRecur(get_root(), cache, "vca:");
     }
-    if (display_flags & GLOBAL_PARAMETERS)
+    if (display_flags & FMOD_DISPLAY_GLOBAL_PARAMETERS)
     {
-        initRecur(get_root(), cache, "param:");
+        initRecur(get_root(), cache, "parameter:");
     }
 }
-String EventTree::get_item_path(TreeItem *p_item)
+String FmodObjectTree::get_item_path(TreeItem *p_item)
 {
     TreeItem *current = p_item;
     if (!current)
@@ -152,7 +152,7 @@ String EventTree::get_item_path(TreeItem *p_item)
     }
     return str;
 }
-Variant EventTree::_get_drag_data(const Vector2 &p_vec2)
+Variant FmodObjectTree::_get_drag_data(const Vector2 &p_vec2)
 {
     TreeItem *item = get_item_at_position(p_vec2);
     Ref<Texture2D> event_icon = get_theme_icon("FmodEvent", "EditorIcons");

@@ -41,15 +41,15 @@
 #include "fmod_editor_plugin.h"
 #include "fmod_event_browser.h"
 #include "fmod_event_guid_selector_property.h"
-#include "fmod_event_inspector_plugin.h"
 #include "fmod_event_panner.h"
 #include "fmod_event_path_selector_property.h"
 #include "fmod_event_previewer.h"
-#include "fmod_event_selector.h"
 #include "fmod_installer.h"
 #include "fmod_object_details.h"
+#include "fmod_object_selector.h"
 #include "fmod_project_explorer.h"
 #include "fmod_script_client.h"
+#include "fmod_selector_inspector_plugin.h"
 #include "live_update_indicator.h"
 #include "mute_button.h"
 #include <classes/editor_interface.hpp>
@@ -185,8 +185,8 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
     {
 #ifdef TOOLS_ENABLED
         GDREGISTER_INTERNAL_CLASS(MuteButton);
-        GDREGISTER_INTERNAL_CLASS(FmodEventSelector);
-        GDREGISTER_INTERNAL_CLASS(EventTree);
+        GDREGISTER_INTERNAL_CLASS(FmodObjectSelector);
+        GDREGISTER_INTERNAL_CLASS(FmodObjectTree);
 
         GDREGISTER_INTERNAL_CLASS(FmodScriptClient)
         GDREGISTER_INTERNAL_CLASS(FmodEditorInterface);
@@ -199,9 +199,9 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
 
         GDREGISTER_INTERNAL_CLASS(FmodDebuggerPlugin)
         GDREGISTER_INTERNAL_CLASS(FmodEditorPlugin)
-        GDREGISTER_INTERNAL_CLASS(EventInspector)
-        GDREGISTER_INTERNAL_CLASS(EventPathSelectorProperty)
-        GDREGISTER_INTERNAL_CLASS(EventGUIDSelectorProperty)
+        GDREGISTER_INTERNAL_CLASS(FmodSelectorInspector)
+        GDREGISTER_INTERNAL_CLASS(FmodPathSelectorProperty)
+        GDREGISTER_INTERNAL_CLASS(FmodGUIDSelectorProperty)
         GDREGISTER_INTERNAL_CLASS(FmodBankImporter);
         GDREGISTER_INTERNAL_CLASS(BankInspectorPlugin);
         GDREGISTER_INTERNAL_CLASS(FmodObjectDetails);

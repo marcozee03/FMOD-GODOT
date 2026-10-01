@@ -1,5 +1,5 @@
 #pragma once
-#include "fmod_event_selector.h"
+#include "fmod_object_selector.h"
 #include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/classes/editor_property.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
@@ -7,11 +7,11 @@
 using namespace godot;
 namespace FmodGodot
 {
-class EventPathSelectorProperty : public EditorProperty
+class FmodPathSelectorProperty : public EditorProperty
 {
-    GDCLASS(EventPathSelectorProperty, EditorProperty)
+    GDCLASS(FmodPathSelectorProperty, EditorProperty)
   private:
-    FmodEventSelector *eventSelector;
+    FmodObjectSelector *objectSelector;
     String currentValue;
     bool updating = false;
     void _fmod_guid_and_path_changed(const Vector4i &p_guid, const String &p_path);
@@ -20,8 +20,9 @@ class EventPathSelectorProperty : public EditorProperty
     static void _bind_methods();
 
   public:
-    EventPathSelectorProperty();
-    ~EventPathSelectorProperty();
+    FmodPathSelectorProperty();
+    FmodPathSelectorProperty(FmodObjectTree::DisplayFlags p_flags);
+    ~FmodPathSelectorProperty();
     virtual void _update_property() override;
 };
 } // namespace FmodGodot

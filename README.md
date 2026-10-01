@@ -38,6 +38,8 @@ var soundfx2 : Vector4I
 
 ![](images/exported_event.png)
 
+There's also "FmodParam", "FmodVCA" for selecting global parameters and vcas.
+
 ### Event Browser
 
 The editor will load all of the banks in the banks folder. and cache them at
@@ -78,7 +80,7 @@ what events they contain and their GUID.
 - ![](plugin_template/icons/FmodListener2D.svg) **FmodListener2D/3D**: place
 listeners into the scene that automatically update their position.
 
-## C#
+## C #
 
 The FmodAudioServer api is exposed C#. This allows C# to gain direct access to the FMOD System Handles. Allowing you to access the underlying FMOD API exposed through the official C# wrapper. With full access to the rest of the Node/Resource library planned.
 
@@ -93,6 +95,7 @@ To run the install go to Project > Tools > Finish FMOD Godot setup
 Enter your fmod account info and the installer will close once complete
 
 ## GDScript
+
 A large subset of the FMOD Studio API is exposed to GDScript. The bindings closely mirrors FMOD's C API.
 
 Also Checkout [FMOD GDExtension](https://github.com/utopia-rise/fmod-gdextension) if you want a higher layer of abstraction over the FMOD API and aren't using C#.
