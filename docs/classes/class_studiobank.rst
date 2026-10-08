@@ -12,9 +12,14 @@ StudioBank
 
 **Inherits:** Object
 
-.. container:: contribute
+A collection of sound samples and meta data
 
-	There is currently no description for this class. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
+.. rst-class:: classref-introduction-group
+
+Description
+-----------
+
+Banks made in FMOD Studio contain the metadata and audio sample data required for runtime mixing and playback. Audio sample data may be packed into the same bank as the event metadata which references it, or it may be packed into separate banks.
 
 .. rst-class:: classref-reftable-group
 

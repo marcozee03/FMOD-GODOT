@@ -91,18 +91,18 @@ class FmodAudioServer : public Object
             RigidBody3D *rigidBody3D;
         };
         Vector3 lastFramePosition;
-        bool nonRigidbodyVelocity;
+        bool nonRigidbodyVelocity = false;
     };
 
   private:
     FMOD_SYSTEM *core_system = nullptr;
     FMOD_STUDIO_SYSTEM *studio_system = nullptr;
-    CharString encryption_key;
-    bool initialized;
-    bool muted;
+    CharString encryption_key = "";
+    bool initialized = false;
+    bool muted = false;
     LocalVector<Ref<FmodBank>> registered_banks;
-    bool live_update_connected;
-    bool start_up_banks_loaded;
+    bool live_update_connected = false;
+    bool start_up_banks_loaded = false;
 
     // core api
 

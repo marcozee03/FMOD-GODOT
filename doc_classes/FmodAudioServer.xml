@@ -52,14 +52,14 @@
 			<return type="int" />
 			<param index="0" name="guid" type="Vector4i" />
 			<description>
-                Creates a handle to an FMOD Event Instance.
+				Creates a handle to an FMOD Event Instance.
 			</description>
 		</method>
 		<method name="create_instance_by_path" qualifiers="const">
 			<return type="int" />
 			<param index="0" name="path" type="String" />
 			<description>
-                Creates a handle to an FMOD Event Instance.
+				Creates a handle to an FMOD Event Instance.
 			</description>
 		</method>
 		<method name="detach_instance">
@@ -80,7 +80,7 @@
 			<return type="int" />
 			<param index="0" name="path" type="String" />
 			<description>
-                Returns handle to FMOD Bus.
+				Returns handle to FMOD Bus.
 			</description>
 		</method>
 		<method name="get_core">
@@ -93,14 +93,14 @@
 			<return type="int" />
 			<param index="0" name="id" type="Vector4i" />
 			<description>
-                Returns handle to Event Description.
+				Returns handle to Event Description.
 			</description>
 		</method>
 		<method name="get_event_description_by_path" qualifiers="const">
 			<return type="int" />
 			<param index="0" name="path" type="String" />
 			<description>
-                Returns handle to Event Description.
+				Returns handle to Event Description.
 			</description>
 		</method>
 		<method name="get_singleton" qualifiers="static">
@@ -112,54 +112,54 @@
 		<method name="get_studio">
 			<return type="int" />
 			<description>
-                Returns handle to FMOD_STUDIO_SYSTEM.
+				Returns handle to FMOD_STUDIO_SYSTEM.
 			</description>
 		</method>
 		<method name="get_vca" qualifiers="const">
 			<return type="int" />
 			<param index="0" name="guid" type="Vector4i" />
 			<description>
-                Returns handle to FMOD VCA.
+				Returns handle to FMOD VCA.
 			</description>
 		</method>
 		<method name="get_vca_by_path" qualifiers="const">
 			<return type="int" />
 			<param index="0" name="path" type="String" />
 			<description>
-                Returns handle to FMOD VCA.
+				Returns handle to FMOD VCA.
 			</description>
 		</method>
 		<method name="get_version_number" qualifiers="static">
 			<return type="String" />
 			<description>
-                Gets the FMOD Headers Version Number.
+				Gets the FMOD Headers Version Number.
 			</description>
 		</method>
 		<method name="has_bank_loaded" qualifiers="const">
 			<return type="bool" />
 			<param index="0" name="bank_name" type="String" />
 			<description>
-                Check if bank at path to file or id string is loaded.
+				Check if bank at path to file or id string is loaded.
 			</description>
 		</method>
 		<method name="is_live_update_connected" qualifiers="const">
 			<return type="bool" />
 			<description>
-                if [code]true[/code] game is connected to fmod studio.
+				if [code]true[/code] game is connected to fmod studio.
 			</description>
 		</method>
 		<method name="path_to_guid" qualifiers="const">
 			<return type="Vector4i" />
 			<param index="0" name="path" type="String" />
 			<description>
-                Looks up guid for path.
+				Looks up guid for path.
 			</description>
 		</method>
 		<method name="pause_all_events">
 			<return type="void" />
 			<param index="0" name="pause" type="bool" />
 			<description>
-                Pauses or unpauses all events.
+				Pauses or unpauses all events.
 			</description>
 		</method>
 		<method name="play_one_shot">
@@ -167,7 +167,7 @@
 			<param index="0" name="guid" type="Vector4i" />
 			<param index="1" name="position" type="Vector3" default="Vector3(0, 0, 0)" />
 			<description>
-                Plays sound at [param position]
+				Plays sound at [param position]
 			</description>
 		</method>
 		<method name="play_one_shot_attached_2d">
@@ -176,7 +176,7 @@
 			<param index="1" name="node" type="Node2D" />
 			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
 			<description>
-                Plays sound attached to [param node].
+				Plays sound attached to [param node].
 			</description>
 		</method>
 		<method name="play_one_shot_attached_2d_by_path">
@@ -185,7 +185,7 @@
 			<param index="1" name="node" type="Node2D" />
 			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
 			<description>
-                Plays sound attached to [param node].
+				Plays sound attached to [param node].
 			</description>
 		</method>
 		<method name="play_one_shot_attached_3d">
@@ -194,7 +194,7 @@
 			<param index="1" name="node" type="Node3D" />
 			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
 			<description>
-                Plays sound attached to [param node].
+				Plays sound attached to [param node].
 			</description>
 		</method>
 		<method name="play_one_shot_attached_3d_by_path">
@@ -203,7 +203,7 @@
 			<param index="1" name="node" type="Node3D" />
 			<param index="2" name="non_rigid_body_velocity" type="bool" default="false" />
 			<description>
-                Plays sound attached to [param node].
+				Plays sound attached to [param node].
 			</description>
 		</method>
 		<method name="play_one_shot_attached_rigidbody_2d">
@@ -211,7 +211,7 @@
 			<param index="0" name="guid" type="Vector4i" />
 			<param index="1" name="rigidbody" type="RigidBody2D" />
 			<description>
-                Plays sound attached to [param rigidbody].
+				Plays sound attached to [param rigidbody].
 			</description>
 		</method>
 		<method name="play_one_shot_attached_rigidbody_2d_by_path">
@@ -219,7 +219,7 @@
 			<param index="0" name="path" type="String" />
 			<param index="1" name="rigidbody" type="RigidBody2D" />
 			<description>
-                Plays sound attached to [param rigidbody].
+				Plays sound attached to [param rigidbody].
 			</description>
 		</method>
 		<method name="play_one_shot_attached_rigidbody_3d">
@@ -227,7 +227,7 @@
 			<param index="0" name="guid" type="Vector4i" />
 			<param index="1" name="rigidbody" type="RigidBody3D" />
 			<description>
-                Plays sound attached to [param rigidbody].
+				Plays sound attached to [param rigidbody].
 			</description>
 		</method>
 		<method name="play_one_shot_attached_rigidbody_3d_by_path">
@@ -235,7 +235,7 @@
 			<param index="0" name="path" type="String" />
 			<param index="1" name="rigidbody" type="RigidBody3D" />
 			<description>
-                Plays sound attached to [param rigidbody].
+				Plays sound attached to [param rigidbody].
 			</description>
 		</method>
 		<method name="play_one_shot_by_path">
@@ -254,7 +254,7 @@
 			<param index="1" name="listener_index" type="int" default="0" />
 			<param index="2" name="attenuation_object" type="Node2D" default="null" />
 			<description>
-                Moves listener at [param listener_index] to [param node]'s position and optionally attenuates on [param attenuation_object]
+				Moves listener at [param listener_index] to [param node]'s position and optionally attenuates on [param attenuation_object]
 			</description>
 		</method>
 		<method name="set_listener_location_3d">
@@ -263,7 +263,7 @@
 			<param index="1" name="listener_index" type="int" default="0" />
 			<param index="2" name="attenuation_object" type="Node3D" default="null" />
 			<description>
-                Moves listener at [param listener_index] to [param node]'s position and optionally attenuates on [param attenuation_object]
+				Moves listener at [param listener_index] to [param node]'s position and optionally attenuates on [param attenuation_object]
 			</description>
 		</method>
 		<method name="set_listener_location_rigid_body2d">
@@ -272,7 +272,7 @@
 			<param index="1" name="listener_index" type="int" default="0" />
 			<param index="2" name="attenuation_object" type="Node2D" default="null" />
 			<description>
-                Moves listener at [param listener_index] to [param node]'s position and optionally attenuates on [param attenuation_object]
+				Moves listener at [param listener_index] to [param node]'s position and optionally attenuates on [param attenuation_object]
 			</description>
 		</method>
 		<method name="set_listener_location_rigid_body3d">
@@ -281,19 +281,19 @@
 			<param index="1" name="listener_index" type="int" default="0" />
 			<param index="2" name="attenuation_object" type="Node3D" default="null" />
 			<description>
-                Moves listener at [param listener_index] to [param node]'s position and optionally attenuates on [param attenuation_object]
+				Moves listener at [param listener_index] to [param node]'s position and optionally attenuates on [param attenuation_object]
 			</description>
 		</method>
 		<method name="unload_banks">
 			<return type="void" />
 			<description>
-                Unloads all banks
+				Unloads all banks
 			</description>
 		</method>
 		<method name="wait_for_all_sample_loading">
 			<return type="void" />
 			<description>
-                Load all sample data.
+				Load all sample data.
 			</description>
 		</method>
 	</methods>
@@ -304,22 +304,22 @@
 	<signals>
 		<signal name="live_update_connected">
 			<description>
-                            Called after a live update connection has been established.
+				Called after a live update connection has been established.
 			</description>
 		</signal>
 		<signal name="live_update_disconnected">
 			<description>
-                            Called after live update session disconnects.
+				Called after live update session disconnects.
 			</description>
 		</signal>
 		<signal name="postupdate">
 			<description>
-                            Called at the end of the main Studio update. For async mode this will be on its own thread.
+				Called at the end of the main Studio update. For async mode this will be on its own thread.
 			</description>
 		</signal>
 		<signal name="preupdate">
 			<description>
-                            Called at the start of the main Studio update. For async mode this will be on its own thread.
+				Called at the start of the main Studio update. For async mode this will be on its own thread.
 			</description>
 		</signal>
 	</signals>
