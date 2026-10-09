@@ -155,7 +155,7 @@ void FmodConsole::_load_layout_from_config(const Ref<ConfigFile> &p_config, cons
     input->load_history(p_config->get_value(p_section, "_command_history", PackedStringArray({})));
     is_loading_state = false;
 }
-void FmodGodot::FmodConsole::_set_fmod_script_client(FmodScriptClient *p_client)
+void FmodGodot::FmodConsole::_set_fmod_script_client(Ref<FmodScriptClient> p_client)
 {
     client = p_client;
 }

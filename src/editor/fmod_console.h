@@ -121,7 +121,7 @@ class FmodConsole : public EditorDock
     Button *clear_button = nullptr;
 
     CommandInput *input = nullptr;
-    FmodScriptClient *client = nullptr;
+    Ref<FmodScriptClient> client = nullptr;
 
     bool is_loading_state = false; // Used to disable saving requests while loading (some signals from buttons will try
                                    // to trigger a save, which happens during loading).
@@ -151,7 +151,7 @@ class FmodConsole : public EditorDock
     void add_message(const String &p_msg, MessageType p_type = MSG_TYPE_STD);
     void _save_layout_to_config(const Ref<ConfigFile> &p_config, const String &p_section) const override;
     void _load_layout_from_config(const Ref<ConfigFile> &p_config, const String &p_section) override;
-    void _set_fmod_script_client(FmodScriptClient *p_client);
+    void _set_fmod_script_client(Ref<FmodScriptClient> p_client);
 
     void clear();
 

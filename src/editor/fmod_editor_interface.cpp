@@ -47,7 +47,7 @@ const FmodEditorIndex *FmodEditorInterface::get_cache() const
 {
     return &cache;
 }
-FmodScriptClient *FmodEditorInterface::get_script_client() const
+Ref<FmodScriptClient> FmodEditorInterface::get_script_client() const
 {
     return script;
 }

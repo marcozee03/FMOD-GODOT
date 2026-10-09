@@ -15,7 +15,7 @@ class FmodEditorInterface : public Object
     /* data */
     FmodEditorIndex cache;
     static FmodEditorInterface *singleton;
-    FmodScriptClient *script = nullptr;
+    Ref<FmodScriptClient> script = nullptr;
     FmodConsole *console = nullptr;
     Ref<FmodDebuggerPlugin> debugger = nullptr;
 
@@ -29,7 +29,7 @@ class FmodEditorInterface : public Object
     void build_banks();
     void refresh(bool p_load_start_up_banks = false);
     const FmodEditorIndex *get_cache() const;
-    FmodScriptClient *get_script_client() const;
+    Ref<FmodScriptClient> get_script_client() const;
     void register_console(FmodConsole *p_console);
     void register_debugger(Ref<FmodDebuggerPlugin> p_debugger);
     bool get_mute_remote(bool p_muted) const;
