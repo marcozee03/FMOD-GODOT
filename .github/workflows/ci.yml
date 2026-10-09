@@ -27,14 +27,17 @@ jobs:
         include:
           - target: { platform: linux, arch: x86_64, os: ubuntu-22.04 }
             target-type: editor
+            build-profile: build_profile_editor.json
             float-precision: single
             api-version: 4.6
           - target: { platform: windows, arch: x86_64, os: windows-latest }
             target-type: editor
+            build-profile: build_profile_editor.json
             float-precision: single
             api-version: 4.6
           - target: { platform: linux, arch: x86_64, os: ubuntu-22.04 }
             target-type: template_release
+            build-profile: build_profile.json
             float-precision: single
             api-version: 4.6
           # - target: { platform: macos, arch: universal, os: macos-latest }
@@ -42,6 +45,7 @@ jobs:
           #   float-precision: single
           - target: { platform: android, arch: arm64, os: ubuntu-22.04 }
             target-type: template_debug
+            build-profile: build_profile.json
             float-precision: single
             api-version: 4.6
           # - target: { platform: web, arch: wasm32, os: ubuntu-22.04 }
@@ -101,7 +105,7 @@ jobs:
         env:
           SCONS_CACHE: ${{ github.workspace }}/.scons-cache/
         run: |
-          scons target=${{ matrix.target-type }} use_static_cpp=yes platform=${{ matrix.target.platform }} arch=${{ matrix.target.arch }} precision=${{ matrix.float-precision }} api_version=${{ matrix.api-version }}
+          scons target=${{ matrix.target-type }} use_static_cpp=yes platform=${{ matrix.target.platform }} arch=${{ matrix.target.arch }} precision=${{ matrix.float-precision }} api_version=${{ matrix.api-version }} build_profile=${{ matrix.build-profile }}
 
       - name: Save .scons_cache
         uses: ./godot-cpp/.github/actions/godot-cache-save

@@ -1,8 +1,6 @@
 #pragma once
 
-#include "fmod.h"
 #include "fmod_common.h"
-#include "fmod_studio.h"
 #include "fmod_studio_common.h"
 #include <classes/project_settings.hpp>
 namespace FmodGodot

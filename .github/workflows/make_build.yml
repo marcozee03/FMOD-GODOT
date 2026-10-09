@@ -72,12 +72,22 @@ jobs:
           scons-cache: ${{ github.workspace }}/.scons-cache/
           cache-name: ${{ matrix.target.platform }}_${{ matrix.target.arch }}_${{ matrix.float-precision }}_${{ matrix.target-type }}_${{ matrix.api-version }}_static
 
-      - name: Build GDExtension Debug Build
+      - name: Build GDExtension Editor Build
         shell: sh
+        if: ${{ matrix.target-type == 'editor' }}
         env:
           SCONS_CACHE: ${{ github.workspace }}/.scons-cache/
         run: |
-          scons target=${{ matrix.target-type }} use_static_cpp=yes platform=${{ matrix.target.platform }} arch=${{ matrix.target.arch }} precision=${{ matrix.float-precision }} api_version=${{ matrix.api-version }}
+          scons target=${{ matrix.target-type }} use_static_cpp=yes platform=${{ matrix.target.platform }} arch=${{ matrix.target.arch }} precision=${{ matrix.float-precision }} api_version=${{ matrix.api-version }} build_profile=build_profile_editor.json
+
+      - name: Build GDExtension Debug Build
+        shell: sh
+        if: ${{ matrix.target-type != 'editor' }}
+        env:
+          SCONS_CACHE: ${{ github.workspace }}/.scons-cache/
+        run: |
+          scons target=${{ matrix.target-type }} use_static_cpp=yes platform=${{ matrix.target.platform }} arch=${{ matrix.target.arch }} precision=${{ matrix.float-precision }} api_version=${{ matrix.api-version }} build_profile=build_profile.json
+
 
       - name: Save .scons_cache
         uses: ./godot-cpp/.github/actions/godot-cache-save

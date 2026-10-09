@@ -1,0 +1,32 @@
+{
+    "type": "feature_profile",
+    "enabled_classes": [
+        "Callable",
+        "TextServer",
+        "ClassDB",
+        "Object",
+        "OS",
+        "ProjectSettings",
+        "Engine",
+        "EngineDebugger",
+        "Thread",
+        "SceneTree",
+        "Control",
+        "Node",
+        "Node2D",
+        "Node3D",
+        "RigidBody2D",
+        "RigidBody3D",
+        "Performance",
+        "ResourceLoader",
+        "ResourceFormatLoader",
+        "ResourceSaver",
+        "ResourceFormatSaver",
+        "ResourceImporter",
+        "AudioStream",
+        "AudioStreamPlayback",
+        "ProjectSettings",
+        "DirAccess",
+        "EditorSettings"
+    ]
+}
