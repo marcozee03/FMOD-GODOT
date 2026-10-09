@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="StudioEventInstance" inherits="Object" api_type="extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
-An instance of an FMOD Studio event.
+		An instance of an FMOD Studio event.
 	</brief_description>
 	<description>
 	</description>
@@ -12,14 +12,14 @@ An instance of an FMOD Studio event.
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the event description.
+				Retrieves the event description.
 			</description>
 		</method>
 		<method name="get_exclusive_cpu_usage" qualifiers="static">
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the event CPU usage processing just this unit during the last update in microseconds.
+				Retrieves the event CPU usage processing just this unit during the last update in microseconds.
 			</description>
 		</method>
 		<method name="get_final_parameter_by_id" qualifiers="static">
@@ -27,58 +27,58 @@ Retrieves the event CPU usage processing just this unit during the last update i
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="id" type="int" />
 			<description>
-Retrieves a parameter value by unique identifier. after applying adjustments due to automation, modulation, seek speed, and parameter velocity to value. This is calculated asynchronously when the Studio system updates.
+				Retrieves a parameter value by unique identifier. after applying adjustments due to automation, modulation, seek speed, and parameter velocity to value. This is calculated asynchronously when the Studio system updates.
 			</description>
 		</method>
 		<method name="get_final_pitch" qualifiers="static">
 			<return type="float" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the pitch multiplier.
-The final combined value returned in finalpitch combines the pitch set using Studio::EventInstance::setPitch with the result of any automation or modulation. The final combined pitch is calculated asynchronously when the Studio system updates.
+				Retrieves the pitch multiplier.
+				The final combined value returned in finalpitch combines the pitch set using Studio::EventInstance::setPitch with the result of any automation or modulation. The final combined pitch is calculated asynchronously when the Studio system updates.
 			</description>
 		</method>
 		<method name="get_final_volume" qualifiers="static">
 			<return type="float" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the volume level. The final combined value returned in finalvolume combines the volume set using the public API with the result of any automation or modulation. The final combined volume is calculated asynchronously when the Studio system updates.
+				Retrieves the volume level. The final combined value returned in finalvolume combines the volume set using the public API with the result of any automation or modulation. The final combined volume is calculated asynchronously when the Studio system updates.
 			</description>
 		</method>
 		<method name="get_inclusive_cpu_usage" qualifiers="static">
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the event CPU time spent processing this unit and all of its input during the last update in microseconds.
+				Retrieves the event CPU time spent processing this unit and all of its input during the last update in microseconds.
 			</description>
 		</method>
 		<method name="get_listener_mask" qualifiers="static">
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the listener mask.
+				Retrieves the listener mask.
 			</description>
 		</method>
 		<method name="get_max_distance" qualifiers="static">
 			<return type="float" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the maximum distances for 3D attenuation.
+				Retrieves the maximum distances for 3D attenuation.
 			</description>
 		</method>
 		<method name="get_min_distance" qualifiers="static">
 			<return type="float" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the minimum distances for 3D attenuation.
+				Retrieves the minimum distances for 3D attenuation.
 			</description>
 		</method>
 		<method name="get_parameter_by_id" qualifiers="static">
 			<return type="float" />
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="id" type="int" />
-                        <description>
-Retrieves a parameter value by unique identifier.
+			<description>
+				Retrieves a parameter value by unique identifier.
 			</description>
 		</method>
 		<method name="get_parameter_by_name" qualifiers="static">
@@ -86,28 +86,28 @@ Retrieves a parameter value by unique identifier.
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="name" type="String" />
 			<description>
-Retrieves a parameter value by name, including the path if needed.
+				Retrieves a parameter value by name, including the path if needed.
 			</description>
 		</method>
 		<method name="get_paused" qualifiers="static">
 			<return type="bool" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the pause state.
+				Retrieves the pause state.
 			</description>
 		</method>
 		<method name="get_pitch" qualifiers="static">
 			<return type="float" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the pitch multiplier.
+				Retrieves the pitch multiplier.
 			</description>
 		</method>
 		<method name="get_playback_state" qualifiers="static">
 			<return type="int" enum="FMOD_STUDIO_PLAYBACK_STATE" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the playback state.
+				Retrieves the playback state.
 			</description>
 		</method>
 		<method name="get_property" qualifiers="static">
@@ -115,7 +115,7 @@ Retrieves the playback state.
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="index" type="int" enum="FMOD_STUDIO_EVENT_PROPERTY" />
 			<description>
-Retrieves the value of a built-in property.
+				Retrieves the value of a built-in property.
 			</description>
 		</method>
 		<method name="get_reverb_level" qualifiers="static">
@@ -123,70 +123,70 @@ Retrieves the value of a built-in property.
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="index" type="int" />
 			<description>
-Retrieves the core reverb send level.
+				Retrieves the core reverb send level.
 			</description>
 		</method>
 		<method name="get_system" qualifiers="static">
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the FMOD Studio System.
+				Retrieves the FMOD Studio System.
 			</description>
 		</method>
 		<method name="get_timeline_position" qualifiers="static">
 			<return type="int" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the timeline cursor position.
+				Retrieves the timeline cursor position.
 			</description>
 		</method>
 		<method name="get_transform" qualifiers="static">
 			<return type="Transform3D" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the instance's transform. (Corresponds to get3DAttributes)
+				Retrieves the instance's transform. (Corresponds to get3DAttributes)
 			</description>
 		</method>
 		<method name="get_velocity" qualifiers="static">
 			<return type="Vector3" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the instance's transform. (Corresponds to get3DAttributes)
+				Retrieves the instance's transform. (Corresponds to get3DAttributes)
 			</description>
 		</method>
 		<method name="get_volume" qualifiers="static">
 			<return type="float" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the volume level.
+				Retrieves the volume level.
 			</description>
 		</method>
 		<method name="is_valid" qualifiers="static">
 			<return type="bool" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Checks that the EventInstance reference is valid.
+				Checks that the EventInstance reference is valid.
 			</description>
 		</method>
 		<method name="is_virtual" qualifiers="static">
 			<return type="bool" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the virtualization state.
+				Retrieves the virtualization state.
 			</description>
 		</method>
 		<method name="key_off" qualifiers="static">
 			<return type="int" enum="FMOD_RESULT" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Allow an event to continue past a sustain point.
+				Allow an event to continue past a sustain point.
 			</description>
 		</method>
 		<method name="release" qualifiers="static">
 			<return type="int" enum="FMOD_RESULT" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Marks the event instance for release.
+				Marks the event instance for release.
 			</description>
 		</method>
 		<method name="set_3d_attributes" qualifiers="static">
@@ -195,7 +195,7 @@ Marks the event instance for release.
 			<param index="1" name="transform" type="Transform3D" />
 			<param index="2" name="velocity" type="Vector3" />
 			<description>
-Sets the 3D attributes.
+				Sets the 3D attributes.
 			</description>
 		</method>
 		<method name="set_listener_mask" qualifiers="static">
@@ -203,7 +203,7 @@ Sets the 3D attributes.
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="listener_mask" type="int" />
 			<description>
-Sets the listener mask.
+				Sets the listener mask.
 			</description>
 		</method>
 		<method name="set_parameter_by_id" qualifiers="static">
@@ -213,7 +213,7 @@ Sets the listener mask.
 			<param index="2" name="value" type="float" />
 			<param index="3" name="ignore_seek_speed" type="bool" default="false" />
 			<description>
-Sets a parameter value by unique identifier.
+				Sets a parameter value by unique identifier.
 			</description>
 		</method>
 		<method name="set_parameter_by_id_with_label" qualifiers="static">
@@ -223,7 +223,7 @@ Sets a parameter value by unique identifier.
 			<param index="2" name="label" type="String" />
 			<param index="3" name="ignoreseekspeed" type="bool" default="false" />
 			<description>
-Sets a parameter value by unique identifier, looking up the value label.
+				Sets a parameter value by unique identifier, looking up the value label.
 			</description>
 		</method>
 		<method name="set_parameter_by_name" qualifiers="static">
@@ -233,7 +233,7 @@ Sets a parameter value by unique identifier, looking up the value label.
 			<param index="2" name="value" type="float" />
 			<param index="3" name="ignore_seek_speed" type="bool" default="false" />
 			<description>
-Sets a parameter value by name, including the path if needed.
+				Sets a parameter value by name, including the path if needed.
 			</description>
 		</method>
 		<method name="set_parameter_by_name_with_label" qualifiers="static">
@@ -243,7 +243,7 @@ Sets a parameter value by name, including the path if needed.
 			<param index="2" name="label" type="String" />
 			<param index="3" name="ignore_seek_speed" type="bool" default="false" />
 			<description>
-Sets a parameter value by name, including the path if needed, looking up the value label.
+				Sets a parameter value by name, including the path if needed, looking up the value label.
 			</description>
 		</method>
 		<method name="set_paused" qualifiers="static">
@@ -251,7 +251,7 @@ Sets a parameter value by name, including the path if needed, looking up the val
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="paused" type="bool" />
 			<description>
-Retrieves the pause state.
+				Retrieves the pause state.
 			</description>
 		</method>
 		<method name="set_pitch" qualifiers="static">
@@ -259,7 +259,7 @@ Retrieves the pause state.
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="pitch" type="float" />
 			<description>
-Retrieves the pitch multiplier.
+				Retrieves the pitch multiplier.
 			</description>
 		</method>
 		<method name="set_property" qualifiers="static">
@@ -268,7 +268,7 @@ Retrieves the pitch multiplier.
 			<param index="1" name="index" type="int" enum="FMOD_STUDIO_EVENT_PROPERTY" />
 			<param index="2" name="level" type="float" />
 			<description>
-Retrieves the value of a built-in property.
+				Retrieves the value of a built-in property.
 			</description>
 		</method>
 		<method name="set_reverb_level" qualifiers="static">
@@ -277,7 +277,7 @@ Retrieves the value of a built-in property.
 			<param index="1" name="index" type="int" />
 			<param index="2" name="level" type="float" />
 			<description>
-Sets the core reverb send level.
+				Sets the core reverb send level.
 			</description>
 		</method>
 		<method name="set_timeline_position" qualifiers="static">
@@ -292,7 +292,7 @@ Sets the core reverb send level.
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="transform" type="Transform3D" />
 			<description>
-Sets the instance transform. (Corresponds to Set3DAttributes)
+				Sets the instance transform. (Corresponds to Set3DAttributes)
 			</description>
 		</method>
 		<method name="set_velocity" qualifiers="static">
@@ -300,7 +300,7 @@ Sets the instance transform. (Corresponds to Set3DAttributes)
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="velocity" type="Vector3" />
 			<description>
-Sets the instance velocity. (Corresponds to Set3DAttributes)
+				Sets the instance velocity. (Corresponds to Set3DAttributes)
 			</description>
 		</method>
 		<method name="set_volume" qualifiers="static">
@@ -308,14 +308,14 @@ Sets the instance velocity. (Corresponds to Set3DAttributes)
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="volume" type="float" />
 			<description>
-Sets the volume level.
+				Sets the volume level.
 			</description>
 		</method>
 		<method name="start" qualifiers="static">
 			<return type="int" enum="FMOD_RESULT" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Starts playback.
+				Starts playback.
 			</description>
 		</method>
 		<method name="stop" qualifiers="static">
@@ -323,7 +323,7 @@ Starts playback.
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="stop_mode" type="int" enum="FMOD_STUDIO_STOP_MODE" />
 			<description>
-Stops playback.
+				Stops playback.
 			</description>
 		</method>
 	</methods>

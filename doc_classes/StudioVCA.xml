@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="StudioVCA" inherits="Object" api_type="extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
-Represents a global mixer VCA.
+		Represents a global mixer VCA.
 	</brief_description>
 	<description>
 	</description>
@@ -12,35 +12,35 @@ Represents a global mixer VCA.
 			<return type="float" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the volume level. The final combined volume returned in finalvolume combines the user value set using Studio::VCA::setVolume with the result of any automation or modulation applied to the VCA. The final combined volume is calculated asynchronously when the Studio system updates.
+				Retrieves the volume level. The final combined volume returned in finalvolume combines the user value set using Studio::VCA::setVolume with the result of any automation or modulation applied to the VCA. The final combined volume is calculated asynchronously when the Studio system updates.
 			</description>
 		</method>
 		<method name="get_id" qualifiers="static">
 			<return type="Vector4i" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the VCA's GUID.
+				Retrieves the VCA's GUID.
 			</description>
 		</method>
 		<method name="get_path" qualifiers="static">
 			<return type="String" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the path.
+				Retrieves the path.
 			</description>
 		</method>
 		<method name="get_volume" qualifiers="static">
 			<return type="float" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Retrieves the volume level.
+				Retrieves the volume level.
 			</description>
 		</method>
 		<method name="is_valid" qualifiers="static">
 			<return type="bool" />
 			<param index="0" name="handle" type="int" />
 			<description>
-Checks that the VCA reference is valid.
+				Checks that the VCA reference is valid.
 			</description>
 		</method>
 		<method name="set_volume" qualifiers="static">
@@ -48,7 +48,7 @@ Checks that the VCA reference is valid.
 			<param index="0" name="handle" type="int" />
 			<param index="1" name="volume" type="float" />
 			<description>
-Sets the volume level.
+				Sets the volume level.
 			</description>
 		</method>
 	</methods>
