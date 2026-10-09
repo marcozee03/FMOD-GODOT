@@ -244,7 +244,7 @@ def main():
         args.targetplatform = get_os()
     if args.command != "install_cs" and not args.noprompts:
         if not args.username:
-            password = input("Enter FMOD account username:\n")
+            username = input("Enter FMOD account username:\n")
         if not args.password:
             password = getpass.getpass("Enter FMOD account password:\n")
     match args.command:
