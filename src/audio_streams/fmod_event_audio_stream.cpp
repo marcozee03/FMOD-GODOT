@@ -5,8 +5,9 @@
 #include "classes/engine.hpp"
 #include "event_description.h"
 #include "fmod_audio_server.h"
+#ifdef TOOLS_ENABLED
 #include "fmod_editor_interface.h"
-#include "fmod_errors.h"
+#endif
 #include "fmod_studio.h"
 #include "fmod_studio_common.h"
 #include "globals.h"
