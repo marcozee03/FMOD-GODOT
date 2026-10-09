@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="FmodEventAudioStream" inherits="AudioStream" api_type="extension" experimental="This class was added to support sound themes in godot 4.8 the implementation is somewhat hacky so if you find any bugs open a github issue. For now FmodEventEmitter classes are the preferred way to play sounds using nodes but, in the future they may be deprecated to prefer AudioStreamPlayers and AudioStreams" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		A class representing an Fmod Event
+	</brief_description>
+	<description>
+		The FmodEventAudioStream class is a specialized [class AudioStream] for playing Fmod events.
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="event_guid" type="Vector4i" setter="set_event_guid" getter="get_event_guid" default="Vector4i(0, 0, 0, 0)">
+			The GUID of the event to play.
+		</member>
+	</members>
+</class>

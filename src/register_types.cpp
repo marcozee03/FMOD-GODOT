@@ -7,6 +7,8 @@
 #include "core/binder_common.hpp"
 #include <fmod_studio_common.h>
 
+#include "audio_streams/fmod_event_audio_stream.h"
+#include "audio_streams/fmod_event_audio_stream_playback.h"
 #include "binding/studio/bank.h"
 #include "binding/studio/vca.h"
 #include "classes/global_constants.hpp"
@@ -152,7 +154,7 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
 
         GDREGISTER_CLASS(FmodListener2D);
         GDREGISTER_CLASS(FmodListener3D);
-        GDREGISTER_CLASS(Fmod)
+        GDREGISTER_ABSTRACT_CLASS(Fmod)
         GDREGISTER_ABSTRACT_CLASS(FmodBank);
         GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::StudioBank)
         GDREGISTER_ABSTRACT_CLASS(FmodGodot::Studio::StudioSystem)
@@ -163,6 +165,8 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         GDREGISTER_INTERNAL_CLASS(FmodBankFormatLoader);
         GDREGISTER_CLASS(FmodEventEmitter2D);
         GDREGISTER_CLASS(FmodEventEmitter3D);
+        GDREGISTER_CLASS(FmodEventAudioStream);
+        GDREGISTER_INTERNAL_CLASS(FmodEventAudioStreamPlayback);
         bank_format_loader.instantiate();
         ResourceLoader::get_singleton()->add_resource_format_loader(bank_format_loader);
 
