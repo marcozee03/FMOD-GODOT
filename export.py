@@ -25,7 +25,7 @@ def buildForPlatform(platform, arch, target:str):
         p1 = subprocess.run(
             [
                 "scons",
-                "use_static_cpp=no",
+                "use_static_cpp=yes",
                 "debug_symbols=no",
                 "lto=auto",
                 "target=template_release",
@@ -41,7 +41,7 @@ def buildForPlatform(platform, arch, target:str):
         p2 = subprocess.run(
             [
                 "scons",
-                "use_static_cpp=no",
+                "use_static_cpp=yes",
                 "debug_symbols=no",
                 "lto=auto",
                 "target=template_debug",
@@ -58,7 +58,7 @@ def buildForPlatform(platform, arch, target:str):
         p3 = subprocess.run(
             [
                 "scons",
-                "use_static_cpp=no",
+                "use_static_cpp=yes",
                 "debug_symbols=no",
                 "lto=auto",
                 "target=editor",

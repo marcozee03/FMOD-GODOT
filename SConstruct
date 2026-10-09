@@ -82,6 +82,7 @@ env.Append(
     CPPPATH=[
         "src/",
         "src/scene/",
+        "src/audio_streams/",
         "src/scene/2d/",
         "src/scene/3d",
         "src/binding/studio",
@@ -91,6 +92,7 @@ env.Append(
 sources = [
     Glob("src/*.cpp"),
     Glob("src/scene/*.cpp"),
+    Glob("src/audio_streams/*.cpp"),
     Glob("src/scene/2d/*.cpp"),
     Glob("src/scene/3d/*.cpp"),
     Glob("src/binding/*.cpp"),

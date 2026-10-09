@@ -51,3 +51,14 @@ Other objects
     class_studioeventinstance
     class_studiosystem
     class_studiovca
+
+Variant types
+=============
+
+.. toctree::
+    :maxdepth: 1
+    :name: toc-class-ref-variants
+
+    class_variant
+    class_fmodeventaudiostream
+    class_fmodinstaller
