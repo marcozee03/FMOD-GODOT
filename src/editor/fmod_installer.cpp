@@ -98,11 +98,12 @@ FmodInstaller::FmodInstaller()
         set_title("Fmod Godot Installer");
         set_initial_position(WindowInitialPosition::WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN);
         set_size(Vector2i(500, 300));
+        set_min_size(Vector2i(500, 300));
         set_wrap_controls(true);
         set_transient(true);
         set_flag(FLAG_BORDERLESS, true);
         set_flag(FLAG_RESIZE_DISABLED, true);
-        set_flag(FLAG_POPUP_WM_HINT, true);
+        // set_flag(FLAG_POPUP_WM_HINT, true);
         set_flag(FLAG_POPUP, true);
         set_use_oversampling(true);
         set_oversampling_override(1);
