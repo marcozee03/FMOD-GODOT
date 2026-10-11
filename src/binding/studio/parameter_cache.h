@@ -27,7 +27,7 @@ struct ParameterCache
     float min_value;
     float default_value;
     float max_value;
-    FMOD_STUDIO_PARAMETER_FLAGS flags;
+    FMOD_STUDIO_PARAMETER_FLAGS flags = 0;
     FMOD_STUDIO_PARAMETER_TYPE type;
     PackedStringArray labels;
     constexpr bool is_readonly()
@@ -48,7 +48,8 @@ struct ParameterCache
     }
     constexpr bool is_labeled()
     {
-        return flags & (FMOD_STUDIO_PARAMETER_LABELED | FMOD_STUDIO_PARAMETER_DISCRETE);
+        return (flags & (FMOD_STUDIO_PARAMETER_LABELED | FMOD_STUDIO_PARAMETER_DISCRETE)) ==
+               (FMOD_STUDIO_PARAMETER_LABELED | FMOD_STUDIO_PARAMETER_DISCRETE);
     }
     ParameterCache()
     {
@@ -71,7 +72,8 @@ struct ParameterCache
         PropertyInfo info;
         info.name = "parameters/" + String(p_parameter.name);
         info.usage = PropertyUsageFlags::PROPERTY_USAGE_DEFAULT;
-        if (p_parameter.flags & (FMOD_STUDIO_PARAMETER_LABELED | FMOD_STUDIO_PARAMETER_DISCRETE))
+        if ((p_parameter.flags & (FMOD_STUDIO_PARAMETER_LABELED | FMOD_STUDIO_PARAMETER_DISCRETE)) ==
+            (FMOD_STUDIO_PARAMETER_LABELED | FMOD_STUDIO_PARAMETER_DISCRETE))
         {
             info.hint = PROPERTY_HINT_ENUM;
             info.type = Variant::INT;
