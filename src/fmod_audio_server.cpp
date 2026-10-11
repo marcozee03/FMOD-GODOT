@@ -238,40 +238,45 @@ FMOD_RESULT FmodAudioServer::init(const InitSettings &p_settings)
     default:
         break;
     }
-    FMOD_ERR_FAIL_VE_MSG(
+#if DEBUG_ENABLED
+    FMOD_ERR_FAIL_RETERR_MSG(
         FMOD_Debug_Initialize(p_settings.logging_level | p_settings.debug_type | p_settings.debug_display,
                               FMOD_DEBUG_MODE_CALLBACK, fmod_debug_callback, nullptr),
         "Failed to initialize debug callbacks.");
+#endif
 
-    FMOD_ERR_FAIL_VE_MSG(FMOD_Studio_System_Create(&studio_system, FMOD_VERSION), "Failed to create studio system.");
-    FMOD_ERR_FAIL_VE_MSG(FMOD_Studio_System_GetCoreSystem(studio_system, &core_system), "Failed to get core system.");
+    FMOD_ERR_FAIL_RETERR_MSG(FMOD_Studio_System_Create(&studio_system, FMOD_VERSION),
+                             "Failed to create studio system.");
+    FMOD_ERR_FAIL_RETERR_MSG(FMOD_Studio_System_GetCoreSystem(studio_system, &core_system),
+                             "Failed to get core system.");
 
     // Core Settings | Initialize to zero/NUll since thats default according to FMOD docs. and as recommended;
     FMOD_ADVANCEDSETTINGS fmod_settings = p_settings.get_fmod_advanced_settings();
 
-    FMOD_ERR_FAIL_VE(FMOD_System_SetAdvancedSettings(core_system, &fmod_settings))
-    FMOD_ERR_FAIL_VE(FMOD_System_SetSoftwareFormat(core_system, p_settings.sample_rate, FMOD_SPEAKERMODE_DEFAULT, 0));
-    FMOD_ERR_FAIL_VE(
+    FMOD_ERR_FAIL_RETERR(FMOD_System_SetAdvancedSettings(core_system, &fmod_settings))
+    FMOD_ERR_FAIL_RETERR(
+        FMOD_System_SetSoftwareFormat(core_system, p_settings.sample_rate, FMOD_SPEAKERMODE_DEFAULT, 0));
+    FMOD_ERR_FAIL_RETERR(
         FMOD_System_SetDSPBufferSize(core_system, p_settings.dspbuffer_length, p_settings.dspbuffer_count));
-    FMOD_ERR_FAIL_VE(FMOD_System_SetSoftwareChannels(core_system, p_settings.software_channels));
-    FMOD_ERR_FAIL_VE(FMOD_System_Set3DSettings(core_system, p_settings.doppler_scale, p_settings.distance_factor,
-                                               p_settings.rolloff_scale));
-    FMOD_ERR_FAIL_VE(FMOD_System_SetFileSystem(core_system, open_callback, close_callback, read_callback, seek_callback,
-                                               nullptr, nullptr, 2048));
+    FMOD_ERR_FAIL_RETERR(FMOD_System_SetSoftwareChannels(core_system, p_settings.software_channels));
+    FMOD_ERR_FAIL_RETERR(FMOD_System_Set3DSettings(core_system, p_settings.doppler_scale, p_settings.distance_factor,
+                                                   p_settings.rolloff_scale));
+    FMOD_ERR_FAIL_RETERR(FMOD_System_SetFileSystem(core_system, open_callback, close_callback, read_callback,
+                                                   seek_callback, nullptr, nullptr, 2048));
     // studio settings
     FMOD_STUDIO_ADVANCEDSETTINGS studio_settings = p_settings.get_fmod_studio_advanced_settings(studio_system);
     // PRevents dangling pointer;
     encryption_key = p_settings.encryption_key.utf8();
     studio_settings.encryptionkey = encryption_key.ptr();
 
-    FMOD_ERR_FAIL_VE(FMOD_Studio_System_SetAdvancedSettings(studio_system, &studio_settings));
-    FMOD_ERR_FAIL_VE(
+    FMOD_ERR_FAIL_RETERR(FMOD_Studio_System_SetAdvancedSettings(studio_system, &studio_settings));
+    FMOD_ERR_FAIL_RETERR(
         FMOD_Studio_System_SetCallback(studio_system, fmod_studio_system_callback, FMOD_STUDIO_SYSTEM_CALLBACK_ALL))
-    FMOD_ERR_FAIL_VE(FMOD_Studio_System_SetUserData(studio_system, this))
+    FMOD_ERR_FAIL_RETERR(FMOD_Studio_System_SetUserData(studio_system, this))
 
-    FMOD_ERR_FAIL_VE_MSG(FMOD_Studio_System_Initialize(studio_system, p_settings.virtual_channels, studio_init,
-                                                       FMOD_INIT_NORMAL & FMOD_INIT_3D_RIGHTHANDED, nullptr),
-                         "Failed to initialized Fmod Studio System");
+    FMOD_ERR_FAIL_RETERR_MSG(FMOD_Studio_System_Initialize(studio_system, p_settings.virtual_channels, studio_init,
+                                                           FMOD_INIT_NORMAL & FMOD_INIT_3D_RIGHTHANDED, nullptr),
+                             "Failed to initialized Fmod Studio System");
     initialized = true;
 
     thread->start(callable_mp(this, &FmodAudioServer::_thread_func), Thread::Priority::PRIORITY_NORMAL);
@@ -657,18 +662,22 @@ bool FmodAudioServer::is_live_update_connected() const
 }
 FMOD_SYSTEM *FmodAudioServer::get_core()
 {
+    ERR_FAIL_COND_V_EDMSG(!initialized, nullptr, "FMOD Audio Server is not initialized");
     return core_system;
 }
 const FMOD_SYSTEM *FmodAudioServer::get_core() const
 {
+    ERR_FAIL_COND_V_EDMSG(!initialized, nullptr, "FMOD Audio Server is not initialized");
     return core_system;
 }
 FMOD_STUDIO_SYSTEM *FmodAudioServer::get_studio()
 {
+    ERR_FAIL_COND_V_EDMSG(!initialized, nullptr, "FMOD Audio Server is not initialized");
     return studio_system;
 }
 const FMOD_STUDIO_SYSTEM *FmodAudioServer::get_studio() const
 {
+    ERR_FAIL_COND_V_EDMSG(!initialized, nullptr, "FMOD Audio Server is not initialized");
     return studio_system;
 }
 FMOD_STUDIO_EVENTINSTANCE *FmodAudioServer::create_instance(const Vector4i &p_guid) const
