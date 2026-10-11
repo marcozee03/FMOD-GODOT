@@ -6,8 +6,7 @@ compatibility_minimum = 4.6
 
 FmodAudioServer = "icons/fmod_icon.svg"
 FmodBankLoader = "icons/bank_loader_icon.svg"
-EventTree = "icons/event_icon.svg"
-EventSelector = "icons/event_icon.svg"
+FmodEventAudioStream = "icons/event_icon.svg"
 FmodBank = "icons/bank_icon.svg"
 FmodEventEmitter2D = "icons/FmodEventEmitter2D.svg"
 FmodEventEmitter3D = "icons/FmodEventEmitter3D.svg"
