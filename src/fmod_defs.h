@@ -81,6 +81,12 @@ namespace FmodGodot
         FMOD_RESULT err = m_result;                                                                                    \
         ERR_FAIL_COND_MSG(err != FMOD_OK, vformat("Result: %s %s", FMOD_ErrorString(err), m_msg));                     \
     }
+#define FMOD_ERR_FAIL_RETERR(m_result)                                                                                 \
+    {                                                                                                                  \
+        FMOD_RESULT err = m_result;                                                                                    \
+        ERR_FAIL_COND_V_MSG(err != FMOD_OK, err, FMOD_ErrorString(err));                                               \
+    }
+
 #define FMOD_ERR_FAIL_RETERR_MSG(m_result, m_msg)                                                                      \
     {                                                                                                                  \
         FMOD_RESULT err = m_result;                                                                                    \
@@ -97,21 +103,11 @@ namespace FmodGodot
         FMOD_RESULT err = m_result;                                                                                    \
         ERR_FAIL_COND_V_MSG(err != FMOD_OK, m_retval, FMOD_ErrorString(err));                                          \
     }
-#define FMOD_ERR_FAIL_VE(m_result)                                                                                     \
-    {                                                                                                                  \
-        FMOD_RESULT err = m_result;                                                                                    \
-        ERR_FAIL_COND_V_MSG(err != FMOD_OK, err, FMOD_ErrorString(err));                                               \
-    }
 
 #define FMOD_ERR_FAIL_V_MSG(m_result, m_retval, m_msg)                                                                 \
     {                                                                                                                  \
         FMOD_RESULT err = m_result;                                                                                    \
         ERR_FAIL_COND_V_MSG(err != FMOD_OK, m_retval, vformat("Result: %s %s", FMOD_ErrorString(err), m_msg));         \
-    }
-#define FMOD_ERR_FAIL_VE_MSG(m_result, m_msg)                                                                          \
-    {                                                                                                                  \
-        FMOD_RESULT err = m_result;                                                                                    \
-        ERR_FAIL_COND_V_MSG(err != FMOD_OK, err, vformat("Result: %s %s", FMOD_ErrorString(err), m_msg));              \
     }
 
 typedef size_t Handle;

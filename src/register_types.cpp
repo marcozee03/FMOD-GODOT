@@ -13,12 +13,15 @@
 #include "binding/studio/vca.h"
 #include "classes/global_constants.hpp"
 #include "core/class_db.hpp"
+#include "core/error_macros.hpp"
 #include "core/memory.hpp"
 #include "core/property_info.hpp"
 #include "fmod_audio_server.h"
 #include "fmod_bank_format_loader.h"
 #include "fmod_bank_loader.h"
+#include "fmod_common.h"
 #include "fmod_enums.h"
+#include "fmod_errors.h"
 #include "fmod_event_emitter_2d.h"
 #include "fmod_event_emitter_3d.h"
 #include "fmod_listener_2d.h"
@@ -140,7 +143,11 @@ void initialize_fmod_module(ModuleInitializationLevel p_level)
         GDREGISTER_CLASS(FmodAudioServer);
         audio_server = memnew(FmodAudioServer);
         FmodAudioServer::singleton = audio_server;
-        audio_server->init_with_project_settings();
+        FMOD_RESULT result = audio_server->init_with_project_settings();
+        if (FMOD_OK != result)
+        {
+            ERR_PRINT(vformat("%s %s", "Failed to initialize FmodAudioServer with error.", FMOD_ErrorString(result)));
+        }
         Engine::get_singleton()->register_singleton("FmodAudioServer", audio_server);
 
 #if DEBUG_ENABLED
