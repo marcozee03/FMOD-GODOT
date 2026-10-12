@@ -90,7 +90,7 @@ namespace FmodGodot
 #define FMOD_ERR_FAIL_RETERR_MSG(m_result, m_msg)                                                                      \
     {                                                                                                                  \
         FMOD_RESULT err = m_result;                                                                                    \
-        ERR_FAIL_COND_V_MSG(m_result != FMOD_OK, err, vformat("Result: %s %s", FMOD_ErrorString(err), m_msg));         \
+        ERR_FAIL_COND_V_MSG(err != FMOD_OK, err, vformat("Result: %s %s", FMOD_ErrorString(err), m_msg));              \
     }
 
 #define FMOD_ERR_FAIL(m_result)                                                                                        \
