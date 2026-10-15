@@ -17,11 +17,12 @@ logging = ""
 if env["target"] in ["editor", "template_debug"]:
     logging = "L"
 
-# Require C++17
-if env.get("is_msvc", False):
-    env.Append(CXXFLAGS=["/std:c++20"])
-else:
-    env.Append(CXXFLAGS=["-std=c++20"])
+def cpp_version(version: str):
+    if env.get("is_msvc", False):
+        env.Append(CXXFLAGS=["/std:%s" % version])
+    else:
+        env.Append(CXXFLAGS=["-std=%s" % version])
+
 def linux_config():
     suffix = env['target']
     lib_filename = "{}{}.{}{}".format("lib", libname, suffix, env.subst('$SHLIBSUFFIX'))
@@ -112,9 +113,14 @@ if env["target"] == "editor":
     ])
 
 
+if env["target"] in ["editor", "template_debug"]:
+    env["build_profile"] = "build_profile_editor.json"
+else:
+    env["build_profile"] = "build_profile.json"
 
 
 verify_godot_cpp();
+cpp_version("c++20");
 linux_config();
 windows_config();
 # Currently poorly supported by plugin Untested.
