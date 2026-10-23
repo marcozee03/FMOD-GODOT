@@ -46,16 +46,16 @@ FMOD_3D_ATTRIBUTES to_3d_attributes(Node2D *p_node)
 {
     FMOD_3D_ATTRIBUTES attributes;
     attributes.position = to_fmod_vector(p_node->get_global_position());
-    attributes.forward = to_fmod_vector(p_node->get_global_transform().columns[0]);
-    attributes.up = to_fmod_vector(p_node->get_global_transform().columns[1]);
+    attributes.forward = to_fmod_vector(p_node->get_global_transform().columns[0].normalized());
+    attributes.up = to_fmod_vector(p_node->get_global_transform().columns[1].normalized());
     return attributes;
 }
 FMOD_3D_ATTRIBUTES to_3d_attributes(RigidBody2D *p_rigidbody)
 {
     FMOD_3D_ATTRIBUTES attributes;
     attributes.position = to_fmod_vector(p_rigidbody->get_global_position());
-    attributes.forward = to_fmod_vector(p_rigidbody->get_global_transform().columns[0]);
-    attributes.up = to_fmod_vector(p_rigidbody->get_global_transform().columns[1]);
+    attributes.forward = to_fmod_vector(p_rigidbody->get_global_transform().columns[0].normalized());
+    attributes.up = to_fmod_vector(p_rigidbody->get_global_transform().columns[1].normalized());
     attributes.velocity = to_fmod_vector(p_rigidbody->get_linear_velocity());
     return attributes;
 }
