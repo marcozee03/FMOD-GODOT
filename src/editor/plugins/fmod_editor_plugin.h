@@ -1,7 +1,6 @@
 #pragma once
 #include "bank_inspector_plugin.h"
 #include "classes/editor_interface.hpp"
-#include "fmod_bank_importer.h"
 #include "fmod_console.h"
 #include "fmod_debugger_plugin.h"
 #include "fmod_event_browser.h"
@@ -19,7 +18,6 @@ class FmodEditorPlugin : public EditorPlugin
     GDCLASS(FmodEditorPlugin, EditorPlugin)
   private:
     Ref<FmodSelectorInspector> eventInspector = nullptr;
-    Ref<FmodBankImporter> bankImporter = nullptr;
     Ref<BankInspectorPlugin> bankInspector = nullptr;
     FmodEventBrowser *browser = nullptr;
     FmodConsole *log = nullptr;
