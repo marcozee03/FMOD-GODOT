@@ -42,6 +42,11 @@ void FmodGodot::FmodEventAudioStreamPlayback::_seek(double p_position)
 {
     FMOD_Studio_EventInstance_SetTimelinePosition(instance, p_position * 1000);
 }
+int32_t FmodGodot::FmodEventAudioStreamPlayback::_mix(AudioFrame *p_buffer, float p_rate_scale, int32_t p_frames)
+{
+    return 0;
+}
+
 void FmodGodot::FmodEventAudioStreamPlayback::_set_parameter(const StringName &p_name, const Variant &p_value)
 {
     Studio::StudioEventInstance::set_parameter_by_name(std::bit_cast<Handle>(instance), p_name, p_value);
