@@ -74,7 +74,6 @@ jobs:
 
       - name: Build GDExtension Debug Build
         shell: sh
-        if: ${{ matrix.target-type != 'editor' }}
         env:
           SCONS_CACHE: ${{ github.workspace }}/.scons-cache/
         run: |
