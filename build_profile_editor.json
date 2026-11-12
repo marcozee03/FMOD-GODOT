@@ -45,7 +45,6 @@
         "ResourceFormatLoader",
         "ResourceSaver",
         "ResourceFormatSaver",
-        "ResourceImporter",
         "AudioStream",
         "AudioStreamPlayback",
         "ProjectSettings",

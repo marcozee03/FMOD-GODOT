@@ -1,7 +1,6 @@
 #include "fmod_editor_plugin.h"
 #include "classes/theme.hpp"
 #include "editor/fmod_installer.h"
-#include "fmod_bank_importer.h"
 #include "fmod_editor_interface.h"
 #include "variant/callable_method_pointer.hpp"
 #include <classes/editor_interface.hpp>
@@ -82,8 +81,6 @@ void FmodEditorPlugin::_enter_tree()
     add_inspector_plugin(eventInspector);
     bankInspector = memnew(BankInspectorPlugin);
     add_inspector_plugin(bankInspector);
-    bankImporter = memnew(FmodBankImporter);
-    add_import_plugin(bankImporter);
 
     debugger_plugin = memnew(FmodDebuggerPlugin);
     FmodEditorInterface::get_singleton()->register_debugger(debugger_plugin);
@@ -109,7 +106,6 @@ void FmodEditorPlugin::_exit_tree()
     remove_inspector_plugin(eventInspector);
     remove_inspector_plugin(bankInspector);
     remove_export_plugin(export_plugin);
-    remove_import_plugin(bankImporter);
     remove_debugger_plugin(debugger_plugin);
     remove_tool_menu_item("Finish FMOD Godot setup");
     memdelete_notnull(log);
