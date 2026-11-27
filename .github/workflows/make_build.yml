@@ -32,7 +32,7 @@ jobs:
           ]
         target-type: [template_debug, template_release, editor]
         float-precision: [single]
-        api-version: [4.6]
+        api-version: [4.8]
 
     runs-on: ${{ matrix.target.os }}
     steps:
@@ -74,7 +74,6 @@ jobs:
 
       - name: Build GDExtension Debug Build
         shell: sh
-        if: ${{ matrix.target-type != 'editor' }}
         env:
           SCONS_CACHE: ${{ github.workspace }}/.scons-cache/
         run: |

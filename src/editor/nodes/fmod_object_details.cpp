@@ -1,6 +1,7 @@
 #include "fmod_object_details.h"
 #include "bank.h"
 #include "classes/control.hpp"
+#include "classes/editor_inspector.hpp"
 #include "classes/node.hpp"
 #include "core/memory.hpp"
 #include "fmod_editor_interface.h"
@@ -82,9 +83,17 @@ void FmodObjectDetails::_update_theme()
 }
 void FmodObjectDetails::_meta_clicked(const Variant &p_meta)
 {
-    if (p_meta.get_type() == Variant::STRING)
+    EditorInterface::get_singleton()->get_inspector()->set_property_clipboard(p_meta);
+    switch (p_meta.get_type())
     {
+    case Variant::STRING:
         DisplayServer::get_singleton()->clipboard_set(p_meta);
+        break;
+    case Variant::VECTOR4I:
+        DisplayServer::get_singleton()->clipboard_set(fmod_guid_to_string(Vector4i(p_meta)));
+        break;
+    default:
+        break;
     }
 }
 void FmodObjectDetails::_meta_hover_started(const Variant &p_meta)
@@ -160,8 +169,8 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
         header->set_text("Event");
         header->set_button_icon(event_icon);
         Studio::StudioEventDescription::Cache event = cache->get_event(p_path);
-        push_label_str_meta(text, "Full Path: ", event.full_path, "Copy event path");
-        push_label_var_meta(text, "Guid: ", fmod_guid_to_string(event.guid), event.guid, "Drag Event");
+        push_label_str_meta(text, "Full Path: ", event.full_path, "Click to copy event path.");
+        push_label_var_meta(text, "Guid: ", fmod_guid_to_string(event.guid), event.guid, "Click to copy event GUID.");
         if (event.is3d)
         {
             push_label(text, "3D: ", Variant(event.is3d));
@@ -190,15 +199,16 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
                 text->newline();
                 if (param.is_discrete())
                 {
-                    push_label_var_meta(text, param.full_path, "", param.full_path, "Copy parameter path",
+                    push_label_var_meta(text, param.full_path, "", param.full_path, "Click to copy parameter path.",
                                         d_parameter_icon);
                 }
                 else
                 {
-                    push_label_var_meta(text, param.full_path, "", param.full_path, "Copy parameter path",
+                    push_label_var_meta(text, param.full_path, "", param.full_path, "Click to copy parameter path.",
                                         c_parameter_icon);
                 }
-                push_label_var_meta(text, "Guid: ", fmod_guid_to_string(param.guid), param.guid, "Drag parameter");
+                push_label_var_meta(text, "Guid: ", fmod_guid_to_string(param.guid), param.guid,
+                                    "Click to copy parameter GUID.");
                 push_label(text, "Initial Value: ", itos(param.default_value));
                 text->add_text("\t");
                 push_labeln(text, "Range: ", vformat("%d->%d", param.min_value, param.max_value));
@@ -211,8 +221,8 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
         header->set_text("Bank:" + p_path.get_file().get_basename());
         header->set_button_icon(bank_icon);
         Studio::StudioBank::Cache bank = cache->get_bank(p_path);
-        push_label_str_meta(text, "Full Path: ", bank.full_path, "Copy bank path");
-        push_label_var_meta(text, "Guid: ", fmod_guid_to_string(bank.guid), bank.guid, "Drag Event");
+        push_label_str_meta(text, "Full Path: ", bank.full_path, "Click to copy bank path.");
+        push_label_var_meta(text, "Guid: ", fmod_guid_to_string(bank.guid), bank.guid, "Click to copy bank GUID.");
         text->push_indent(1);
         for (auto event : bank.children)
         {
@@ -233,8 +243,8 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
         header->set_button_icon(vca_icon);
         Studio::StudioVCA::Cache vca = cache->get_vca(p_path);
 
-        push_label_str_meta(text, "Full Path: ", vca.full_path, "Copy vca path");
-        push_label_var_meta(text, "Guid: ", fmod_guid_to_string(vca.guid), vca.guid, "Drag Event");
+        push_label_str_meta(text, "Full Path: ", vca.full_path, "Click to copy vca path.");
+        push_label_var_meta(text, "Guid: ", fmod_guid_to_string(vca.guid), vca.guid, "Click to copy vca GUID");
     }
     else if (p_path.begins_with("parameter:"))
     {
@@ -248,9 +258,10 @@ void FmodObjectDetails::display_fmod_object(const String &p_path)
         {
             header->set_button_icon(c_parameter_icon);
         }
-        push_label_str_meta(text, "Full Path: ", parameter.full_path, "Copy vca path");
+        push_label_str_meta(text, "Full Path: ", parameter.full_path, "Click to copy parameter path.");
         push_labeln(text, "Name: ", parameter.full_path.get_file());
-        push_label_var_meta(text, "Guid: ", fmod_guid_to_string(parameter.guid), parameter.guid, "Drag Event");
+        push_label_var_meta(text, "Guid: ", fmod_guid_to_string(parameter.guid), parameter.guid,
+                            "Click to copy parameter GUID.");
     }
 }
 Variant FmodObjectDetails::_get_drag_data(const Vector2 &p_at_position)
