@@ -31,7 +31,7 @@ def buildForPlatform(platform, arch, target:str):
                 "target=template_release",
                 "platform=%s" % platform,
                 "arch=%s" % arch,
-                "api_version=4.6",
+                "api_version=4.8",
             ]
         )
         if p1.returncode != 0:
@@ -47,7 +47,7 @@ def buildForPlatform(platform, arch, target:str):
                 "target=template_debug",
                 "platform=%s" % platform,
                 "arch=%s" % arch,
-                "api_version=4.6",
+                "api_version=4.8",
             ]
         )
         if p2.returncode != 0:
@@ -64,7 +64,7 @@ def buildForPlatform(platform, arch, target:str):
                 "target=editor",
                 "platform=%s" % platform,
                 "arch=%s" % arch,
-                "api_version=4.6",
+                "api_version=4.8",
             ]
         )
         if p3.returncode != 0:
